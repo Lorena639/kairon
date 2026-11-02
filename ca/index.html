@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KAIRON: SOC gestionat per a pimes. Detectem a temps, responem en el moment just i ho demostrem amb proves.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>KAIRON · El moment just</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../index.html">
+  <link rel="alternate" hreflang="ca" href="index.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <!-- Preloader -->
+  <div class="carga" aria-hidden="true">
+    <div class="carga__panel carga__panel--arriba"></div>
+    <div class="carga__panel carga__panel--abajo"></div>
+    <div class="carga__centro">
+      <!-- Mientras carga: emblema latiendo. Al 100 %: el logo se monta por piezas (ala, anillo, K y letras) -->
+      <span class="brillo brillo--emblema carga__pulso"><img class="carga__emblema" src="../img/kairon-emblema-192.png" width="96" height="96" alt=""></span>
+      <span class="carga__linea"></span>
+      <span class="carga__texto mono">Iniciant vigilància</span>
+    </div>
+    <canvas class="intro__lienzo" aria-hidden="true"></canvas>
+    <div class="intro__logo oro-metal oro-metal--completo" aria-hidden="true"><img src="../img/kairon-logo-dorado.png" width="560" height="505" alt=""></div>
+    <span class="carga__cifra">000</span>
+    <span class="carga__barra"></span>
+  </div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="#servicios"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="#soc"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="#cifras"><span class="mono">03</span>Xifres</a></li>
+      <li><a href="#testimonios"><span class="mono">04</span>Clients</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">05</span>Equip</a></li>
+      <li><a href="#contacto"><span class="mono">06</span>Contacte</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Secció següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Seccions">
+    <a href="#contenido" data-seccion="hero"><span>Inici</span></a>
+    <a href="#servicios" data-seccion="servicios"><span>Serveis</span></a>
+    <a href="#soc" data-seccion="soc"><span>SOC en directe</span></a>
+    <a href="#metodo" data-seccion="metodo"><span>Mètode</span></a>
+    <a href="#incidente" data-seccion="incidente"><span>Incident</span></a>
+    <a href="#cifras" data-seccion="cifras"><span>Xifres</span></a>
+    <a href="#testimonios" data-seccion="testimonios"><span>Clients</span></a>
+    <a href="#faq" data-seccion="faq"><span>Preguntes</span></a>
+    <a href="#contacto" data-seccion="contacto"><span>Contacte</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../index.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="#servicios">Serveis</a></li>
+          <li><a href="#soc">SOC en directe</a></li>
+          <li><a href="#cifras">Xifres</a></li>
+          <li><a href="#incidente">Incident</a></li>
+          <li><a href="#testimonios">Clients</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="titulo-hero" data-punto="hero">
+      <div class="hero__escena" aria-hidden="true"></div>
+      <div class="hero__velo" aria-hidden="true"></div>
+      <span class="hero__marca" aria-hidden="true">KAIRON</span>
+
+      <!-- Registro de eventos en vivo (simulado) -->
+      <aside class="hero__registro" aria-label="Registre d'esdeveniments del SOC (simulat)">
+        <span class="mono">● SOC · registre en directe</span>
+        <ul style="list-style:none;margin:0;padding:0" aria-live="polite"></ul>
+      </aside>
+
+      <div class="contenedor hero__contenido">
+        <span class="hero__estado mono">SOC gestionat · vigilància 24/7</span>
+
+        <h1 class="hero__titulo" id="titulo-hero">
+          <span class="linea"><span>El moment</span></span>
+          <span class="linea"><em class="oro-brillo">just</em></span>
+        </h1>
+
+        <div class="hero__pie">
+          <div>
+            <p class="hero__sub">Detectem els atacs a temps, responem a l'instant precís i ho demostrem amb proves. Seguretat de SOC per a pimes sense equip propi.</p>
+            <div class="hero__acciones">
+              <a href="#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a>
+              <a href="#incidente" class="boton"><span class="boton__texto" data-texto="Mira com actuem">Mira com actuem</span></a>
+            </div>
+          </div>
+          <span class="hero__scroll mono">Llisca</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__pista">
+        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairós · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
+        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairós · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
+      </div>
+    </div>
+
+    <!-- ===== MANIFIESTO ===== -->
+    <section class="manifiesto" aria-label="Què és KAIRON">
+      <img class="manifiesto__fondo" src="../img/kairon-emblema-dorado.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <div class="contenedor">
+        <p class="manifiesto__texto">
+          <span class="palabra">Kairós</span><span class="palabra">és</span><span class="palabra">l'instant</span><span class="palabra oro">oportú.</span>
+          <span class="palabra">En</span><span class="palabra">seguretat,</span><span class="palabra">un</span><span class="palabra">minut</span><span class="palabra">tard</span><span class="palabra">ja</span><span class="palabra">és</span><span class="palabra">un</span><span class="palabra oro">incident.</span>
+          <span class="palabra">KAIRON</span><span class="palabra">vigila</span><span class="palabra">la</span><span class="palabra">teva</span><span class="palabra">empresa</span><span class="palabra">per</span><span class="palabra">actuar</span><span class="palabra">quan</span><span class="palabra">de</span><span class="palabra">debò</span><span class="palabra oro">importa.</span>
+        </p>
+        <p class="manifiesto__nota revelar">Un centre d'operacions de seguretat complet, a la mida d'una pime: sense contractar un equip intern i sense informes que ningú entén.</p>
+      </div>
+    </section>
+
+    <!-- ===== SERVICIOS: scroll horizontal ===== -->
+    <section class="servicios" id="servicios" aria-label="Serveis">
+      <div class="servicios__pista">
+
+        <article class="servicio">
+          <div class="contenedor">
+            <div class="servicio__cabecera">
+              <span class="servicio__numero" aria-hidden="true">01</span>
+              <span class="mono">Vigilància</span>
+            </div>
+            <h2 class="servicio__titulo">Detectar</h2>
+            <p class="servicio__texto">Agents als teus equips envien l'activitat al nostre SOC. Regles pròpies separen el soroll del que importa: accessos sospitosos, malware, força bruta, comportaments anòmals.</p>
+            <ul class="servicio__datos"><li>Wazuh</li><li>Regles pròpies</li><li>Equips i xarxa</li><li>Alertes a l'instant</li></ul>
+          </div>
+          <span class="servicio__orbita" aria-hidden="true"><i class="servicio__satelite"></i><i class="servicio__satelite"></i><i class="servicio__satelite"></i></span>
+        </article>
+
+        <article class="servicio">
+          <div class="contenedor">
+            <div class="servicio__cabecera">
+              <span class="servicio__numero" aria-hidden="true">02</span>
+              <span class="mono">Resposta i forense</span>
+            </div>
+            <h2 class="servicio__titulo">Respondre</h2>
+            <p class="servicio__texto">Contenim l'atac i recollim les proves de l'equip afectat amb cadena de custòdia: processos, connexions, usuaris, persistència. Cada prova amb hora UTC, número de cas i hash SHA-256.</p>
+            <ul class="servicio__datos"><li>Cadena de custòdia</li><li>SHA-256</li><li>Eina pròpia</li><li>Contenció</li></ul>
+          </div>
+          <span class="servicio__orbita" aria-hidden="true"><i class="servicio__satelite"></i><i class="servicio__satelite"></i><i class="servicio__satelite"></i></span>
+        </article>
+
+        <article class="servicio">
+          <div class="contenedor">
+            <div class="servicio__cabecera">
+              <span class="servicio__numero" aria-hidden="true">03</span>
+              <span class="mono">Informes i auditoria</span>
+            </div>
+            <h2 class="servicio__titulo">Demostrar</h2>
+            <p class="servicio__texto">Cronologia del que ha passat, què s'ha fet i com evitar que es repeteixi, en llenguatge clar per a direcció i útil per a auditories. A més: auditoria de seguretat, hardening i formació per a la plantilla.</p>
+            <ul class="servicio__datos"><li>Informe clar</li><li>RGPD</li><li>Hardening</li><li>Formació anti-phishing</li></ul>
+            <div class="hero__acciones"><a href="informe.html" class="boton"><span class="boton__texto" data-texto="Mira un informe d'exemple">Mira un informe d'exemple</span></a></div>
+          </div>
+          <span class="servicio__orbita" aria-hidden="true"><i class="servicio__satelite"></i><i class="servicio__satelite"></i><i class="servicio__satelite"></i></span>
+        </article>
+
+      </div>
+      <div class="servicio__indice" aria-hidden="true"><span class="activo"></span><span></span><span></span></div>
+    </section>
+
+    <!-- ===== SOC EN VIVO (simulado) ===== -->
+    <section class="soc" id="soc" aria-labelledby="titulo-soc" data-fondo="SOC">
+      <div class="contenedor">
+        <span class="mono">SOC en directe · dades simulades</span>
+        <h2 class="soc__titulo revelar" id="titulo-soc">Així es veu la nostra vigilància</h2>
+
+        <div class="panel revelar">
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Esdeveniments per minut</span><span class="panel__punto"></span></div>
+            <canvas class="panel__grafica" aria-label="Gràfica d'esdeveniments per minut (simulada)"></canvas>
+          </div>
+
+          <div class="panel__bloque">
+            <div class="panel__cabecera"><span class="mono">Analitzats avui</span></div>
+            <p class="panel__grande" data-vivo="1240318">1.240.318<small>esdeveniments</small></p>
+            <p class="panel__nota">Processats per les regles del SOC des de les 00:00.</p>
+          </div>
+
+          <div class="panel__bloque">
+            <div class="panel__cabecera"><span class="mono">Deteccions per tipus</span></div>
+            <ul class="panel__barras">
+              <li data-w="78"><span>Força bruta <b>78</b></span><i></i></li>
+              <li data-w="52"><span>Phishing <b>52</b></span><i></i></li>
+              <li data-w="34"><span>Malware <b>34</b></span><i></i></li>
+              <li data-w="21" class="alerta"><span>Persistència <b>21</b></span><i></i></li>
+            </ul>
+          </div>
+
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Últimes alertes</span><span class="panel__punto"></span></div>
+            <ul class="panel__alertas" aria-live="polite"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EL MÉTODO (sección clara, scrollytelling) ===== -->
+    <section class="metodo claro" id="metodo" aria-labelledby="titulo-metodo">
+      <div class="topografia" aria-hidden="true"></div>
+      <div class="contenedor metodo__grid">
+        <div class="metodo__fijo">
+          <span class="mono">El mètode KAIRON</span>
+          <h2 class="metodo__titulo" id="titulo-metodo">Vigilar. <br>Actuar. <br><span class="metodo__destacado">Demostrar.</span></h2>
+          <div class="metodo__emblema">
+            <img src="../img/kairon-emblema-oro_oscuro.png" width="260" height="243" alt="" loading="lazy" decoding="async">
+            <span class="metodo__anillo"></span>
+            <span class="metodo__anillo metodo__anillo--2"></span>
+          </div>
+        </div>
+        <ol class="metodo__pasos">
+          <li class="metodo__paso" data-n="01">
+            <h3>Conèixer la teva empresa</h3>
+            <p>Auditoria inicial gratuïta: quins equips tens, quines dades importen i per on et podrien atacar. Sense tecnicismes.</p>
+          </li>
+          <li class="metodo__paso" data-n="02">
+            <h3>Instal·lar la vigilància</h3>
+            <p>Un agent lleuger a cada equip envia l'activitat al SOC. Regles ajustades al teu negoci perquè les alertes importin.</p>
+          </li>
+          <li class="metodo__paso" data-n="03">
+            <h3>Respondre en minuts</h3>
+            <p>Contenció immediata, trucada a direcció i recollida de proves amb cadena de custòdia mentre l'atac encara és calent.</p>
+          </li>
+          <li class="metodo__paso" data-n="04">
+            <h3>Demostrar-ho amb un informe</h3>
+            <p>Cronologia, evidències amb SHA-256 i recomanacions clares. El que necessita una auditoria i el que entén una gerència.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== CINTA DE TECNOLOGÍAS DEL PROYECTO ===== -->
+    <div class="marquee marquee--tec" aria-label="Tecnologies del projecte">
+      <div class="marquee__pista marquee__pista--inversa">
+        <span class="marquee__item marquee__item--tec"><span>Wazuh</span><i></i><span>Python</span><i></i><span>VirtualBox</span><i></i><span>Linux</span><i></i><span>Windows Server</span><i></i><span>pfSense</span><i></i><span>SHA-256</span><i></i><span>Sysmon</span><i></i><span>HTML5 · CSS3 · JS</span><i></i><span>Git</span><i></i></span>
+        <span class="marquee__item marquee__item--tec"><span>Wazuh</span><i></i><span>Python</span><i></i><span>VirtualBox</span><i></i><span>Linux</span><i></i><span>Windows Server</span><i></i><span>pfSense</span><i></i><span>SHA-256</span><i></i><span>Sysmon</span><i></i><span>HTML5 · CSS3 · JS</span><i></i><span>Git</span><i></i></span>
+      </div>
+    </div>
+
+    <!-- ===== ANATOMÍA DE UN INCIDENTE + SIMULADOR ===== -->
+    <section class="incidente" id="incidente" aria-labelledby="titulo-incidente" data-fondo="00:00">
+      <div class="contenedor">
+        <div class="incidente__cabecera">
+          <div>
+            <span class="mono">Anatomia d'un incident</span>
+            <h2 class="equipo__titulo revelar" id="titulo-incidente">De l'atac a l'informe</h2>
+          </div>
+          <div class="hero__acciones" style="margin-top:0">
+            <button class="boton boton--lleno simular" type="button"><span class="boton__texto" data-texto="▶ Simular un atac">▶ Simular un atac</span></button>
+            <a href="informe.html" class="boton"><span class="boton__texto" data-texto="Mira l'informe del cas">Mira l'informe del cas</span></a>
+          </div>
+        </div>
+
+        <ol class="pasos">
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:00</span>
+            <h3>Entrada</h3>
+            <p>Un correu de phishing. Algú fa clic i s'executa un fitxer sense signatura en un portàtil.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:01</span>
+            <h3>Detecció</h3>
+            <p>L'agent de l'equip envia l'esdeveniment a Wazuh. Una regla pròpia el marca com a execució sospitosa amb persistència.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:03</span>
+            <h3>Contenció</h3>
+            <p>S'aïlla el portàtil de la xarxa i es bloqueja la IP de comandament i control al tallafoc.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:09</span>
+            <h3>Forense</h3>
+            <p>La nostra eina recull processos, connexions, usuaris i persistència. Cada prova amb hora UTC, número de cas i SHA-256.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:40</span>
+            <h3>Informe</h3>
+            <p>Cronologia clara del que ha passat, què s'ha fet i com evitar que es repeteixi. A punt per a direcció i auditories.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== CIFRAS (ficticias) ===== -->
+    <section class="cifras" id="cifras" aria-labelledby="titulo-cifras" data-fondo="24/7">
+      <div class="contenedor">
+        <svg width="0" height="0" aria-hidden="true"><defs><linearGradient id="oro" x1="0" x2="1"><stop offset="0" stop-color="#8a6a2e"/><stop offset="1" stop-color="#fff0c4"/></linearGradient></defs></svg>
+        <span class="mono">Xifres · dades d'exemple</span>
+        <h2 class="equipo__titulo revelar" id="titulo-cifras">El que vigilem</h2>
+        <ul class="cifras__lista">
+          <li class="cifra revelar" data-pct="88">
+            <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
+            <div><span class="cifra__valor" data-valor="1240000">0<small>esd/dia</small></span><p class="cifra__texto">Esdeveniments analitzats cada dia</p></div>
+          </li>
+          <li class="cifra revelar" data-pct="30">
+            <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
+            <div><span class="cifra__valor" data-valor="12">0<small>min</small></span><p class="cifra__texto">Temps mitjà de primera resposta</p></div>
+          </li>
+          <li class="cifra revelar" data-pct="99.9">
+            <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
+            <div><span class="cifra__valor" data-valor="99.9">0<small>%</small></span><p class="cifra__texto">Disponibilitat del SOC</p></div>
+          </li>
+          <li class="cifra revelar" data-pct="100">
+            <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
+            <div><span class="cifra__valor" data-valor="100">0<small>%</small></span><p class="cifra__texto">Proves amb hash SHA-256 i cadena de custòdia</p></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== TESTIMONIOS (ficticios, contenido de ejemplo para la práctica) ===== -->
+    <section class="testimonios claro" id="testimonios" aria-labelledby="titulo-testimonios">
+      <div class="topografia" aria-hidden="true"></div>
+      <div class="contenedor">
+        <span class="mono">Clients · testimonis ficticis</span>
+        <div class="incidente__cabecera">
+          <h2 class="equipo__titulo revelar" id="titulo-testimonios">El que diuen de nosaltres</h2>
+          <div class="testimonios__flechas">
+            <button type="button" class="flecha" data-dir="-1" aria-label="Testimoni anterior">←</button>
+            <button type="button" class="flecha" data-dir="1" aria-label="Testimoni següent">→</button>
+          </div>
+        </div>
+      </div>
+      <div class="testimonios__pista arrastrable" data-arrastra="Arrossega" aria-label="Testimonis">
+        <blockquote class="testimonio revelar">
+          <p>Ens van avisar d'un correu sospitós abans que ningú hi fes clic. Ens van estalviar un disgust enorme.</p>
+          <footer><strong>Marta R.</strong><span class="mono">Directora administrativa · logística</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>L'informe de l'incident va ser clar i útil. Per fi vam entendre què havia passat a la nostra xarxa.</p>
+          <footer><strong>Jordi P.</strong><span class="mono">Gerent · despatx d'arquitectura</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>Un ransomware va entrar per un portàtil i al cap de deu minuts ja estava aïllat. Sense KAIRON hauríem aturat la fàbrica.</p>
+          <footer><strong>Núria S.</strong><span class="mono">Responsable d'IT · indústria</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>Parlen clar. Sé què tinc, quin risc corro i què fer. És el que necessita una empresa petita.</p>
+          <footer><strong>Álvaro M.</strong><span class="mono">CEO · comerç en línia</span></footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== PREGUNTAS FRECUENTES ===== -->
+    <section class="faq" id="faq" aria-labelledby="titulo-faq">
+      <div class="contenedor faq__grid">
+        <div>
+          <span class="mono">Preguntes freqüents</span>
+          <h2 class="equipo__titulo revelar" id="titulo-faq">El que ens pregunten</h2>
+        </div>
+        <div class="faq__lista revelar">
+          <details class="faq__item" open>
+            <summary>Què és un SOC i per què el necessita una pime?</summary>
+            <p>Un centre d'operacions de seguretat: persones i eines que vigilen els teus sistemes i responen si passa res. La majoria d'atacs a pimes entren per correu o contrasenyes febles, i sense vigilància es descobreixen setmanes després.</p>
+          </details>
+          <details class="faq__item">
+            <summary>He d'instal·lar res?</summary>
+            <p>Un agent lleuger a cada equip (Windows o Linux) que envia l'activitat al SOC. No frena l'ordinador i no llegeix els teus documents.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Què passa quan detecteu un atac?</summary>
+            <p>Primer contenim (aïllar l'equip, bloquejar la IP), recollim les proves amb cadena de custòdia i et truquem. Després reps un informe en llenguatge clar.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Les proves serveixen davant d'una auditoria o una denúncia?</summary>
+            <p>Cada evidència porta hora UTC, número de cas i empremta SHA-256, de manera que es pot comprovar que no ha estat alterada. <a href="informe.html">Mira un informe d'exemple</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>I aquest web, està protegit?</summary>
+            <p>Sí, prediquem amb l'exemple: política de seguretat de contingut (CSP) que només permet recursos d'aquest lloc, sense scripts en línia, política de referrer estricta, enllaços externs amb <code>rel="noopener"</code>, formulari amb camp trampa anti-spam i ni una galeta ni rastrejador.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Quant costa?</summary>
+            <p>Depèn del nombre d'equips. Comencem sempre amb una auditoria gratuïta per saber què tens i quin risc corres.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EQUIPO ===== -->
+    <section class="equipo" aria-labelledby="titulo-equipo" data-fondo="KAIRON">
+      <div class="contenedor">
+        <span class="mono">Equip</span>
+        <h2 class="equipo__titulo revelar" id="titulo-equipo">Qui vigila</h2>
+        <div class="equipo__lista">
+          <article class="persona revelar">
+            <img class="persona__avatar" src="../img/avatar-lorena.svg" width="96" height="96" alt="Avatar de Lorena" loading="lazy" decoding="async">
+            <h3>Antonia Lorena Cracana</h3>
+            <p class="persona__rol mono">Ciberseguretat i anàlisi forense</p>
+            <p class="persona__texto">Detecció, resposta a incidents i recollida de proves amb cadena de custòdia. Munta el laboratori i afina les regles del SOC.</p>
+            <div class="persona__enlaces">
+              <a href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
+              <a href="sobre-mi.html">Perfil</a>
+            </div>
+          </article>
+          <article class="persona revelar">
+            <img class="persona__avatar" src="../img/avatar-dani.svg" width="96" height="96" alt="Avatar de João Daniel" loading="lazy" decoding="async">
+            <h3>João Daniel de Paiva Oliveira</h3>
+            <p class="persona__rol mono">Desenvolupament web i sistemes</p>
+            <p class="persona__texto">Arquitectures web netes, scripting modular i maquinari. Lidera el front-end i l'optimització dels equips.</p>
+            <div class="persona__enlaces">
+              <a href="https://github.com/jdanioliv" target="_blank" rel="noopener">GitHub</a>
+              <a href="sobre-mi.html">Perfil</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section class="contacto" id="contacto" aria-labelledby="titulo-contacto" data-fondo="HOLA">
+      <div class="contenedor contacto__grid">
+        <div>
+          <span class="mono">Contacte</span>
+          <h2 class="contacto__titulo revelar" id="titulo-contacto">Saps què passa <em class="oro-brillo">ara</em> a la teva xarxa?</h2>
+          <p class="hero__sub revelar" style="margin-top:24px">Et fem una auditoria inicial gratuïta i t'expliquem, sense tecnicismes, per on començar.</p>
+        </div>
+
+        <form class="formulario revelar" action="#" method="post" novalidate>
+          <div class="formulario__campo">
+            <label for="nombre">Nom</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="email">Correu electrònic</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" name="empresa" autocomplete="organization">
+          </div>
+          <div class="formulario__campo formulario__trampa" aria-hidden="true">
+            <label for="web">No omplis aquest camp</label>
+            <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="formulario__campo">
+            <label for="mensaje">Missatge</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <p class="formulario__aviso" role="status" hidden></p>
+          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Demanar auditoria gratuïta">Demanar auditoria gratuïta</span></button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante oro-brillo" aria-hidden="true">KAIRON</span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/jdanioliv/Argos-TFG" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operatiu</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors</p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.12.5 y Lenis 1.1.18) para no depender de internet -->
+  <script src="../js/vendor/three.min.js" defer></script>
+  <script src="../js/vendor/gsap.min.js" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="../js/vendor/lenis.min.js" defer></script>
+  <script src="../js/intro.js" defer></script>
+  <script src="../js/escena.js" defer></script>
+  <script src="../js/polvo.js" defer></script>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

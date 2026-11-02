@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /informe.html
+Disallow: /ca/informe.html
+Sitemap: sitemap.xml

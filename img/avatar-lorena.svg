@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Avatar de Lorena">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c1727"/>
+      <stop offset="1" stop-color="#0b0910"/>
+    </linearGradient>
+    <linearGradient id="o" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0c4"/>
+      <stop offset="0.5" stop-color="#c4974b"/>
+      <stop offset="1" stop-color="#8a6a2e"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#g)"/>
+  <circle cx="100" cy="100" r="92" fill="none" stroke="url(#o)" stroke-width="1.5" opacity="0.8"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#c4974b" stroke-width="0.8" stroke-dasharray="3 6" opacity="0.5"/>
+  <text x="100" y="118" text-anchor="middle" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="56" font-weight="600" fill="url(#o)" letter-spacing="-2">AL</text>
+</svg>

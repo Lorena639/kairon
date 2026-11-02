@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="El equipo de KAIRON: Lorena (ciberseguridad y análisis forense) y João Daniel (desarrollo web y sistemas). Valores y visión.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="Equipo · KAIRON">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>Equipo · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="sobre-mi.html">
+  <link rel="alternate" hreflang="ca" href="ca/sobre-mi.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="index.html#servicios"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="index.html#soc"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="index.html#cifras"><span class="mono">03</span>Cifras</a></li>
+      <li><a href="index.html#testimonios"><span class="mono">04</span>Clientes</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">05</span>Equipo</a></li>
+      <li><a href="index.html#contacto"><span class="mono">06</span>Contacto</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA (igual que index.html) ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/sobre-mi.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="index.html#servicios">Servicios</a></li>
+          <li><a href="index.html#soc">SOC en vivo</a></li>
+          <li><a href="index.html#cifras">Cifras</a></li>
+          <li><a href="sobre-mi.html" aria-current="page">Equipo</a></li>
+          <li><a href="index.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===== EQUIPO ===== -->
+    <section class="pagina" aria-labelledby="titulo-equipo">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <span class="mono">Sobre nosotros</span>
+        <h1 class="pagina__titulo revelar" id="titulo-equipo">Quién <span class="oro-brillo">vigila</span></h1>
+        <p class="pagina__intro">Dos perfiles complementarios, seguridad y desarrollo. Estudiantes de 2º de CFGM Sistemes Microinformàtics i Xarxes (SMX) en Digitech, Barcelona.</p>
+
+        <div class="equipo__lista">
+
+          <!-- Lorena: ciberseguridad y análisis forense -->
+          <article class="persona revelar" aria-labelledby="nombre-lorena">
+            <img class="persona__avatar" src="img/avatar-lorena.svg" width="88" height="88" alt="Avatar de Lorena" loading="lazy" decoding="async">
+            <h3 id="nombre-lorena">Antonia Lorena Cracana</h3>
+            <p class="persona__rol mono">Ciberseguridad y análisis forense</p>
+            <p class="persona__texto">En KAIRON dirige la detección de ataques, la respuesta a incidentes y el análisis forense: montar el laboratorio, afinar las reglas del SOC y recoger pruebas con cadena de custodia. Quiere especializarse en análisis forense.</p>
+            <ul class="panel__barras nivel" aria-label="Nivel de competencias de Lorena">
+              <li data-w="92"><span>Redes, VLAN y firewalls <b>92%</b></span><i></i></li>
+              <li data-w="88"><span>Windows Server, AD y virtualización <b>88%</b></span><i></i></li>
+              <li data-w="84"><span>Detección con Wazuh y respuesta <b>84%</b></span><i></i></li>
+              <li data-w="80"><span>Análisis forense y cadena de custodia <b>80%</b></span><i></i></li>
+            </ul>
+            <div class="persona__enlaces">
+              <a href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
+              <!-- TODO: sustituir # por el enlace real de LinkedIn -->
+              <a href="#">LinkedIn</a>
+            </div>
+          </article>
+
+          <!-- Dani: desarrollo web y sistemas -->
+          <article class="persona revelar" aria-labelledby="nombre-dani">
+            <img class="persona__avatar" src="img/avatar-dani.svg" width="88" height="88" alt="Avatar de João Daniel" loading="lazy" decoding="async">
+            <h3 id="nombre-dani">João Daniel de Paiva Oliveira</h3>
+            <p class="persona__rol mono">Desarrollo web y sistemas</p>
+            <p class="persona__texto">Especializado en arquitecturas web limpias y semánticas, automatización mediante scripting modular y diagnóstico de hardware. En KAIRON lidera el desarrollo front-end, la experiencia de usuario y la optimización de los equipos.</p>
+            <ul class="panel__barras nivel" aria-label="Nivel de competencias de João Daniel">
+              <li data-w="95"><span>HTML5 semántico y accesibilidad <b>95%</b></span><i></i></li>
+              <li data-w="92"><span>CSS3: Grid, Flexbox y animaciones <b>92%</b></span><i></i></li>
+              <li data-w="90"><span>Scripting modular y Git <b>90%</b></span><i></i></li>
+              <li data-w="88"><span>Hardware, montaje y sistemas <b>88%</b></span><i></i></li>
+            </ul>
+            <div class="persona__enlaces">
+              <a href="https://github.com/jdanioliv" target="_blank" rel="noopener">GitHub</a>
+              <!-- TODO: sustituir # por el enlace real de LinkedIn -->
+              <a href="#">LinkedIn</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOJA DE RUTA DEL PROYECTO ===== -->
+    <section class="ruta" aria-labelledby="titulo-ruta">
+      <div class="contenedor">
+        <span class="mono">Hoja de ruta · TFG 2026-2027</span>
+        <h2 class="equipo__titulo revelar" id="titulo-ruta">Cómo lo estamos construyendo</h2>
+        <ol class="ruta__lista">
+          <li class="ruta__hito revelar"><span class="mono">Nov 2026</span><h3>Web y laboratorio</h3><p>Web corporativa KAIRON y red virtual con Wazuh, servidor Linux, equipos Windows y máquina atacante.</p></li>
+          <li class="ruta__hito revelar"><span class="mono">Nov–Dic 2026</span><h3>Detección y herramienta forense</h3><p>Ataques simulados detectados por Wazuh y herramienta en Python que recoge pruebas con cadena de custodia.</p></li>
+          <li class="ruta__hito revelar"><span class="mono">Ene 2027</span><h3>Caso completo</h3><p>Demo de principio a fin: ataque, alerta, contención, recogida de pruebas e informe.</p></li>
+          <li class="ruta__hito revelar"><span class="mono">Feb–Mar 2027</span><h3>Presentación</h3><p>Memoria, ensayo y defensa. Líneas futuras: KAIRON Data Chip, identidad y trazabilidad por dato.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== VALORES Y VISIÓN ===== -->
+    <section class="valores" aria-labelledby="titulo-valores">
+      <div class="contenedor">
+        <span class="mono">Valores y visión</span>
+        <h2 class="equipo__titulo revelar" id="titulo-valores">Cómo entendemos la seguridad</h2>
+
+        <div class="valores__lista">
+          <article class="valor revelar">
+            <span class="mono">01</span>
+            <h3>En el momento justo</h3>
+            <p>Kairós, el instante oportuno. Detectar pronto y actuar a tiempo vale más que cualquier herramienta cara.</p>
+          </article>
+          <article class="valor revelar">
+            <span class="mono">02</span>
+            <h3>Pruebas, no suposiciones</h3>
+            <p>Cada afirmación de un informe se apoya en una evidencia con hora, número de caso y huella SHA-256.</p>
+          </article>
+          <article class="valor revelar">
+            <span class="mono">03</span>
+            <h3>Claridad</h3>
+            <p>Si la dirección no entiende el informe, no sirve. Hablamos claro y explicamos el porqué de cada medida.</p>
+          </article>
+        </div>
+
+        <p class="vision revelar">Nuestra visión: que cualquier pyme, sin departamento de seguridad, tenga la misma vigilancia y la misma capacidad de respuesta que una gran empresa.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE (igual que index.html) ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante oro-brillo" aria-hidden="true">KAIRON</span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/jdanioliv/Argos-TFG" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores</p>
+    </div>
+  </footer>
+
+  <script src="js/vendor/three.min.js" defer></script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/vendor/lenis.min.js" defer></script>
+  <script src="js/escena.js" defer></script>
+  <script src="js/polvo.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

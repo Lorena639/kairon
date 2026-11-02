@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Informe de incidente de ejemplo de KAIRON: cronología, evidencias con hash SHA-256 y cadena de custodia, acciones y recomendaciones.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+  <title>Informe de incidente KAIRON-0428 (ejemplo) · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="informe.html">
+  <link rel="alternate" hreflang="ca" href="ca/informe.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="informe-pagina">
+
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/informe.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="index.html#servicios">Servicios</a></li>
+          <li><a href="index.html#incidente">Incidente</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><button type="button" class="boton imprimir"><span class="boton__texto" data-texto="Imprimir / PDF">Imprimir / PDF</span></button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="index.html"><span class="mono">01</span>Inicio</a></li>
+      <li><a href="index.html#incidente"><span class="mono">02</span>Incidente</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">03</span>Equipo</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+  </div>
+
+  <main id="contenido" class="informe">
+
+    <!-- ===== PORTADA DEL INFORME ===== -->
+    <section class="pagina informe__cabecera" aria-labelledby="titulo-informe">
+      <div class="contenedor">
+        <span class="mono">Informe de incidente · ejemplo para la práctica</span>
+        <h1 class="pagina__titulo revelar" id="titulo-informe">Caso <span class="oro-brillo">KAIRON-0428</span></h1>
+        <dl class="informe__datos revelar">
+          <div><dt>Cliente</dt><dd>Logística Marta S.L. (ficticio)</dd></div>
+          <div><dt>Clasificación</dt><dd><span class="etiqueta etiqueta--alerta">Alta</span> Malware con persistencia</dd></div>
+          <div><dt>Detectado</dt><dd><time datetime="2026-10-29T09:41:12Z">29/10/2026 · 09:41:12 UTC</time></dd></div>
+          <div><dt>Contenido</dt><dd><time datetime="2026-10-29T09:52:40Z">29/10/2026 · 09:52:40 UTC</time> (11 min)</dd></div>
+          <div><dt>Analista</dt><dd>A. Lorena Cracana · KAIRON SOC</dd></div>
+          <div><dt>Estado</dt><dd><span class="etiqueta etiqueta--ok">Cerrado</span></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== RESUMEN PARA DIRECCIÓN ===== -->
+    <section class="informe__bloque" aria-labelledby="titulo-resumen">
+      <div class="contenedor">
+        <span class="mono">1 · Resumen para dirección</span>
+        <h2 class="informe__titulo revelar" id="titulo-resumen">Qué ha pasado, en una página</h2>
+        <div class="informe__texto revelar">
+          <p>Un empleado abrió un adjunto de un correo que imitaba a un proveedor. El adjunto ejecutó un programa sin firma en el portátil WS-03, que creó una tarea programada para volver a arrancar en cada inicio e intentó conectarse a un servidor externo de mando y control.</p>
+          <p>KAIRON detectó la ejecución al minuto, aisló el portátil de la red a los tres minutos y bloqueó la IP externa en el firewall. No hay indicios de que el atacante accediera a otros equipos ni de que saliera información de la empresa. El portátil se reinstaló desde cero y el usuario cambió sus contraseñas.</p>
+          <p><strong>Impacto:</strong> ninguno en producción. <strong>Datos afectados:</strong> no se han identificado. <strong>Riesgo residual:</strong> bajo, siempre que se apliquen las recomendaciones del apartado 5.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CRONOLOGÍA ===== -->
+    <section class="informe__bloque" aria-labelledby="titulo-cronologia">
+      <div class="contenedor">
+        <span class="mono">2 · Cronología (UTC)</span>
+        <h2 class="informe__titulo revelar" id="titulo-cronologia">Minuto a minuto</h2>
+        <div class="tabla revelar">
+          <table>
+            <thead><tr><th>Hora</th><th>Evento</th><th>Fuente</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td>09:40:03</td><td>Recepción de correo con adjunto <code>Factura_0931.pdf.exe</code></td><td>Servidor de correo</td><td>—</td></tr>
+              <tr><td>09:40:55</td><td>Ejecución del adjunto por el usuario en WS-03</td><td>Sysmon · evento 1</td><td>—</td></tr>
+              <tr><td>09:41:12</td><td><strong>Alerta:</strong> ejecutable sin firma crea tarea programada</td><td>Wazuh · regla propia 100021</td><td>Caso abierto</td></tr>
+              <tr><td>09:41:40</td><td>Intento de conexión a 198.51.100.7:443</td><td>Firewall · registro de conexiones</td><td>—</td></tr>
+              <tr><td>09:43:05</td><td>Portátil WS-03 aislado de la red</td><td>Respuesta activa de Wazuh</td><td>Contención</td></tr>
+              <tr><td>09:44:20</td><td>IP 198.51.100.7 bloqueada</td><td>Firewall</td><td>Contención</td></tr>
+              <tr><td>09:45:00</td><td>Recogida de evidencias con la herramienta forense</td><td>KAIRON Forense v1.0</td><td>Evidencias E1–E6</td></tr>
+              <tr><td>09:52:40</td><td>Amenaza contenida; aviso telefónico a dirección</td><td>SOC</td><td>Comunicación</td></tr>
+              <tr><td>11:30:00</td><td>Reinstalación de WS-03 y cambio de contraseñas</td><td>Soporte IT</td><td>Recuperación</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EVIDENCIAS ===== -->
+    <section class="informe__bloque" aria-labelledby="titulo-evidencias">
+      <div class="contenedor">
+        <span class="mono">3 · Evidencias y cadena de custodia</span>
+        <h2 class="informe__titulo revelar" id="titulo-evidencias">Cada prueba, con su huella</h2>
+        <p class="informe__nota revelar">Todas las evidencias se recogieron en WS-03 con la herramienta forense de KAIRON, se sellaron con hora UTC y se calculó su hash SHA-256 en el momento de la recogida. Cualquier cambio posterior en un archivo cambiaría su hash.</p>
+        <div class="tabla revelar">
+          <table>
+            <thead><tr><th>ID</th><th>Evidencia</th><th>Recogida (UTC)</th><th>SHA-256</th></tr></thead>
+            <tbody>
+              <tr><td>E1</td><td>Listado de procesos en ejecución</td><td>09:45:12</td><td><code>3f1c…9a2e</code></td></tr>
+              <tr><td>E2</td><td>Conexiones de red activas</td><td>09:45:31</td><td><code>b7d0…41c8</code></td></tr>
+              <tr><td>E3</td><td>Usuarios e inicios de sesión recientes</td><td>09:45:50</td><td><code>58aa…e03f</code></td></tr>
+              <tr><td>E4</td><td>Mecanismos de persistencia (tareas y registro)</td><td>09:46:14</td><td><code>c21e…77b4</code></td></tr>
+              <tr><td>E5</td><td>Copia del ejecutable <code>Factura_0931.pdf.exe</code></td><td>09:46:48</td><td><code>9e4b…d1a0</code></td></tr>
+              <tr><td>E6</td><td>Registro de eventos de Sysmon (09:30–09:50)</td><td>09:47:30</td><td><code>0d73…5f6c</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="informe__nota revelar">Los hashes se muestran abreviados en este ejemplo. En un informe real aparecen completos (64 caracteres hexadecimales) junto con el nombre de quien recogió cada evidencia y dónde se custodia.</p>
+      </div>
+    </section>
+
+    <!-- ===== ANÁLISIS ===== -->
+    <section class="informe__bloque" aria-labelledby="titulo-analisis">
+      <div class="contenedor">
+        <span class="mono">4 · Análisis técnico</span>
+        <h2 class="informe__titulo revelar" id="titulo-analisis">Cómo entró y qué intentó hacer</h2>
+        <div class="informe__grid">
+          <article class="valor revelar"><span class="mono">Vector de entrada</span><h3>Phishing con adjunto</h3><p>Correo que suplanta a un proveedor habitual. El adjunto tiene doble extensión (<code>.pdf.exe</code>) para parecer un PDF.</p></article>
+          <article class="valor revelar"><span class="mono">Persistencia</span><h3>Tarea programada</h3><p>El ejecutable crea una tarea que lo lanza en cada inicio de sesión. Es lo que disparó la regla 100021 de Wazuh.</p></article>
+          <article class="valor revelar"><span class="mono">Comunicación</span><h3>Mando y control</h3><p>Intento de conexión cifrada al puerto 443 de una IP sin reputación. Bloqueada antes de que completara el intercambio.</p></article>
+          <article class="valor revelar"><span class="mono">Alcance</span><h3>Un solo equipo</h3><p>Sin movimiento lateral: no hay inicios de sesión del usuario en otros equipos ni tráfico interno anómalo en la ventana del incidente.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RECOMENDACIONES ===== -->
+    <section class="informe__bloque" aria-labelledby="titulo-recomendaciones">
+      <div class="contenedor">
+        <span class="mono">5 · Recomendaciones</span>
+        <h2 class="informe__titulo revelar" id="titulo-recomendaciones">Para que no se repita</h2>
+        <ol class="pasos">
+          <li class="paso revelar"><span class="paso__hora mono">Prioridad alta</span><h3>Bloquear ejecutables desde el correo</h3><p>Rechazar adjuntos ejecutables y dobles extensiones en el servidor de correo.</p></li>
+          <li class="paso revelar"><span class="paso__hora mono">Prioridad alta</span><h3>Formación anti-phishing</h3><p>Sesión de 45 minutos para la plantilla con ejemplos reales como este.</p></li>
+          <li class="paso revelar"><span class="paso__hora mono">Prioridad media</span><h3>Usuarios sin permisos de administrador</h3><p>El ejecutable pudo crear la tarea porque el usuario era administrador local.</p></li>
+          <li class="paso revelar"><span class="paso__hora mono">Prioridad media</span><h3>Doble factor en el correo</h3><p>Reduce el daño si una contraseña acaba en manos ajenas.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== FIRMA ===== -->
+    <section class="informe__bloque informe__firma" aria-label="Firma del informe">
+      <div class="contenedor">
+        <div class="informe__sello revelar">
+          <span class="oro-metal oro-metal--emblema"><img src="img/kairon-emblema-192.png" width="64" height="64" alt="" loading="lazy" decoding="async"></span>
+          <div>
+            <p class="mono">Emitido por KAIRON SOC · 29/10/2026 · 14:05 UTC</p>
+            <p>Informe de ejemplo creado para la práctica A1-RA1 y el TFG. Todos los datos, nombres e IP son ficticios.</p>
+          </div>
+        </div>
+        <div class="hero__acciones">
+          <button type="button" class="boton boton--lleno imprimir"><span class="boton__texto" data-texto="Imprimir / guardar como PDF">Imprimir / guardar como PDF</span></button>
+          <button type="button" class="boton compartir" hidden><span class="boton__texto" data-texto="Compartir">Compartir</span></button>
+          <a href="index.html#incidente" class="boton"><span class="boton__texto" data-texto="Volver al incidente">Volver al incidente</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/jdanioliv/Argos-TFG" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores</p>
+    </div>
+  </footer>
+
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/vendor/lenis.min.js" defer></script>
+  <script src="js/polvo.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
