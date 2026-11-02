@@ -11,6 +11,9 @@
   const carga = document.querySelector(".carga");
   const lienzo = carga && carga.querySelector(".intro__lienzo");
   const logoFinal = carga && carga.querySelector(".intro__logo");
+  const fogonazo = carga && carga.querySelector(".intro__fogonazo");
+  const lente = carga && carga.querySelector(".intro__lente");
+  const eslogan = carga && carga.querySelector(".intro__eslogan");
   if (!carga || !lienzo || !logoFinal) return;
 
   const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -89,7 +92,7 @@
           sx: centroX + Math.cos(ang) * radio,
           sy: centroY + Math.sin(ang) * radio,
           tx, ty,
-          giro: (Math.random() - 0.5) * 2.4,           // cuánto gira alrededor del centro mientras llega
+          giro: (Math.random() < 0.5 ? -1 : 1) * (1.8 + Math.random() * 2.2), // vórtice: todas giran, en uno u otro sentido
           retraso: Math.hypot(tx - centroX, ty - centroY) / Math.hypot(objetivo.w, objetivo.h) * 0.35 + Math.random() * 0.2,
           tam: 1.4 + Math.random() * 1.6,
           color,
@@ -141,7 +144,12 @@
     medir();
     muestrear();
     const inicio = performance.now();
-    const D_PARTICULAS = 2600, D_FUNDIDO = 700, D_DESTELLO = 1100, D_PAUSA = 350;
+    const D_PARTICULAS = 3200, D_FUNDIDO = 600, D_DESTELLO = 1300, D_PAUSA = 1500;
+    // Posición del destello: la esfera de la brújula del emblema (proporciones del PNG del logo)
+    if (lente) { lente.style.left = (objetivo.x + objetivo.w * 0.503) + "px"; lente.style.top = (objetivo.y + objetivo.h * 0.105) + "px"; }
+    if (eslogan) { eslogan.style.top = (objetivo.y + objetivo.h + 28) + "px"; eslogan.textContent = ""; }
+    let letrasEslogan = 0;
+    const textoEslogan = (eslogan && eslogan.dataset.texto) || "";
     let fase = 0;
     function cuadro(ahora) {
       const t = ahora - inicio;
@@ -149,14 +157,28 @@
         dibujar(t / D_PARTICULAS, 1);
       } else if (t < D_PARTICULAS + D_FUNDIDO) {
         const f = (t - D_PARTICULAS) / D_FUNDIDO;
-        if (fase === 0) { fase = 1; logoFinal.classList.add("visible"); }
+        if (fase === 0) {
+          fase = 1;
+          logoFinal.classList.add("visible");
+          if (fogonazo) fogonazo.classList.add("activo");
+        }
         dibujar(1, 1 - cubicInOut(f));
       } else if (t < D_PARTICULAS + D_FUNDIDO + D_DESTELLO) {
-        if (fase === 1) { fase = 2; ctx.clearRect(0, 0, ancho, alto); logoFinal.classList.add("destello"); }
+        if (fase === 1) {
+          fase = 2;
+          ctx.clearRect(0, 0, ancho, alto);
+          logoFinal.classList.add("destello");
+          if (lente) setTimeout(() => lente.classList.add("activo"), 500);
+        }
       } else if (t < D_PARTICULAS + D_FUNDIDO + D_DESTELLO + D_PAUSA) {
-        // pausa con el logo completo
+        // pausa con el logo completo: se escribe el eslogan letra a letra
+        if (eslogan) {
+          eslogan.classList.add("activo");
+          const n = Math.min(textoEslogan.length, Math.floor((t - D_PARTICULAS - D_FUNDIDO - D_DESTELLO) / 55));
+          if (n !== letrasEslogan) { letrasEslogan = n; eslogan.textContent = textoEslogan.slice(0, n).toUpperCase(); }
+        }
       } else {
-        if (fase === 2) { fase = 3; volarACabecera(); alTerminar(); }
+        if (fase === 2) { fase = 3; if (eslogan) eslogan.style.opacity = "0"; volarACabecera(); alTerminar(); }
         return;
       }
       programar(cuadro);

@@ -85,7 +85,7 @@ partirTitulo();
 
 function revelarHero() {
   const letras = document.querySelectorAll(".hero__titulo .letra, .hero__titulo .linea > .oro-brillo");
-  const resto = document.querySelectorAll(".hero__estado, .hero__sub, .hero__scroll, .cabecera, .hero__registro, .hero__marca");
+  const resto = document.querySelectorAll(".hero__estado, .logo3d, .hero__nombre, .hero__titular, .hero__kairos, .hero__sub, .hero__acciones--centro, .hero__scroll, .cabecera, .hero__registro, .hero__marca");
   if (!hayGSAP || reducido) {
     resto.forEach((r) => (r.style.opacity = 1));
     return;
@@ -183,6 +183,43 @@ if (carga) {
     gsap.to(cortina, { scaleY: 0, duration: 0.9, ease: "power4.inOut", delay: 0.1 });
   }
   revelarHero();
+}
+
+/* ---------- 1b. Logo 3D de la portada: capas apiladas que giran con el ratón ---------- */
+const logo3d = document.querySelector(".logo3d");
+if (logo3d) {
+  const cuerpo = document.createElement("div");
+  cuerpo.className = "logo3d__cuerpo";
+  const CAPAS = 18, PASO = 1.6; // grosor total ≈ 29 px
+  for (let i = CAPAS - 1; i >= 0; i--) {
+    const capa = document.createElement("i");
+    capa.className = "logo3d__capa" + (i === 0 ? " logo3d__capa--frente" : "");
+    const prof = -i * PASO;
+    // Las capas de atrás se oscurecen: canto de oro en sombra
+    capa.style.transform = `translateZ(${prof}px)`;
+    if (i > 0) capa.style.filter = `brightness(${0.78 - (i / CAPAS) * 0.45}) saturate(1.1)`;
+    cuerpo.appendChild(capa);
+  }
+  const sombra = document.createElement("span");
+  sombra.className = "logo3d__sombra";
+  logo3d.appendChild(sombra);
+  logo3d.appendChild(cuerpo);
+
+  if (!reducido && window.matchMedia("(hover: hover)").matches) {
+    const objetivo = { x: 0, y: 0 }, actual = { x: 0, y: 0 };
+    window.addEventListener("pointermove", (e) => {
+      objetivo.x = (e.clientX / innerWidth - 0.5) * 2;
+      objetivo.y = (e.clientY / innerHeight - 0.5) * 2;
+    }, { passive: true });
+    (function girar() {
+      actual.x += (objetivo.x - actual.x) * 0.06;
+      actual.y += (objetivo.y - actual.y) * 0.06;
+      cuerpo.style.transform = `rotateY(${(actual.x * 28).toFixed(2)}deg) rotateX(${(-actual.y * 18).toFixed(2)}deg)`;
+      requestAnimationFrame(girar);
+    })();
+  } else {
+    cuerpo.style.transform = "rotateY(-18deg) rotateX(8deg)";
+  }
 }
 
 /* ---------- 2. Transición entre páginas ---------- */
@@ -302,11 +339,15 @@ if (hayGSAP && !reducido) {
             },
           },
         });
-        paneles.forEach((p) => {
-          gsap.from(p.querySelectorAll(".servicio__numero, .servicio__titulo, .servicio__texto, .servicio__datos"), {
-            y: 70, opacity: 0, duration: 1.2, ease: "power4.out", stagger: 0.08,
-            scrollTrigger: { trigger: p, containerAnimation: tween, start: "left 70%" },
-          });
+        paneles.forEach((p, i) => {
+          const partes = p.querySelectorAll(".servicio__numero, .servicio__titulo, .servicio__texto, .servicio__datos, .hero__acciones");
+          if (i === 0) {
+            gsap.from(partes, { y: 70, opacity: 0, duration: 1.2, ease: "power4.out", stagger: 0.08,
+              scrollTrigger: { trigger: servicios, start: "top 60%" } });
+          } else {
+            gsap.from(partes, { y: 70, opacity: 0, duration: 1.2, ease: "power4.out", stagger: 0.08,
+              scrollTrigger: { trigger: p, containerAnimation: tween, start: "left 75%" } });
+          }
         });
       },
       "(max-width: 1023px)": () => {
@@ -366,8 +407,10 @@ if (hayGSAP && !reducido) {
   if (window.innerWidth >= 720) {
     gsap.utils.toArray(".pasos .paso").forEach((p, i, arr) => {
       if (i === arr.length - 1) return;
-      gsap.to(p, { scale: 0.94 - (arr.length - 1 - i) * 0.0, opacity: 0.55, transformOrigin: "top center", ease: "none",
-        scrollTrigger: { trigger: arr[i + 1], start: "top 70%", end: "top 25%", scrub: true } });
+      // El contenido se desvanece en proporción a lo que la siguiente tarjeta lo va tapando
+      gsap.to(p, { scale: 0.96, transformOrigin: "top center", ease: "none",
+        scrollTrigger: { trigger: arr[i + 1], start: "top 60%", end: "top 20%", scrub: true,
+          onUpdate: (self) => p.style.setProperty("--tapa", String(1 - self.progress * 0.7)) } });
     });
   }
 
@@ -455,7 +498,8 @@ if (hayGSAP && !reducido) {
   // Tarjetas: entran con un pequeño giro 3D escalonado
   gsap.utils.toArray(".persona").forEach((c, i) => {
     gsap.from(c, { clipPath: "inset(0 0 100% 0 round 18px)", duration: 1.2, ease: "expo.out", delay: i * 0.12,
-      scrollTrigger: { trigger: c, start: "top 88%" } });
+      scrollTrigger: { trigger: c, start: "top 88%" },
+      onComplete: () => gsap.set(c, { clearProps: "clipPath" }) }); // sin clip-path al final: si no, el giro 3D se aplana y el dorso no se ve
   });
   gsap.utils.toArray(".valor, .cifra, .testimonio, .ruta__hito, .panel__bloque").forEach((c, i) => {
     gsap.from(c, { rotateX: -10, y: 30, transformOrigin: "top center", duration: 1, ease: "power3.out", delay: (i % 4) * 0.08,
@@ -583,6 +627,7 @@ document.querySelectorAll(".panel__bloque, .persona, .valor, .cifra").forEach((c
   const esPersona = card.classList.contains("persona");
   const estado = { rx: 0, ry: 0, tx: 0, ty: 0, activo: false, raf: 0 };
   const pintar = () => {
+    if (card.classList.contains("girada")) { estado.raf = 0; estado.activo = false; return; } // girada: manda el giro, no la inclinación
     estado.rx += (estado.tx - estado.rx) * 0.1;
     estado.ry += (estado.ty - estado.ry) * 0.1;
     card.style.transform = `perspective(900px) rotateX(${estado.rx.toFixed(2)}deg) rotateY(${estado.ry.toFixed(2)}deg)`;
@@ -598,7 +643,7 @@ document.querySelectorAll(".panel__bloque, .persona, .valor, .cifra").forEach((c
     const x = e.clientX - r.left, y = e.clientY - r.top;
     card.style.setProperty("--x", x + "px");
     card.style.setProperty("--y", y + "px");
-    if (esPersona && !reducido) {
+    if (esPersona && !reducido && !card.classList.contains("girada")) {
       estado.activo = true;
       estado.tx = ((y / r.height) - 0.5) * -7;
       estado.ty = ((x / r.width) - 0.5) * 9;
@@ -657,6 +702,22 @@ if (botonSimular) {
     }, 7000);
   });
 }
+
+/* ---------- 7a2. Tarjetas de equipo: giro para ver el expediente ---------- */
+document.querySelectorAll(".persona--giro").forEach((card) => {
+  let girada = false;
+  const aplicar = () => {
+    card.classList.toggle("girada", girada);
+    card.style.transition = "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
+    card.style.transform = girada ? "perspective(1200px) rotateY(180deg)" : "";
+  };
+  card.addEventListener("click", (e) => { if (e.target.closest("a")) return; girada = !girada; aplicar(); });
+  card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); girada = !girada; aplicar(); } });
+  // Se vuelve a girar con otro clic, con Escape o al pulsar fuera (no al salir el ratón: al rotar cambia el área y saltaría)
+  document.addEventListener("pointerdown", (e) => { if (girada && !card.contains(e.target)) { girada = false; aplicar(); } });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape" && girada) { girada = false; aplicar(); } });
+  card.dataset.giro = "1";
+});
 
 /* ---------- 7b. Menú móvil y botón arriba ---------- */
 const botonMenu = document.querySelector(".menu-boton");
@@ -717,7 +778,10 @@ document.querySelectorAll(".arrastrable").forEach((pista) => {
   if (!etiqueta) { etiqueta = document.createElement("span"); etiqueta.className = "cursor__texto"; document.body.appendChild(etiqueta); }
   let bajando = false, x0 = 0, s0 = 0, movido = false;
   pista.addEventListener("pointerenter", () => { etiqueta.textContent = pista.dataset.arrastra || "Arrastra"; document.body.classList.add("cursor--arrastra"); });
-  pista.addEventListener("pointerleave", () => { document.body.classList.remove("cursor--arrastra"); bajando = false; pista.classList.remove("arrastrando"); });
+  const soltar = () => { document.body.classList.remove("cursor--arrastra"); bajando = false; pista.classList.remove("arrastrando"); };
+  pista.addEventListener("pointerleave", soltar);
+  window.addEventListener("scroll", () => { if (document.body.classList.contains("cursor--arrastra")) soltar(); }, { passive: true });
+  document.addEventListener("pointermove", (e) => { if (document.body.classList.contains("cursor--arrastra") && !e.target.closest(".arrastrable")) soltar(); }, { passive: true });
   pista.addEventListener("pointermove", (e) => {
     etiqueta.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%) scale(1)`;
     if (!bajando) return;

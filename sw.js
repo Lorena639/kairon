@@ -3,11 +3,11 @@
    la app instalada abre al instante y funciona aunque no haya conexión.
    Estrategia: primero red (para ver cambios), y si falla, caché. */
 
-const VERSION = "kairon-v1";
+const VERSION = "kairon-v5";
 const ARCHIVOS = [
   "./", "./index.html", "./sobre-mi.html", "./informe.html",
   "./ca/index.html", "./ca/sobre-mi.html", "./ca/informe.html",
-  "./css/styles.css", "./js/main.js", "./js/escena.js",
+  "./css/styles.css", "./js/main.js", "./js/escena.js", "./js/intro.js", "./js/polvo.js", "./js/visuales.js",
   "./js/vendor/three.min.js", "./js/vendor/gsap.min.js", "./js/vendor/ScrollTrigger.min.js", "./js/vendor/lenis.min.js",
   "./manifest.webmanifest", "./img/favicon.ico", "./img/apple-touch-icon.png",
   "./img/app-icon-192.png", "./img/app-icon-512.png", "./img/kairon-emblema-192.png",
@@ -28,7 +28,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, { cache: "no-cache" }) // siempre revalida con el servidor: los cambios se ven al recargar
       .then((resp) => {
         if (resp.ok && new URL(e.request.url).origin === location.origin) {
           const copia = resp.clone();

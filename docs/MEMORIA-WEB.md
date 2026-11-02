@@ -26,7 +26,7 @@ KAIRON es una empresa ficticia de ciberseguridad que ofrece un SOC (centro de op
 ## 3. Identidad visual
 
 - **Colores** (hoja de marca): dorado `#D4AF7A` y dorado oscuro `#8C6B3F` (confianza, lo clásico), azul oscuro `#0B0F14` y marfil `#F8F5EE`; cian `#35C6D6` como acento tecnológico y de alertas.
-- **Tipografía**: Space Grotesk para títulos grandes, JetBrains Mono para datos y etiquetas (estética de consola de un SOC).
+- **Tipografía**: Cinzel, la misma serif del logo, en todos los títulos y en el nombre KAIRON de la portada (coherencia con la marca); Space Grotesk para texto corrido y JetBrains Mono para datos y etiquetas (estética de consola de un SOC).
 - **Logo**: K alada sobre una esfera de brújula. Versiones completa, horizontal, emblema, sello y app icon en `img/`.
 
 ## 4. Estructura y tecnologías
@@ -38,6 +38,7 @@ KAIRON es una empresa ficticia de ciberseguridad que ofrece un SOC (centro de op
 ## 5. Experiencia e interacción
 
 - Preloader con contador e intro del logo en JavaScript puro (canvas 2D): miles de partículas doradas, cuyas posiciones salen de leer los píxeles del PNG, convergen hasta formar el logo; se funde con el logo con acabado de oro metálico, pasa un destello y el logo vuela hasta la cabecera mientras se abren las cortinas. Pasos del incidente como tarjetas apiladas con `position: sticky`; cursor personalizado; scroll suave; cabecera que se oculta al bajar.
+- Portada: emblema del logo en 3D (dieciocho capas apiladas con `translateZ`, acabado de oro metálico y canto en sombra) que gira siguiendo al ratón, sobre el nombre KAIRON con degradado de oro y el lema.
 - Escena 3D: globo de nodos (equipos vigilados), red, barrido de radar, paquetes de datos, polvo con parallax; nodos que se vuelven rojos al detectarse una amenaza. Modo ligero automático si el equipo baja de 30 fps; radar 2D de reserva sin WebGL.
 - Servicios con scroll horizontal fijado; panel "SOC en vivo" con gráfica, contador y alertas simuladas; sección "Del ataque al informe" con botón que simula un ataque de principio a fin.
 - Secciones claras color marfil (El método, testimonios) con relieve topográfico generado por código (curvas de nivel sobre ruido, `tools/topografia.py`), alternando con los bloques oscuros como en las webs de referencia; escena 3D fija cuya cámara se aleja con el scroll; palabras gigantes de fondo con parallax; cortinillas diagonales de entrada; contadores tipo odómetro; polvo de oro que sigue al cursor.

@@ -18,6 +18,7 @@ KAIRON-TFG/
 │   └── styles.css      Estilos (variables de marca en :root, animaciones, media queries)
 ├── js/
 │   ├── main.js         Preloader, cortina, cursor, menú móvil, botones magnéticos, scroll suave, animaciones, panel SOC simulado y formulario
+│   ├── visuales.js     Visuales por sección en canvas: escudo de contención, informe que se escribe, mapa de amenazas
 │   ├── polvo.js        Polvo de oro que sigue al cursor (JavaScript puro)
 │   ├── intro.js        Intro del logo en JavaScript puro: partículas doradas que forman el logo, acabado metálico, destello y vuelo a la cabecera
 │   ├── escena.js       Escena 3D de la portada (Three.js) con radar 2D de reserva si no hay WebGL
@@ -42,7 +43,7 @@ KAIRON-TFG/
   - **Three.js** (0.160): escena 3D de la portada, un globo de nodos con barrido de radar.
   - **GSAP + ScrollTrigger** (3.12): animaciones de entrada y ligadas al scroll.
   - **Lenis** (1.1): scroll suave con inercia.
-- Tipografía Space Grotesk y JetBrains Mono (Google Fonts).
+- Tipografía: Cinzel (la serif del logo) para todos los títulos y el nombre en la portada, Space Grotesk para texto y JetBrains Mono para datos (Google Fonts).
 - Instalable como app (manifest + iconos + service worker con caché; una vez visitada, abre sin conexión). Botón "Instalar app" en el pie cuando el navegador lo permite y aviso de "sin conexión".
 - Disponible en castellano y catalán (`ca/`), con los textos generados por JavaScript también traducidos.
 
