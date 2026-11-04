@@ -3,130 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antonia Lorena Cracana · SOC y sistemas</title>
-  <meta name="description" content="Portfolio de Antonia Lorena Cracana: técnica SOC en prácticas y estudiante de SMX. Gestión de incidencias, Wazuh, IRIS y Grafana.">
-  <meta name="theme-color" content="#080d12">
+  <title>Antonia Lorena Cracana · Expediente</title>
+  <meta name="description" content="Portfolio de Antonia Lorena Cracana: técnica SOC en prácticas y estudiante de SMX, con interés en ciberseguridad y análisis forense.">
+  <meta name="theme-color" content="#f1eadb">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" href="../img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="portfolio.css?v=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
+  <link rel="stylesheet" href="portfolio.css?v=2">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
-  <header class="barra mono">
-    <a href="#contenido"><span class="punto" aria-hidden="true"></span>ALC // PORTFOLIO</a>
+
+  <header class="cinta maq">
+    <a href="#contenido">Expediente ALC</a>
     <nav aria-label="Secciones">
-      <a href="#competencias">Competencias</a>
-      <a href="#trayectoria">Trayectoria</a>
-      <a href="#proyectos">Proyectos</a>
+      <a href="#pruebas">Pruebas</a>
+      <a href="#custodia">Custodia</a>
+      <a href="#sello">Sello</a>
+      <a href="#casos">Casos</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </header>
 
   <main id="contenido">
     <section class="portada">
-      <p class="mono acento">&gt; whoami</p>
-      <h1>Antonia<br>Lorena<br><span>Cracana</span></h1>
-      <p class="portada__rol">De atender personas a responder incidentes. Hice 114 días de prácticas en un SOC y estudio 2.º de Sistemas Microinformáticos y Redes.</p>
-      <p class="estado mono"><span class="punto" aria-hidden="true"></span>Disponible · Sant Feliu de Llobregat (Barcelona)</p>
-      <div class="acciones">
-        <a class="boton boton--lleno" href="#contacto">Hablemos</a>
-        <a class="boton" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
-      </div>
+      <svg class="huella" id="huella" viewBox="-30 -40 460 640" aria-hidden="true"></svg>
+      <p class="maq portada__ref">Ref. ALC-2026 · Sant Feliu de Llobregat</p>
+      <h1>Antonia<br><em>Lorena</em><br>Cracana</h1>
+      <p class="portada__texto">Sigo el rastro de lo que pasa en un sistema. Hice 114 días de prácticas en un SOC y quiero especializarme en análisis forense.</p>
+      <a class="enlace" href="#pruebas">Abrir el expediente ↓</a>
+      <span class="sello-disp maq" aria-hidden="true">Disponible</span>
+    </section>
 
-      <div class="consola" aria-label="Consola interactiva">
-        <div class="consola__barra mono"><i></i><i></i><i></i><span>lorena@soc: ~</span></div>
-        <div class="consola__salida mono" id="salida" role="log" aria-live="polite"></div>
-        <form class="consola__entrada mono" id="consola">
-          <label for="orden">$</label>
-          <input id="orden" autocomplete="off" spellcheck="false" placeholder="escribe help">
-        </form>
-        <div class="consola__atajos" aria-label="Órdenes rápidas">
-          <button type="button" class="mono" data-orden="perfil">perfil</button>
-          <button type="button" class="mono" data-orden="herramientas">herramientas</button>
-          <button type="button" class="mono" data-orden="idiomas">idiomas</button>
-          <button type="button" class="mono" data-orden="contacto">contacto</button>
+    <section class="ficha" aria-label="Ficha">
+      <dl>
+        <div><dt class="maq">Formación</dt><dd>2.º de SMX en Digitech FP, hasta junio de 2027</dd></div>
+        <div><dt class="maq">Experiencia</dt><dd>Técnica SOC en prácticas, Apolo Cybersecurity</dd></div>
+        <div><dt class="maq">Herramientas</dt><dd>Wazuh, IRIS, Grafana, Windows Server, Linux</dd></div>
+        <div><dt class="maq">Idiomas</dt><dd>Rumano nativo, español avanzado, catalán C1, inglés B2</dd></div>
+      </dl>
+    </section>
+
+    <section id="pruebas" class="pruebas" aria-labelledby="t-pruebas">
+      <div class="cabeza">
+        <p class="maq">Sección 01</p>
+        <h2 id="t-pruebas">Pruebas <em>aportadas</em></h2>
+        <p class="cabeza__nota">Cada competencia, con su origen. <span class="solo-raton">Puedes mover las tarjetas.</span></p>
+        <div class="filtros" role="group" aria-label="Filtrar por origen">
+          <button type="button" class="maq activo" data-f="todas" aria-pressed="true">Todas</button>
+          <button type="button" class="maq" data-f="practicas" aria-pressed="false">Prácticas</button>
+          <button type="button" class="maq" data-f="ciclo" aria-pressed="false">Ciclo</button>
+          <button type="button" class="maq" data-f="curso" aria-pressed="false">En curso</button>
         </div>
       </div>
-    </section>
-
-    <section class="flujo" aria-labelledby="t-flujo">
-      <p class="mono acento">Cómo trabajaba en el SOC</p>
-      <h2 id="t-flujo">Una incidencia, de principio a fin</h2>
-      <ol class="flujo__pasos">
-        <li class="aparece"><span class="mono">01</span><h3>Recibir</h3><p>Revisar cada día las alertas de Wazuh.</p></li>
-        <li class="aparece"><span class="mono">02</span><h3>Analizar</h3><p>Distinguir incidentes reales de falsos positivos.</p></li>
-        <li class="aparece"><span class="mono">03</span><h3>Priorizar</h3><p>Decidir la prioridad y hacer el seguimiento.</p></li>
-        <li class="aparece"><span class="mono">04</span><h3>Escalar</h3><p>Pasarla al nivel superior y seguirla hasta el cierre.</p></li>
-        <li class="aparece"><span class="mono">05</span><h3>Documentar</h3><p>Cerrar el caso en IRIS y redactar el informe.</p></li>
-      </ol>
-    </section>
-
-    <section id="competencias" aria-labelledby="t-comp">
-      <p class="mono acento">Qué sé hacer · cómo lo demuestro</p>
-      <h2 id="t-comp">Competencias</h2>
-      <div class="filtros" role="group" aria-label="Filtrar por origen">
-        <button type="button" class="mono activo" data-f="todas" aria-pressed="true">Todas</button>
-        <button type="button" class="mono" data-f="practicas" aria-pressed="false">Prácticas</button>
-        <button type="button" class="mono" data-f="ciclo" aria-pressed="false">Ciclo</button>
-        <button type="button" class="mono" data-f="curso" aria-pressed="false">En curso</button>
-      </div>
-      <ul class="comp" id="lista-comp">
-        <li data-o="practicas"><span class="mono sello">Prácticas</span><h3>Gestión de incidencias</h3><p>Análisis, prioridad, escalado y seguimiento hasta el cierre.</p><small>En el SOC de Apolo Cybersecurity</small></li>
-        <li data-o="practicas"><span class="mono sello">Prácticas</span><h3>Monitorización</h3><p>Revisión de alertas y descarte de falsos positivos.</p><small>Wazuh y Grafana</small></li>
-        <li data-o="practicas"><span class="mono sello">Prácticas</span><h3>Ticketing y documentación</h3><p>Abrir, documentar y cerrar casos siguiendo procedimientos.</p><small>Casos en IRIS e informes para el equipo</small></li>
-        <li data-o="ciclo"><span class="mono sello">Ciclo</span><h3>Windows y Windows Server</h3><p>Equipos, usuarios, grupos y permisos en el servidor.</p><small>Ahora aprendiendo DHCP</small></li>
-        <li data-o="ciclo"><span class="mono sello">Ciclo</span><h3>Linux</h3><p>Terminal, usuarios y permisos, paquetes y scripts sencillos en Bash.</p><small>Prácticas de clase en SMX</small></li>
-        <li data-o="ciclo"><span class="mono sello">Ciclo</span><h3>Redes</h3><p>Red física con cableado y direccionamiento IP.</p><small>Prácticas de redes locales</small></li>
-        <li data-o="curso"><span class="mono sello">En curso</span><h3>Microsoft 365 y Power Platform</h3><p>Empezando con SharePoint, Power BI y Power Automate.</p><small>Tutorial introductorio de Power BI</small></li>
-        <li data-o="curso"><span class="mono sello">En curso</span><h3>TryHackMe</h3><p>Laboratorios de seguridad por mi cuenta.</p><small>Aprendizaje continuo</small></li>
+      <ul class="mesa" id="mesa">
+        <li class="prueba" data-o="practicas"><span class="maq">E-01 · Prácticas</span><h3>Gestión de incidencias</h3><p>Análisis, prioridad, escalado y seguimiento hasta el cierre, cada día en el SOC.</p></li>
+        <li class="prueba" data-o="practicas"><span class="maq">E-02 · Prácticas</span><h3>Monitorización</h3><p>Alertas en Wazuh, datos en Grafana y descarte de falsos positivos.</p></li>
+        <li class="prueba" data-o="practicas"><span class="maq">E-03 · Prácticas</span><h3>Ticketing e informes</h3><p>Casos en IRIS según procedimiento e informes para el equipo.</p></li>
+        <li class="prueba" data-o="ciclo"><span class="maq">E-04 · Ciclo</span><h3>Windows Server</h3><p>Equipos, usuarios, grupos y permisos. Ahora aprendiendo DHCP.</p></li>
+        <li class="prueba" data-o="ciclo"><span class="maq">E-05 · Ciclo</span><h3>Linux y redes</h3><p>Terminal, permisos, Bash sencillo, cableado y direccionamiento IP.</p></li>
+        <li class="prueba" data-o="curso"><span class="maq">E-06 · En curso</span><h3>TryHackMe</h3><p>Laboratorios de seguridad por mi cuenta.</p></li>
+        <li class="prueba" data-o="curso"><span class="maq">E-07 · En curso</span><h3>Microsoft 365 y Power BI</h3><p>Empezando con Power BI y Power Automate.</p></li>
       </ul>
     </section>
 
-    <section id="trayectoria" aria-labelledby="t-tray">
-      <p class="mono acento">Registro</p>
-      <h2 id="t-tray">Trayectoria</h2>
-      <ol class="linea">
-        <li class="aparece"><time class="mono">2025 → jun. 2027</time><h3>CFGM Sistemas Microinformáticos y Redes</h3><p>Digitech FP, Barcelona. 2.º curso.</p></li>
-        <li class="aparece destacado"><time class="mono">oct. 2025 → feb. 2026</time><h3>Técnica SOC en prácticas · Apolo Cybersecurity</h3><p>114 días de prácticas del ciclo: alertas en Wazuh, paneles en Grafana, casos en IRIS, apoyo al equipo en Threat Hunting.</p></li>
-        <li class="aparece"><time class="mono">2020 → 2025</time><h3>Atención al cliente</h3><p>Hostelería, logística y cuidado de personas. De ahí vienen la comunicación y el trabajo bajo presión.</p></li>
+    <section id="custodia" class="custodia" aria-labelledby="t-custodia">
+      <div class="cabeza">
+        <p class="maq">Sección 02</p>
+        <h2 id="t-custodia">Cadena de <em>custodia</em></h2>
+      </div>
+      <ol class="cadena">
+        <li class="aparece"><time class="maq">2020 → 2025</time><h3>Atención al cliente</h3><p>Hostelería, logística y cuidado de personas. Aprendí a tratar con gente y a trabajar bajo presión.</p></li>
+        <li class="aparece"><time class="maq">2025 → jun. 2027</time><h3>CFGM SMX</h3><p>Digitech FP, Barcelona. El paso a la informática.</p></li>
+        <li class="aparece clave"><time class="maq">oct. 2025 → feb. 2026</time><h3>SOC, Apolo Cybersecurity</h3><p>114 días gestionando incidencias de principio a fin y ayudando al equipo en Threat Hunting.</p></li>
+        <li class="aparece"><time class="maq">Ahora</time><h3>Rumbo al forense</h3><p>KAIRON, mi TFG, y laboratorios por mi cuenta.</p></li>
       </ol>
     </section>
 
-    <section id="proyectos" aria-labelledby="t-proy">
-      <p class="mono acento">Hecho por mí</p>
-      <h2 id="t-proy">Proyectos</h2>
-      <div class="proyectos">
-        <a class="proyecto" href="../index.html">
-          <span class="mono">TFG · con João Daniel</span>
-          <h3>KAIRON</h3>
-          <p>Empresa ficticia de SOC gestionado para pymes: web, identidad y plan de proyecto.</p>
-          <span class="mono acento">Ver la web →</span>
-        </a>
-        <a class="proyecto" href="https://github.com/Lorena639/mochila-smx-app" target="_blank" rel="noopener">
-          <span class="mono">Proyecto personal</span>
-          <h3>Mochila SMX</h3>
-          <p>Mi web en GitHub Pages para organizar trabajos y apuntes del ciclo.</p>
-          <span class="mono acento">Ver el código →</span>
-        </a>
+    <section id="sello" class="sello" aria-labelledby="t-sello">
+      <div class="cabeza">
+        <p class="maq">Sección 03</p>
+        <h2 id="t-sello">Si cambia una letra, <em>se nota</em></h2>
+        <p class="cabeza__nota">Así se demuestra que una prueba no se ha tocado: su huella SHA-256. Escribe algo y cambia una sola letra. Se calcula de verdad en tu navegador y no se envía nada.</p>
       </div>
+      <label class="maq" for="texto-hash">Prueba</label>
+      <input id="texto-hash" value="Cadena de custodia" autocomplete="off" spellcheck="false">
+      <p class="maq sello__etq">Huella SHA-256</p>
+      <output class="maq sello__hash" id="hash" for="texto-hash">—</output>
     </section>
 
-    <section id="contacto" class="cierre" aria-labelledby="t-cont">
-      <p class="mono acento">&gt; contacto</p>
-      <h2 id="t-cont">¿Tienes una incidencia para mí?</h2>
-      <p>Busco seguir aprendiendo en un equipo de sistemas o seguridad.</p>
-      <div class="acciones">
-        <a class="boton boton--lleno" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
-        <a class="boton" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
+    <section id="casos" class="casos" aria-labelledby="t-casos">
+      <div class="cabeza">
+        <p class="maq">Sección 04</p>
+        <h2 id="t-casos">Casos <em>abiertos</em></h2>
       </div>
+      <a class="caso aparece" href="../index.html">
+        <span class="maq">TFG · con João Daniel</span>
+        <strong>KAIRON</strong>
+        <span class="caso__txt">Empresa ficticia de SOC gestionado para pymes: web, identidad y plan de proyecto.</span>
+      </a>
+      <a class="caso aparece" href="https://github.com/Lorena639/mochila-smx-app" target="_blank" rel="noopener">
+        <span class="maq">Proyecto personal</span>
+        <strong>Mochila SMX</strong>
+        <span class="caso__txt">Mi web para organizar trabajos y apuntes del ciclo.</span>
+      </a>
+    </section>
+
+    <section id="contacto" class="contacto" aria-labelledby="t-contacto">
+      <p class="maq">Fin del expediente</p>
+      <h2 id="t-contacto">¿Abrimos un <em>caso</em>?</h2>
+      <a class="correo" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
+      <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub ↗</a>
     </section>
   </main>
 
-  <footer class="pie mono">Antonia Lorena Cracana · Barcelona</footer>
-  <script src="portfolio.js?v=1" defer></script>
+  <script src="portfolio.js?v=2" defer></script>
 </body>
 </html>

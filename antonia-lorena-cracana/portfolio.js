@@ -1,56 +1,74 @@
-/* Portfolio: consola de órdenes, filtro de competencias y aparición al hacer scroll */
+/* Portfolio: huella dibujada, pruebas que se mueven, filtro, SHA-256 real y aparición al hacer scroll */
 document.documentElement.classList.add("js");
 
 const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const NS = "http://www.w3.org/2000/svg";
 
-/* ---------- Consola ---------- */
-const salida = document.getElementById("salida");
-const formulario = document.getElementById("consola");
-const entrada = document.getElementById("orden");
-
-const ORDENES = {
-  help: "Órdenes: perfil · herramientas · idiomas · formacion · contacto · clear",
-  perfil: "Técnica SOC en prácticas (114 días, Apolo Cybersecurity).\nEstudiante de 2.º de SMX en Digitech FP.\nMe interesan la ciberseguridad y el análisis forense.",
-  herramientas: "SOC:      Wazuh · IRIS · Grafana\nSistemas: Windows Server · Linux · Bash\nOficina:  MS Office · empezando con Power BI",
-  idiomas: "Rumano   nativo\nEspañol  avanzado\nCatalán  C1\nInglés   B2",
-  formacion: "CFGM SMX · Digitech FP · hasta jun. 2027\nTryHackMe · en curso\nCurso de OT",
-  contacto: "antoniacracana@gmail.com\ngithub.com/Lorena639",
-};
-
-function escribir(texto, clase) {
-  const linea = document.createElement("div");
-  if (clase) linea.className = clase;
-  linea.textContent = texto;
-  salida.appendChild(linea);
-  salida.scrollTop = salida.scrollHeight;
+/* ---------- Huella dactilar: arcos que se dibujan al cargar ---------- */
+const huella = document.getElementById("huella");
+for (let i = 0; i < 17; i++) {
+  const r = 18 + i * 13;
+  const hueco = 0.28 + ((i * 37) % 11) / 40;           // cada línea se abre por un sitio distinto
+  const ini = Math.PI * (1.02 + hueco * 0.2);
+  const fin = Math.PI * (2.0 + (i % 3 === 0 ? 0.32 : 0.62)) - hueco * 0.3;
+  const punto = (a) => `${(200 + Math.cos(a) * r).toFixed(1)} ${(270 + Math.sin(a) * r * 1.22).toFixed(1)}`;
+  const arco = document.createElementNS(NS, "path");
+  arco.setAttribute("d", `M ${punto(ini)} A ${r} ${(r * 1.22).toFixed(1)} 0 ${fin - ini > Math.PI ? 1 : 0} 1 ${punto(fin)}`);
+  huella.appendChild(arco);
+  if (!reducido) {
+    const largo = arco.getTotalLength();
+    arco.style.strokeDasharray = largo;
+    arco.animate([{ strokeDashoffset: largo }, { strokeDashoffset: 0 }], { duration: 1100, delay: i * 45, easing: "ease-out", fill: "backwards" });
+  }
 }
 
-function ejecutar(bruta) {
-  const orden = bruta.trim().toLowerCase();
-  if (!orden) return;
-  escribir("$ " + orden, "orden");
-  if (orden === "clear") { salida.textContent = ""; return; }
-  if (orden === "sudo") { escribir("Buen intento. Este incidente queda registrado."); return; }
-  escribir(Object.hasOwn(ORDENES, orden) ? ORDENES[orden] : `Orden no encontrada: ${orden}. Prueba con help.`);
-}
+/* ---------- Pruebas: inclinación, filtro y arrastre con ratón ---------- */
+const pruebas = document.querySelectorAll(".prueba");
+pruebas.forEach((p, i) => p.style.setProperty("--giro", `${[-1.6, 1.2, -0.7, 1.7, -1.1, 0.8, -1.4][i % 7]}deg`));
 
-formulario.addEventListener("submit", (e) => {
-  e.preventDefault();
-  ejecutar(entrada.value);
-  entrada.value = "";
-});
-document.querySelectorAll("[data-orden]").forEach((b) => b.addEventListener("click", () => ejecutar(b.dataset.orden)));
-
-ejecutar("perfil");
-escribir("\nEscribe help para ver más.");
-
-/* ---------- Filtro de competencias ---------- */
 const filtros = document.querySelectorAll(".filtros button");
-const competencias = document.querySelectorAll("#lista-comp li");
 filtros.forEach((b) => b.addEventListener("click", () => {
   filtros.forEach((o) => { o.classList.toggle("activo", o === b); o.setAttribute("aria-pressed", String(o === b)); });
-  competencias.forEach((c) => { c.hidden = b.dataset.f !== "todas" && c.dataset.o !== b.dataset.f; });
+  pruebas.forEach((p) => {
+    p.hidden = b.dataset.f !== "todas" && p.dataset.o !== b.dataset.f;
+    p.style.removeProperty("--x");
+    p.style.removeProperty("--y");
+  });
 }));
+
+if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  pruebas.forEach((p) => {
+    let x = 0, y = 0, ix = 0, iy = 0;
+    p.addEventListener("pointerdown", (e) => {
+      x = parseFloat(p.style.getPropertyValue("--x")) || 0;
+      y = parseFloat(p.style.getPropertyValue("--y")) || 0;
+      ix = e.clientX; iy = e.clientY;
+      p.setPointerCapture(e.pointerId);
+      p.classList.add("moviendo");
+    });
+    p.addEventListener("pointermove", (e) => {
+      if (!p.classList.contains("moviendo")) return;
+      p.style.setProperty("--x", `${x + e.clientX - ix}px`);
+      p.style.setProperty("--y", `${y + e.clientY - iy}px`);
+    });
+    const soltar = () => p.classList.remove("moviendo");
+    p.addEventListener("pointerup", soltar);
+    p.addEventListener("pointercancel", soltar);
+  });
+}
+
+/* ---------- Sello: SHA-256 real con la API del navegador ---------- */
+const entradaHash = document.getElementById("texto-hash");
+const salidaHash = document.getElementById("hash");
+async function sellar() {
+  if (!crypto.subtle) { salidaHash.textContent = "Tu navegador no permite calcularla aquí."; return; }
+  const valor = entradaHash.value;
+  const datos = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(valor));
+  if (valor !== entradaHash.value) return; // ya se ha escrito otra cosa
+  salidaHash.textContent = [...new Uint8Array(datos)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+entradaHash.addEventListener("input", sellar);
+sellar();
 
 /* ---------- Aparición al entrar en pantalla ---------- */
 const aparecen = document.querySelectorAll(".aparece");
@@ -60,5 +78,5 @@ if (reducido || !("IntersectionObserver" in window)) {
   const vigia = new IntersectionObserver((entradas) => {
     entradas.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); vigia.unobserve(e.target); } });
   }, { threshold: 0.15 });
-  aparecen.forEach((a, i) => { a.style.setProperty("--i", String(i % 5)); vigia.observe(a); });
+  aparecen.forEach((a) => vigia.observe(a));
 }
