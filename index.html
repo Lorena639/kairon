@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261104d">
+  <link rel="stylesheet" href="css/styles.css?v=20261104e">
 </head>
 <body>
 
@@ -272,8 +272,30 @@
           </div>
 
           <div class="panel__bloque panel__bloque--ancho">
-            <div class="panel__cabecera"><span class="mono">Últimas alertas</span><span class="panel__punto"></span></div>
-            <ul class="panel__alertas" aria-live="polite"></ul>
+            <div class="panel__cabecera"><span class="mono">Estado de los sistemas</span><span class="panel__sim mono">Simulación</span></div>
+            <ul class="panel__estados">
+              <li data-sistema="agentes"><span>Agentes conectados</span><b>42 / 42</b></li>
+              <li data-sistema="reglas"><span>Reglas de detección</span><b>Operativo</b></li>
+              <li data-sistema="cortafuegos"><span>Cortafuegos</span><b>Operativo</b></li>
+              <li data-sistema="copias"><span>Copias de seguridad</span><b>Operativo</b></li>
+            </ul>
+          </div>
+
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Últimas alertas</span><span class="panel__sim mono">Simulación</span></div>
+            <div class="panel__barra-filtros">
+              <div class="panel__filtros" role="group" aria-label="Últimas alertas">
+                <button type="button" class="filtro activo" data-filtro="todas" aria-pressed="true">Todas <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="alerta" aria-pressed="false">Alertas <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="aviso" aria-pressed="false">Avisos <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="ok" aria-pressed="false">OK <b>0</b></button>
+              </div>
+              <button type="button" class="filtro panel__pausa" aria-pressed="false">Pausar</button>
+            </div>
+            <div class="panel__consola">
+              <ul class="panel__alertas" data-filtro="todas" data-lenis-prevent></ul>
+              <aside class="panel__detalle" aria-live="polite"><p class="panel__nota">Selecciona una alerta para ver su detalle.</p></aside>
+            </div>
           </div>
         </div>
       </div>
@@ -573,13 +595,13 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.12.5 y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261104d" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261104d" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261104d" defer></script>
-  <script src="js/intro.js?v=20261104d" defer></script>
-  <script src="js/escena.js?v=20261104d" defer></script>
-  <script src="js/visuales.js?v=20261104d" defer></script>
-  <script src="js/polvo.js?v=20261104d" defer></script>
-  <script src="js/main.js?v=20261104d" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261104e" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261104e" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261104e" defer></script>
+  <script src="js/intro.js?v=20261104e" defer></script>
+  <script src="js/escena.js?v=20261104e" defer></script>
+  <script src="js/visuales.js?v=20261104e" defer></script>
+  <script src="js/polvo.js?v=20261104e" defer></script>
+  <script src="js/main.js?v=20261104e" defer></script>
 </body>
 </html>

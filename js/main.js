@@ -21,6 +21,12 @@ const TXT = CA ? {
     ["ok", "Hash SHA-256 registrat · cas 0427"], ["alerta", "Persistència detectada · tasca programada"], ["ok", "Amenaça continguda en 11 min"],
   ],
   etiquetas: { ok: "OK", aviso: "AVÍS", alerta: "ALERTA" },
+  detalle: {
+    hora: "Hora", estado: "Estat", siguiente: "Pas següent",
+    alerta: { estado: "Escalada a l'analista", siguiente: "Aïllar l'equip, conservar proves i obrir un cas." },
+    aviso: { estado: "En revisió", siguiente: "Comprovar si és legítim i ajustar la regla si cal." },
+    ok: { estado: "Tancada", siguiente: "Cap acció: queda registrada a l'historial." },
+  },
   guion: [
     [0, "alerta", "Executable sense signatura · WS-03 · phishing"], [900, "alerta", "Persistència creada · tasca programada"],
     [1800, "alerta", "Connexió a C2 · 198.51.100.7:443"], [2800, "aviso", "WS-03 aïllat de la xarxa"],
@@ -38,6 +44,12 @@ const TXT = CA ? {
     ["ok", "Hash SHA-256 registrado · caso 0427"], ["alerta", "Persistencia detectada · tarea programada"], ["ok", "Amenaza contenida en 11 min"],
   ],
   etiquetas: { ok: "OK", aviso: "AVISO", alerta: "ALERTA" },
+  detalle: {
+    hora: "Hora", estado: "Estado", siguiente: "Siguiente paso",
+    alerta: { estado: "Escalada al analista", siguiente: "Aislar el equipo, conservar pruebas y abrir un caso." },
+    aviso: { estado: "En revisión", siguiente: "Comprobar si es legítimo y ajustar la regla si hace falta." },
+    ok: { estado: "Cerrada", siguiente: "Ninguna acción: queda registrada en el historial." },
+  },
   guion: [
     [0, "alerta", "Ejecutable sin firma · WS-03 · phishing"], [900, "alerta", "Persistencia creada · tarea programada"],
     [1800, "alerta", "Conexión a C2 · 198.51.100.7:443"], [2800, "aviso", "WS-03 aislado de la red"],
@@ -515,12 +527,60 @@ alimentar(document.querySelector(".hero__registro ul"), 6, ([tipo, msg], desfase
   li.innerHTML = `<time>${hora(desfase)}</time><span class="${tipo}">${msg}</span>`;
   return li;
 });
-alimentar(document.querySelector(".panel__alertas"), 7, ([tipo, msg], desfase) => {
+// Consola de alertas: la más nueva arriba, con filtros, pausa y detalle al pulsar
+const consola = document.querySelector(".panel__alertas");
+const detalle = document.querySelector(".panel__detalle");
+const botonesFiltro = document.querySelectorAll(".panel__filtros .filtro");
+const botonPausa = document.querySelector(".panel__pausa");
+let consolaPausada = false;
+
+function contarAlertas() {
+  botonesFiltro.forEach((b) => {
+    const f = b.dataset.filtro;
+    b.querySelector("b").textContent = f === "todas" ? consola.children.length : consola.querySelectorAll(`[data-tipo="${f}"]`).length;
+  });
+}
+function mostrarDetalle(fila, tipo, msg, cuando) {
+  consola.querySelectorAll(".elegida").forEach((e) => e.classList.remove("elegida"));
+  fila.classList.add("elegida");
+  const info = TXT.detalle[tipo];
+  detalle.innerHTML = `<span class="etiqueta etiqueta--${tipo}">${TXT.etiquetas[tipo]}</span><h3>${msg}</h3><dl><dt>${TXT.detalle.hora}</dt><dd>${cuando}</dd><dt>${TXT.detalle.estado}</dt><dd>${info.estado}</dd><dt>${TXT.detalle.siguiente}</dt><dd>${info.siguiente}</dd></dl>`;
+}
+function agregarAlerta(tipo, msg, desfase = 0) {
+  if (!consola) return;
+  const cuando = hora(desfase);
   const li = document.createElement("li");
-  const etiqueta = TXT.etiquetas[tipo];
-  li.innerHTML = `<time>${hora(desfase)}</time><span>${msg}</span><span class="etiqueta etiqueta--${tipo}">${etiqueta}</span>`;
-  return li;
-});
+  li.dataset.tipo = tipo;
+  li.innerHTML = `<button type="button"><time>${cuando}</time><span>${msg}</span><span class="etiqueta etiqueta--${tipo}">${TXT.etiquetas[tipo]}</span></button>`;
+  li.firstChild.addEventListener("click", () => mostrarDetalle(li, tipo, msg, cuando));
+  consola.prepend(li);
+  while (consola.children.length > 30) consola.removeChild(consola.lastChild);
+  contarAlertas();
+}
+if (consola) {
+  botonesFiltro.forEach((b) => b.addEventListener("click", () => {
+    consola.dataset.filtro = b.dataset.filtro;
+    botonesFiltro.forEach((o) => { o.classList.toggle("activo", o === b); o.setAttribute("aria-pressed", String(o === b)); });
+  }));
+  if (botonPausa) botonPausa.addEventListener("click", () => {
+    consolaPausada = !consolaPausada;
+    botonPausa.setAttribute("aria-pressed", String(consolaPausada));
+    botonPausa.classList.toggle("activo", consolaPausada);
+  });
+  for (let k = 0; k < 6; k++) { const [t, m] = eventos[k % eventos.length]; agregarAlerta(t, m, (6 - k) * 1400); }
+  if (!reducido) setInterval(() => {
+    if (consolaPausada) return;
+    const [t, m] = eventos[Math.floor(Math.random() * eventos.length)];
+    agregarAlerta(t, m);
+  }, 2400);
+}
+// Durante el simulador de ataque, el estado de los sistemas también reacciona
+function estadoIncidente(activo) {
+  const fila = document.querySelector('[data-sistema="agentes"]');
+  if (!fila) return;
+  fila.classList.toggle("en-incidente", activo);
+  fila.querySelector("b").textContent = activo ? "41 / 42" : "42 / 42";
+}
 
 // Gráfica: eventos por minuto, línea con relleno, se va desplazando
 const grafica = document.querySelector(".panel__grafica");
@@ -615,17 +675,13 @@ if (botonSimular) {
     botonSimular.classList.add("sin-deslizar");
     if (window.kaironEscena) window.kaironEscena.ataque(true);
     const pasosEl = document.querySelectorAll(".paso");
-    const lista = document.querySelector(".panel__alertas");
     const registro = document.querySelector(".hero__registro ul");
     guion.forEach(([t, tipo, msg], i) => {
       setTimeout(() => {
         const etiqueta = TXT.etiquetas[tipo];
-        if (lista) {
-          const li = document.createElement("li");
-          li.innerHTML = `<time>${hora()}</time><span>${msg}</span><span class="etiqueta etiqueta--${tipo}">${etiqueta}</span>`;
-          lista.appendChild(li);
-          while (lista.children.length > 7) lista.removeChild(lista.firstChild);
-        }
+        agregarAlerta(tipo, msg);
+        if (i === 0) estadoIncidente(true);
+        if (i === guion.length - 1) estadoIncidente(false);
         if (registro) {
           const li = document.createElement("li");
           li.className = "registro__linea";
