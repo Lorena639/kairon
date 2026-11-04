@@ -504,6 +504,27 @@ if (hayGSAP && !reducido) {
   document.querySelectorAll(".panel__barras li").forEach((li) => li.style.setProperty("--w", li.dataset.w + "%"));
 }
 
+// Chronos y kairos: una regla de 60 marcas que avanza con el scroll; una sola es el momento justo
+const reglaKairos = document.querySelector(".kairos__regla");
+if (reglaKairos) {
+  const MARCAS = 60, MOMENTO = 42;
+  for (let i = 0; i < MARCAS; i++) {
+    const m = document.createElement("i");
+    if (i === MOMENTO) { m.className = "momento"; m.dataset.texto = reglaKairos.dataset.momento; }
+    reglaKairos.appendChild(m);
+  }
+  const marcas = reglaKairos.children;
+  const pintar = (p) => {
+    const n = Math.round(p * MARCAS);
+    for (let i = 0; i < MARCAS; i++) marcas[i].classList.toggle("pasada", i < n);
+  };
+  if (hayGSAP && !reducido) {
+    ScrollTrigger.create({ trigger: reglaKairos, start: "top 90%", end: "top 35%", scrub: true, onUpdate: (self) => pintar(self.progress) });
+  } else {
+    pintar(1);
+  }
+}
+
 /* ---------- 6. SOC en vivo (datos simulados para la práctica) ---------- */
 const eventos = TXT.eventos;
 function hora(desfase = 0) {

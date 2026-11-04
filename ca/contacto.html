@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Preguntes freqüents i contacte de KAIRON.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>Contacte · KAIRON</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../contacto.html">
+  <link rel="alternate" hreflang="ca" href="contacto.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20261104g">
+</head>
+<body>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="proyectos.html"><span class="mono">03</span>Projectes</a></li>
+      <li><a href="futuro.html"><span class="mono">04</span>Futur</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">05</span>Equip</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">06</span>Contacte</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Secció següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Seccions">
+    <a href="#contenido" data-seccion="hero"><span>Inici</span></a>
+    <a href="#faq" data-seccion="faq"><span>Preguntes</span></a>
+    <a href="#contacto" data-seccion="contacto"><span>Contacte</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../contacto.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="servicios.html">Serveis</a></li>
+          <li><a href="soc.html">SOC en directe</a></li>
+          <li><a href="proyectos.html">Projectes</a></li>
+          <li><a href="futuro.html">Futur</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <span class="mono">Contacte</span>
+        <h1 class="pagina__titulo revelar" id="titulo-pagina">Parlem de <span class="oro-brillo">la teva xarxa</span></h1>
+        <p class="pagina__intro">Preguntes freqüents i sol·licitud d'auditoria.</p>
+      </div>
+    </section>
+
+    <!-- ===== PREGUNTAS FRECUENTES ===== -->
+    <section class="faq" id="faq" aria-labelledby="titulo-faq">
+      <div class="contenedor faq__grid">
+        <div>
+          <span class="mono">Preguntes freqüents</span>
+          <h2 class="equipo__titulo revelar" id="titulo-faq">El que ens pregunten</h2>
+        </div>
+        <div class="faq__lista revelar">
+          <details class="faq__item" open>
+            <summary>Què és un SOC i per què el necessita una pime?</summary>
+            <p>Un centre d'operacions de seguretat: persones i eines que vigilen els teus sistemes i responen si passa res. La majoria d'atacs a pimes entren per correu o contrasenyes febles, i sense vigilància es descobreixen setmanes després.</p>
+          </details>
+          <details class="faq__item">
+            <summary>He d'instal·lar res?</summary>
+            <p>Un agent lleuger a cada equip (Windows o Linux) que envia l'activitat al SOC. No frena l'ordinador i no llegeix els teus documents.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Què passa quan detecteu un atac?</summary>
+            <p>Primer contenim (aïllar l'equip, bloquejar la IP), recollim les proves amb cadena de custòdia i et truquem. Després reps un informe en llenguatge clar.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Les proves serveixen davant d'una auditoria o una denúncia?</summary>
+            <p>Cada evidència porta hora UTC, número de cas i empremta SHA-256, de manera que es pot comprovar que no ha estat alterada. <a href="informe.html">Mira un informe d'exemple</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>I aquest web, està protegit?</summary>
+            <p>Sí, prediquem amb l'exemple: política de seguretat de contingut (CSP) que només permet recursos d'aquest lloc, sense scripts en línia, política de referrer estricta, enllaços externs amb <code>rel="noopener"</code>, formulari amb camp trampa anti-spam i ni una galeta ni rastrejador.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Quant costa?</summary>
+            <p>Depèn del nombre d'equips. Comencem sempre amb una auditoria gratuïta per saber què tens i quin risc corres.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section class="contacto" id="contacto" aria-labelledby="titulo-contacto" data-fondo="HOLA">
+      <div class="contenedor contacto__grid">
+        <div>
+          <span class="mono">Contacte</span>
+          <h2 class="contacto__titulo revelar" id="titulo-contacto">Saps què passa <em class="oro-brillo">ara</em> a la teva xarxa?</h2>
+          <p class="hero__sub revelar" style="margin-top:24px">Et fem una auditoria inicial gratuïta i t'expliquem, sense tecnicismes, per on començar.</p>
+        </div>
+
+        <form class="formulario revelar" action="#" method="post" novalidate>
+          <div class="formulario__campo">
+            <label for="nombre">Nom</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="email">Correu electrònic</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" name="empresa" autocomplete="organization">
+          </div>
+          <div class="formulario__campo formulario__trampa" aria-hidden="true">
+            <label for="web">No omplis aquest camp</label>
+            <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="formulario__campo">
+            <label for="mensaje">Missatge</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <p class="formulario__aviso" role="status" hidden></p>
+          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Demanar auditoria gratuïta">Demanar auditoria gratuïta</span></button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante oro-brillo" aria-hidden="true"><span class="pie__letra">K</span><span class="pie__letra">A</span><span class="pie__letra">I</span><span class="pie__letra">R</span><span class="pie__letra">O</span><span class="pie__letra">N</span></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/jdanioliv/Argos-TFG" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operatiu</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors</p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.12.5 y Lenis 1.1.18) para no depender de internet -->
+  <script src="../js/vendor/gsap.min.js?v=20261104g" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261104g" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261104g" defer></script>
+  <script src="../js/intro.js?v=20261104g" defer></script>
+  <script src="../js/escena.js?v=20261104g" defer></script>
+  <script src="../js/visuales.js?v=20261104g" defer></script>
+  <script src="../js/polvo.js?v=20261104g" defer></script>
+  <script src="../js/main.js?v=20261104g" defer></script>
+</body>
+</html>

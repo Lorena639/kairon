@@ -12,7 +12,7 @@ import io, os, sys, threading, functools, http.server, socketserver
 from html.parser import HTMLParser
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGINAS = ["index.html", "sobre-mi.html", "informe.html", "404.html", "ca/index.html", "ca/sobre-mi.html", "ca/informe.html"]
+PAGINAS = ["index.html", "sobre-mi.html", "informe.html", "404.html", "ca/index.html", "ca/sobre-mi.html", "ca/informe.html", "servicios.html", "ca/servicios.html", "soc.html", "ca/soc.html", "contacto.html", "ca/contacto.html", "proyectos.html", "ca/proyectos.html", "futuro.html", "ca/futuro.html"]
 VACIAS = {"img", "br", "meta", "link", "input", "hr", "source", "path", "circle", "stop", "wbr"}
 
 

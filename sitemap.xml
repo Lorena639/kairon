@@ -24,4 +24,29 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>servicios.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="servicios.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/servicios.html"/>
+  </url>
+  <url>
+    <loc>soc.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="soc.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/soc.html"/>
+  </url>
+  <url>
+    <loc>contacto.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/contacto.html"/>
+  </url>
+  <url>
+    <loc>proyectos.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="proyectos.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/proyectos.html"/>
+  </url>
+  <url>
+    <loc>futuro.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="futuro.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/futuro.html"/>
+  </url>
 </urlset>

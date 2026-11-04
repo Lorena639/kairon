@@ -3958,3 +3958,75 @@ main, .pie { overflow-x: clip; }
 /* Cifras: las cuatro tarjetas siempre caben en el ancho disponible */
 .cifras__lista { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
 .cifra { min-width: 0; }
+
+/* ---------- 15w. Logo: el PNG original se ve tal cual, solo con un destello encima ---------- */
+.oro-metal img { opacity: 1; }
+.oro-metal::before { content: none; }
+
+/* ---------- 15x. Chronos y kairos ---------- */
+.kairos { margin-top: clamp(56px, 9vw, 110px); }
+.kairos__conceptos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.kairos__conceptos p { margin: 0; color: var(--suave); }
+.kairos__conceptos b {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--blanco);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.kairos__oro b { color: var(--oro-claro); }
+.kairos__regla { display: flex; justify-content: space-between; align-items: flex-end; height: 92px; margin-top: 48px; }
+.kairos__regla i { position: relative; width: 1px; height: 22px; background: rgba(248, 245, 238, 0.22); transition: background 0.2s; }
+.kairos__regla i.pasada { background: var(--blanco); }
+.kairos__regla i.momento { width: 3px; height: 60px; background: var(--oro-oscuro); transition: background 0.3s, box-shadow 0.3s; }
+.kairos__regla i.momento.pasada { background: var(--oro-claro); box-shadow: 0 0 22px var(--oro); }
+.kairos__regla i.momento::after {
+  content: attr(data-texto);
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  color: var(--oro-claro);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.kairos__regla i.momento.pasada::after { opacity: 1; }
+@media (max-width: 719px) {
+  .kairos__regla i:nth-child(even):not(.momento) { display: none; }
+}
+
+/* ---------- 15y. Páginas interiores, proyectos y futuro ---------- */
+.pagina--cabeza { min-height: 56svh; display: grid; align-content: end; }
+.fichas { padding: clamp(40px, 7vw, 90px) 0 clamp(80px, 10vw, 140px); }
+.fichas__lista { list-style: none; margin: 0; padding: 0; }
+.ficha {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.3fr) minmax(0, 1fr);
+  gap: clamp(16px, 4vw, 56px);
+  padding: clamp(28px, 4vw, 52px) 0;
+  border-top: 1px solid var(--linea);
+}
+.ficha__num { color: var(--oro); font-size: clamp(1rem, 2.2vw, 1.5rem); }
+.ficha--ruta .ficha__num { font-size: 0.8rem; letter-spacing: 0.08em; }
+.ficha__estado { display: block; margin-bottom: 10px; color: var(--lavanda); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.ficha h2 { margin: 0 0 12px; font-size: clamp(1.5rem, 3.6vw, 2.9rem); line-height: 1.1; }
+.ficha p { max-width: 62ch; margin: 0; color: var(--suave); }
+.ficha__datos { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; margin: 16px 0 0; padding: 0; color: var(--cian); font-size: 0.72rem; }
+.fichas__limite { margin-top: 48px; padding: clamp(22px, 4vw, 40px); border-left: 3px solid var(--rojo); background: var(--grafito); }
+.fichas__limite h2 { margin: 0 0 10px; font-size: clamp(1.2rem, 2.6vw, 1.8rem); }
+.fichas__limite p { max-width: 70ch; margin: 0; color: var(--suave); }
+.explorar { padding: clamp(70px, 10vw, 130px) 0; }
+.explorar__lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1px; margin: 36px 0 0; padding: 0; list-style: none; background: var(--linea); border: 1px solid var(--linea); }
+.explorar__lista li { background: var(--negro); }
+.explorar__lista a { display: block; height: 100%; padding: 28px; color: inherit; text-decoration: none; transition: background 0.3s; }
+.explorar__lista a:hover, .explorar__lista a:focus-visible { background: var(--negro-3); }
+.explorar__lista h3 { margin: 0 0 8px; color: var(--oro-claro); font-size: 1.35rem; }
+.explorar__lista p { margin: 0; color: var(--suave); font-size: 0.95rem; }
+@media (max-width: 600px) { .ficha { grid-template-columns: 1fr; gap: 10px; } }
+@media (max-width: 600px) { .pagina--cabeza .pagina__titulo { font-size: clamp(1.7rem, 8.4vw, 2.6rem); overflow-wrap: anywhere; } }
