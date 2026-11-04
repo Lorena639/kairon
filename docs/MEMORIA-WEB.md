@@ -6,7 +6,7 @@ Capturas disponibles en `docs/capturas/` (01 a 09).
 
 ## 1. Introducción y objetivo
 
-KAIRON es una empresa ficticia de ciberseguridad que ofrece un SOC (centro de operaciones de seguridad) gestionado a pymes. La web es su cara pública y la parte "visible" del TFG: debe transmitir confianza, explicar el servicio en lenguaje claro y, a la vez, demostrar en la propia web las capacidades técnicas del equipo (seguridad, animación, accesibilidad). El nombre viene de *kairós*, el instante oportuno: detectar y actuar en el momento justo.
+KAIRON es una empresa ficticia de ciberseguridad que ofrece un SOC (centro de operaciones de seguridad) gestionado a pymes. La web es su cara pública y la parte "visible" del TFG: debe transmitir confianza, explicar el servicio en lenguaje claro y, a la vez, demostrar en la propia web las capacidades técnicas del equipo (seguridad, animación, accesibilidad). El nombre viene de *kairos*, el instante oportuno: detectar y actuar en el momento justo.
 
 ## 2. Requisitos del enunciado y cómo se cumplen
 

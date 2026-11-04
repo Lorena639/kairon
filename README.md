@@ -51,7 +51,7 @@ KAIRON-TFG/
 
 ## Marca
 
-- Nombre: **KAIRON**, de *kairós*, el instante oportuno. La empresa actúa en el momento justo.
+- Nombre: **KAIRON**, de *kairos*, el instante oportuno. La empresa actúa en el momento justo.
 - Logo: K alada sobre una esfera de brújula. Paleta de la hoja de marca: dorado `#D4AF7A`, dorado oscuro `#8C6B3F`, azul oscuro `#0B0F14`, marfil `#F8F5EE`.
 - Acabado **oro metálico** en todos los logos: la imagen se usa como máscara y el color lo pone un degradado dorado con luz en movimiento (`.oro-metal`).
 - Versiones del logo en `img/`: completo (`kairon-logo-*.png`), horizontal (`kairon-logo-horizontal-*.png`), solo texto (`kairon-wordmark-*.png`), emblema (`kairon-emblema-*.png`), sello (`kairon-sello-oro.png`), iconos de app (`app-icon-*.png`) e imagen para redes (`og-image.jpg`).

@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261104a">
+  <link rel="stylesheet" href="../css/styles.css?v=20261104c">
 </head>
 <body>
 
@@ -52,20 +52,12 @@
   <div class="carga" aria-hidden="true">
     <div class="carga__panel carga__panel--arriba"></div>
     <div class="carga__panel carga__panel--abajo"></div>
-    <div class="carga__centro">
-      <!-- Mientras carga: emblema latiendo. Al 100 %: el logo se monta por piezas (ala, anillo, K y letras) -->
-      <span class="brillo brillo--emblema carga__pulso"><img class="carga__emblema" src="../img/kairon-emblema-192.png" width="96" height="96" alt=""></span>
-      <span class="carga__linea"></span>
-      <span class="carga__texto mono">Iniciant vigilància</span>
-    </div>
     <div class="intro__rayos" aria-hidden="true"></div>
     <div class="intro__fogonazo" aria-hidden="true"></div>
     <canvas class="intro__lienzo" aria-hidden="true"></canvas>
     <span class="intro__lente" aria-hidden="true"></span>
     <p class="intro__eslogan mono" aria-hidden="true" data-texto="El moment just"></p>
     <div class="intro__logo oro-metal oro-metal--completo" aria-hidden="true"><img src="../img/kairon-logo-dorado.png" width="560" height="505" alt=""></div>
-    <span class="carga__cifra">000</span>
-    <span class="carga__barra"></span>
   </div>
 
   <div class="cursor" aria-hidden="true"></div>
@@ -166,7 +158,7 @@
 
         <p class="hero__nombre"><img src="../img/kairon-wordmark-dorado.png" alt="KAIRON" width="560" height="118"></p>
         <h1 class="hero__titular" id="titulo-hero">La seguretat no espera. <em>Nosaltres tampoc.</em></h1>
-        <p class="hero__kairos mono">Kairós: l'instant oportú</p>
+        <p class="hero__kairos mono">Kairos: l'instant oportú</p>
 
         <p class="hero__sub hero__sub--centro">Detectem els atacs a temps, responem a l'instant precís i ho demostrem amb proves. Seguretat de SOC per a pimes sense equip propi.</p>
         <div class="hero__acciones hero__acciones--centro">
@@ -180,8 +172,8 @@
     <!-- ===== MARQUEE ===== -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__pista">
-        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairós · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
-        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairós · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
+        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairos · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
+        <span class="marquee__item">Detectar <img src="../img/kairon-emblema-192.png" alt=""> Respondre <img src="../img/kairon-emblema-192.png" alt=""> Demostrar <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Vigilància 24/7</span> <img src="../img/kairon-emblema-192.png" alt=""> <span class="fino">Kairos · l'instant oportú</span> <img src="../img/kairon-emblema-192.png" alt=""></span>
       </div>
     </div>
 
@@ -190,7 +182,7 @@
       <img class="manifiesto__fondo" src="../img/kairon-emblema-dorado.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <div class="contenedor">
         <p class="manifiesto__texto">
-          <span class="palabra">Kairós</span><span class="palabra">és</span><span class="palabra">l'instant</span><span class="palabra oro">oportú.</span>
+          <span class="palabra">Kairos</span><span class="palabra">és</span><span class="palabra">l'instant</span><span class="palabra oro">oportú.</span>
           <span class="palabra">En</span><span class="palabra">seguretat,</span><span class="palabra">un</span><span class="palabra">minut</span><span class="palabra">tard</span><span class="palabra">ja</span><span class="palabra">és</span><span class="palabra">un</span><span class="palabra oro">incident.</span>
           <span class="palabra">KAIRON</span><span class="palabra">vigila</span><span class="palabra">la</span><span class="palabra">teva</span><span class="palabra">empresa</span><span class="palabra">per</span><span class="palabra">actuar</span><span class="palabra">quan</span><span class="palabra">de</span><span class="palabra">debò</span><span class="palabra oro">importa.</span>
         </p>
@@ -581,14 +573,14 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.12.5 y Lenis 1.1.18) para no depender de internet -->
-  <script src="../js/vendor/three.min.js?v=20261104a" defer></script>
-  <script src="../js/vendor/gsap.min.js?v=20261104a" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261104a" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261104a" defer></script>
-  <script src="../js/intro.js?v=20261104a" defer></script>
-  <script src="../js/escena.js?v=20261104a" defer></script>
-  <script src="../js/visuales.js?v=20261104a" defer></script>
-  <script src="../js/polvo.js?v=20261104a" defer></script>
-  <script src="../js/main.js?v=20261104a" defer></script>
+  <script src="../js/vendor/three.min.js?v=20261104c" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261104c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261104c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261104c" defer></script>
+  <script src="../js/intro.js?v=20261104c" defer></script>
+  <script src="../js/escena.js?v=20261104c" defer></script>
+  <script src="../js/visuales.js?v=20261104c" defer></script>
+  <script src="../js/polvo.js?v=20261104c" defer></script>
+  <script src="../js/main.js?v=20261104c" defer></script>
 </body>
 </html>

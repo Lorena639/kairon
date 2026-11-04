@@ -3952,3 +3952,6 @@ body.cursor--arrastra .cursor {
   .hero__nombre img { width: clamp(200px, 26vw, 340px); }
   .hero__kairos { display: none; }
 }
+
+/* Intro sin la línea horizontal entre las cortinas */
+.carga__panel--arriba, .carga__panel--abajo { border: 0; }

@@ -1,5 +1,5 @@
 /* KAIRON · Interacción de la web
-   1. Preloader (contador, texto que se escribe, cortinas) y revelado del hero.
+   1. Intro (partículas que forman el logo, cortinas) y revelado del hero.
    2. Transición entre páginas (cortina).
    3. Cursor personalizado + foco que sigue al ratón + botones magnéticos.
    4. Scroll suave (Lenis) + barra de progreso.
@@ -133,7 +133,7 @@ function terminarCarga() {
   if (!carga) return revelarHero();
   if (hayGSAP && !reducido) {
     const salida = gsap.timeline({ paused: true, onComplete: () => carga.remove() })
-      .to(".carga__centro, .carga__cifra, .carga__barra, .intro__lienzo", { opacity: 0, duration: 0.35 })
+      .to(".intro__lienzo", { opacity: 0, duration: 0.35 })
       .to(".carga__panel--arriba", { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<")
       .to(".carga__panel--abajo", { yPercent: 100, duration: 0.9, ease: "power4.inOut" }, "<")
       .to(carga, { opacity: 0, duration: 0.2 }, "-=0.1");
@@ -152,29 +152,7 @@ function terminarCarga() {
 
 if (carga) {
   document.body.classList.add("sin-scroll");
-  const cifra = carga.querySelector(".carga__cifra");
-  const barra = carga.querySelector(".carga__barra");
-  const texto = carga.querySelector(".carga__texto");
-  const frases = TXT.frases;
-  if (reducido) {
-    terminarCarga();
-  } else {
-    const inicio = performance.now();
-    let yaVisto = false;
-    try { yaVisto = sessionStorage.getItem("kairon-visto") === "1"; sessionStorage.setItem("kairon-visto", "1"); } catch (e) {}
-    const duracion = yaVisto ? 700 : 2200;
-    let fraseActual = -1;
-    (function paso(ahora) {
-      const t = Math.min((ahora - inicio) / duracion, 1);
-      const valor = Math.round(100 * (1 - Math.pow(1 - t, 3)));
-      if (cifra) cifra.textContent = String(valor).padStart(3, "0");
-      if (barra) barra.style.width = valor + "%";
-      const f = Math.min(Math.floor(t * frases.length), frases.length - 1);
-      if (f !== fraseActual && texto) { fraseActual = f; texto.textContent = frases[f]; }
-      if (t < 1) requestAnimationFrame(paso);
-      else setTimeout(terminarCarga, 300);
-    })(inicio);
-  }
+  terminarCarga(); // sin contador: la intro de película empieza directamente
 } else {
   // Páginas sin preloader: la cortina se retira al entrar
   const cortina = document.querySelector(".cortina");

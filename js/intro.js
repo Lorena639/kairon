@@ -1,5 +1,5 @@
 /* KAIRON · Intro del logo (JavaScript puro, sin librerías)
-   Al llegar el contador al 100 %:
+   Nada más cargar la página:
    1. Miles de partículas doradas se arremolinan y convergen hasta formar el logo completo
       (las posiciones salen de leer los píxeles del PNG del logo en un canvas).
    2. Las partículas se funden con el logo real, con acabado de oro metálico.
@@ -199,7 +199,10 @@
   window.kaironIntro = {
     start(alTerminar) {
       if (listo) empezar(alTerminar);
-      else imagen.addEventListener("load", () => empezar(alTerminar), { once: true });
+      else {
+        imagen.addEventListener("load", () => empezar(alTerminar), { once: true });
+        imagen.addEventListener("error", alTerminar, { once: true }); // si falla el PNG, entra la web igualmente
+      }
     },
   };
 })();

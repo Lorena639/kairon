@@ -5,7 +5,7 @@ Repositorio de Lorena y Dani (Daniel Oliva, usuario jdanioliv) para dos cosas a 
 1. La práctica A1-RA1 de "0228 Aplicaciones Web" del ciclo CFGM Sistemes Microinformàtics i Xarxes (SMX), 2º curso, en Digitech Barcelona.
 2. La parte web del Trabajo de Final de Curso (TFG), que combina ciberseguridad y programación.
 
-La empresa ficticia se llama **KAIRON** (antes Argos; renombrada el 29-10-2026). El nombre viene de *kairós*, el instante oportuno en griego, frente a *chronos*, el tiempo que pasa. Kairós se representaba como un joven alado con un mechón en la frente: solo se le puede agarrar cuando pasa. La identidad visual y el discurso de la web reflejan esa idea: **detectar a tiempo y actuar en el momento justo**.
+La empresa ficticia se llama **KAIRON** (antes Argos; renombrada el 29-10-2026). El nombre viene de *kairos*, el instante oportuno en griego, frente a *chronos*, el tiempo que pasa. Kairos se representaba como un joven alado con un mechón en la frente: solo se le puede agarrar cuando pasa. La identidad visual y el discurso de la web reflejan esa idea: **detectar a tiempo y actuar en el momento justo**.
 
 ## Quiénes somos y qué hace cada uno
 - **Lorena**: parte de ciberseguridad (análisis forense, monitorización, respuesta a incidentes). Objetivo profesional: especializarse en análisis forense y ciberseguridad.

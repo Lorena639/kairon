@@ -20,7 +20,7 @@ Preguntas que tenéis que cerrar entre los dos:
 | 2 | Qué vais a ver | 0,5 | Lorena | Índice en 4 puntos: empresa, identidad, web, lo aprendido. |
 | 3 | La empresa | 2 | Lorena | Sector: ciberseguridad para pymes. Problema: no tienen equipo de seguridad y un ransomware las para. Propuesta de valor: "vigilancia profesional sin contratar un equipo interno". |
 | 4 | Buyer persona | 1 | Lorena | Marta, 45, directora administrativa de una logística de 60 empleados; teme el ransomware y el RGPD; quiere claridad y precios previsibles. Una sola tarjeta visual. |
-| 5 | Nombre y logo | 2 | Lorena | Kairós = el instante oportuno (frente a *chronos*, el tiempo que pasa). En seguridad, un minuto tarde ya es un incidente. Logo: K alada + esfera de brújula. Enseñar las versiones (completo, emblema, blanco/dorado). |
+| 5 | Nombre y logo | 2 | Lorena | Kairos = el instante oportuno (frente a *chronos*, el tiempo que pasa). En seguridad, un minuto tarde ya es un incidente. Logo: K alada + esfera de brújula. Enseñar las versiones (completo, emblema, blanco/dorado). |
 | 6 | Paleta y tipografía | 1 | Lorena | Oro `#C4974B`, fondo `#0E0B16`, cian `#35C6D6` de acento. Cinzel para títulos, serif para texto. Por qué: serio, elegante, mitológico. |
 | 7 | Wireframe / estructura | 1,5 | Dani | Esquema de index (header, hero, servicios, beneficios+testimonios, footer) y de sobre-mi (ficha, valores). Relacionarlo con los requisitos del enunciado. |
 | 8 | Demo en vivo | 4 | Dani | Abrir la web (servidor local). Dejar que cargue el preloader → portada 3D (mover el ratón) → bajar al manifiesto → servicios en horizontal → panel SOC → **pulsar "Simular un ataque"** y narrar los pasos → abrir "Ver el informe del caso" (informe.html) y enseñar la tabla de evidencias con SHA-256 → cifras → página de equipo. Enseñar el responsive con F12. |
@@ -56,4 +56,4 @@ Total: 20 min. Si hay que recortar a 15: quitar la 11, acortar la 3 y la 10 a un
 
 ## 4. Guion de apertura (30 segundos, para no quedarse en blanco)
 
-"Somos Lorena y Dani. KAIRON es una empresa ficticia de ciberseguridad que vigila los sistemas de pymes que no tienen equipo de seguridad propio. El nombre viene de *kairós*, el instante oportuno: en seguridad, lo importante es actuar en el momento justo. Hoy os enseñamos cómo definimos la empresa, su identidad visual y la web que hemos construido con HTML y CSS."
+"Somos Lorena y Dani. KAIRON es una empresa ficticia de ciberseguridad que vigila los sistemas de pymes que no tienen equipo de seguridad propio. El nombre viene de *kairos*, el instante oportuno: en seguridad, lo importante es actuar en el momento justo. Hoy os enseñamos cómo definimos la empresa, su identidad visual y la web que hemos construido con HTML y CSS."

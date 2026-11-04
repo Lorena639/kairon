@@ -14,7 +14,7 @@ Empresa **ficticia** de ciberseguridad creada para el TFG de SMX. El proyecto si
 
 ### Nombre e historia
 
-- **Kairós:** en griego, el *instante oportuno*, distinto de *chronos* (el tiempo que pasa). Se representaba como un joven alado con un mechón en la frente: solo se le puede agarrar cuando pasa por delante, nunca después.
+- **Kairos:** en griego, el *instante oportuno*, distinto de *chronos* (el tiempo que pasa). Se representaba como un joven alado con un mechón en la frente: solo se le puede agarrar cuando pasa por delante, nunca después.
 - **Por qué el nombre:** en seguridad lo que importa es detectar y actuar en el momento exacto; un minuto tarde ya es un incidente.
 - **Historia de la empresa:** *[pendiente: no está definida en el contexto del proyecto]*.
 
@@ -23,7 +23,7 @@ Empresa **ficticia** de ciberseguridad creada para el TFG de SMX. El proyecto si
 ### Logotipo
 
 Logo definitivo (carpeta `KAIRON-logo-limpio-transparente-versiones`):
-- Letra **K** con un ala a la izquierda (las alas de Kairós) sobre una **esfera de brújula / reloj** con marcas en los ejes (el instante exacto).
+- Letra **K** con un ala a la izquierda (las alas de Kairos) sobre una **esfera de brújula / reloj** con marcas en los ejes (el instante exacto).
 - Palabra "KAIRON" en mayúsculas serif; la **O** lleva la misma esfera.
 - Versiones: completo y emblema, en dorado, blanco, negro y oro oscuro; app icon de 1024 px y emblema en 16 a 512 px.
 
