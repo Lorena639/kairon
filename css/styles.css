@@ -4046,3 +4046,38 @@ main, .pie { overflow-x: clip; }
 .modulos p { margin: 0; color: var(--suave); font-size: 0.95rem; }
 .principios { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; font-size: 0.74rem; }
 .principios li { padding: 8px 12px; border: 1px solid var(--lavanda); color: var(--blanco); }
+
+.plan-aviso { margin: 0 0 12px; padding: 12px 16px; border-left: 3px solid var(--lavanda); color: var(--lavanda); font-size: 0.74rem; line-height: 1.6; }
+
+/* ---------- 16. Correcciones y detalle de servicios ---------- */
+/* Menú: fondo sólido, el contenido nunca se mezcla con él */
+.cabecera:not(.cabecera--clara) { background: rgba(11, 15, 20, 0.97); }
+.cabecera--clara { background: rgba(248, 245, 238, 0.97); }
+.controles--ocultos { opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+/* La etiqueta "Arrastra" se salía de la pantalla: basta con el cursor de arrastre */
+
+/* Cifras: dos columnas anchas para que los números quepan siempre */
+.cifras__lista { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.cifra__valor { font-size: clamp(1.9rem, 3vw, 3rem); overflow-wrap: anywhere; }
+.cifra > div { min-width: 0; }
+.servicio__mas { justify-self: start; color: var(--oro-claro); font-size: 0.76rem; letter-spacing: 0.08em; }
+.servicio__mas:hover { color: var(--blanco); }
+.detalle { padding: clamp(32px, 6vw, 80px) 0; }
+.detalle__serv { display: grid; grid-template-columns: minmax(70px, 0.18fr) minmax(0, 1fr); gap: clamp(14px, 3vw, 44px); padding: clamp(44px, 7vw, 96px) 0; border-top: 1px solid var(--linea); scroll-margin-top: 90px; }
+.detalle__num { color: var(--oro); font-size: clamp(1.1rem, 2.4vw, 1.7rem); }
+.detalle__serv h2 { margin: 10px 0 20px; font-size: clamp(2.2rem, 6vw, 5rem); line-height: 1.04; }
+.detalle__col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 40px; margin-top: 40px; }
+.detalle__col h3 { margin: 0 0 14px; color: var(--oro-claro); font-size: 1.05rem; }
+.detalle__lista, .detalle__pasos { margin: 0; padding: 0; list-style: none; color: var(--suave); }
+.detalle__lista li, .detalle__pasos li { padding: 10px 0; border-top: 1px solid var(--linea); }
+.detalle__pasos { counter-reset: p; }
+.detalle__pasos li { counter-increment: p; }
+.detalle__pasos li::before { content: counter(p) ". "; color: var(--cian); font-family: var(--mono); }
+.detalle__rec { margin: 32px 0 0; padding: 18px 20px; border-left: 3px solid var(--oro); background: var(--grafito); }
+.detalle__rec b { display: block; margin-bottom: 6px; color: var(--oro-claro); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
+.ficha__mas { margin-top: 12px !important; }
+.viaje b { color: var(--blanco); }
+.cursor__texto { display: none !important; }
+@media (min-width: 720px) { .cifras__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* El panel del SOC no deja huecos: estado y alertas ocupan todo el ancho */
+@media (min-width: 720px) { .panel > .panel__bloque:nth-last-child(-n+2) { grid-column: 1 / -1; } }

@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261104h">
+  <link rel="stylesheet" href="css/styles.css?v=20261104j">
 </head>
 <body>
 
@@ -56,10 +56,12 @@
     <ul>
       <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
       <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
-      <li><a href="proyectos.html"><span class="mono">03</span>Proyectos</a></li>
-      <li><a href="futuro.html"><span class="mono">04</span>Futuro</a></li>
-      <li><a href="sobre-mi.html"><span class="mono">05</span>Equipo</a></li>
-      <li><a href="contacto.html#contacto"><span class="mono">06</span>Contacto</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
     <p class="mono">KAIRON · SOC gestionado para pymes</p>
   </div>
@@ -106,6 +108,7 @@
           <li class="menu__idioma"><a href="ca/proyectos.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
           <li><a href="servicios.html">Servicios</a></li>
           <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
           <li><a href="proyectos.html" aria-current="page">Proyectos</a></li>
           <li><a href="futuro.html">Futuro</a></li>
           <li><a href="sobre-mi.html">Equipo</a></li>
@@ -135,6 +138,7 @@
               <span class="ficha__estado mono">Publicada</span>
               <h2>Web corporativa</h2>
               <p>La cara pública de KAIRON: portada, servicios, SOC de demostración, equipo y versión en catalán. Se puede instalar como app.</p>
+              <p class="ficha__mas">Tiene escena 3D con Three.js y fallback 2D, animaciones ligadas al scroll, consola de alertas simulada y simulador de ataque. También funciona como PWA y respeta quien prefiere menos movimiento. Falta conectar el formulario.</p>
               <ul class="ficha__datos mono"><li>HTML, CSS y JS</li><li>Three.js</li><li>GSAP</li><li>PWA</li></ul>
             </div>
           </li>
@@ -144,6 +148,7 @@
               <span class="ficha__estado mono">Planificado · parte del TFG</span>
               <h2>Laboratorio SOC</h2>
               <p>Red virtual aislada con cortafuegos, servidor Linux, equipos Windows y una máquina atacante, para probar ataques con seguridad.</p>
+              <p class="ficha__mas">Se montará en VirtualBox con Wazuh como SIEM. Servirá para lanzar dos ataques de prueba, fuerza bruta y un ejecutable simulado con persistencia, y comprobar que se generan alertas. Va aislado para no afectar a ninguna red real.</p>
               <ul class="ficha__datos mono"><li>VirtualBox</li><li>Wazuh</li><li>pfSense</li><li>Linux y Windows</li></ul>
             </div>
           </li>
@@ -153,6 +158,7 @@
               <span class="ficha__estado mono">Planificada · parte del TFG</span>
               <h2>Herramienta forense</h2>
               <p>Recoge procesos, conexiones, usuarios, inicios de sesión y persistencia, y genera un informe con hora UTC, número de caso y SHA-256 de cada prueba.</p>
+              <p class="ficha__mas">Se usará en el equipo afectado y entregará un informe en JSON y Markdown. Cada prueba lleva su hash para poder demostrar que no se ha modificado. La hacen entre las dos partes del equipo: seguridad define qué recoger y programación lo construye.</p>
               <ul class="ficha__datos mono"><li>Python</li><li>Cadena de custodia</li><li>SHA-256</li></ul>
             </div>
           </li>
@@ -162,6 +168,7 @@
               <span class="ficha__estado mono">Objetivo: enero de 2027</span>
               <h2>Demo de un ataque completo</h2>
               <p>La prueba de que todo encaja: un ataque simulado, Wazuh lo detecta, la herramienta recoge las pruebas y sale el informe.</p>
+              <p class="ficha__mas">Es el centro de la presentación. Se ensayará en enero y habrá un vídeo de reserva por si algo falla ese día.</p>
               <ul class="ficha__datos mono"><li>Fuerza bruta</li><li>Phishing simulado</li><li>Informe</li></ul>
             </div>
           </li>
@@ -171,7 +178,18 @@
               <span class="ficha__estado mono">Estudio terminado · sin prototipo</span>
               <h2>KAIRON Data Chip</h2>
               <p>Dar a cada dato una identidad propia: huella, clasificación, política de acceso e historial. Es una línea futura, fuera del alcance del TFG.</p>
+              <p class="ficha__mas">El estudio separa lo viable hoy, lo experimental y lo imposible. El primer prototipo sería un agente para Windows que registra archivos, detecta copias a USB y guarda eventos firmados en un log verificable.</p>
               <ul class="ficha__datos mono"><li>Estudio de viabilidad</li><li>Arquitectura</li><li>Plan por fases</li></ul>
+            </div>
+          </li>
+          <li class="ficha revelar ">
+            <span class="ficha__num mono">06</span>
+            <div class="ficha__cuerpo">
+              <span class="ficha__estado mono">Primer producto elegido · en diseño</span>
+              <h2>KAIRON Agents</h2>
+              <p>Plataforma de agentes de IA de seguridad con permisos, autonomía configurable e historial auditable. Es el primer producto del plan de empresa; aún no hay prototipo.</p>
+              <p class="ficha__mas">El plan empieza por un solo agente con permisos y registro de actividad, y luego añade un panel central para gestionarlos.</p>
+              <ul class="ficha__datos mono"><li>IA especializada</li><li>Permisos</li><li>Auditoría</li><li>Local y nube</li></ul>
             </div>
           </li>
         </ol>
@@ -206,13 +224,13 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.12.5 y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261104h" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261104h" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261104h" defer></script>
-  <script src="js/intro.js?v=20261104h" defer></script>
-  <script src="js/escena.js?v=20261104h" defer></script>
-  <script src="js/visuales.js?v=20261104h" defer></script>
-  <script src="js/polvo.js?v=20261104h" defer></script>
-  <script src="js/main.js?v=20261104h" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261104j" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261104j" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261104j" defer></script>
+  <script src="js/intro.js?v=20261104j" defer></script>
+  <script src="js/escena.js?v=20261104j" defer></script>
+  <script src="js/visuales.js?v=20261104j" defer></script>
+  <script src="js/polvo.js?v=20261104j" defer></script>
+  <script src="js/main.js?v=20261104j" defer></script>
 </body>
 </html>

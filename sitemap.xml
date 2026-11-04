@@ -49,4 +49,9 @@
     <xhtml:link rel="alternate" hreflang="es" href="futuro.html"/>
     <xhtml:link rel="alternate" hreflang="ca" href="ca/futuro.html"/>
   </url>
+  <url>
+    <loc>productos.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="productos.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/productos.html"/>
+  </url>
 </urlset>

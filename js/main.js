@@ -473,12 +473,6 @@ if (hayGSAP && !reducido) {
     gsap.fromTo(palabra, { xPercent: 10 }, { xPercent: -40, ease: "none", scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: true } });
   });
 
-  // Cortinilla diagonal: el bloque se descubre de arriba abajo al entrar
-  gsap.utils.toArray(".soc .panel, .cifras__lista, .equipo__lista, .faq__lista, .metodo__pasos, .pasos").forEach((el) => {
-    el.classList.add("cortinilla");
-    gsap.fromTo(el, { "--corte": "0%" }, { "--corte": "100%", ease: "none", scrollTrigger: { trigger: el, start: "top 95%", end: "top 35%", scrub: true } });
-  });
-
   // El método: el paso que está a la altura del centro se marca como activo
   const pasosMetodo = document.querySelectorAll(".metodo__paso");
   pasosMetodo.forEach((p) => {
@@ -523,6 +517,14 @@ if (reglaKairos) {
   } else {
     pintar(1);
   }
+}
+
+// Los controles flotantes solo se ven en la primera pantalla: más abajo tapaban texto
+const controlesFlotantes = document.querySelector(".controles");
+if (controlesFlotantes) {
+  const verControles = () => controlesFlotantes.classList.toggle("controles--ocultos", window.scrollY > window.innerHeight * 0.5);
+  window.addEventListener("scroll", verControles, { passive: true });
+  verControles();
 }
 
 /* ---------- 6. SOC en vivo (datos simulados para la práctica) ---------- */
