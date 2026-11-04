@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
-  <link rel="stylesheet" href="../portfolio.css?v=4">
+  <link rel="stylesheet" href="../portfolio.css?v=6">
 </head>
 <body>
   <a class="saltar" href="#contenido">Salta al contingut</a>
@@ -35,7 +35,7 @@
       <a href="#custodia">Custòdia</a>
       <a href="#metodo">Mètode</a>
       <a href="#sello">Segell</a>
-      <a href="#laboratorio">Investiga</a>
+      
       <a href="#casos">Casos</a>
       <a href="#contacto">Contacte</a>
     </nav>
@@ -139,48 +139,10 @@
       <button type="button" class="boton maq" id="restaurar">Torna a l'original</button>
     </section>
 
-    <section id="laboratorio" class="laboratorio" aria-labelledby="t-lab">
-      <p class="pista maq" aria-hidden="true">Pista: mira la IP, no només la paraula «Failed».</p>
-      <div class="cabeza">
-        <p class="maq">Secció 05 · Casos simulats, amb dades inventades</p>
-        <h2 id="t-lab">Ara <em>investigues</em> tu</h2>
-        <p class="cabeza__nota">Dos casos per practicar. Marca el que sigui sospitós i tanca'l: al final veuràs l'explicació de cada línia.</p>
-      </div>
-      <noscript><p>Aquests casos necessiten JavaScript per funcionar.</p></noscript>
-      <article class="caso-lab" data-caso="accesos">
-        <h3>Cas 1 · Un accés sense permís</h3>
-        <p class="cabeza__nota">Registre d'accessos d'un servidor: cada línia anota alguna cosa que va passar. Marca les línies que formen part de l'atac.</p>
-        <ol class="registro maq"></ol>
-        <div class="lab__acciones">
-          <button type="button" class="boton maq lab__cerrar">Tanca el cas</button>
-          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Torna a començar</button>
-          <p class="maq lab__cuenta" aria-live="polite">0 marcades</p>
-        </div>
-        <div class="veredicto" tabindex="-1" hidden>
-          <p class="veredicto__nota"></p>
-          <p>El que va passar, en ordre: diversos intents fallits des d'una IP externa, un accés correcte amb el compte <code>admin</code>, un usuari nou i una tasca programada per poder tornar. Les fallades d'<code>ana</code> arriben des de la xarxa interna i acaba entrant: el més normal és que s'equivoqués en escriure la contrasenya, tot i que en un cas real també es comprovaria.</p>
-        </div>
-      </article>
-      <article class="caso-lab" data-caso="correo">
-        <h3>Cas 2 · Un correu dubtós</h3>
-        <p class="cabeza__nota">Marca les parts d'aquest correu que delaten que és phishing, és a dir, un engany per robar-te dades.</p>
-        <ol class="registro maq registro--correo"></ol>
-        <div class="lab__acciones">
-          <button type="button" class="boton maq lab__cerrar">Tanca el cas</button>
-          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Torna a començar</button>
-          <p class="maq lab__cuenta" aria-live="polite">0 marcades</p>
-        </div>
-        <div class="veredicto" tabindex="-1" hidden>
-          <p class="veredicto__nota"></p>
-          <p>Cap senyal n'hi ha prou per si sol, però junts són clars: remitent amb un domini estrany, comprovacions d'autenticitat suspeses, presses, salutació genèrica i un enllaç al mateix domini estrany. <strong>SPF</strong> comprova qui pot enviar per un domini, <strong>DKIM</strong> signa el missatge i <strong>DMARC</strong> diu què fer si fallen.</p>
-        </div>
-      </article>
-    </section>
-
     <section id="casos" class="casos" aria-labelledby="t-casos">
       <p class="pista maq" aria-hidden="true">Aquesta web es deia Argos abans que KAIRON.</p>
       <div class="cabeza">
-        <p class="maq">Secció 06</p>
+        <p class="maq">Secció 05</p>
         <h2 id="t-casos">Casos <em>oberts</em></h2>
       </div>
       <a class="caso aparece" href="../../ca/index.html">
@@ -205,6 +167,6 @@
     </section>
   </main>
 
-  <script src="../portfolio.js?v=4" defer></script>
+  <script src="../portfolio.js?v=6" defer></script>
 </body>
 </html>

