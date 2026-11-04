@@ -16,7 +16,22 @@
   function hayWebGL() {
     try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; }
   }
-  if (typeof THREE === "undefined" || !hayWebGL()) { radar2D(contenedor); return; }
+  // Three.js se descarga solo si se va a usar, y sin frenar la carga de la página.
+  // Con ahorro de datos o poca memoria se queda el radar 2D.
+  const ligero = (navigator.connection && navigator.connection.saveData) || navigator.deviceMemory <= 2;
+  if (!hayWebGL() || ligero) { radar2D(contenedor); return; }
+  const rutaThree = document.currentScript.src.replace("escena.js", "vendor/three.min.js");
+  const cargarThree = () => {
+    const js = document.createElement("script");
+    js.src = rutaThree;
+    js.onload = iniciar;
+    js.onerror = () => radar2D(contenedor);
+    document.head.appendChild(js);
+  };
+  if (document.readyState === "complete") cargarThree();
+  else window.addEventListener("load", cargarThree, { once: true });
+
+  function iniciar() {
 
   const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const movil = window.innerWidth < 720;
@@ -371,6 +386,7 @@
       }
     },
   };
+  }
 })();
 
 /* Radar 2D de reserva: anillos, barrido y puntos que se encienden. Sin librerías. */

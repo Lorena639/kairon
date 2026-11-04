@@ -275,16 +275,8 @@ p {
   border-color: var(--linea);
 }
 
-.carga__panel--arriba { top: 0; border-bottom: 1px solid; }
-.carga__panel--abajo { bottom: 0; border-top: 1px solid; }
-
-.carga__centro {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  justify-items: center;
-  gap: 22px;
-}
+.carga__panel--arriba { top: 0; }
+.carga__panel--abajo { bottom: 0; }
 
 .carga__emblema {
   width: 96px;
@@ -292,66 +284,12 @@ p {
   animation: pulso 1.6s ease-in-out infinite;
 }
 
-.carga__linea {
-  width: 220px;
-  height: 1px;
-  background: var(--linea);
-  position: relative;
-  overflow: hidden;
-}
-
-.carga__linea::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, var(--oro-brillo), transparent);
-  transform: translateX(-100%);
-  animation: escaneo 1.4s ease-in-out infinite;
-}
-
 @keyframes escaneo {
   to { transform: translateX(100%); }
 }
 
-.carga__texto {
-  color: var(--suave);
-  min-height: 1.2em;
-}
-
-.carga__texto::after {
-  content: "_";
-  animation: parpadeo 0.8s steps(2) infinite;
-  color: var(--oro);
-}
-
 @keyframes parpadeo {
   to { opacity: 0; }
-}
-
-.carga__cifra {
-  position: absolute;
-  z-index: 2;
-  left: 40px;
-  bottom: 28px;
-  font-family: var(--mono);
-  font-size: clamp(3.5rem, 12vw, 9rem);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, var(--blanco), rgba(248, 245, 238, 0.35));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.carga__barra {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 0;
-  background: linear-gradient(90deg, var(--oro-oscuro), var(--oro-brillo));
-  box-shadow: 0 0 20px var(--oro);
 }
 
 @keyframes pulso {
@@ -2782,77 +2720,6 @@ html.presentacion .mono {
   animation: entra-linea 0.5s var(--facil);
 }
 
-/* ---------- 15m. Montaje del logo en el preloader ---------- */
-.carga__centro {
-  min-height: 300px;
-}
-
-.carga__montaje {
-  position: relative;
-  width: min(80vw, 520px);
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-}
-
-.carga.montando .carga__pulso {
-  display: none;
-}
-
-.carga.montando .carga__montaje {
-  display: flex;
-}
-
-.carga.montando .carga__cifra,
-.carga.montando .carga__barra {
-  opacity: 0.3;
-  transition: opacity 0.6s;
-}
-
-.montaje__emblema {
-  position: relative;
-  width: 54%;
-  aspect-ratio: 933 / 873;
-}
-
-.pieza {
-  position: absolute;
-  inset: 0;
-  display: block;
-  background: url("../img/kairon-emblema-dorado.png") center / 100% 100% no-repeat;
-  will-change: transform, filter, opacity;
-}
-
-/* Cada pieza recorta una zona del mismo PNG: ala (izquierda), K (centro-abajo) y anillo (resto) */
-.pieza--ala { clip-path: polygon(0 0, 46% 0, 46% 100%, 0 100%); }
-.pieza--k { clip-path: polygon(46% 18%, 82% 18%, 82% 100%, 46% 100%); }
-.pieza--anillo { clip-path: polygon(46% 0, 100% 0, 100% 100%, 82% 100%, 82% 18%, 46% 18%); }
-
-.montaje__palabra {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1243 / 263;
-}
-
-.pieza--letra {
-  background-image: url("../img/kairon-wordmark-dorado.png");
-  clip-path: inset(0 calc(100% - (var(--n) + 1) * 16.6667%) 0 calc(var(--n) * 16.6667%));
-}
-
-/* Destello final: misma técnica que el logo de la cabecera, recortado por el logo completo */
-.montaje__brillo {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 248, 225, 0.95) 50%, transparent 65%);
-  background-size: 250% 100%;
-  background-position: 120% 0;
-  -webkit-mask: url("../img/kairon-logo-dorado.png") center / contain no-repeat;
-  mask: url("../img/kairon-logo-dorado.png") center / contain no-repeat;
-  opacity: 0;
-  pointer-events: none;
-}
-
 /* ---------- 15n. Oro metálico, intro de partículas, tarjetas apiladas, arrastre ---------- */
 
 /* Oro metálico: la imagen del logo se usa solo como máscara; el color lo pone un degradado con luz en movimiento */
@@ -2910,18 +2777,6 @@ html.presentacion .mono {
 
 .carga.intro-activa .intro__lienzo {
   display: block;
-}
-
-.carga.intro-activa .carga__pulso,
-.carga.intro-activa .carga__linea,
-.carga.intro-activa .carga__texto {
-  display: none;
-}
-
-.carga.intro-activa .carga__cifra,
-.carga.intro-activa .carga__barra {
-  opacity: 0.25;
-  transition: opacity 0.6s;
 }
 
 .intro__logo {
@@ -3875,10 +3730,6 @@ body.cursor--arrastra .cursor {
     display: none;
   }
 
-  .carga__cifra {
-    left: 20px;
-  }
-
   .cifra {
     grid-template-columns: 72px 1fr;
   }
@@ -3953,5 +3804,3 @@ body.cursor--arrastra .cursor {
   .hero__kairos { display: none; }
 }
 
-/* Intro sin la línea horizontal entre las cortinas */
-.carga__panel--arriba, .carga__panel--abajo { border: 0; }

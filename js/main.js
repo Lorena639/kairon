@@ -14,7 +14,6 @@ document.documentElement.classList.remove("sin-js");
 /* Textos que genera el JavaScript, en el idioma de la página (lang="es" o "ca") */
 const CA = document.documentElement.lang === "ca";
 const TXT = CA ? {
-  frases: ["Iniciant vigilància", "Connectant agents", "Carregant regles del SOC", "Sistema operatiu"],
   eventos: [
     ["ok", "Agent WS-07 en línia"], ["ok", "Integritat de fitxers verificada"], ["aviso", "5 intents de login fallits · srv-01"],
     ["alerta", "Força bruta SSH bloquejada · 203.0.113.9"], ["ok", "Regles actualitzades (v2026.10)"], ["aviso", "USB desconegut a WS-12"],
@@ -29,10 +28,9 @@ const TXT = CA ? {
     [5600, "ok", "Amenaça continguda · informe en curs"],
   ],
   enCurso: "Atac en curs…", otroAtaque: "▶ Simular un altre atac",
-  enviando: "Enviant…", recibido: "✓ Rebut", avisoForm: "> Rebut. Et responem en menys de 24 h.", pedir: "Demanar auditoria gratuïta",
+  enviando: "Enviant…", recibido: "Demo completada", avisoForm: "> Demostració: aquest formulari encara no envia les dades.", pedir: "Demanar auditoria gratuïta",
   latencia: "latència",
 } : {
-  frases: ["Iniciando vigilancia", "Conectando agentes", "Cargando reglas del SOC", "Sistema operativo"],
   eventos: [
     ["ok", "Agente WS-07 en línea"], ["ok", "Integridad de archivos verificada"], ["aviso", "5 intentos de login fallidos · srv-01"],
     ["alerta", "Fuerza bruta SSH bloqueada · 203.0.113.9"], ["ok", "Reglas actualizadas (v2026.10)"], ["aviso", "USB desconocido en WS-12"],
@@ -47,7 +45,7 @@ const TXT = CA ? {
     [5600, "ok", "Amenaza contenida · informe en curso"],
   ],
   enCurso: "Ataque en curso…", otroAtaque: "▶ Simular otro ataque",
-  enviando: "Enviando…", recibido: "✓ Recibido", avisoForm: "> Recibido. Te respondemos en menos de 24 h.", pedir: "Pedir auditoría gratuita",
+  enviando: "Enviando…", recibido: "Demo completada", avisoForm: "> Demostración: este formulario todavía no envía los datos.", pedir: "Pedir auditoría gratuita",
   latencia: "latencia",
 };
 
@@ -101,33 +99,6 @@ function revelarHero() {
   if (resto.length) tl.to(resto, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08 }, letras.length ? "-=0.7" : 0);
 }
 
-function montarLogo() {
-  // Devuelve una línea de tiempo con el montaje del logo pieza a pieza y el brillo final
-  const tl = gsap.timeline();
-  if (!carga || !carga.querySelector(".carga__montaje") || !hayGSAP || reducido) return tl;
-  carga.classList.add("montando");
-  const ala = carga.querySelector(".pieza--ala");
-  const anillo = carga.querySelector(".pieza--anillo");
-  const k = carga.querySelector(".pieza--k");
-  const letras = carga.querySelectorAll(".pieza--letra");
-  const brillo = carga.querySelector(".montaje__brillo");
-  gsap.set(carga.querySelector(".carga__texto"), { opacity: 0 });
-  gsap.set(carga.querySelector(".carga__linea"), { opacity: 0 });
-  gsap.set(ala, { x: -90, rotate: -25, opacity: 0, filter: "blur(10px)", transformOrigin: "100% 60%" });
-  gsap.set(anillo, { scale: 1.6, rotate: 70, opacity: 0, filter: "blur(10px)", transformOrigin: "50% 50%" });
-  gsap.set(k, { y: 90, scale: 0.7, opacity: 0, filter: "blur(10px)", transformOrigin: "50% 100%" });
-  gsap.set(letras, { y: 46, opacity: 0, filter: "blur(8px)", scaleY: 1.3, transformOrigin: "50% 100%" });
-  tl.to(anillo, { scale: 1, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, ease: "expo.out" })
-    .to(k, { y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "back.out(1.6)" }, "-=0.75")
-    .to(ala, { x: 0, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, "-=0.6")
-    .to(letras, { y: 0, opacity: 1, filter: "blur(0px)", scaleY: 1, duration: 0.7, ease: "back.out(1.4)", stagger: 0.09 }, "-=0.45")
-    .to(brillo, { opacity: 1, duration: 0.2 }, "-=0.1")
-    .fromTo(brillo, { backgroundPosition: "120% 0" }, { backgroundPosition: "-120% 0", duration: 1.1, ease: "power2.inOut" }, "<")
-    .to(brillo, { opacity: 0, duration: 0.3 }, "-=0.25")
-    .to({}, { duration: 0.35 });
-  return tl;
-}
-
 function terminarCarga() {
   document.body.classList.remove("sin-scroll");
   if (!carga) return revelarHero();
@@ -137,13 +108,9 @@ function terminarCarga() {
       .to(".carga__panel--arriba", { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<")
       .to(".carga__panel--abajo", { yPercent: 100, duration: 0.9, ease: "power4.inOut" }, "<")
       .to(carga, { opacity: 0, duration: 0.2 }, "-=0.1");
-    if (window.kaironIntro) {
-      window.kaironIntro.start(() => { salida.play(); setTimeout(revelarHero, 500); });
-    } else {
-      const montaje = montarLogo();
-      montaje.eventCallback("onComplete", () => { salida.play(); setTimeout(revelarHero, 500); });
-      if (!montaje.duration()) { salida.play(); setTimeout(revelarHero, 500); }
-    }
+    const entrar = () => { salida.play(); setTimeout(revelarHero, 500); };
+    if (window.kaironIntro) window.kaironIntro.start(entrar);
+    else entrar();
   } else {
     carga.remove();
     revelarHero();
