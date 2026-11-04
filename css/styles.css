@@ -3935,3 +3935,20 @@ body.cursor--arrastra .cursor {
 /* Nombre = wordmark original del manual (la O con el punto orbital) */
 .hero__nombre { line-height: 0; }
 .hero__nombre img { width: clamp(220px, 40vw, 560px); height: auto; filter: drop-shadow(0 6px 30px rgba(212, 175, 122, 0.25)); }
+
+/* Hero: el emblema se mide también por la altura para no pisar el nombre,
+   y un velo oscuro central mantiene legible el texto sobre la escena */
+.hero__contenido--centro .logo3d { transform: none; width: min(44vw, 25vh, 240px); margin: 0 0 14px; }
+.hero__velo {
+  background:
+    radial-gradient(ellipse 620px 62% at 50% 62%, rgba(11, 15, 20, 0.86) 0%, rgba(11, 15, 20, 0.62) 58%, transparent 100%),
+    linear-gradient(180deg, rgba(11, 15, 20, 0.55) 0%, transparent 28%, transparent 55%, rgba(11, 15, 20, 0.9) 100%);
+}
+
+/* Pantallas bajas: botones siempre dentro de la primera pantalla */
+@media (max-height: 720px) and (min-width: 720px) {
+  .hero__contenido--centro { padding-top: 84px; gap: 6px; }
+  .hero__contenido--centro .logo3d { width: min(44vw, 20vh, 240px); margin-bottom: 6px; }
+  .hero__nombre img { width: clamp(200px, 26vw, 340px); }
+  .hero__kairos { display: none; }
+}
