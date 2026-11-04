@@ -3,7 +3,7 @@
    la app instalada abre al instante y funciona aunque no haya conexión.
    Estrategia: primero red (para ver cambios), y si falla, caché. */
 
-const VERSION = "kairon-v10";
+const VERSION = "kairon-v11";
 const ARCHIVOS = [
   "./", "./index.html", "./sobre-mi.html", "./informe.html",
   "./ca/index.html", "./ca/sobre-mi.html", "./ca/informe.html",

@@ -3917,3 +3917,44 @@ body.cursor--arrastra .cursor {
   .panel__detalle { padding: 14px 0 0; border-left: 0; border-top: 1px solid var(--linea); }
 }
 .panel__detalle .etiqueta { display: inline-block; padding: 2px 8px; border-radius: 999px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; }
+
+/* ---------- 15v. Correcciones de maquetación ---------- */
+/* Nada puede ensanchar la página: lo que sobresale se recorta aquí (clip no rompe sticky) */
+main, .pie { overflow-x: clip; }
+
+/* Botones: el texto se queda centrado al pasar el ratón */
+.boton:hover .boton__texto { transform: none; }
+.boton__texto::after { content: none; }
+
+/* Servicios: el visual nunca pisa el texto */
+@media (min-width: 1024px) {
+  .servicio .contenedor > * { max-width: min(52vw, 700px); }
+}
+@media (min-width: 720px) and (max-width: 1023px) {
+  .servicio { padding: 88px 0; min-height: 0; }
+  .servicio__visual {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    justify-self: center;
+    width: min(70vw, 480px);
+    height: 300px;
+    margin-top: 32px;
+  }
+  .servicio__orbita { display: none; }
+}
+
+/* El contenido ya no se mezcla con el menú al pasar por debajo */
+.cabecera:not(.cabecera--clara) { background: linear-gradient(180deg, rgba(11, 15, 20, 0.94) 60%, rgba(11, 15, 20, 0)); }
+.cabecera--clara { background: linear-gradient(180deg, rgba(248, 245, 238, 0.96) 60%, rgba(248, 245, 238, 0)); }
+
+/* Los puntos laterales solo muestran su nombre al pasar el ratón: así no pisan los paneles */
+.puntos a.activo:not(:hover) span { opacity: 0; }
+
+/* Los controles flotantes tapaban texto en pantallas medianas */
+@media (max-width: 1099px) { .controles { display: none; } }
+
+/* Cifras: las cuatro tarjetas siempre caben en el ancho disponible */
+.cifras__lista { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.cifra { min-width: 0; }
