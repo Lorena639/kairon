@@ -100,16 +100,73 @@ h2 { margin: 8px 0 14px; font: 300 clamp(2.6rem, 7.6vw, 6.8rem)/0.98 var(--serif
 .enlace--claro { display: inline-block; margin: 0; text-decoration-color: var(--papel); }
 .enlace--claro:hover { color: var(--tinta); }
 
+.progreso { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--tinta); transform: scaleX(0); transform-origin: left; }
+
+.boton { min-height: 42px; padding: 8px 18px; border: 2px solid var(--tinta); background: var(--tinta); color: var(--papel); cursor: pointer; }
+.boton:hover { background: var(--rojo); border-color: var(--rojo); }
+.boton--suave { background: transparent; color: var(--tinta); }
+.boton--suave:hover { color: var(--papel); }
+
+.sello__hash .cambia { color: var(--tinta); background: #f3c9bd; }
+.sello__cambios { margin: 12px 0 18px; color: var(--suave); }
+
+.laboratorio { background: var(--papel-2); }
+.registro { display: grid; gap: 6px; }
+.registro button { display: block; width: 100%; min-height: 44px; padding: 10px 14px; border: 1.5px solid var(--linea); background: #fbf7ec; color: var(--tinta); font: inherit; text-align: left; overflow-wrap: anywhere; cursor: pointer; }
+.registro button:hover:not(:disabled) { border-color: var(--tinta); }
+.registro button[aria-pressed="true"] { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+.registro button:disabled { cursor: default; }
+.registro .es-ataque button { border-left: 8px solid var(--rojo); }
+.registro .es-normal button { border-left: 8px solid #6f7f58; }
+.registro .fallo button { outline: 2px dashed var(--rojo); outline-offset: 2px; }
+.registro__nota { padding: 6px 14px 8px; font-family: var(--sans); font-size: 0.95rem; color: var(--suave); }
+.lab__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 22px; }
+.lab__cuenta { color: var(--suave); }
+.boton[hidden] { display: none; }
+.veredicto { max-width: 46em; margin-top: 26px; padding-top: 20px; border-top: 2px solid var(--tinta); outline: none; }
+.veredicto__nota { margin-bottom: 10px; font: 400 clamp(1.4rem, 3vw, 2.2rem)/1.15 var(--serif); }
+.veredicto code { font-family: var(--maq); }
+
+.enlace--boton { display: block; margin-top: 16px; padding: 0; border: 0; background: none; color: inherit; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 2px; cursor: pointer; }
+
 .js .aparece { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s, padding 0.3s, color 0.3s; }
 .js .aparece.visto { opacity: 1; transform: none; }
 
 @media (max-width: 720px) {
-  .cinta nav { display: none; }
+  html { scroll-padding-top: 88px; }
+  .portada { min-height: calc(100svh - 75px); }
+  .cinta { flex-direction: column; gap: 6px; padding-block: 10px; }
+  .cinta nav { gap: 16px; margin-inline: calc(var(--margen) * -1); padding-inline: var(--margen); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+  .cinta nav a { padding-block: 4px; }
   .huella { top: 40px; height: 56%; right: -50px; max-width: 80%; opacity: 0.4; }
   .sello-disp { bottom: auto; top: 60px; }
   h1 em { padding-left: 0; }
   .caso { grid-template-columns: 1fr; gap: 8px; }
   .prueba { rotate: 0deg; }
+}
+@media print {
+  body { background: #fff; font-size: 11pt; }
+  .cinta, .huella, .sello-disp, .enlace, .filtros, .solo-raton, .sello, .laboratorio, .saltar { display: none !important; }
+  .portada { min-height: 0; padding: 0 0 12pt; }
+  .portada__ref { margin-bottom: 0; }
+  h1 { font-size: 30pt; line-height: 1; margin: 8pt 0; }
+  h1 em { padding-left: 0; }
+  .cabeza > .maq { display: none; }
+  a.enlace--claro { display: inline-block !important; }
+  * { transition: none !important; animation: none !important; }
+  @page { margin: 16mm; }
+  h2 { font-size: 22pt; }
+  section[id], .ficha { padding: 12pt 0; background: #fff !important; color: #000 !important; }
+  .custodia .maq, .cadena p, .prueba p, .caso__txt { color: #333 !important; }
+  .cadena li::before { background: #000 !important; }
+  .mesa { grid-template-columns: repeat(2, 1fr); gap: 8pt; }
+  .prueba { padding: 8pt; rotate: none; translate: none; box-shadow: none; break-inside: avoid; }
+  .prueba::before { display: none; }
+  .js .aparece { opacity: 1; transform: none; }
+  .caso { padding: 8pt 0; }
+  .caso strong { font-size: 18pt; }
+  .correo { font-size: 13pt; margin: 4pt 0; }
+  .contacto h2 { font-size: 22pt; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

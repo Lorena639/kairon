@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
-  <link rel="stylesheet" href="portfolio.css?v=2">
+  <link rel="stylesheet" href="portfolio.css?v=3">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -23,9 +23,11 @@
       <a href="#pruebas">Pruebas</a>
       <a href="#custodia">Custodia</a>
       <a href="#sello">Sello</a>
+      <a href="#laboratorio">Investiga</a>
       <a href="#casos">Casos</a>
       <a href="#contacto">Contacto</a>
     </nav>
+    <span class="progreso" id="progreso" aria-hidden="true"></span>
   </header>
 
   <main id="contenido">
@@ -93,11 +95,32 @@
       <input id="texto-hash" value="Cadena de custodia" autocomplete="off" spellcheck="false">
       <p class="maq sello__etq">Huella SHA-256</p>
       <output class="maq sello__hash" id="hash" for="texto-hash">—</output>
+      <p class="sello__cambios" id="cambios" aria-live="polite"></p>
+      <button type="button" class="boton maq" id="restaurar">Volver al original</button>
+    </section>
+
+    <section id="laboratorio" class="laboratorio" aria-labelledby="t-lab">
+      <div class="cabeza">
+        <p class="maq">Sección 04 · Caso simulado, con datos inventados</p>
+        <h2 id="t-lab">Ahora <em>investigas</em> tú</h2>
+        <p class="cabeza__nota">Este es el registro de accesos de un servidor: cada línea anota algo que ocurrió. Alguien ha entrado sin permiso. Marca las líneas que forman parte del ataque y cierra el caso.</p>
+      </div>
+      <ol class="registro maq" id="registro"></ol>
+      <noscript><p>Este caso necesita JavaScript para funcionar.</p></noscript>
+      <div class="lab__acciones">
+        <button type="button" class="boton maq" id="cerrar-caso">Cerrar el caso</button>
+        <button type="button" class="boton boton--suave maq" id="reabrir-caso" hidden>Empezar de nuevo</button>
+        <p class="maq lab__cuenta" id="cuenta" aria-live="polite">0 líneas marcadas</p>
+      </div>
+      <div class="veredicto" id="veredicto" tabindex="-1" hidden>
+        <p class="veredicto__nota" id="veredicto-nota"></p>
+        <p>Lo que ocurrió, en orden: varios intentos fallidos desde una IP externa, un acceso correcto con la cuenta <code>admin</code>, un usuario nuevo y una tarea programada para poder volver. Los fallos de <code>ana</code> llegan desde la red interna y acaba entrando: lo normal es que se equivocara al escribir la contraseña, aunque en un caso real también se comprobaría.</p>
+      </div>
     </section>
 
     <section id="casos" class="casos" aria-labelledby="t-casos">
       <div class="cabeza">
-        <p class="maq">Sección 04</p>
+        <p class="maq">Sección 05</p>
         <h2 id="t-casos">Casos <em>abiertos</em></h2>
       </div>
       <a class="caso aparece" href="../index.html">
@@ -117,9 +140,10 @@
       <h2 id="t-contacto">¿Abrimos un <em>caso</em>?</h2>
       <a class="correo" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
       <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub ↗</a>
+      <button type="button" class="enlace enlace--claro enlace--boton" id="imprimir">Imprimir el expediente</button>
     </section>
   </main>
 
-  <script src="portfolio.js?v=2" defer></script>
+  <script src="portfolio.js?v=3" defer></script>
 </body>
 </html>
