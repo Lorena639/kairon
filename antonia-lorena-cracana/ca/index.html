@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antonia Lorena Cracana · Expedient</title>
+  <meta name="description" content="Portfolio d'Antonia Lorena Cracana: tècnica SOC en pràctiques i estudiant de SMX, amb interès en ciberseguretat i anàlisi forense.">
+  <meta name="theme-color" content="#f1eadb">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Antonia Lorena Cracana · Expedient">
+  <meta property="og:description" content="Portfolio d'Antonia Lorena Cracana: tècnica SOC en pràctiques i estudiant de SMX, amb interès en ciberseguretat i anàlisi forense.">
+  <meta property="og:url" content="https://lorena639.github.io/kairon/antonia-lorena-cracana/ca/">
+  <meta property="og:locale" content="ca_ES">
+  <meta property="og:image" content="https://lorena639.github.io/kairon/antonia-lorena-cracana/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="es" href="https://lorena639.github.io/kairon/antonia-lorena-cracana/">
+  <link rel="alternate" hreflang="ca" href="https://lorena639.github.io/kairon/antonia-lorena-cracana/ca/">
+  <link rel="icon" href="../../img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
+  <link rel="stylesheet" href="../portfolio.css?v=4">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Salta al contingut</a>
+
+  <header class="cinta maq">
+    <a href="#contenido">Expediente ALC</a>
+    <nav aria-label="Seccions">
+      <a href="#pruebas">Proves</a>
+      <a href="#custodia">Custòdia</a>
+      <a href="#metodo">Mètode</a>
+      <a href="#sello">Segell</a>
+      <a href="#laboratorio">Investiga</a>
+      <a href="#casos">Casos</a>
+      <a href="#contacto">Contacte</a>
+    </nav>
+    <div class="cinta__extra">
+      <a href="../" hreflang="es" aria-label="Versión en español">ES</a>
+      <button type="button" class="uv-boton" id="uv" aria-pressed="false" aria-label="Activa la llum ultraviolada">UV<span id="uv-cuenta"></span></button>
+    </div>
+    <span class="progreso" id="progreso" aria-hidden="true"></span>
+  </header>
+  <div class="uv-capa" id="uv-capa" aria-hidden="true"></div>
+  <div class="definicion" id="definicion" role="tooltip" hidden></div>
+
+  <main id="contenido">
+    <section class="portada">
+      <svg class="huella" id="huella" viewBox="-30 -40 460 640" aria-hidden="true"></svg>
+      <p class="maq portada__ref">Ref. ALC-2026 · Sant Feliu de Llobregat</p>
+      <h1>Antonia<br><em>Lorena</em><br>Cracana</h1>
+      <p class="portada__texto">Segueixo el rastre del que passa en un sistema. Vaig fer 114 dies de pràctiques en un <button type="button" class="termino" data-t="soc">SOC</button> i vull especialitzar-me en anàlisi forense.</p>
+      <a class="enlace" href="#pruebas">Obre l'expedient ↓</a>
+      <span class="sello-disp maq" aria-hidden="true">Disponible</span>
+      <p class="pista maq" aria-hidden="true">El rastre comença a l'atenció al client: escoltar també és investigar.</p>
+    </section>
+
+    <section class="ficha" aria-label="Fitxa">
+      <dl>
+        <div><dt class="maq">Formació</dt><dd>2n de SMX a Digitech FP, fins al juny de 2027</dd></div>
+        <div><dt class="maq">Experiència</dt><dd>Tècnica SOC en pràctiques, Apolo Cybersecurity</dd></div>
+        <div><dt class="maq">Eines</dt><dd><button type="button" class="termino" data-t="wazuh">Wazuh</button>, <button type="button" class="termino" data-t="iris">IRIS</button>, <button type="button" class="termino" data-t="grafana">Grafana</button>, Windows Server, Linux</dd></div>
+        <div><dt class="maq">Idiomes</dt><dd>Romanès natiu, espanyol avançat, català C1, anglès B2</dd></div>
+      </dl>
+    </section>
+
+    <section id="pruebas" class="pruebas" aria-labelledby="t-pruebas">
+      <p class="pista maq" aria-hidden="true">Cada targeta diu d'on surt. Una prova sense origen no val.</p>
+      <div class="cabeza">
+        <p class="maq">Secció 01</p>
+        <h2 id="t-pruebas">Proves <em>aportades</em></h2>
+        <p class="cabeza__nota">Cada competència, amb el seu origen. <span class="solo-raton">Pots moure les targetes.</span></p>
+        <div class="filtros" role="group" aria-label="Filtra per origen">
+          <button type="button" class="maq activo" data-f="todas" aria-pressed="true">Totes</button>
+          <button type="button" class="maq" data-f="practicas" aria-pressed="false">Pràctiques</button>
+          <button type="button" class="maq" data-f="ciclo" aria-pressed="false">Cicle</button>
+          <button type="button" class="maq" data-f="curso" aria-pressed="false">En curs</button>
+        </div>
+      </div>
+      <ul class="mesa" id="mesa">
+        <li class="prueba" data-o="practicas"><span class="maq">E-01 · Pràctiques</span><h3>Gestió d'incidències</h3><p>Anàlisi, prioritat, escalat i seguiment fins al tancament, cada dia al SOC.</p></li>
+        <li class="prueba" data-o="practicas"><span class="maq">E-02 · Pràctiques</span><h3>Monitoratge</h3><p>Alertes a Wazuh, dades a Grafana i descart de <button type="button" class="termino" data-t="fp">falsos positius</button>.</p></li>
+        <li class="prueba" data-o="practicas"><span class="maq">E-03 · Pràctiques</span><h3>Ticketing i informes</h3><p>Casos a IRIS segons el procediment i informes per a l'equip.</p></li>
+        <li class="prueba" data-o="ciclo"><span class="maq">E-04 · Cicle</span><h3>Windows Server</h3><p>Equips, usuaris, grups i permisos. Ara aprenent DHCP.</p></li>
+        <li class="prueba" data-o="ciclo"><span class="maq">E-05 · Cicle</span><h3>Linux i xarxes</h3><p>Terminal, permisos, Bash senzill, cablejat i adreçament IP.</p></li>
+        <li class="prueba" data-o="curso"><span class="maq">E-06 · En curs</span><h3>TryHackMe</h3><p>Laboratoris de seguretat pel meu compte.</p></li>
+        <li class="prueba" data-o="curso"><span class="maq">E-07 · En curs</span><h3>Microsoft 365 i Power BI</h3><p>Començant amb Power BI i Power Automate.</p></li>
+      </ul>
+    </section>
+
+    <section id="custodia" class="custodia" aria-labelledby="t-custodia">
+      <p class="pista maq" aria-hidden="true">114 dies en un SOC.</p>
+      <div class="cabeza">
+        <p class="maq">Secció 02</p>
+        <h2 id="t-custodia">Cadena de <em>custòdia</em></h2>
+      </div>
+      <ol class="cadena">
+        <li class="aparece"><time class="maq">2020 → 2025</time><h3>Atenció al client</h3><p>Hostaleria, logística i cura de persones. Vaig aprendre a tractar amb gent i a treballar sota pressió.</p></li>
+        <li class="aparece"><time class="maq">2025 → juny 2027</time><h3>CFGM SMX</h3><p>Digitech FP, Barcelona. El pas a la informàtica.</p></li>
+        <li class="aparece clave"><time class="maq">oct. 2025 → febr. 2026</time><h3>SOC, Apolo Cybersecurity</h3><p>114 dies gestionant incidències de principi a fi i ajudant l'equip en <button type="button" class="termino" data-t="th">Threat Hunting</button>.</p></li>
+        <li class="aparece"><time class="maq">Ara</time><h3>Rumb al forense</h3><p>KAIRON, el meu TFG, i laboratoris pel meu compte.</p></li>
+      </ol>
+    </section>
+
+    <section id="metodo" class="metodo" aria-labelledby="t-metodo">
+      <div class="cabeza">
+        <p class="maq">Secció 03</p>
+        <h2 id="t-metodo">Com <em>treballo</em></h2>
+        <p class="cabeza__nota">El que feia amb cada incidència al SOC.</p>
+      </div>
+      <ol class="pasos">
+        <li class="aparece"><h3>Analitzar</h3><p>Què ha passat i si és real o un fals positiu.</p></li>
+        <li class="aparece"><h3>Prioritzar</h3><p>Què és més urgent i què pot esperar.</p></li>
+        <li class="aparece"><h3>Escalar</h3><p>Qui ha d'intervenir, si em supera.</p></li>
+        <li class="aparece"><h3>Seguir fins al tancament</h3><p>Deixar-ho documentat a IRIS i no perdre-ho de vista.</p></li>
+      </ol>
+      <aside class="ahora">
+        <p class="maq">Aprenent ara · actualitzat el novembre de 2026</p>
+        <ul><li>DHCP a Windows Server</li><li>Power BI i Power Automate</li><li>Laboratoris a TryHackMe</li></ul>
+      </aside>
+    </section>
+
+    <section id="sello" class="sello" aria-labelledby="t-sello">
+      <p class="pista maq" aria-hidden="true">Sempre 64 caràcters, escriguis el que escriguis.</p>
+      <div class="cabeza">
+        <p class="maq">Secció 04</p>
+        <h2 id="t-sello">Si canvia una lletra, <em>es nota</em></h2>
+        <p class="cabeza__nota">Així es demostra que una prova no s'ha tocat: la seva empremta <button type="button" class="termino" data-t="sha">SHA-256</button>. Escriu alguna cosa i canvia una sola lletra. Es calcula de veritat al teu navegador i no s'envia res.</p>
+      </div>
+      <label class="maq" for="texto-hash">Prova</label>
+      <input id="texto-hash" value="Cadena de custòdia" autocomplete="off" spellcheck="false">
+      <p class="maq sello__etq">Empremta SHA-256</p>
+      <output class="maq sello__hash" id="hash" for="texto-hash">—</output>
+      <p class="sello__cambios" id="cambios" aria-live="polite"></p>
+      <button type="button" class="boton maq" id="restaurar">Torna a l'original</button>
+    </section>
+
+    <section id="laboratorio" class="laboratorio" aria-labelledby="t-lab">
+      <p class="pista maq" aria-hidden="true">Pista: mira la IP, no només la paraula «Failed».</p>
+      <div class="cabeza">
+        <p class="maq">Secció 05 · Casos simulats, amb dades inventades</p>
+        <h2 id="t-lab">Ara <em>investigues</em> tu</h2>
+        <p class="cabeza__nota">Dos casos per practicar. Marca el que sigui sospitós i tanca'l: al final veuràs l'explicació de cada línia.</p>
+      </div>
+      <noscript><p>Aquests casos necessiten JavaScript per funcionar.</p></noscript>
+      <article class="caso-lab" data-caso="accesos">
+        <h3>Cas 1 · Un accés sense permís</h3>
+        <p class="cabeza__nota">Registre d'accessos d'un servidor: cada línia anota alguna cosa que va passar. Marca les línies que formen part de l'atac.</p>
+        <ol class="registro maq"></ol>
+        <div class="lab__acciones">
+          <button type="button" class="boton maq lab__cerrar">Tanca el cas</button>
+          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Torna a començar</button>
+          <p class="maq lab__cuenta" aria-live="polite">0 marcades</p>
+        </div>
+        <div class="veredicto" tabindex="-1" hidden>
+          <p class="veredicto__nota"></p>
+          <p>El que va passar, en ordre: diversos intents fallits des d'una IP externa, un accés correcte amb el compte <code>admin</code>, un usuari nou i una tasca programada per poder tornar. Les fallades d'<code>ana</code> arriben des de la xarxa interna i acaba entrant: el més normal és que s'equivoqués en escriure la contrasenya, tot i que en un cas real també es comprovaria.</p>
+        </div>
+      </article>
+      <article class="caso-lab" data-caso="correo">
+        <h3>Cas 2 · Un correu dubtós</h3>
+        <p class="cabeza__nota">Marca les parts d'aquest correu que delaten que és phishing, és a dir, un engany per robar-te dades.</p>
+        <ol class="registro maq registro--correo"></ol>
+        <div class="lab__acciones">
+          <button type="button" class="boton maq lab__cerrar">Tanca el cas</button>
+          <button type="button" class="boton boton--suave maq lab__reabrir" hidden>Torna a començar</button>
+          <p class="maq lab__cuenta" aria-live="polite">0 marcades</p>
+        </div>
+        <div class="veredicto" tabindex="-1" hidden>
+          <p class="veredicto__nota"></p>
+          <p>Cap senyal n'hi ha prou per si sol, però junts són clars: remitent amb un domini estrany, comprovacions d'autenticitat suspeses, presses, salutació genèrica i un enllaç al mateix domini estrany. <strong>SPF</strong> comprova qui pot enviar per un domini, <strong>DKIM</strong> signa el missatge i <strong>DMARC</strong> diu què fer si fallen.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="casos" class="casos" aria-labelledby="t-casos">
+      <p class="pista maq" aria-hidden="true">Aquesta web es deia Argos abans que KAIRON.</p>
+      <div class="cabeza">
+        <p class="maq">Secció 06</p>
+        <h2 id="t-casos">Casos <em>oberts</em></h2>
+      </div>
+      <a class="caso aparece" href="../../ca/index.html">
+        <span class="maq">TFG · amb João Daniel</span>
+        <strong>KAIRON</strong>
+        <span class="caso__txt">Empresa fictícia de SOC gestionat per a pimes: web, identitat i pla de projecte.</span>
+      </a>
+      <a class="caso aparece" href="https://github.com/Lorena639/mochila-smx-app" target="_blank" rel="noopener">
+        <span class="maq">Projecte personal</span>
+        <strong>Mochila SMX</strong>
+        <span class="caso__txt">La meva web per organitzar treballs i apunts del cicle.</span>
+      </a>
+    </section>
+
+    <section id="contacto" class="contacto" aria-labelledby="t-contacto">
+      <p class="pista maq" aria-hidden="true">Si has arribat fins aquí, escriu-me.</p>
+      <p class="maq">Fi de l'expedient</p>
+      <h2 id="t-contacto">Obrim un <em>cas</em>?</h2>
+      <a class="correo" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
+      <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub ↗</a>
+      <button type="button" class="enlace enlace--claro enlace--boton" id="imprimir">Imprimeix l'expedient</button>
+    </section>
+  </main>
+
+  <script src="../portfolio.js?v=4" defer></script>
+</body>
+</html>
