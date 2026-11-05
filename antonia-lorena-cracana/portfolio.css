@@ -236,3 +236,15 @@ section[id], .portada { position: relative; }
   *, *::before { animation: none !important; transition: none !important; }
   .js .aparece { opacity: 1; transform: none; }
 }
+
+/* Móvil: la animación de caída no ensancha la página y los enlaces se pulsan bien */
+@media (max-width: 720px) {
+  .pruebas { overflow-x: clip; }
+  .prueba.cae { scale: 1.06; }
+  .cinta__extra > a, .cinta > a { display: inline-flex; align-items: center; min-height: 36px; }
+  .cinta nav a { display: inline-flex; align-items: center; min-height: 36px; padding-block: 0; }
+  .uv-boton { min-width: 36px; min-height: 36px; }
+  .enlace { display: inline-flex; align-items: center; min-height: 44px; }
+  .enlace--boton { display: flex; }
+  .termino { min-height: 0; }
+}

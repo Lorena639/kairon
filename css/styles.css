@@ -4081,3 +4081,11 @@ main, .pie { overflow-x: clip; }
 @media (min-width: 720px) { .cifras__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 /* El panel del SOC no deja huecos: estado y alertas ocupan todo el ancho */
 @media (min-width: 720px) { .panel > .panel__bloque:nth-last-child(-n+2) { grid-column: 1 / -1; } }
+/* Móvil: objetivos táctiles cómodos y letra mínima legible */
+@media (max-width: 720px) {
+  .persona__enlaces { flex-wrap: wrap; }
+  .persona__enlaces a, .servicio__mas, .pie__derechos a { display: inline-flex; align-items: center; min-height: 44px; }
+  span.mono, .etiqueta, .hero__kairos, .hero__estado, .hero__scroll, .persona__rol, .persona__enlaces a, .pie__derechos,
+  .servicio__datos li, .formulario__campo label, .filtro, .boton__texto, .paso__hora, .panel__sim, .pie__latencia, .pie__reloj,
+  .panel__cabecera span, .filtro b, .pie__estado span { font-size: 12px; }
+}
