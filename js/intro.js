@@ -142,6 +142,8 @@
     if (reducido) { alTerminar(); return; }
     carga.classList.add("intro-activa");
     medir();
+    // Ventana sin tamaño (por ejemplo, oculta): no hay nada que dibujar y entra la web igualmente
+    if (objetivo.w < 8 || objetivo.h < 8) { alTerminar(); return; }
     muestrear();
     const inicio = performance.now();
     const D_PARTICULAS = 3200, D_FUNDIDO = 600, D_DESTELLO = 1300, D_PAUSA = 1500;
