@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>João Daniel de Paiva Oliveira · Maru</title>
+  <meta name="description" content="Portfolio de João Daniel de Paiva Oliveira (Maru): estudiante de SMX en Barcelona, en camino hacia el desarrollo de software, los datos y la IA.">
+  <meta name="theme-color" content="#070709">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&display=swap">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="cabecera__marca" href="#contenido">JD<span>.</span></a>
+    <nav class="cabecera__nav" aria-label="Secciones">
+      <a class="tajo" href="#sobre">Sobre mí</a>
+      <a class="tajo" href="#habilidades">Habilidades</a>
+      <a class="tajo" href="#proyectos">Proyectos</a>
+      <a class="tajo" href="#formacion">Formación</a>
+      <a class="tajo" href="#cifrado">Cifrado</a>
+      <a class="tajo" href="#contacto">Contacto</a>
+    </nav>
+    <button type="button" class="cabecera__calma" id="calma" aria-pressed="false">Suprimir energía maldita</button>
+  </header>
+
+  <main id="contenido">
+    <section class="portada">
+      <span class="portada__kanji" aria-hidden="true">解</span>
+      <p class="etiqueta">aka Maru · Barcelona</p>
+      <h1 class="portada__titulo">João Daniel<br><em>de Paiva</em><br>Oliveira</h1>
+      <p class="portada__texto">Estudiante de sistemas informáticos en Barcelona, en camino hacia el desarrollo de software. Escribo Python, construyo pequeñas herramientas web y quiero acabar trabajando con datos e IA.</p>
+      <div class="portada__acciones">
+        <a class="boton boton--corte" href="https://jdanioliv.github.io/assets/cv/CV_Joao_Daniel_de_Paiva_Oliveira_ES.pdf" target="_blank" rel="noopener">Descargar CV</a>
+        <a class="boton boton--llama" href="https://github.com/jdanioliv" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </section>
+
+    <section id="sobre" class="seccion" aria-labelledby="t-sobre">
+      <p class="etiqueta">壱 · Sobre mí</p>
+      <h2 id="t-sobre" class="seccion__titulo">Una base sólida, <em>un siguiente paso</em></h2>
+      <div class="sobre">
+        <div class="sobre__texto">
+          <p>Estoy en segundo de SMX en Digitech FP, en Barcelona: hardware, sistemas operativos, redes y seguridad. Eso me ha dado una base sólida, y mi siguiente paso es el desarrollo de software.</p>
+          <p>Terminé el CS50x de Harvard y sigo con el resto de cursos CS50. Fuera de clase juego mucho, hago mis propios juegos en Roblox con Luau y me gustan el anime y el manga. En internet me conocen como Maru.</p>
+          <p>Hablo inglés y portugués como lenguas nativas y vivo en España.</p>
+        </div>
+        <ol class="ruta">
+          <li class="ruta__paso"><span class="etiqueta">Ahora</span><strong>SMX</strong><span>Sistemas, redes y scripting (2025–2027)</span></li>
+          <li class="ruta__paso"><span class="etiqueta">Después</span><strong>DAM</strong><span>Aplicaciones multiplataforma y bases de datos</span></li>
+          <li class="ruta__paso"><span class="etiqueta">Más adelante</span><strong>Datos e IA</strong><span>Python, Big Data y aprendizaje automático</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="habilidades" class="seccion seccion--elevada" aria-labelledby="t-hab">
+      <p class="etiqueta">弐 · Habilidades</p>
+      <h2 id="t-hab" class="seccion__titulo">Qué uso y <em>dónde lo he usado</em></h2>
+      <div class="rejilla">
+        <article class="tarjeta tajo">
+          <h3 class="tarjeta__titulo">Programación</h3>
+          <dl class="lista">
+            <div><dt>Python</dt><dd>Ejercicios de CS50 y el analizador de logs</dd></div>
+            <div><dt>JavaScript</dt><dd>Mini apps y terminal de mi web</dd></div>
+            <div><dt>HTML y CSS</dt><dd>Mi web y los ejercicios de clase</dd></div>
+            <div><dt>Java</dt><dd>Bases de orientación a objetos, preparando DAM</dd></div>
+            <div><dt>Lua / Luau</dt><dd>Juegos en Roblox Studio</dd></div>
+            <div><dt>SQL</dt><dd>Bases de datos relacionales en CS50</dd></div>
+          </dl>
+        </article>
+        <article class="tarjeta tajo">
+          <h3 class="tarjeta__titulo">Sistemas y redes</h3>
+          <dl class="lista">
+            <div><dt>Windows y Windows Server</dt><dd>Usuarios, grupos, permisos y PowerShell</dd></div>
+            <div><dt>Linux</dt><dd>Ubuntu y Debian desde terminal, Bash</dd></div>
+            <div><dt>Redes</dt><dd>LAN y WLAN, direccionamiento IPv4, DNS</dd></div>
+            <div><dt>Hardware</dt><dd>Montar, reparar y diagnosticar PC</dd></div>
+          </dl>
+        </article>
+        <article class="tarjeta tajo">
+          <h3 class="tarjeta__titulo">Herramientas</h3>
+          <dl class="lista">
+            <div><dt>Git y GitHub</dt><dd>Control de versiones de mis proyectos</dd></div>
+            <div><dt>VS Code</dt><dd>Mi editor de cada día</dd></div>
+            <div><dt>VirtualBox</dt><dd>Máquinas virtuales para prácticas</dd></div>
+            <div><dt>Office y Google Workspace</dt><dd>Excel, Sheets, Word y Docs</dd></div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section id="proyectos" class="seccion" aria-labelledby="t-pro">
+      <p class="etiqueta">参 · Proyectos</p>
+      <h2 id="t-pro" class="seccion__titulo">Hechos <em>mientras aprendo</em></h2>
+      <div class="rejilla">
+        <article class="tarjeta tajo">
+          <p class="etiqueta">Python · regex · PyScript</p>
+          <h3 class="tarjeta__titulo">Analizador de logs</h3>
+          <p>Lee logs de un servidor HTTP, cuenta peticiones por IP y por código de estado, lista los errores y marca una IP con 401/403 repetidos como posible fuerza bruta. Funciona en el navegador con PyScript.</p>
+          <a class="enlace" href="https://jdanioliv.github.io/#lab" target="_blank" rel="noopener">Probarlo ↗</a>
+        </article>
+        <article class="tarjeta tajo">
+          <p class="etiqueta">HTML · CSS · JavaScript</p>
+          <h3 class="tarjeta__titulo">CV interactivo</h3>
+          <p>Mi CV como página web, con una pequeña terminal donde escribir comandos y el PDF para descargar en inglés o español.</p>
+          <a class="enlace" href="https://jdanioliv.github.io/cv.html" target="_blank" rel="noopener">Abrirlo ↗</a>
+        </article>
+        <article class="tarjeta tajo">
+          <p class="etiqueta">HTML · CSS · JavaScript</p>
+          <h3 class="tarjeta__titulo">Mi web personal</h3>
+          <p>Sin frameworks: diseño adaptable, terminal, tres mini apps y siete idiomas, publicada en GitHub Pages.</p>
+          <a class="enlace" href="https://github.com/jdanioliv/jdanioliv.github.io" target="_blank" rel="noopener">Repositorio ↗</a>
+        </article>
+        <article class="tarjeta tajo">
+          <p class="etiqueta">TFG · con Lorena</p>
+          <h3 class="tarjeta__titulo">KAIRON</h3>
+          <p>Empresa ficticia de SOC gestionado para pymes. Lidero la parte de desarrollo web y experiencia de usuario.</p>
+          <a class="enlace" href="../index.html">Ver KAIRON →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="formacion" class="seccion seccion--elevada" aria-labelledby="t-for">
+      <p class="etiqueta">肆 · Formación</p>
+      <h2 id="t-for" class="seccion__titulo">Terminados y <em>en camino</em></h2>
+      <ul class="cursos">
+        <li class="cursos__fila cursos__fila--hecho"><span>CS50x: Introducción a las Ciencias de la Computación · Harvard</span><span class="etiqueta">Completado</span></li>
+        <li class="cursos__fila"><span>CS50P: Programación con Python · Harvard</span><span class="etiqueta">En curso</span></li>
+        <li class="cursos__fila"><span>CS50W: Programación web con Python y JavaScript · Harvard</span><span class="etiqueta">En curso</span></li>
+        <li class="cursos__fila"><span>CS50AI: Inteligencia artificial con Python · Harvard</span><span class="etiqueta">El siguiente</span></li>
+        <li class="cursos__fila"><span>CS50G: Introducción al desarrollo de videojuegos · Harvard</span><span class="etiqueta">El siguiente</span></li>
+        <li class="cursos__fila"><span>Tiny Machine Learning (TinyML) · HarvardX</span><span class="etiqueta">Más adelante</span></li>
+      </ul>
+    </section>
+
+    <section id="cifrado" class="seccion" aria-labelledby="t-cif">
+      <p class="etiqueta">伍 · Laboratorio</p>
+      <h2 id="t-cif" class="seccion__titulo">Cifrado de <em>encantamientos</em></h2>
+      <p class="seccion__nota">Cada carácter se sustituye siempre por el mismo sello dibujado por código. Es un juego de sustitución, no un cifrado seguro: nada de lo que escribes sale de tu navegador.</p>
+      <div class="terminal">
+        <label class="etiqueta" for="conjuro">maru@santuario:~$ escribe tu conjuro</label>
+        <input class="terminal__entrada" id="conjuro" maxlength="60" value="Maru" autocomplete="off" spellcheck="false">
+        <ol class="terminal__fases" id="fases" aria-hidden="true"></ol>
+        <div class="terminal__salida" id="salida" role="img" aria-label="Sellos generados a partir del texto escrito"></div>
+      </div>
+    </section>
+
+    <section id="contacto" class="seccion contacto" aria-labelledby="t-con">
+      <p class="etiqueta">陸 · Contacto</p>
+      <h2 id="t-con" class="seccion__titulo">Abierto a prácticas <em>y primeros empleos</em></h2>
+      <p class="seccion__nota">Busco prácticas remuneradas de FP y puestos junior en Barcelona, en soporte informático, administración de sistemas o desarrollo de software.</p>
+      <a class="contacto__correo tajo" href="mailto:joaodaniel.jd@icloud.com">joaodaniel.jd@icloud.com</a>
+      <div class="portada__acciones">
+        <a class="boton boton--llama" href="mailto:joaodaniel.jd@icloud.com">Escríbeme</a>
+        <a class="boton boton--corte" href="https://jdanioliv.github.io/" target="_blank" rel="noopener">Mi web personal</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>© 2026 João Daniel de Paiva Oliveira · Maru</p>
+    <p>Homenaje de fan a <cite>Jujutsu Kaisen</cite>, sin relación oficial con la obra. <a href="../index.html">Volver a KAIRON</a></p>
+    <button type="button" class="pie__repetir" id="repetir">Repetir la intro</button>
+  </footer>
+
+  <canvas class="brasas" id="brasas" aria-hidden="true"></canvas>
+  <script type="module" src="vfx-engine.js?v=2"></script>
+</body>
+</html>
