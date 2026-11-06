@@ -122,32 +122,93 @@ em { font-style: normal; color: var(--carmesi); }
 .cursos__fila--hecho { color: var(--hueso); font-weight: 600; }
 .cursos__fila--hecho .etiqueta { color: var(--destello); }
 
-/* Terminal del cifrado */
-.terminal { display: grid; gap: 14px; padding: clamp(18px, 3vw, 30px); background: var(--superficie); border: 1px solid var(--carmesi-seco); }
-.terminal__entrada { width: 100%; min-height: 54px; padding: 8px 14px; border: 1px solid var(--linea); background: var(--obsidiana); color: var(--hueso); font: 400 1.15rem var(--mono); outline: none; }
-.terminal__entrada:focus { border-color: var(--carmesi); box-shadow: 0 0 0 2px var(--carmesi-seco), 0 0 18px var(--carmesi-seco); }
-.terminal__fases { display: flex; flex-wrap: wrap; gap: 4px 14px; font: 400 0.82rem var(--mono); color: #77767c; }
-.terminal__fases .activa { color: var(--destello); }
-.terminal__salida { position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; min-height: 110px; padding: 14px; background: #000; }
-.terminal__salida--destello { animation: kokusen 0.32s steps(3); }
-/* Destello negro: núcleo negro, halo carmesí y arcos blancos */
-.terminal__salida--destello { box-shadow: 0 0 0 1px var(--destello), 0 0 24px var(--destello); }
-.kokusen { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; overflow: visible; }
-.kokusen polyline { stroke: var(--arco); stroke-width: 1.4; stroke-linejoin: bevel; filter: drop-shadow(0 0 3px var(--destello)) drop-shadow(0 0 1px var(--arco)); animation: arco 0.3s steps(3) forwards; }
-@keyframes arco { 0% { opacity: 1; } 50% { opacity: 0.4; } 70% { opacity: 1; } 100% { opacity: 0; } }
-.terminal__runas { min-height: 1.6em; font: 400 1.5rem/1.5 "Noto Sans Runic", var(--mono); letter-spacing: 0.18em; color: var(--hueso); overflow-wrap: anywhere; }
-.terminal__runas:empty::before { content: "—"; color: var(--ceniza); }
-@keyframes kokusen {
-  0% { filter: drop-shadow(0 0 0 #000); transform: translate3d(0, 0, 0); }
-  35% { filter: drop-shadow(3px 0 0 var(--carmesi)) drop-shadow(-3px 0 0 #000) drop-shadow(0 0 8px var(--destello)); transform: translate3d(-2px, 1px, 0); }
-  70% { filter: drop-shadow(-2px 0 0 var(--destello)) drop-shadow(0 0 2px #fff); transform: translate3d(2px, -1px, 0); }
-  100% { filter: none; transform: none; }
-}
-.sello { width: 36px; height: 36px; fill: none; stroke: var(--hueso); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.sello circle { fill: var(--carmesi); stroke: none; }
-.sello--nuevo { animation: sello 0.28s cubic-bezier(0.2, 1.8, 0.4, 1) both; }
-@keyframes sello { from { opacity: 0; transform: scale(1.8) rotate(-12deg); } }
-.separador { width: 16px; }
+/* ---------- Laboratorio ---------- */
+kbd { padding: 1px 6px; border: 1px solid var(--linea); border-bottom-width: 2px; background: var(--obsidiana); font: 400 0.85em var(--mono); color: var(--hueso); white-space: nowrap; }
+.lab { display: grid; gap: 22px; }
+.lab > .etiqueta, .lab > .seccion__titulo, .lab > .seccion__nota { margin-bottom: 0; }
+.lab__bloque { position: relative; display: grid; gap: 16px; padding: clamp(18px, 3vw, 32px); background: var(--superficie); border: 1px solid var(--linea); border-left: 3px solid var(--carmesi); }
+.lab__cabeza { display: grid; gap: 8px; max-width: 52em; }
+.lab__cabeza > p:not(.etiqueta) { color: var(--ceniza); }
+.lab__log { width: 100%; min-height: 160px; padding: 12px 14px; resize: vertical; border: 1px solid var(--linea); background: #000; color: var(--hueso); font: 400 0.85rem/1.6 var(--mono); white-space: pre; overflow-x: auto; }
+.lab__log:focus { outline: none; border-color: var(--carmesi); box-shadow: 0 0 0 2px var(--carmesi-seco), 0 0 18px var(--carmesi-seco); }
+.lab__acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+.boton--hueco { border: 1px dashed var(--ceniza); color: var(--ceniza); }
+.boton--hueco:hover, .boton--hueco:focus-within { border-color: var(--hueso); color: var(--hueso); }
+button.boton { font: 600 1rem var(--texto); color: var(--hueso); }
+
+/* Informe del analizador */
+.informe { display: grid; gap: 18px; }
+.informe:empty { display: none; }
+.informe__vacio { color: var(--ceniza); }
+.informe__veredicto { display: grid; gap: 4px; padding: 16px 18px; border: 1px solid var(--linea); background: var(--obsidiana); }
+.informe__veredicto strong { font: 400 1.6rem var(--titulo); }
+.informe__veredicto p { color: var(--ceniza); font: 400 0.9rem var(--mono); }
+.informe__veredicto--alerta { position: relative; overflow: hidden; border-color: var(--carmesi); background: linear-gradient(100deg, rgba(138, 0, 20, 0.45), var(--obsidiana) 70%); animation: alerta 0.5s steps(3); }
+.informe__veredicto--alerta strong { color: var(--destello); text-shadow: 0 0 14px var(--carmesi); }
+.informe__veredicto--alerta p { color: var(--hueso); }
+.informe__veredicto--alerta::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; height: 2px; background: var(--hueso); box-shadow: 0 0 10px 2px var(--carmesi); rotate: -8deg; transform: scaleX(0); animation: rayo 0.4s 0.1s ease-out both; }
+@keyframes alerta { 33% { transform: translate3d(-4px, 2px, 0); } 66% { transform: translate3d(3px, -1px, 0); } }
+.informe__cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--linea); border: 1px solid var(--linea); }
+.informe__cifras div { padding: 14px 16px; background: var(--obsidiana); }
+.informe__cifras dd { font: 400 2.2rem/1.1 var(--titulo); }
+.informe__rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.informe__panel { display: grid; gap: 10px; align-content: start; }
+.informe__barras { display: grid; gap: 6px; }
+.informe__barras li { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 6px 10px; font: 400 0.85rem var(--mono); z-index: 0; }
+.informe__barras li::before { content: ""; position: absolute; inset: 0; z-index: -1; width: var(--ancho); background: rgba(244, 243, 239, 0.08); border-right: 2px solid var(--ceniza); transform-origin: left; animation: crecer 0.6s calc(var(--i) * 60ms) var(--corte) both; }
+@keyframes crecer { from { transform: scaleX(0); } }
+.informe__barras .es-sospechosa::before, .informe__barras .es-4xx::before { background: rgba(217, 4, 41, 0.25); border-color: var(--carmesi); }
+.informe__barras .es-5xx::before { background: rgba(255, 77, 0, 0.22); border-color: var(--fuego); }
+.informe__barras .es-sospechosa { color: var(--destello); font-weight: 600; }
+.informe__errores summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font: 400 0.9rem var(--mono); }
+.informe__errores > table { display: block; max-height: 320px; overflow: auto; width: 100%; border-collapse: collapse; font: 400 0.8rem var(--mono); }
+.informe__errores th, .informe__errores td { padding: 6px 12px 6px 0; text-align: left; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.informe__errores th { color: var(--ceniza); font-weight: 400; position: sticky; top: 0; background: var(--superficie); }
+.informe__errores .es-sospechosa td { color: var(--destello); }
+
+/* Minijuego */
+.juego { position: relative; height: clamp(360px, 60vh, 560px); overflow: hidden; background: radial-gradient(ellipse at 50% 120%, rgba(138, 0, 20, 0.35), #000 60%); border: 1px solid var(--carmesi-seco); }
+.juego__lienzo { display: block; width: 100%; height: 100%; cursor: crosshair; outline: none; }
+.juego--activo .juego__lienzo { touch-action: none; }
+.juego--golpe { animation: alerta 0.3s steps(3); box-shadow: inset 0 -40px 50px -30px var(--destello); }
+.juego__marcador { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 18px; justify-content: flex-end; padding: 10px 14px; pointer-events: none; font: 400 0.8rem var(--mono); color: var(--ceniza); }
+.juego__marcador strong { color: var(--hueso); font-weight: 400; font-size: 1.1rem; }
+.juego__portada { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 16px; padding: 20px; text-align: center; background: rgba(7, 7, 9, 0.7); }
+.juego__portada[hidden] { display: none; }
+.juego__aviso { font: 400 clamp(1.6rem, 4vw, 2.6rem)/1.15 var(--titulo); }
+
+/* Expansión de dominio */
+.lab__bloque--dominio { background: linear-gradient(120deg, rgba(138, 0, 20, 0.3), var(--superficie) 60%); }
+.boton--dominio { justify-self: start; min-height: 58px; font-size: 1.1rem; letter-spacing: 0.04em; }
+.dominio { position: fixed; inset: 0; z-index: 9990; display: grid; place-items: center; overflow: hidden; background: rgba(0, 0, 0, 0.85); animation: aparecer 0.4s both; opacity: 0; }
+.dominio__circulo { position: absolute; inset: 0; background: radial-gradient(circle, #3a0009 0%, #12000a 45%, #000 80%); clip-path: circle(0% at 50% 50%); animation: expandir-dominio 1.1s 1.2s var(--corte) forwards; }
+@keyframes expandir-dominio { to { clip-path: circle(75% at 50% 50%); } }
+.dominio__anillos { position: absolute; width: min(90vmin, 720px); fill: none; stroke: var(--carmesi); stroke-width: 0.6; rotate: -90deg; filter: drop-shadow(0 0 6px var(--carmesi)); }
+.dominio__anillos circle { stroke-dasharray: 100; stroke-dashoffset: 100; animation: trazar 1s var(--corte) forwards; }
+.dominio__anillos circle:nth-child(2) { stroke: var(--hueso); stroke-width: 0.3; animation-delay: 0.25s; }
+.dominio__anillos circle:nth-child(3) { animation-delay: 0.5s; }
+.dominio__texto { position: relative; display: grid; justify-items: center; gap: 6px; text-align: center; }
+.dominio__invocacion { font: 400 clamp(1rem, 3vmin, 1.4rem) var(--mono); letter-spacing: 0.8em; padding-left: 0.8em; color: var(--ceniza); opacity: 0; animation: aparecer 0.4s 0.3s forwards; }
+.dominio__nombre { font: 400 clamp(3.6rem, 16vmin, 10rem)/1 var(--titulo); color: var(--hueso); text-shadow: 0 0 30px var(--carmesi), 0 0 2px var(--hueso); opacity: 0; animation: aparecer-kanji 0.6s 0.8s cubic-bezier(0.2, 1.4, 0.4, 1) forwards; }
+.dominio__traduccion { font: 400 clamp(0.8rem, 2.2vmin, 1rem) var(--mono); letter-spacing: 0.2em; color: var(--destello); opacity: 0; animation: aparecer 0.4s 1.4s forwards; }
+.dominio__tajos { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 0 4px var(--carmesi)); }
+.dominio__tajos line { stroke: var(--hueso); stroke-width: 0.3; stroke-dasharray: 100; stroke-dashoffset: 100; animation: tajo-dominio 0.5s var(--corte) forwards; }
+.dominio__tajos .dominio__tajo--rojo { stroke: var(--destello); stroke-width: 0.5; }
+@keyframes tajo-dominio { 0% { stroke-dashoffset: 100; } 50% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: -100; opacity: 0; } }
+/* Con los tajos, el dominio se vuelve translúcido y deja ver la página temblando debajo */
+.dominio--tajos { background: rgba(0, 0, 0, 0.35); }
+.dominio--tajos .dominio__circulo { opacity: 0.55; transition: opacity 0.6s; }
+.dominio--tajos .dominio__texto { animation: latido 0.32s steps(3) infinite; }
+.en-dominio main { filter: sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.55); }
+.en-dominio:not(.calma) main { animation: temblor 0.4s steps(4) infinite; animation-delay: 2.4s; }
+.dominio__cerrar { position: absolute; bottom: 18px; right: 18px; min-height: 44px; padding: 0 16px; border: 1px solid var(--linea); background: rgba(0, 0, 0, 0.6); color: var(--ceniza); font: 400 0.8rem var(--mono); cursor: pointer; }
+.dominio__cerrar:hover, .dominio__cerrar:focus-visible { color: var(--hueso); border-color: var(--carmesi); }
+.dominio--saliendo { animation: desvanecer 0.5s forwards; opacity: 1; }
+/* Versión sin movimiento: solo el nombre del dominio sobre fondo rojo, sin tajos */
+.dominio--calma { opacity: 1; animation: none; }
+.dominio--calma .dominio__circulo { clip-path: none; }
+.dominio--calma .dominio__invocacion, .dominio--calma .dominio__nombre, .dominio--calma .dominio__traduccion { opacity: 1; }
+.dominio--calma .dominio__anillos circle { stroke-dashoffset: 0; }
 
 .contacto__correo { display: inline-block; padding-block: 8px; font: 400 clamp(1.25rem, 4vw, 3rem) var(--titulo); overflow-wrap: anywhere; text-decoration-color: var(--carmesi); text-underline-offset: 6px; }
 
@@ -219,7 +280,7 @@ em { font-style: normal; color: var(--carmesi); }
   .boton { flex: 1 1 150px; }
 }
 @media print {
-  .cabecera, .brasas, .corte, .portada__kanji, .terminal, #cifrado { display: none !important; }
+  .cabecera, .brasas, .corte, .portada__kanji, .lab__juego, .lab__acciones { display: none !important; }
   body { background: #fff; color: #000; }
   body::before { display: none; }
   .seccion, .portada { min-height: 0; padding: 14pt 0; background: #fff; }

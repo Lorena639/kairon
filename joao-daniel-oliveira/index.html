@@ -11,8 +11,8 @@
   <link rel="icon" href="../img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&family=Noto+Sans+Runic&display=swap">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&display=swap">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -24,7 +24,7 @@
       <a class="tajo" href="#habilidades">Habilidades</a>
       <a class="tajo" href="#proyectos">Proyectos</a>
       <a class="tajo" href="#formacion">Formación</a>
-      <a class="tajo" href="#cifrado">Cifrado</a>
+      <a class="tajo" href="#laboratorio">Laboratorio</a>
       <a class="tajo" href="#contacto">Contacto</a>
     </nav>
     <button type="button" class="cabecera__calma" id="calma" aria-pressed="false">Suprimir energía maldita</button>
@@ -140,17 +140,54 @@
       </ul>
     </section>
 
-    <section id="cifrado" class="seccion" aria-labelledby="t-cif">
+    <section id="laboratorio" class="seccion lab" aria-labelledby="t-lab">
       <p class="etiqueta">伍 · Laboratorio</p>
-      <h2 id="t-cif" class="seccion__titulo">Cifrado de <em>encantamientos</em></h2>
-      <p class="seccion__nota">Cada carácter se sustituye siempre por la misma runa y el mismo sello dibujado por código. Es un juego de sustitución, no un cifrado seguro: nada de lo que escribes sale de tu navegador.</p>
-      <div class="terminal">
-        <label class="etiqueta" for="conjuro">maru@santuario:~$ escribe tu conjuro</label>
-        <input class="terminal__entrada" id="conjuro" maxlength="60" value="Maru" autocomplete="off" spellcheck="false">
-        <ol class="terminal__fases" id="fases" aria-hidden="true"></ol>
-        <p class="terminal__runas" id="runas" aria-label="Texto en runas"></p>
-        <div class="terminal__salida" id="salida" role="img" aria-label="Sellos generados a partir del texto escrito"></div>
-      </div>
+      <h2 id="t-lab" class="seccion__titulo">Técnicas <em>en vivo</em></h2>
+      <p class="seccion__nota">Tres cosas que he programado para esta página. Todo se ejecuta en tu navegador: nada de lo que pegues o juegues se envía a ningún sitio.</p>
+
+      <!-- 1. Analizador de logs: versión en JavaScript de mi analizador en Python -->
+      <article class="lab__bloque" id="analizador" aria-labelledby="t-ana">
+        <header class="lab__cabeza">
+          <p class="etiqueta">Técnica 01 · JavaScript · expresiones regulares</p>
+          <h3 id="t-ana" class="tarjeta__titulo">Analizador de logs</h3>
+          <p>Pega líneas de un log de acceso HTTP (formato Apache/Nginx). Cuenta peticiones por IP y por código, lista los errores y marca como posible fuerza bruta la IP que acumula muchos 401/403.</p>
+        </header>
+        <label class="etiqueta" for="log">maru@santuario:~$ cat access.log</label>
+        <textarea class="lab__log" id="log" rows="8" spellcheck="false" autocomplete="off" placeholder='203.0.113.7 - - [05/Nov/2026:10:15:32 +0100] "POST /login HTTP/1.1" 401 512'></textarea>
+        <div class="lab__acciones">
+          <button type="button" class="boton boton--llama" id="analizar">Analizar</button>
+          <button type="button" class="boton boton--corte" id="ejemplo">Cargar ejemplo</button>
+          <label class="boton boton--hueco">Abrir archivo<input type="file" id="archivo" accept=".log,.txt,text/plain" hidden></label>
+        </div>
+        <div class="informe" id="informe" aria-live="polite"></div>
+      </article>
+
+      <!-- 2. Minijuego: cortar bugs arrastrando el ratón o el dedo -->
+      <article class="lab__bloque" id="juego" aria-labelledby="t-jue">
+        <header class="lab__cabeza">
+          <p class="etiqueta">Técnica 02 · Canvas · física sencilla</p>
+          <h3 id="t-jue" class="tarjeta__titulo">Desmantelar</h3>
+          <p>Caen bugs. Arrastra el ratón o el dedo para cortarlos antes de que lleguen al suelo. Cada corte suma; si se te escapan tres, se acaba. Con teclado: <kbd>Espacio</kbd> lanza un tajo horizontal a la altura del bug más bajo, y se puede usar cada segundo.</p>
+        </header>
+        <div class="juego">
+          <canvas class="juego__lienzo" id="lienzo-juego" tabindex="-1" aria-label="Zona de juego: bugs que caen y se cortan arrastrando" role="img"></canvas>
+          <div class="juego__marcador" aria-live="polite"><span>Cortes <strong id="puntos">0</strong></span><span>Récord <strong id="record">0</strong></span><span>Vidas <strong id="vidas">3</strong></span></div>
+          <div class="juego__portada" id="portada-juego">
+            <p class="juego__aviso" id="aviso-juego">¿Listo para desmantelar?</p>
+            <button type="button" class="boton boton--llama" id="empezar">Empezar</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Expansión de dominio -->
+      <article class="lab__bloque lab__bloque--dominio" aria-labelledby="t-dom">
+        <header class="lab__cabeza">
+          <p class="etiqueta">Técnica 03 · CSS · animación</p>
+          <h3 id="t-dom" class="tarjeta__titulo">Expansión de dominio</h3>
+          <p>Toda la página se convierte durante unos segundos en el Santuario Malévolo. También se activa si escribes <kbd>ryoiki tenkai</kbd> en cualquier parte de la página. <kbd>Esc</kbd> la cierra.</p>
+        </header>
+        <button type="button" class="boton boton--llama boton--dominio" id="expandir">領域展開 · Expandir dominio</button>
+      </article>
     </section>
 
     <section id="contacto" class="seccion contacto" aria-labelledby="t-con">
@@ -172,6 +209,9 @@
   </footer>
 
   <canvas class="brasas" id="brasas" aria-hidden="true"></canvas>
-  <script type="module" src="vfx-engine.js?v=4"></script>
+  <script type="module" src="vfx-engine.js?v=5"></script>
+  <script type="module" src="analizador.js?v=1"></script>
+  <script type="module" src="juego.js?v=1"></script>
+  <script type="module" src="dominio.js?v=1"></script>
 </body>
 </html>
