@@ -11,8 +11,8 @@
   <link rel="icon" href="../img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&display=swap">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&family=Noto+Sans+Runic&display=swap">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -142,11 +142,12 @@
     <section id="cifrado" class="seccion" aria-labelledby="t-cif">
       <p class="etiqueta">伍 · Laboratorio</p>
       <h2 id="t-cif" class="seccion__titulo">Cifrado de <em>encantamientos</em></h2>
-      <p class="seccion__nota">Cada carácter se sustituye siempre por el mismo sello dibujado por código. Es un juego de sustitución, no un cifrado seguro: nada de lo que escribes sale de tu navegador.</p>
+      <p class="seccion__nota">Cada carácter se sustituye siempre por la misma runa y el mismo sello dibujado por código. Es un juego de sustitución, no un cifrado seguro: nada de lo que escribes sale de tu navegador.</p>
       <div class="terminal">
         <label class="etiqueta" for="conjuro">maru@santuario:~$ escribe tu conjuro</label>
         <input class="terminal__entrada" id="conjuro" maxlength="60" value="Maru" autocomplete="off" spellcheck="false">
         <ol class="terminal__fases" id="fases" aria-hidden="true"></ol>
+        <p class="terminal__runas" id="runas" aria-label="Texto en runas"></p>
         <div class="terminal__salida" id="salida" role="img" aria-label="Sellos generados a partir del texto escrito"></div>
       </div>
     </section>
@@ -170,6 +171,6 @@
   </footer>
 
   <canvas class="brasas" id="brasas" aria-hidden="true"></canvas>
-  <script type="module" src="vfx-engine.js?v=2"></script>
+  <script type="module" src="vfx-engine.js?v=3"></script>
 </body>
 </html>

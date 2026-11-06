@@ -7,7 +7,9 @@
   --destello: #ff002b;
   --fuego: #ff4d00;
   --hueso: #f4f3ef;
-  --ceniza: #a3a2a9;
+  --ceniza: #8e8d94;
+  --nucleo: #000000;
+  --arco: #ffffff;
   --linea: rgba(244, 243, 239, 0.16);
   --titulo: "Zen Antique", Georgia, serif;
   --texto: "Manrope", "Segoe UI", sans-serif;
@@ -115,8 +117,15 @@ em { font-style: normal; color: var(--carmesi); }
 .terminal__entrada:focus { border-color: var(--carmesi); box-shadow: 0 0 0 2px var(--carmesi-seco), 0 0 18px var(--carmesi-seco); }
 .terminal__fases { display: flex; flex-wrap: wrap; gap: 4px 14px; font: 400 0.82rem var(--mono); color: #77767c; }
 .terminal__fases .activa { color: var(--destello); }
-.terminal__salida { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; min-height: 110px; padding: 14px; background: #000; }
+.terminal__salida { position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; min-height: 110px; padding: 14px; background: #000; }
 .terminal__salida--destello { animation: kokusen 0.32s steps(3); }
+/* Destello negro: núcleo negro, halo carmesí y arcos blancos */
+.terminal__salida--destello { box-shadow: 0 0 0 1px var(--destello), 0 0 24px var(--destello); }
+.kokusen { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; overflow: visible; }
+.kokusen polyline { stroke: var(--arco); stroke-width: 1.4; stroke-linejoin: bevel; filter: drop-shadow(0 0 3px var(--destello)) drop-shadow(0 0 1px var(--arco)); animation: arco 0.3s steps(3) forwards; }
+@keyframes arco { 0% { opacity: 1; } 50% { opacity: 0.4; } 70% { opacity: 1; } 100% { opacity: 0; } }
+.terminal__runas { min-height: 1.6em; font: 400 1.5rem/1.5 "Noto Sans Runic", var(--mono); letter-spacing: 0.18em; color: var(--hueso); overflow-wrap: anywhere; }
+.terminal__runas:empty::before { content: "—"; color: var(--ceniza); }
 @keyframes kokusen {
   0% { filter: drop-shadow(0 0 0 #000); transform: translate3d(0, 0, 0); }
   35% { filter: drop-shadow(3px 0 0 var(--carmesi)) drop-shadow(-3px 0 0 #000) drop-shadow(0 0 8px var(--destello)); transform: translate3d(-2px, 1px, 0); }
@@ -135,14 +144,19 @@ em { font-style: normal; color: var(--carmesi); }
 .pie a { display: inline-flex; align-items: center; min-height: 44px; color: var(--hueso); }
 
 /* Intro: anillo y emblema, tres tajos y el corte que abre la página */
-.corte { position: fixed; inset: 0; z-index: 25; overflow: hidden; cursor: pointer; }
+.corte { position: fixed; inset: 0; z-index: 9999; overflow: hidden; cursor: pointer; }
 .corte__mitad { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle, #1a0307, var(--obsidiana) 62%); animation: 0.8s 2.05s var(--corte) forwards; }
 .corte__mitad--a { clip-path: polygon(0 0, 100% 0, 0 100%); animation-name: abrir-a; }
 .corte__mitad--b { clip-path: polygon(100% 0, 100% 100%, 0 100%); animation-name: abrir-b; }
 @keyframes abrir-a { to { transform: translate(-62%, -62%); } }
 @keyframes abrir-b { to { transform: translate(62%, 62%); } }
 
-.emblema { position: relative; display: grid; place-items: center; width: min(68vmin, 460px); aspect-ratio: 1; animation: latido 0.32s 1.1s steps(3) 3; }
+.emblema { position: relative; display: grid; place-items: center; width: min(68vmin, 460px); aspect-ratio: 1; animation: latido 0.32s 1.1s steps(3) 3, aberracion 0.3s 1.98s steps(3); }
+/* Aberración cromática carmesí justo cuando cae el corte final */
+@keyframes aberracion {
+  33% { filter: drop-shadow(6px 0 0 var(--carmesi)) drop-shadow(-6px 0 0 var(--destello)); }
+  66% { filter: drop-shadow(-4px 2px 0 var(--carmesi)) drop-shadow(4px -2px 0 rgba(244, 243, 239, 0.6)); }
+}
 @keyframes latido { 50% { transform: translate3d(3px, -2px, 0) scale(1.015); } }
 .emblema__anillo { position: absolute; inset: 0; fill: none; stroke: var(--carmesi); stroke-width: 1; rotate: -90deg; filter: drop-shadow(0 0 6px var(--carmesi)); }
 .emblema__anillo circle { stroke-dasharray: 100; stroke-dashoffset: 100; animation: trazar 0.75s 0.1s var(--corte) forwards; }
@@ -161,7 +175,7 @@ em { font-style: normal; color: var(--carmesi); }
 .corte__final { animation: trazar 0.2s 1.88s ease-in forwards, desvanecer 0.3s 2.3s forwards; }
 @keyframes trazar { to { stroke-dashoffset: 0; } }
 @keyframes desvanecer { to { opacity: 0; } }
-.corte__fogonazo { position: absolute; inset: 0; pointer-events: none; background: var(--hueso); opacity: 0; animation: fogonazo 0.26s 2.03s ease-out; }
+.corte__fogonazo { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle, var(--hueso) 30%, var(--carmesi) 100%); opacity: 0; animation: fogonazo 0.26s 2.03s ease-out; }
 @keyframes fogonazo { 0% { opacity: 0.85; } 100% { opacity: 0; } }
 .temblor { animation: temblor 0.32s 2.05s steps(4); }
 @keyframes temblor {

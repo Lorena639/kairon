@@ -184,6 +184,7 @@ const FASES = ["Escama del dragón", "Retroceso", "Meteoros gemelos", "Fase", "C
 const entrada = document.getElementById("conjuro");
 const salida = document.getElementById("salida");
 const listaFases = document.getElementById("fases");
+const runas = document.getElementById("runas");
 const fases = FASES.map((texto) => {
   const li = document.createElement("li");
   li.textContent = texto;
@@ -207,6 +208,31 @@ function crearSello(codigo, nuevo) {
   return svg;
 }
 
+// Mismo carácter, misma runa: 75 letras del bloque rúnico (U+16A0 a U+16EA)
+function aRuna(c) {
+  if (/\s/.test(c)) return " ";
+  const h = (c.codePointAt(0) * 2654435761) >>> 0;
+  return String.fromCodePoint(0x16a0 + (h >>> 8) % 75);
+}
+
+// Kokusen: arcos blancos en zigzag que cruzan la salida y se apagan
+function arcos() {
+  if (calmado()) return;
+  const svg = crearSvg("svg", { class: "kokusen", viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true" });
+  for (let a = 0; a < 2 + Math.floor(Math.random() * 2); a++) {
+    let x = Math.random() * 20, y = 20 + Math.random() * 60;
+    const puntos = [[x, y]];
+    while (x < 100) {
+      x += 6 + Math.random() * 12;
+      y = Math.max(2, Math.min(98, y + (Math.random() - 0.5) * 40));
+      puntos.push([x, y]);
+    }
+    svg.appendChild(crearSvg("polyline", { points: puntos.map((p) => p.join(",")).join(" ") }));
+  }
+  salida.appendChild(svg);
+  setTimeout(() => svg.remove(), 320);
+}
+
 let textoPrevio = "";
 function traducir() {
   const caracteres = [...entrada.value];
@@ -214,6 +240,7 @@ function traducir() {
   let comunes = 0;
   while (comunes < caracteres.length && caracteres[comunes] === previos[comunes]) comunes++;
   // Solo se redibuja desde el primer carácter que ha cambiado
+  salida.querySelectorAll(".kokusen").forEach((k) => k.remove());
   while (salida.children.length > comunes) salida.lastElementChild.remove();
   caracteres.slice(comunes).forEach((c) => {
     if (c === " ") {
@@ -226,10 +253,11 @@ function traducir() {
   });
   const activa = caracteres.length ? Math.floor((caracteres.length - 1) / 4) % FASES.length : -1;
   fases.forEach((f, i) => f.classList.toggle("activa", i === activa));
+  runas.textContent = caracteres.map(aRuna).join("");
   textoPrevio = entrada.value;
   salida.classList.remove("terminal__salida--destello");
   void salida.offsetWidth; // reinicia la animación del destello
   salida.classList.add("terminal__salida--destello");
 }
-entrada.addEventListener("input", traducir);
+entrada.addEventListener("input", () => { traducir(); arcos(); });
 traducir();
