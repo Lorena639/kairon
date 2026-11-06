@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&family=Noto+Sans+Runic&display=swap">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -28,6 +28,7 @@
       <a class="tajo" href="#contacto">Contacto</a>
     </nav>
     <button type="button" class="cabecera__calma" id="calma" aria-pressed="false">Suprimir energía maldita</button>
+    <span class="progreso" id="progreso" aria-hidden="true"></span>
   </header>
 
   <main id="contenido">
@@ -98,7 +99,7 @@
     <section id="proyectos" class="seccion" aria-labelledby="t-pro">
       <p class="etiqueta">参 · Proyectos</p>
       <h2 id="t-pro" class="seccion__titulo">Hechos <em>mientras aprendo</em></h2>
-      <div class="rejilla">
+      <div class="rejilla rejilla--numerada">
         <article class="tarjeta tajo">
           <p class="etiqueta">Python · regex · PyScript</p>
           <h3 class="tarjeta__titulo">Analizador de logs</h3>
@@ -171,6 +172,6 @@
   </footer>
 
   <canvas class="brasas" id="brasas" aria-hidden="true"></canvas>
-  <script type="module" src="vfx-engine.js?v=3"></script>
+  <script type="module" src="vfx-engine.js?v=4"></script>
 </body>
 </html>

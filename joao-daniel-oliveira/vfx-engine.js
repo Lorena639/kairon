@@ -1,6 +1,7 @@
 /* Motor de efectos: corte de entrada, tajos, botones, brasas y cifrado de encantamientos */
 const NS = "http://www.w3.org/2000/svg";
 const raiz = document.documentElement;
+raiz.classList.add("vfx"); // sin JS, todo el contenido se ve desde el principio
 
 const guardado = {
   leer(almacen, clave) { try { return window[almacen].getItem(clave); } catch { return null; } },
@@ -261,3 +262,45 @@ function traducir() {
 }
 entrada.addEventListener("input", () => { traducir(); arcos(); });
 traducir();
+
+/* ---------- Aparición al hacer scroll ---------- */
+const revelables = document.querySelectorAll(".seccion__titulo, .sobre__texto > p, .ruta__paso, .tarjeta, .cursos__fila, .contacto__correo");
+const vigia = new IntersectionObserver((entradas) => {
+  entradas.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add("revela--vista");
+    vigia.unobserve(el);
+    // Al terminar se quitan las clases para que el hover de las tarjetas no herede el retardo
+    setTimeout(() => el.classList.remove("revela", "revela--vista"), 900 + 90 * (+el.style.getPropertyValue("--i") || 0));
+  });
+}, { rootMargin: "0px 0px -12% 0px" });
+revelables.forEach((el) => {
+  // Los hermanos aparecen en cascada: el retardo depende de su posición
+  el.style.setProperty("--i", [...el.parentElement.children].filter((h) => h.matches(".revela, " + el.tagName)).indexOf(el) % 6);
+  el.classList.add("revela");
+  vigia.observe(el);
+});
+
+/* ---------- Progreso de lectura y kanji que se desplaza más lento ---------- */
+const progreso = document.getElementById("progreso");
+const kanjiPortada = document.querySelector(".portada__kanji");
+let pendiente = false;
+function alDesplazar() {
+  pendiente = false;
+  const max = document.documentElement.scrollHeight - innerHeight;
+  progreso.style.setProperty("--avance", max > 0 ? (scrollY / max).toFixed(4) : 0);
+  if (!calmado() && scrollY < innerHeight * 1.5) kanjiPortada.style.setProperty("--desp", `${(scrollY * 0.35).toFixed(1)}px`);
+}
+addEventListener("scroll", () => { if (!pendiente) { pendiente = true; requestAnimationFrame(alDesplazar); } }, { passive: true });
+alDesplazar();
+
+/* ---------- Menú: marca la sección que se está leyendo ---------- */
+const enlacesMenu = new Map([...document.querySelectorAll(".cabecera__nav a")].map((a) => [a.hash.slice(1), a]));
+const vigiaMenu = new IntersectionObserver((entradas) => {
+  entradas.forEach((e) => {
+    if (!e.isIntersecting) return;
+    enlacesMenu.forEach((a, id) => a.setAttribute("aria-current", String(id === e.target.id)));
+  });
+}, { rootMargin: "-45% 0px -50% 0px" });
+enlacesMenu.forEach((_, id) => { const s = document.getElementById(id); if (s) vigiaMenu.observe(s); });

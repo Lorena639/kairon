@@ -39,14 +39,19 @@ em { font-style: normal; color: var(--carmesi); }
 .cabecera__marca { font: 400 1.5rem var(--titulo); text-decoration: none; }
 .cabecera__marca span { color: var(--carmesi); }
 .cabecera__nav { display: flex; flex: 1; min-width: 0; gap: 4px; overflow-x: auto; scrollbar-width: none; white-space: nowrap; font-size: 0.92rem; }
-.cabecera__nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; text-decoration: none; }
+.cabecera__nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; text-decoration: none; color: var(--ceniza); transition: color 0.2s, box-shadow 0.2s; }
+.cabecera__nav a:hover { color: var(--hueso); }
+/* Sección en la que está el lector */
+.cabecera__nav a[aria-current="true"] { color: var(--hueso); box-shadow: inset 0 -2px 0 var(--carmesi); }
+/* Barra de progreso de lectura bajo la cabecera */
+.progreso { position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: var(--destello); box-shadow: 0 0 8px var(--carmesi); transform: scaleX(var(--avance, 0)); transform-origin: left; pointer-events: none; }
 .cabecera__calma { flex: none; min-height: 44px; padding: 4px 12px; border: 1px solid var(--linea); background: transparent; color: var(--ceniza); font: 400 0.76rem var(--mono); cursor: pointer; }
 .cabecera__calma:hover { border-color: var(--carmesi); color: var(--hueso); }
 .cabecera__calma[aria-pressed="true"] { background: var(--carmesi-seco); color: var(--hueso); }
 
 /* Portada */
 .portada { position: relative; min-height: calc(100svh - 66px); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px var(--margen) clamp(40px, 7vw, 80px); overflow: clip; }
-.portada__kanji { position: absolute; right: -2vw; top: 2vh; z-index: -1; font: 400 clamp(16rem, 44vw, 42rem)/1 var(--titulo); color: rgba(138, 0, 20, 0.28); }
+.portada__kanji { translate: 0 var(--desp, 0); position: absolute; right: -2vw; top: 2vh; z-index: -1; font: 400 clamp(16rem, 44vw, 42rem)/1 var(--titulo); color: rgba(138, 0, 20, 0.28); }
 .portada__titulo { margin: 14px 0 20px; font: 400 clamp(3.2rem, 11vw, 10.5rem)/0.98 var(--titulo); }
 .portada__titulo em { padding-left: 0.4em; }
 .portada__texto { max-width: 36em; color: var(--ceniza); font-size: clamp(1.05rem, 1.6vw, 1.3rem); }
@@ -86,7 +91,7 @@ em { font-style: normal; color: var(--carmesi); }
 /* Secciones */
 .seccion { padding: clamp(70px, 10vw, 140px) var(--margen); }
 .seccion--elevada { background: rgba(17, 17, 21, 0.9); }
-.seccion__titulo { margin: 8px 0 clamp(26px, 4vw, 48px); font: 400 clamp(2.2rem, 6vw, 5.4rem)/1.05 var(--titulo); }
+.seccion__titulo { position: relative; margin: 8px 0 clamp(26px, 4vw, 48px); font: 400 clamp(2.2rem, 6vw, 5.4rem)/1.05 var(--titulo); }
 .seccion__nota { max-width: 40em; margin-top: -14px; margin-bottom: 26px; color: var(--ceniza); }
 
 .sobre { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(30px, 6vw, 80px); }
@@ -96,8 +101,14 @@ em { font-style: normal; color: var(--carmesi); }
 .ruta__paso strong { font: 400 1.7rem var(--titulo); }
 .ruta__paso > span:last-child { color: var(--ceniza); }
 
+/* Proyectos numerados con una cifra fantasma en la esquina */
+.rejilla--numerada { counter-reset: proyecto; }
+.rejilla--numerada .tarjeta { counter-increment: proyecto; overflow: hidden; }
+.rejilla--numerada .tarjeta::before { content: counter(proyecto, decimal-leading-zero); position: absolute; right: 14px; top: 4px; font: 400 4.5rem/1 var(--titulo); color: rgba(217, 4, 41, 0.12); pointer-events: none; transition: color 0.25s, transform 0.25s var(--corte); }
+.rejilla--numerada .tarjeta:hover::before { color: rgba(217, 4, 41, 0.35); transform: translateX(-6px); }
+.tarjeta:hover { transform: translateY(-4px); box-shadow: 0 14px 30px -18px var(--carmesi); }
 .rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; }
-.tarjeta { display: flex; flex-direction: column; gap: 12px; padding: 26px; background: var(--superficie); border: 1px solid var(--linea); transition: border-color 0.2s; }
+.tarjeta { display: flex; flex-direction: column; gap: 12px; padding: 26px; background: var(--superficie); border: 1px solid var(--linea); transition: border-color 0.2s, transform 0.25s var(--corte), box-shadow 0.25s; }
 .tarjeta:hover { border-color: var(--carmesi); }
 .tarjeta > p:not(.etiqueta) { color: var(--ceniza); }
 .tarjeta__titulo { font: 400 1.7rem/1.15 var(--titulo); }
@@ -184,6 +195,15 @@ em { font-style: normal; color: var(--carmesi); }
   75% { transform: translate3d(-3px, 2px, 0); }
 }
 .pie__repetir { min-height: 44px; padding: 0; border: 0; background: none; color: var(--hueso); font: inherit; text-decoration: underline; cursor: pointer; }
+
+/* Aparición al hacer scroll: el elemento se descubre de izquierda a derecha, como un corte.
+   Solo se oculta si el JS está activo (.vfx) y no se ha pedido calma. */
+.vfx:not(.calma) .revela { clip-path: inset(0 100% 0 0); translate: -18px 0; transition: clip-path 0.7s var(--corte), translate 0.7s var(--corte); transition-delay: calc(var(--i, 0) * 90ms); }
+.vfx:not(.calma) .revela--vista { clip-path: inset(0 -20px 0 0); translate: 0 0; }
+/* En los títulos, un tajo carmesí barre el texto mientras aparece */
+.vfx:not(.calma) .seccion__titulo.revela::after { content: ""; position: absolute; left: 0; right: 0; top: 52%; height: 2px; background: var(--hueso); box-shadow: 0 0 10px 2px var(--carmesi); transform: scaleX(0); transform-origin: left; opacity: 0; }
+.vfx:not(.calma) .seccion__titulo.revela--vista::after { animation: barrido 0.8s var(--corte); }
+@keyframes barrido { 0% { transform: scaleX(0); opacity: 1; } 55% { transform: scaleX(1); opacity: 1; transform-origin: left; } 56% { transform-origin: right; } 100% { transform: scaleX(0); transform-origin: right; opacity: 1; } }
 
 /* Movimiento reducido: el botón lo controla también */
 .calma *, .calma *::before, .calma *::after { animation: none !important; transition: none !important; }
