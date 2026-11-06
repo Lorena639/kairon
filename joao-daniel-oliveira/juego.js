@@ -2,6 +2,8 @@
    Canvas 2D, un bucle con requestAnimationFrame y detección de corte por distancia
    de un punto (el bug) a un segmento (el último tramo del trazo). */
 
+import { corte, golpe, tajo } from "./sonido.js?v=1";
+
 const lienzo = document.getElementById("lienzo-juego");
 const ctx = lienzo.getContext("2d");
 const caja = lienzo.parentElement;
@@ -50,8 +52,12 @@ function distancia(px, py, ax, ay, bx, by) {
   return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
 }
 
+// Cada corte suena un poco distinto para que no canse
+const azarTono = () => 0.85 + Math.random() * 0.4;
+
 function cortar(bug, angulo) {
   puntos++;
+  corte({ fuerza: 0.7, tono: azarTono() });
   marcador.puntos.textContent = puntos;
   // Dos mitades que salen despedidas en perpendicular al corte
   const nx = -Math.sin(angulo), ny = Math.cos(angulo);
@@ -144,6 +150,7 @@ function paso(t) {
   if (escapados) {
     bugs = bugs.filter((b) => b.y - b.r <= alto);
     vidas = Math.max(0, vidas - escapados);
+    golpe({ fuerza: 0.6 });
     marcador.vidas.textContent = vidas;
     caja.classList.remove("juego--golpe");
     void caja.offsetWidth;
@@ -175,6 +182,7 @@ function empezar() {
 
 function terminar() {
   jugando = false;
+  golpe({ fuerza: 0.8, grave: 0.6 });
   caja.classList.remove("juego--activo");
   const nuevo = puntos > record;
   if (nuevo) {
@@ -211,6 +219,7 @@ addEventListener("keydown", (e) => {
   const y = Math.max(...bugs.map((b) => b.y));
   const ahora = performance.now();
   trazo = [{ x: 0, y, t: ahora }, { x: ancho / 2, y, t: ahora }, { x: ancho, y, t: ahora }];
+  tajo({ fuerza: 0.8 });
   comprobarCortes(0, y, ancho, y);
 });
 

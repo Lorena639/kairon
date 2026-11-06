@@ -48,6 +48,8 @@ em { font-style: normal; color: var(--carmesi); }
 .cabecera__calma { flex: none; min-height: 44px; padding: 4px 12px; border: 1px solid var(--linea); background: transparent; color: var(--ceniza); font: 400 0.76rem var(--mono); cursor: pointer; }
 .cabecera__calma:hover { border-color: var(--carmesi); color: var(--hueso); }
 .cabecera__calma[aria-pressed="true"] { background: var(--carmesi-seco); color: var(--hueso); }
+/* El sonido encendido solo se marca con el borde: no es una alerta */
+.cabecera__sonido[aria-pressed="true"] { background: transparent; border-color: var(--carmesi); color: var(--hueso); }
 
 /* Portada */
 .portada { position: relative; min-height: calc(100svh - 66px); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px var(--margen) clamp(40px, 7vw, 80px); overflow: clip; }
@@ -274,6 +276,7 @@ button.boton { font: 600 1rem var(--texto); color: var(--hueso); }
   html { scroll-padding-top: 120px; }
   .cabecera { flex-wrap: wrap; gap: 0 12px; padding-block: 4px; }
   .cabecera__marca { flex: 1; }
+  .cabecera__calma { padding: 4px 8px; font-size: 0.68rem; }
   .cabecera__nav { order: 3; flex: 1 0 100%; margin-inline: calc(var(--margen) * -1); padding-inline: calc(var(--margen) - 10px); }
   .portada { min-height: calc(100svh - 104px); }
   .portada__titulo em { padding-left: 0; }

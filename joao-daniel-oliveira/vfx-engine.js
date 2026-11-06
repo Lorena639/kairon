@@ -1,4 +1,6 @@
 /* Motor de efectos: corte de entrada, tajos, botones, brasas y cifrado de encantamientos */
+import { tajo, corte, golpe, fuego } from "./sonido.js?v=1";
+
 const NS = "http://www.w3.org/2000/svg";
 const raiz = document.documentElement;
 raiz.classList.add("vfx"); // sin JS, todo el contenido se ve desde el principio
@@ -65,7 +67,13 @@ function lanzarIntro() {
   const principal = document.querySelector("main");
   principal.classList.add("temblor");
 
+  // Sonido sincronizado con los tres tajos rápidos, el corte final y el fogonazo
+  const sonidos = [
+    setTimeout(() => tajo({ fuerza: 0.7 }), 1100), setTimeout(() => tajo({ fuerza: 0.7 }), 1320),
+    setTimeout(() => tajo({ fuerza: 0.7 }), 1540), setTimeout(() => corte(), 1880), setTimeout(() => golpe({ fuerza: 0.8 }), 2030)
+  ];
   const terminar = () => {
+    sonidos.forEach(clearTimeout);
     clearTimeout(reloj);
     corte.remove();
     principal.classList.remove("temblor");
@@ -86,12 +94,21 @@ document.getElementById("repetir").addEventListener("click", () => {
 });
 
 /* ---------- Tajos cruzados en tarjetas y enlaces ---------- */
+// Al pasar el ratón suena un tajo muy flojo, como mucho cada 120 ms
+let ultimoTajo = 0;
+function tajoSuave() {
+  const ahora = performance.now();
+  if (ahora - ultimoTajo < 120) return;
+  ultimoTajo = ahora;
+  tajo({ fuerza: 0.3 });
+}
 document.querySelectorAll(".tajo").forEach((el) => {
   const trazos = crearSvg("svg", { class: "tajo__trazos", viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true" });
   [[0, 15, 100, 75], [100, 10, 0, 90], [15, 100, 90, 0]].forEach(([x1, y1, x2, y2]) => {
     trazos.appendChild(crearSvg("line", { x1, y1, x2, y2, pathLength: 150 }));
   });
   el.appendChild(trazos);
+  el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && !calmado()) tajoSuave(); });
 });
 
 /* ---------- Botones que se parten al pulsarlos ---------- */
@@ -108,6 +125,7 @@ document.querySelectorAll(".boton--corte").forEach((boton) => {
   boton.addEventListener("pointerdown", () => {
     if (calmado()) return;
     boton.classList.add("boton--cortado");
+    corte({ fuerza: 0.8 });
     setTimeout(() => boton.classList.remove("boton--cortado"), 340);
   });
 });
@@ -177,7 +195,7 @@ document.querySelectorAll(".boton--llama").forEach((boton) => {
   boton.addEventListener("pointerleave", apagar);
   boton.addEventListener("focus", encender);
   boton.addEventListener("blur", apagar);
-  boton.addEventListener("pointerdown", () => emitir(boton, 70, 2.2));
+  boton.addEventListener("pointerdown", () => { emitir(boton, 70, 2.2); if (!calmado()) fuego(); });
 });
 
 /* ---------- Aparición al hacer scroll ---------- */
@@ -187,6 +205,7 @@ const vigia = new IntersectionObserver((entradas) => {
     if (!e.isIntersecting) return;
     const el = e.target;
     el.classList.add("revela--vista");
+    if (el.classList.contains("seccion__titulo")) tajo({ fuerza: 0.45 }); // el barrido del título
     vigia.unobserve(el);
     // Al terminar se quitan las clases para que el hover de las tarjetas no herede el retardo
     setTimeout(() => el.classList.remove("revela", "revela--vista"), 900 + 90 * (+el.style.getPropertyValue("--i") || 0));

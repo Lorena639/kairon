@@ -2,6 +2,8 @@
    Fases: invocación (texto y anillos) → el dominio se expande en círculo → lluvia de tajos
    sobre la página → se cierra. Se lanza con el botón o escribiendo «ryoiki tenkai». */
 
+import { tajo, corte, golpe, dron } from "./sonido.js?v=1";
+
 const NS = "http://www.w3.org/2000/svg";
 const raiz = document.documentElement;
 const calmado = () => raiz.classList.contains("calma");
@@ -18,6 +20,7 @@ function linea(svg) {
   l2.setAttribute("pathLength", "100");
   if (Math.random() < 0.3) l2.classList.add("dominio__tajo--rojo");
   svg.appendChild(l2);
+  if (Math.random() < 0.45) tajo({ fuerza: 0.3 }); // no todos suenan, para que no sature
   setTimeout(() => l2.remove(), 600);
 }
 
@@ -48,6 +51,8 @@ function expandir() {
   cerrar.focus({ preventScroll: true });
 
   const relojes = [];
+  dron(1.2);
+  relojes.push(setTimeout(() => golpe({ fuerza: 1, grave: 0.8 }), 1200)); // el dominio se expande
   let lluvia = null;
   if (!calmado()) {
     // A los 2,4 s el dominio ya cubre la pantalla y empiezan a llover tajos
@@ -63,6 +68,7 @@ function expandir() {
     relojes.forEach(clearTimeout);
     clearInterval(lluvia);
     capa.classList.add("dominio--saliendo");
+    corte({ fuerza: 0.7, tono: 0.8 });
     raiz.classList.remove("en-dominio");
     removeEventListener("keydown", teclas);
     setTimeout(() => capa.remove(), 500);

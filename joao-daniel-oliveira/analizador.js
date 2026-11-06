@@ -2,6 +2,8 @@
    Lee líneas en formato de log de acceso (Apache/Nginx "combined"), cuenta peticiones
    por IP y por código de estado, lista los errores y marca posible fuerza bruta. */
 
+import { corte, golpe, tajo } from "./sonido.js?v=1";
+
 const UMBRAL_FUERZA_BRUTA = 5; // 401/403 de una misma IP a partir de los cuales se avisa
 // IP, fecha entre corchetes, "MÉTODO RUTA PROTOCOLO", código y tamaño
 const LINEA = /^(\S+) \S+ \S+ \[([^\]]+)\] "(\S+) (\S+)[^"]*" (\d{3}) (\S+)/;
@@ -84,9 +86,12 @@ function pintar(r) {
   const veredicto = el("div", `informe__veredicto${r.sospechosas.length ? " informe__veredicto--alerta" : ""}`);
   if (r.sospechosas.length) {
     veredicto.appendChild(el("strong", "", "Maldición detectada"));
+    corte({ retardo: 0.1 });
+    golpe({ fuerza: 0.7, retardo: 0.1 });
     r.sospechosas.forEach(([ip, n]) => veredicto.appendChild(el("p", "", `${ip} · ${n} accesos denegados (401/403): posible ataque de fuerza bruta.`)));
   } else {
     veredicto.appendChild(el("strong", "", "Santuario limpio"));
+    tajo({ fuerza: 0.4 });
     veredicto.appendChild(el("p", "", `Ninguna IP llega a ${UMBRAL_FUERZA_BRUTA} accesos denegados.`));
   }
   informe.appendChild(veredicto);
