@@ -21,10 +21,18 @@
   const ligero = (navigator.connection && navigator.connection.saveData) || navigator.deviceMemory <= 2;
   if (!hayWebGL() || ligero) { radar2D(contenedor); return; }
   const rutaThree = document.currentScript.src.replace("escena.js", "vendor/three.min.js");
+  // Postprocesado (brillo, aberración cromática, viñeta y grano): va después de Three.js.
+  // Si no carga, la escena se dibuja igual, solo que sin efectos.
+  const rutaEfectos = document.currentScript.src.replace("escena.js", "vendor/postprocessing.min.js");
   const cargarThree = () => {
     const js = document.createElement("script");
     js.src = rutaThree;
-    js.onload = iniciar;
+    js.onload = () => {
+      const efectos = document.createElement("script");
+      efectos.src = rutaEfectos;
+      efectos.onload = efectos.onerror = iniciar;
+      document.head.appendChild(efectos);
+    };
     js.onerror = () => radar2D(contenedor);
     document.head.appendChild(js);
   };
@@ -230,12 +238,31 @@
     scrollF = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1);
   }, { passive: true });
 
+  // --- Postprocesado: el acabado "de cine" de la escena ---
+  // Bloom: solo lo más brillante (barrido, paquetes, nodos encendidos) desprende luz.
+  // Aberración cromática: separa un poco los colores en los bordes y se dispara con cada impacto.
+  // (Sin viñeta ni grano: el lienzo no ocupa toda la pantalla y marcarían sus bordes.)
+  const PP = window.POSTPROCESSING;
+  let compositor = null;
+  let aberracion = null;
+  let sacudida = 0; // 0..1, sube con los impactos y baja sola
+  const ABERRACION_BASE = movil ? 0.0004 : 0.0008;
+  if (PP) {
+    compositor = new PP.EffectComposer(render, { frameBufferType: THREE.HalfFloatType });
+    compositor.addPass(new PP.RenderPass(escena, camara));
+    const bloom = new PP.BloomEffect({ intensity: 0.9, luminanceThreshold: 0.55, luminanceSmoothing: 0.25, mipmapBlur: true, radius: 0.55 });
+    compositor.addPass(new PP.EffectPass(camara, bloom));
+    aberracion = new PP.ChromaticAberrationEffect({ offset: new THREE.Vector2(ABERRACION_BASE, ABERRACION_BASE), radialModulation: true, modulationOffset: 0.2 });
+    compositor.addPass(new PP.EffectPass(camara, aberracion));
+  }
+
   function ajustar() {
     const w = contenedor.clientWidth;
     const h = contenedor.clientHeight;
     camara.aspect = w / h;
     camara.updateProjectionMatrix();
     render.setSize(w, h, false);
+    if (compositor) compositor.setSize(w, h, false);
     camara.position.z = w < 720 ? 9.8 : 7.4;
   }
   window.addEventListener("resize", ajustar);
@@ -265,6 +292,8 @@
         polvo.visible = false;
         halo.visible = false;
         render.setPixelRatio(1);
+        if (compositor) { compositor.dispose(); compositor = null; } // sin efectos en equipos lentos
+        ajustar();
         console.info("KAIRON: modo ligero activado (" + Math.round(fps) + " fps)");
       }
       fotogramas = 0;
@@ -274,7 +303,8 @@
 
   function cuadro(ahora) {
     requestAnimationFrame(cuadro);
-    if (!visible) return;
+    // Mientras la intro tapa la pantalla no se dibuja nada: así no le roba rendimiento
+    if (!visible || document.querySelector(".carga.intro-activa")) { ultimo = ahora; return; }
     const dt = Math.min((ahora - ultimo) / 1000, 0.05);
     ultimo = ahora;
     medirRendimiento(ahora);
@@ -363,7 +393,15 @@
       geoPaquetes.getAttribute("position").needsUpdate = true;
     }
 
-    render.render(escena, camara);
+    if (compositor) {
+      // La aberración se abre con los impactos y con el ratón rápido, y vuelve a su valor base
+      sacudida = Math.max(0, sacudida - dt * 1.6);
+      const desvio = ABERRACION_BASE + sacudida * 0.006 + Math.min(Math.abs(objetivo.x - actual.x) + Math.abs(objetivo.y - actual.y), 1) * 0.0012;
+      aberracion.offset.set(desvio, desvio * 0.6);
+      compositor.render(dt);
+    } else {
+      render.render(escena, camara);
+    }
   }
   requestAnimationFrame(cuadro);
 
@@ -378,10 +416,11 @@
         if (Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 0.35) b.amenaza = 1;
       }
       tPulso = 0;
+      sacudida = 1;
     },
     ataque(encender) {
       for (let i = 0; i < N; i++) {
-        if (encender) { if (Math.random() < 0.18) nodos[i].amenaza = 1; }
+        if (encender) { if (Math.random() < 0.18) nodos[i].amenaza = 1; sacudida = 1; }
         else nodos[i].amenaza = 0;
       }
     },
