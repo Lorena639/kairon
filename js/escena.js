@@ -281,7 +281,7 @@
     texturaK.colorSpace = THREE.SRGBColorSpace;
     texturaK.anisotropy = render.capabilities.getMaxAnisotropy();
     // Cara: el PNG tal cual (emisivo, para que sus colores no dependan de la luz) más un brillo metálico encima
-    const matCara = new THREE.MeshStandardMaterial({ map: texturaK, emissiveMap: texturaK, emissive: 0xffffff, emissiveIntensity: 0.62, metalness: 0.75, roughness: 0.32, envMap: entorno, envMapIntensity: 0.7, alphaTest: 0.35, transparent: false });
+    const matCara = new THREE.MeshStandardMaterial({ map: texturaK, emissiveMap: texturaK, emissive: 0xffffff, emissiveIntensity: 0.92, metalness: 0.35, roughness: 0.38, envMap: entorno, envMapIntensity: 0.55, alphaTest: 0.35, transparent: false });
     const matCanto = new THREE.MeshStandardMaterial({ color: 0xb58a4c, metalness: 1, roughness: 0.26, envMap: entorno, envMapIntensity: 1.25 });
     const mallaK = new THREE.Mesh(geoK, [matCara, matCanto]);
     const ALTO_K = enPagina ? 2.2 : 3.1;
@@ -293,6 +293,7 @@
     document.documentElement.classList.add("k3d-activa");
     // Entrada: gira desde de canto y crece cuando termina la intro
     k3d.userData.entrada = 0;
+    k3d.userData.inicio = 0;
   }
 
   // --- Postprocesado: el acabado "de cine" de la escena ---
@@ -415,7 +416,9 @@
 
     // K en 3D: acompaña al globo, sigue al ratón y flota; entra girando tras la intro
     if (k3d) {
-      if (!document.querySelector(".carga")) k3d.userData.entrada = Math.min(1, k3d.userData.entrada + dt / 1.8);
+      // Entrada en tiempo real (1,8 s desde que se va la intro), aunque el equipo vaya a pocos fps
+      if (!document.querySelector(".carga") && !k3d.userData.inicio) k3d.userData.inicio = ahora;
+      if (k3d.userData.inicio) k3d.userData.entrada = Math.min(1, (ahora - k3d.userData.inicio) / 1800);
       const e = 1 - Math.pow(1 - k3d.userData.entrada, 3); // ease-out cúbico
       const t = ahora / 1000;
       k3d.position.copy(grupo.position);
