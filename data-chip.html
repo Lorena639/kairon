@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KAIRON Data Chip es una línea de investigación, no un producto: un registro verificable de qué organizaciones han recibido tus datos, cuándo, para qué y con qué base legal. Incluye una demo con datos ficticios.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El momento justo">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>KAIRON Data Chip: saber por dónde han pasado tus datos · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="data-chip.html">
+  <link rel="alternate" hreflang="ca" href="ca/data-chip.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "url": "index.html",
+    "logo": "img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguridad y análisis forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desarrollo web y sistemas", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
+  <!-- Estilos propios de Data Chip y Legalidad -->
+  <link rel="stylesheet" href="css/datachip.css?v=20261112c">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
+    </ul>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Secciones">
+    <a href="#contenido" data-seccion="hero"><span>Inicio</span></a>
+    <a href="#problema" data-seccion="problema"><span>El problema</span></a>
+    <a href="#idea" data-seccion="idea"><span>La idea</span></a>
+    <a href="#demo" data-seccion="demo"><span>Demo</span></a>
+    <a href="#arquitectura" data-seccion="arquitectura"><span>Cómo funcionaría</span></a>
+    <a href="#limites" data-seccion="limites"><span>Lo que no es</span></a>
+    <a href="#fases" data-seccion="fases"><span>Fases</span></a>
+    <a href="#riesgos" data-seccion="riesgos"><span>Riesgos</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/data-chip.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det dc">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">¿Por dónde han pasado tus datos?</h1>
+        <p class="pagina__intro">KAIRON Data Chip es una línea de investigación: un registro que te enseñaría qué organizaciones han recibido tus datos, cuándo, para qué y con qué base legal. Hoy no existe. Esta página explica la idea y sus límites.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li class="pi-datos__aviso">En fase de estudio: no se vende ni funciona</li><li>Fase 5 del plan de empresa</li><li>Fuera del alcance del TFG</li><li>Demo con datos ficticios</li></ul>
+      </div>
+    </section>
+
+    <!-- ===== EL PROBLEMA ===== -->
+    <section class="det-seccion det-seccion--borde" id="problema" aria-labelledby="titulo-problema">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-problema">Das tus datos una vez. Viajan muchas</h2>
+        <p class="det-entrada">Compras en una tienda en línea y escribes tu nombre, tu correo y tu dirección. La tienda no trabaja sola: cobra con una pasarela de pago, envía con una mensajería y manda sus boletines con otra empresa.</p>
+        <p class="det-prosa">Cada una recibe una parte de tus datos. Algunas están en otro país. Todo eso puede ser perfectamente legal, y aun así tú no tienes delante el recorrido completo.</p>
+        <div class="det-pares">
+          <div>
+            <h3>Lo que la ley ya te da</h3>
+            <p class="det-prosa">El derecho de acceso del RGPD (artículo 15) te permite preguntar a una empresa a quién ha comunicado tus datos. Desde 2023, el Tribunal de Justicia de la Unión Europea exige que te dé nombres concretos si los pides, no solo categorías. La empresa tiene un mes para contestar.</p>
+          </div>
+          <div class="det-pares__oro">
+            <h3>Lo que falta</h3>
+            <p class="det-prosa">Tienes que preguntar empresa por empresa, esperar cada respuesta y juntar las piezas a mano. Y no tienes forma de comprobar que lo que te contestan hoy coincide con lo que se anotó en su día.</p>
+          </div>
+        </div>
+        <p class="det-prosa dc-pie">Para una empresa pequeña el problema es el mismo visto desde el otro lado: cuando un cliente pregunta, hay que reconstruir el recorrido a partir de contratos y correos. <a href="legal.html#marco-data-chip">El detalle legal, con sus fuentes</a>.</p>
+      </div>
+    </section>
+
+    <!-- ===== LA IDEA ===== -->
+    <section class="det-seccion claro" id="idea" aria-labelledby="titulo-idea">
+      <div class="contenedor dc-idea">
+        <div>
+          <h2 class="det-h2" id="titulo-idea">Un registro de movimientos, no un rastreador</h2>
+          <p class="det-entrada">Cada vez que una organización adherida comunica datos tuyos a otra, anota el movimiento: quién, a quién, qué tipo de datos, para qué, con qué base legal y en qué país.</p>
+          <p class="det-prosa">La anotación no contiene tus datos. Es un <dfn>recibo</dfn>: dice que algo se movió, no qué decía. Cada recibo lleva una <dfn>huella</dfn>, un número calculado a partir de su contenido, y cada huella incluye la del recibo anterior. Si alguien cambia una anotación antigua, todas las huellas posteriores dejan de coincidir y se nota.</p>
+          <p class="det-prosa">Tú verías esos recibos como una línea de tiempo y un mapa, y desde ahí podrías ejercer tus derechos ante la empresa que corresponda.</p>
+        </div>
+        <div class="dc-nombre">
+          <h3 class="det-h3">Por qué «chip»</h3>
+          <p class="det-prosa">No es una pieza física ni algo que se implante. Es una imagen: igual que el chip de una mascota permite saber de quién es, cada conjunto de datos llevaría un identificador que permite seguir su historial dentro de las organizaciones que participan.</p>
+          <p class="det-prosa">Fuera de ellas no hay seguimiento posible, y no lo prometemos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEMO: el momento central de la página =====
+         Los seis movimientos están escritos aquí, en el HTML: sin JavaScript se leen todos.
+         js/datachip.js los recorre con el scroll, dibuja el mapa y calcula las huellas SHA-256 encadenadas. -->
+    <section class="dc-demo" id="demo" aria-labelledby="titulo-demo">
+      <div class="contenedor dc-demo__cab">
+        <h2 class="det-h2" id="titulo-demo">El viaje de los datos de Irene</h2>
+        <p class="pi-sello">Datos ficticios: ni Irene ni estas empresas existen</p>
+        <p class="det-entrada">Irene compra unas zapatillas en una tienda en línea. Estos son los seis movimientos que Data Chip le enseñaría, en el orden en que ocurrieron.</p>
+      </div>
+
+      <div class="dc-escena">
+        <div class="contenedor dc-escena__caja">
+
+          <!-- Mapa: decorativo para lectores de pantalla (la lista de la derecha dice lo mismo) -->
+          <figure class="dc-mapa" aria-hidden="true">
+            <svg viewBox="0 0 720 560" focusable="false">
+              <!-- Frontera del Espacio Económico Europeo -->
+              <path class="dc-mapa__frontera" d="M566 24 C 540 150, 600 300, 560 536"/>
+              <text class="dc-mapa__zona" x="40" y="46">Espacio Económico Europeo</text>
+              <text class="dc-mapa__zona dc-mapa__zona--fuera" x="700" y="46" text-anchor="end">Fuera del EEE</text>
+
+              <!-- Rutas (una por movimiento). pathLength=1 para dibujarlas con stroke-dashoffset -->
+              <path class="dc-ruta" data-ruta="1" pathLength="1" d="M92 290 C 150 250, 210 250, 276 284"/>
+              <path class="dc-ruta" data-ruta="2" pathLength="1" d="M300 268 C 320 190, 380 130, 452 118"/>
+              <path class="dc-ruta" data-ruta="3" pathLength="1" d="M324 284 C 380 262, 420 256, 470 262"/>
+              <path class="dc-ruta" data-ruta="4" pathLength="1" d="M318 302 C 420 330, 540 350, 626 396"/>
+              <path class="dc-ruta" data-ruta="5" pathLength="1" d="M296 314 C 300 380, 350 440, 420 456"/>
+              <path class="dc-ruta dc-ruta--orden" data-ruta="6" pathLength="1" d="M92 304 C 220 420, 480 470, 630 416"/>
+
+              <!-- Nodos -->
+              <g class="dc-nodo dc-nodo--persona" data-nodo="irene" transform="translate(76 296)">
+                <circle r="20"/><circle class="dc-nodo__centro" r="5"/>
+                <text y="46" text-anchor="middle">Irene</text>
+              </g>
+              <g class="dc-nodo" data-nodo="albatros" transform="translate(300 292)">
+                <circle r="26"/><circle class="dc-nodo__centro" r="6"/>
+                <text y="52" text-anchor="middle">Tienda Albatros</text>
+                <text class="dc-nodo__pais" y="70" text-anchor="middle">España</text>
+              </g>
+              <g class="dc-nodo" data-nodo="lumen" transform="translate(470 112)">
+                <circle r="18"/><circle class="dc-nodo__centro" r="4"/>
+                <text y="-30" text-anchor="middle">Pagos Lumen</text>
+                <text class="dc-nodo__pais" y="42" text-anchor="middle">Irlanda</text>
+              </g>
+              <g class="dc-nodo" data-nodo="boreal" transform="translate(488 262)">
+                <circle r="18"/><circle class="dc-nodo__centro" r="4"/>
+                <text y="-30" text-anchor="middle">Mensajería Boreal</text>
+                <text class="dc-nodo__pais" y="42" text-anchor="middle">España</text>
+              </g>
+              <g class="dc-nodo" data-nodo="ancora" transform="translate(438 460)">
+                <circle r="18"/><circle class="dc-nodo__centro" r="4"/>
+                <text y="44" text-anchor="middle">Gestoría Áncora</text>
+                <text class="dc-nodo__pais" y="62" text-anchor="middle">España</text>
+              </g>
+              <g class="dc-nodo dc-nodo--fuera" data-nodo="nimbus" transform="translate(644 404)">
+                <circle r="18"/><circle class="dc-nodo__centro" r="4"/>
+                <text y="-30" text-anchor="middle">Correo Nimbus</text>
+                <text class="dc-nodo__pais" y="42" text-anchor="middle">Estados Unidos</text>
+              </g>
+
+              <!-- El dato en movimiento -->
+              <circle class="dc-pulso" r="6" cx="-20" cy="-20"/>
+            </svg>
+            <figcaption class="dc-mapa__leyenda">
+              <span class="dc-ley dc-ley--dato">Datos comunicados</span>
+              <span class="dc-ley dc-ley--orden">Orden de supresión</span>
+            </figcaption>
+          </figure>
+
+          <div class="dc-panel">
+            <div class="dc-panel__cab">
+              <p class="dc-cuenta"><span class="dc-oculto">Movimiento </span><b>01</b> <span aria-hidden="true">/</span><span class="dc-oculto"> de </span> 06</p>
+              <div class="dc-pasos" hidden>
+                <button type="button" class="dc-paso" data-paso="-1" aria-label="Movimiento anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+                <button type="button" class="dc-paso" data-paso="1" aria-label="Movimiento siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+            </div>
+
+            <ol class="dc-registro">
+              <li class="dc-mov" data-ruta="1" data-de="irene" data-a="albatros">
+                <h3 class="dc-mov__cab"><time datetime="2026-03-02" data-campo="fecha">2 mar 2026</time><span class="dc-mov__quien"><span data-campo="de">Irene</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Tienda Albatros</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Nombre, correo y dirección de envío</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Gestionar su pedido</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Ejecución de un contrato (art. 6.1.b RGPD)</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">España</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+              <li class="dc-mov" data-ruta="2" data-de="albatros" data-a="lumen">
+                <h3 class="dc-mov__cab"><time datetime="2026-03-02" data-campo="fecha">2 mar 2026</time><span class="dc-mov__quien"><span data-campo="de">Tienda Albatros</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Pagos Lumen</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Nombre, importe y referencia de la tarjeta</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Cobrar el pedido</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Ejecución de un contrato (art. 6.1.b); Lumen actúa como encargado (art. 28)</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">Irlanda, dentro del EEE</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+              <li class="dc-mov" data-ruta="3" data-de="albatros" data-a="boreal">
+                <h3 class="dc-mov__cab"><time datetime="2026-03-03" data-campo="fecha">3 mar 2026</time><span class="dc-mov__quien"><span data-campo="de">Tienda Albatros</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Mensajería Boreal</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Nombre, dirección y teléfono</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Entregar el paquete</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Ejecución de un contrato (art. 6.1.b)</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">España</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+              <li class="dc-mov dc-mov--fuera" data-ruta="4" data-de="albatros" data-a="nimbus">
+                <h3 class="dc-mov__cab"><time datetime="2026-03-10" data-campo="fecha">10 mar 2026</time><span class="dc-mov__quien"><span data-campo="de">Tienda Albatros</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Correo Nimbus</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Correo electrónico</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Enviar el boletín de novedades</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Consentimiento (art. 6.1.a), recibo de consentimiento del 2 mar 2026</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">Estados Unidos, fuera del EEE. Garantía: cláusulas contractuales tipo (art. 46)</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+              <li class="dc-mov" data-ruta="5" data-de="albatros" data-a="ancora">
+                <h3 class="dc-mov__cab"><time datetime="2026-04-18" data-campo="fecha">18 abr 2026</time><span class="dc-mov__quien"><span data-campo="de">Tienda Albatros</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Gestoría Áncora</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Datos de facturación</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Llevar la contabilidad y los impuestos</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Obligación legal (art. 6.1.c)</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">España</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+              <li class="dc-mov dc-mov--orden" data-ruta="6" data-de="irene" data-a="nimbus" data-apaga="nimbus">
+                <h3 class="dc-mov__cab"><time datetime="2026-06-01" data-campo="fecha">1 jun 2026</time><span class="dc-mov__quien"><span data-campo="de">Irene</span> <span class="dc-mov__flecha" aria-hidden="true">→</span><span class="dc-oculto"> a </span> <span data-campo="a">Correo Nimbus</span></span></h3>
+                <dl class="dc-mov__datos">
+                  <div><dt>Datos</dt><dd data-campo="datos">Ninguno: es una orden. Irene la da a la tienda y la tienda la traslada a Nimbus (art. 19)</dd></div>
+                  <div><dt>Finalidad</dt><dd data-campo="finalidad">Retirar el consentimiento del boletín y pedir la supresión</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Retirada del consentimiento (art. 7.3) y derecho de supresión (art. 17)</dd></div>
+                  <div><dt>País</dt><dd data-campo="pais">Estados Unidos. Supresión confirmada el 9 jun 2026</dd></div>
+                  <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
+                </dl>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prueba de la huella: solo aparece si el navegador puede calcular SHA-256 -->
+      <div class="contenedor">
+        <div class="dc-prueba" hidden data-ok="Las seis huellas coinciden con las registradas." data-roto="El movimiento {n} ya no coincide con lo registrado, y los posteriores tampoco." data-fila="Movimiento {n}" data-estado-ok="coincide" data-estado-roto="no coincide">
+          <div class="dc-prueba__texto">
+            <h3 class="det-h3">Cambia una palabra y mira la cadena</h3>
+            <p class="dc-texto">Elige un movimiento y edita su finalidad. Tu navegador vuelve a calcular las huellas SHA-256. Como cada una incluye la anterior, un cambio en un recibo antiguo rompe todos los que vienen después. Nada de lo que escribas sale de esta página.</p>
+            <div class="dc-prueba__campos">
+              <div class="dc-campo">
+                <label for="dc-cual">Movimiento</label>
+                <select id="dc-cual"></select>
+              </div>
+              <div class="dc-campo dc-campo--ancho">
+                <label for="dc-finalidad">Finalidad anotada</label>
+                <input type="text" id="dc-finalidad" autocomplete="off" spellcheck="false" maxlength="120">
+              </div>
+              <button type="button" class="boton dc-restaurar"><span class="boton__texto" data-texto="Restaurar">Restaurar</span></button>
+            </div>
+            <p class="dc-prueba__estado" role="status" data-estado="ok"></p>
+          </div>
+          <ol class="dc-cadena" aria-label="Huellas de los seis movimientos"></ol>
+        </div>
+        <p class="det-aviso">Demostración con datos inventados. La huella es un SHA-256 real calculado en tu navegador; el registro, las firmas y las empresas son una maqueta de cómo funcionaría el sistema.</p>
+      </div>
+    </section>
+
+    <!-- ===== CÓMO FUNCIONARÍA ===== -->
+    <section class="det-seccion det-seccion--borde" id="arquitectura" aria-labelledby="titulo-arquitectura">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-arquitectura">Cómo funcionaría, pieza a pieza</h2>
+        <p class="det-entrada">Cinco piezas. Ninguna está construida: esto es el diseño conceptual que la fase de investigación tiene que poner a prueba.</p>
+
+        <div class="dc-arq">
+          <ol class="dc-hilo dc-piezas">
+            <li>
+              <h3 class="det-h3">Identidad sin exponer quién eres</h3>
+              <p class="dc-texto">Cada persona tiene un identificador distinto para cada organización, de modo que dos empresas no pueden cruzar sus registros para saber que hablan de la misma persona. Solo tú puedes reunirlos. Para demostrar que eres tú, el diseño prevé apoyarse en la cartera europea de identidad digital en lugar de crear otra cuenta más.</p>
+            </li>
+            <li>
+              <h3 class="det-h3">Recibo de consentimiento</h3>
+              <p class="dc-texto">Cuando aceptas algo, recibes una copia de lo que aceptaste: quién lo pide, para qué, hasta cuándo y cómo retirarlo. Existe una especificación técnica internacional para este tipo de recibos, ISO/IEC TS 27560, y un vocabulario abierto para describirlos. No habría que inventar el formato.</p>
+            </li>
+            <li>
+              <h3 class="det-h3">Anotación firmada de cada movimiento</h3>
+              <p class="dc-texto">La organización que comunica los datos escribe la anotación y la firma con su clave. La firma dice quién lo anotó; la huella encadenada dice que no se ha tocado después. El registro no contiene los datos, solo la descripción del movimiento.</p>
+            </li>
+            <li>
+              <h3 class="det-h3">Verificación al alcance de cualquiera</h3>
+              <p class="dc-texto">Quien tenga los recibos puede volver a calcular las huellas, como en la demo de arriba, sin fiarse de KAIRON. Es la misma idea que usamos en la cadena de custodia de un incidente: <a href="informe.html">cada prueba con su hora, su caso y su SHA-256</a>.</p>
+            </li>
+            <li>
+              <h3 class="det-h3">Tu vista: línea de tiempo, mapa y derechos</h3>
+              <p class="dc-texto">Ves a quién llegaron tus datos, cuáles salieron del Espacio Económico Europeo y con qué garantía. Desde cada recibo puedes preparar una solicitud de acceso, rectificación, supresión u oposición dirigida a la empresa que corresponde. Data Chip no decide por ella: le hace llegar tu petición y anota la respuesta.</p>
+            </li>
+          </ol>
+
+          <figure class="dc-recibo">
+            <figcaption>Una anotación, tal como se guardaría <small>Ejemplo ficticio</small></figcaption>
+            <pre tabindex="0"><code>{
+  "movimiento": 4,
+  "fecha_utc": "2026-03-10T09:14:00Z",
+  "emisor": "Tienda Albatros",
+  "destinatario": "Correo Nimbus",
+  "categorias": ["correo electrónico"],
+  "finalidad": "Enviar el boletín de novedades",
+  "base_legal": "RGPD art. 6.1.a",
+  "recibo_consentimiento": "rc-2026-03-02-0007",
+  "pais": "US",
+  "garantia": "RGPD art. 46, cláusulas tipo",
+  "huella_anterior": "sha256 del movimiento 3",
+  "firma_emisor": "firma de Tienda Albatros"
+}</code></pre>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LO QUE NO ES (sección clara) ===== -->
+    <section class="det-seccion claro" id="limites" aria-labelledby="titulo-limites">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-limites">Lo que Data Chip no es</h2>
+        <p class="det-entrada">Un sistema que sigue datos personales puede convertirse fácilmente en lo contrario de lo que pretende. Estos límites son parte del diseño, no una nota al pie.</p>
+        <ul class="dc-noes">
+          <li>
+            <h3>No espía a nadie</h3>
+            <p class="det-prosa">Solo existen las anotaciones que una organización adherida decide emitir sobre sus propios movimientos. No se observa a terceros ni se recogen datos de fuentes externas.</p>
+          </li>
+          <li>
+            <h3>No entra en sistemas sin permiso</h3>
+            <p class="det-prosa">Acceder a un sistema ajeno sin autorización es delito (artículo 197 bis del Código Penal). Data Chip no audita ni inspecciona a quien no participa.</p>
+          </li>
+          <li>
+            <h3>No persigue copias</h3>
+            <p class="det-prosa">Un identificador no basta para rastrear una copia que sale de las organizaciones participantes. Dentro de un entorno controlado hay trazabilidad; fuera, no se puede garantizar.</p>
+          </li>
+          <li>
+            <h3>No guarda tus datos</h3>
+            <p class="det-prosa">El registro contiene la descripción del movimiento y su huella. Tu nombre, tu dirección o tu tarjeta se quedan donde ya estaban.</p>
+          </li>
+          <li>
+            <h3>No sustituye a la empresa ni a la AEPD</h3>
+            <p class="det-prosa">Quien responde de tus datos sigue siendo la empresa que los trata, y quien vigila que cumpla es la autoridad de control. Data Chip solo ordena la información.</p>
+          </li>
+          <li>
+            <h3>No es una cadena de bloques pública</h3>
+            <p class="det-prosa">Publicar para siempre datos sobre personas en un registro que nadie puede borrar chocaría con el derecho de supresión. Las huellas se encadenan, pero el registro es privado y se puede dar de baja.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== FASES ===== -->
+    <section class="det-seccion" id="fases" aria-labelledby="titulo-fases">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-fases">Dónde está y qué vendría después</h2>
+        <p class="det-entrada">En el <a class="det-enlace" href="futuro.html">plan de empresa</a>, Data Chip es la fase 5 de seis. Antes van KAIRON Agents, la plataforma central y los primeros servicios de seguridad. Dentro de esa fase 5, el trabajo se repartiría así.</p>
+        <ol class="dc-hilo dc-fases">
+          <li>
+            <h3 class="det-h3">5.1 · Modelo y vocabulario</h3>
+            <p class="dc-fases__estado">En estudio</p>
+            <p class="dc-texto">Definir qué es un movimiento, qué campos lleva una anotación y qué estándares existentes se reutilizan. Esta página y la demo son el primer borrador.</p>
+          </li>
+          <li>
+            <h3 class="det-h3">5.2 · Prototipo local con datos sintéticos</h3>
+            <p class="dc-fases__estado">No iniciado</p>
+            <p class="dc-texto">Un registro que funcione en un solo ordenador, con empresas y personas inventadas: emitir anotaciones, firmarlas, encadenar huellas y detectar una alteración.</p>
+          </li>
+          <li>
+            <h3 class="det-h3">5.3 · Evaluación de impacto y revisión legal</h3>
+            <p class="dc-fases__estado">No iniciado</p>
+            <p class="dc-texto">Antes de tocar un solo dato real: evaluación de impacto en protección de datos, reparto de responsabilidades y solución al conflicto entre un registro inalterable y el derecho de supresión.</p>
+          </li>
+          <li>
+            <h3 class="det-h3">5.4 · Piloto con una organización voluntaria</h3>
+            <p class="dc-fases__estado">No iniciado</p>
+            <p class="dc-texto">Una sola organización, un solo tipo de movimiento y personas que aceptan participar. Si no aporta nada que una hoja de cálculo bien llevada no dé, se dice y se para.</p>
+          </li>
+        </ol>
+        <p class="det-aviso">Nada de esto forma parte del TFG. El TFG es el laboratorio SOC: Wazuh, la herramienta forense y la demo del ataque. Data Chip aparece en la memoria solo como línea futura.</p>
+      </div>
+    </section>
+
+    <!-- ===== RIESGOS Y PREGUNTAS ABIERTAS ===== -->
+    <section class="det-seccion det-seccion--borde" id="riesgos" aria-labelledby="titulo-riesgos">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-riesgos">Riesgos y preguntas sin respuesta</h2>
+        <p class="det-entrada">Lo que todavía no sabemos resolver. Lo escribimos porque un estudio que solo cuenta ventajas no es un estudio.</p>
+        <dl class="det-terminos dc-riesgos">
+          <div>
+            <dt>El registro es un dato personal</dt>
+            <dd>Saber con qué empresas se relaciona una persona ya dice mucho de ella. Un registro así es un objetivo para un atacante y necesita la misma protección que los datos que describe.</dd>
+          </div>
+          <div>
+            <dt>Borrar frente a no poder alterar</dt>
+            <dd>Si pides que se suprima una anotación, ¿cómo se borra sin romper la cadena? Una vía es guardar en la cadena solo huellas y borrar el contenido aparte. Otra es cifrar cada anotación y destruir la clave. Ninguna está probada, y una huella de un dato personal sigue pudiendo ser un dato personal.</dd>
+          </div>
+          <div>
+            <dt>Solo sirve si participan</dt>
+            <dd>Una empresa que no se adhiere no deja rastro. El registro puede dar una falsa sensación de estar completo. La vista de la persona tendría que decir siempre: esto es lo que han declarado quienes participan, no todo lo que existe.</dd>
+          </div>
+          <div>
+            <dt>Una anotación puede ser falsa</dt>
+            <dd>La huella demuestra que una anotación no ha cambiado, no que fuera verdad cuando se escribió. Una empresa puede anotar una finalidad y usar los datos para otra.</dd>
+          </div>
+          <div>
+            <dt>Quién lo opera</dt>
+            <dd>Quien gestione la plataforma ve relaciones entre personas y empresas. ¿Debe ser KAIRON, un tercero independiente o cada organización por su cuenta? De la respuesta depende quién es responsable ante la ley.</dd>
+          </div>
+          <div>
+            <dt>El coste para una empresa pequeña</dt>
+            <dd>Anotar cada movimiento es trabajo. Si no se integra con las herramientas que la empresa ya usa, nadie lo hará. No tenemos datos de cuánto costaría.</dd>
+          </div>
+          <div>
+            <dt>Menores y personas vulnerables</dt>
+            <dd>Quién ve el registro de un menor, y qué pasa cuando cumple 14 años y puede consentir por sí mismo.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">Lo que sí hacemos hoy</h2>
+            <p class="det-prosa">Data Chip es una idea en estudio. Lo que KAIRON demuestra en el laboratorio es otra cosa: detectar un ataque, contenerlo y documentarlo con pruebas que se pueden verificar.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="legal.html" class="boton boton--lleno"><span class="boton__texto" data-texto="Legalidad y privacidad">Legalidad y privacidad</span></a>
+            <a href="futuro.html" class="boton"><span class="boton__texto" data-texto="Ver el plan completo">Ver el plan completo</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo pi-sin-partir" id="titulo-rel">Sigue leyendo</h2>
+          <ul class="det-rel__lista">
+            <li><a href="legal.html"><b>Legalidad y privacidad</b><span>RGPD, LOPDGDD, Código Penal, NIS2 y el marco legal de Data Chip, con sus fuentes.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="futuro.html"><b>El siguiente instante</b><span>El plan de empresa completo, en seis fases.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="informe.html"><b>Un informe de ejemplo</b><span>La misma idea de huella, aplicada a las pruebas de un incidente.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="incidente.html"><b>Anatomía de un incidente</b><span>Lo que KAIRON hace hoy, minuto a minuto.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores · <a href="legal.html">Legalidad y privacidad</a> · <a href="antonia-lorena-cracana/">Portfolio de Antonia Lorena Cracana</a> · <a href="joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Data Chip y Legalidad: demo del recorrido de los datos, huellas SHA-256 encadenadas e índice de lectura (antes de paginas.js: fija primero) -->
+  <script src="js/datachip.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
+</body>
+</html>

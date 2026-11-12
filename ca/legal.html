@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quines normes obliguen un SOC gestionat com KAIRON (RGPD, LOPDGDD, Codi Penal, LSSI, NIS2), com les compliria, el marc legal de Data Chip i l'ús ètic del laboratori. Projecte acadèmic, no és assessorament jurídic.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>Legalitat i privacitat · KAIRON</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../legal.html">
+  <link rel="alternate" hreflang="ca" href="legal.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
+  <!-- Estilos propios de Data Chip y Legalidad -->
+  <link rel="stylesheet" href="../css/datachip.css?v=20261112c">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Salta al contingut</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+    </ul>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Secció següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Seccions">
+    <a href="#contenido" data-seccion="hero"><span>Inici</span></a>
+    <a href="#esta-web" data-seccion="esta-web"><span>Aquest web</span></a>
+    <a href="#rgpd" data-seccion="rgpd"><span>RGPD</span></a>
+    <a href="#lopdgdd" data-seccion="lopdgdd"><span>LOPDGDD</span></a>
+    <a href="#penal" data-seccion="penal"><span>Codi Penal</span></a>
+    <a href="#lssi" data-seccion="lssi"><span>LSSI</span></a>
+    <a href="#nis2" data-seccion="nis2"><span>NIS2</span></a>
+    <a href="#europa" data-seccion="europa"><span>Normes europees</span></a>
+    <a href="#marco-data-chip" data-seccion="marco-data-chip"><span>Data Chip</span></a>
+    <a href="#etica" data-seccion="etica"><span>Ús ètic</span></a>
+    <a href="#fuentes" data-seccion="fuentes"><span>Fonts</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../legal.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="servicios.html">Serveis</a></li>
+          <li><a href="soc.html">SOC en directe</a></li>
+          <li><a href="productos.html">Productes</a></li>
+          <li><a href="proyectos.html">Projectes</a></li>
+          <li><a href="futuro.html">Futur</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det lg">
+
+    <!-- ===== CAPÇALERA DE PÀGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Legalitat i privacitat</h1>
+        <p class="pagina__intro">Quines lleis obliguen una empresa com KAIRON, com les compliria i quines línies no creuem, ni al laboratori ni en un projecte futur com Data Chip.</p>
+        <ul class="pi-datos" aria-label="En resum"><li class="pi-datos__aviso">Projecte acadèmic: no és assessorament jurídic</li><li>Normativa consultada el 12-11-2026</li><li>Laboratori només amb dades sintètiques</li></ul>
+      </div>
+    </section>
+
+    <!-- ===== CONTINGUT: índex fix a l'esquerra i un bloc per norma ===== -->
+    <section class="det-seccion det-seccion--borde" aria-label="Normes i com les apliquem">
+      <div class="contenedor det-faq lg-cuerpo">
+
+        <nav class="det-indice lg-indice" aria-labelledby="titulo-indice">
+          <h2 id="titulo-indice" class="pi-sin-partir">En aquesta pàgina</h2>
+          <ol>
+            <li><a href="#antes">Abans de llegir</a></li>
+            <li><a href="#esta-web">Aquest web i les teves dades</a></li>
+            <li><a href="#rgpd">RGPD</a></li>
+            <li><a href="#lopdgdd">LOPDGDD</a></li>
+            <li><a href="#penal">Codi Penal</a></li>
+            <li><a href="#lssi">LSSI-CE</a></li>
+            <li><a href="#nis2">NIS2</a></li>
+            <li><a href="#europa">Normes europees recents</a></li>
+            <li><a href="#marco-data-chip">Marc legal de Data Chip</a></li>
+            <li><a href="#etica">Ús ètic del laboratori</a></li>
+            <li><a href="#fuentes">Fonts oficials</a></li>
+          </ol>
+        </nav>
+
+        <div class="lg-texto">
+
+          <!-- 0. Avís -->
+          <section class="det-grupo lg-grupo" id="antes" aria-labelledby="titulo-antes">
+            <h2 class="det-h2" id="titulo-antes">Abans de llegir</h2>
+            <p class="det-entrada">KAIRON és una empresa fictícia creada per dos estudiants de 2n de SMX. Aquesta pàgina explica les normes amb les nostres paraules i enllaça cadascuna amb el seu text oficial.</p>
+            <p class="det-prosa">No som juristes i això <strong>no és assessorament jurídic</strong>. Si tens una empresa real, la teva referència són els textos oficials del final de la pàgina, l'Agència Espanyola de Protecció de Dades (AEPD) i un professional. On una norma està canviant, ho diem i donem la data en què ho vam mirar.</p>
+            <p class="det-prosa">Escrivim «KAIRON fa» per descriure com es prestaria el servei. El que ja existeix de debò és aquest web i el laboratori del projecte.</p>
+          </section>
+
+          <!-- 1. Aquest web -->
+          <section class="det-grupo lg-grupo" id="esta-web" aria-labelledby="titulo-esta-web">
+            <h2 class="det-h2" id="titulo-esta-web">Què fa aquest web amb les teves dades</h2>
+            <p class="det-entrada">Gairebé res, i el poc que fa es queda al teu navegador.</p>
+            <dl class="det-terminos">
+              <div>
+                <dt>Galetes</dt>
+                <dd>Cap. No hi ha analítica, publicitat ni píxels de seguiment.</dd>
+              </div>
+              <div>
+                <dt>Ajustos desats al teu navegador</dt>
+                <dd>Tres a les pàgines de KAIRON, i no surten del teu equip: si has demanat reduir el moviment (es conserva fins que ho canviïs), si ja has vist la introducció, per no repetir-te-la, i si està actiu el mode presentació (aquests dos s'esborren en tancar la pestanya). Els portfolios personals enllaçats al peu desen a més els seus propis ajustos, com el so o el rècord d'un minijoc. La llei no parla només de galetes, sinó de qualsevol dada desada al teu dispositiu. Els expliquem aquí per transparència.</dd>
+              </div>
+              <div>
+                <dt>Formulari de contacte</dt>
+                <dd>És una demostració: comprova el que escrius, però no envia ni desa res.</dd>
+              </div>
+              <div>
+                <dt>Tipus de lletra</dt>
+                <dd>Es carreguen des de Google Fonts. Per servir-los, Google rep l'adreça IP de la teva connexió, com qualsevol servidor a qui es demana un fitxer. És l'única petició a un tercer que fan aquestes pàgines. Allotjar les fonts al mateix lloc l'eliminaria: està pendent de decidir.</dd>
+              </div>
+              <div>
+                <dt>Aplicació instal·lable</dt>
+                <dd>Si instal·les el web, el teu navegador desa una còpia de les pàgines per obrir-les sense connexió. Aquesta còpia no envia dades a ningú.</dd>
+              </div>
+              <div>
+                <dt>Seguretat de la pàgina</dt>
+                <dd>Política de seguretat de contingut sense scripts en línia, política de referència estricta, enllaços externs amb <code>rel="noopener"</code> i un camp trampa contra bots al formulari.</dd>
+              </div>
+            </dl>
+            <p class="det-prosa">Una empresa real hauria de publicar a més les seves dades d'identificació: nom o denominació social, domicili, correu electrònic, NIF i dades registrals (<a href="#lssi">article 10 de la LSSI</a>). KAIRON no en té perquè no existeix, i no n'inventem cap.</p>
+          </section>
+
+          <!-- 2. RGPD -->
+          <section class="det-grupo lg-grupo" id="rgpd" aria-labelledby="titulo-rgpd">
+            <h2 class="det-h2" id="titulo-rgpd">RGPD: qui respon de les dades</h2>
+            <p class="det-entrada">El Reglament General de Protecció de Dades, Reglament (UE) 2016/679, és la norma de la qual penja tota la resta. El primer que demana és saber quin paper tens.</p>
+
+            <h3 class="det-h3 lg-h3">Dos papers diferents</h3>
+            <p class="det-prosa">Quan KAIRON vigila els equips d'un client, els registres d'aquests equips són dades del client. El client és el <dfn>responsable del tractament</dfn>: decideix per a què es fan servir. KAIRON és l'<dfn>encarregat del tractament</dfn>: les tracta per compte del client i seguint les seves instruccions.</p>
+            <p class="det-prosa">Amb les dades dels seus propis clients i contactes (nom, correu, facturació), KAIRON sí que és responsable.</p>
+
+            <h3 class="det-h3 lg-h3">Els articles que més pesen en un SOC</h3>
+            <table class="det-tabla lg-tabla">
+              <caption class="lg-oculto">Articles de l'RGPD i com els aplicaria KAIRON</caption>
+              <thead>
+                <tr><th scope="col">Article</th><th scope="col">Què diu</th><th scope="col">Com l'aplicaria KAIRON</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Art. 5</td>
+                  <td>Els principis: licitud, lleialtat i transparència; limitació de la finalitat; minimització de dades; exactitud; limitació del termini de conservació; integritat i confidencialitat. I la responsabilitat proactiva: complir i poder-ho demostrar.</td>
+                  <td>Es recullen esdeveniments de seguretat (inicis de sessió, processos, connexions, canvis en fitxers del sistema), no el contingut de correus ni documents. Els registres es conserven de 30 a 180 dies segons el pla.</td>
+                </tr>
+                <tr>
+                  <td>Art. 6</td>
+                  <td>Un tractament només és lícit amb una de sis bases: consentiment, contracte, obligació legal, interessos vitals, interès públic o interès legítim.</td>
+                  <td>El servei es presta per contracte. La base per vigilar els equips d'una plantilla la fixa i la documenta el client, que és el responsable.</td>
+                </tr>
+                <tr>
+                  <td>Art. 25</td>
+                  <td>Protecció de dades des del disseny i per defecte: per defecte només es tracten les dades necessàries per a cada fi.</td>
+                  <td>Mínim privilegi: comptes nominals, un rol d'analista de només lectura a Wazuh i una eina forense que només llegeix.</td>
+                </tr>
+                <tr>
+                  <td>Art. 28</td>
+                  <td>L'encarregat actua amb un contracte que fixa objecte, durada, naturalesa i finalitat del tractament, i no pot recórrer a un altre encarregat sense autorització prèvia per escrit del responsable.</td>
+                  <td>Un contracte d'encarregat amb cada client, signat abans d'instal·lar el primer agent.</td>
+                </tr>
+                <tr>
+                  <td>Art. 30</td>
+                  <td>Registre de les activitats de tractament.</td>
+                  <td>KAIRON portaria el seu com a responsable i com a encarregat.</td>
+                </tr>
+                <tr>
+                  <td>Art. 32</td>
+                  <td>Seguretat del tractament: mesures tècniques i organitzatives apropiades al risc.</td>
+                  <td>Comunicació xifrada entre agents i servidor, TLS al panell, còpies xifrades, contrasenyes úniques en un gestor i doble factor. <a href="laboratorio.html">Com està muntat</a>.</td>
+                </tr>
+                <tr>
+                  <td>Art. 33</td>
+                  <td>Una bretxa de dades personals es notifica a l'autoritat de control sense dilació indeguda i, si és possible, en un màxim de 72 hores des que se'n té constància, tret que sigui improbable que suposi un risc. L'encarregat avisa el responsable sense dilació indeguda.</td>
+                  <td>Si KAIRON detecta una bretxa en un client, avisa el client. Notificar-ho a l'AEPD correspon al client; l'informe amb cronologia i empremtes li serveix per documentar-la.</td>
+                </tr>
+                <tr>
+                  <td>Art. 34</td>
+                  <td>Si és probable que la bretxa suposi un alt risc, cal comunicar-la també a les persones afectades, en un llenguatge clar i senzill.</td>
+                  <td>L'informe d'incident inclou un resum sense argot pensat per a això. <a href="informe.html">Un informe d'exemple</a>.</td>
+                </tr>
+                <tr>
+                  <td>Art. 35</td>
+                  <td>Avaluació d'impacte relativa a la protecció de dades (AIPD) abans d'un tractament que probablement comporti un alt risc, en particular si fa servir noves tecnologies.</td>
+                  <td>Data Chip no passaria de prototip sense una. <a href="#marco-data-chip">El seu marc legal</a>.</td>
+                </tr>
+                <tr>
+                  <td>Arts. 44–49</td>
+                  <td>Les dades només surten de l'Espai Econòmic Europeu amb les condicions del capítol V: una decisió d'adequació de la Comissió (art. 45) o garanties adequades, com les clàusules tipus (art. 46).</td>
+                  <td>Pendent de decidir on s'allotjarien els registres. Allotjar-los dins de l'Espai Econòmic Europeu evita haver de justificar una transferència.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="lg-nota"><b>En revisió.</b> La Comissió Europea va proposar el novembre de 2025 un paquet de simplificació, el Digital Omnibus, que entre altres coses ampliaria a 96 hores el termini de notificació de bretxes i el limitaria a les d'alt risc. A les fonts que vam consultar el 12 de novembre de 2026 continuava en tramitació i no era dret vigent: el termini són 72 hores. Comprova-ho abans de donar-ho per bo.</p>
+
+            <h3 class="det-h3 lg-h3">Els teus drets, articles 15 a 22</h3>
+            <table class="det-tabla lg-tabla lg-tabla--dos">
+              <caption class="lg-oculto">Drets de les persones a l'RGPD</caption>
+              <thead>
+                <tr><th scope="col">Article</th><th scope="col">Dret</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Art. 15</td><td><b>Accés.</b> Saber si es tracten les teves dades, obtenir-ne una còpia i conèixer, entre altres coses, a qui s'han comunicat.</td></tr>
+                <tr><td>Art. 16</td><td><b>Rectificació.</b> Corregir les dades inexactes.</td></tr>
+                <tr><td>Art. 17</td><td><b>Supressió.</b> Que s'esborrin quan ja no hi ha motiu per conservar-les.</td></tr>
+                <tr><td>Art. 18</td><td><b>Limitació.</b> Que es desin sense fer-se servir mentre es resol una reclamació.</td></tr>
+                <tr><td>Art. 19</td><td>Qui rectifica, suprimeix o limita ha d'avisar els destinataris a qui va comunicar les dades.</td></tr>
+                <tr><td>Art. 20</td><td><b>Portabilitat.</b> Rebre les teves dades en un format d'ús comú i portar-les a un altre proveïdor.</td></tr>
+                <tr><td>Art. 21</td><td><b>Oposició.</b> Negar-te a un tractament per motius de la teva situació particular.</td></tr>
+                <tr><td>Art. 22</td><td>No ser objecte d'una decisió basada únicament en un tractament automatitzat, inclosa l'elaboració de perfils.</td></tr>
+              </tbody>
+            </table>
+            <p class="det-prosa">El responsable té <strong>un mes</strong> per contestar, prorrogable dos mesos més si la sol·licitud és complexa (article 12.3). Exercir aquests drets és gratuït. Si no hi ha resposta, es pot reclamar davant l'AEPD.</p>
+            <p class="det-prosa">Si treballes en una empresa client, la sol·licitud s'adreça a la teva empresa, que és la responsable. KAIRON, com a encarregat, l'ajuda a respondre.</p>
+          </section>
+
+          <!-- 3. LOPDGDD -->
+          <section class="det-grupo lg-grupo" id="lopdgdd" aria-labelledby="titulo-lopdgdd">
+            <h2 class="det-h2" id="titulo-lopdgdd">LOPDGDD: el que hi afegeix Espanya</h2>
+            <p class="det-entrada">La Llei orgànica 3/2018, de protecció de dades personals i garantia dels drets digitals, completa el reglament europeu. Dues parts afecten de ple un servei com aquest.</p>
+
+            <h3 class="det-h3 lg-h3">Menors: el consentiment val a partir dels 14 anys</h3>
+            <p class="det-prosa">L'article 7 diu que el tractament de les dades d'un menor només es pot basar en el seu consentiment quan és major de catorze anys. Per sota d'aquesta edat cal el de qui tingui la pàtria potestat o la tutela.</p>
+            <p class="det-prosa">Els plans per a particulars cobreixen equips d'una família. El contracte el signa sempre una persona adulta, i a Data Chip ningú menor de 14 anys tindria compte propi.</p>
+
+            <h3 class="det-h3 lg-h3">Drets digitals a la feina, articles 87 a 91</h3>
+            <dl class="det-terminos">
+              <div>
+                <dt>Art. 87</dt>
+                <dd>Dret a la intimitat en l'ús dels dispositius digitals que facilita l'ocupador. L'empresa només pot accedir al seu contingut per controlar el compliment de les obligacions laborals i garantir la integritat dels equips, i ha de fixar criteris d'ús amb la participació de la representació de la plantilla i informar-ne.</dd>
+              </div>
+              <div>
+                <dt>Art. 88</dt>
+                <dd>Dret a la desconnexió digital en l'àmbit laboral.</dd>
+              </div>
+              <div>
+                <dt>Art. 89</dt>
+                <dd>Dret a la intimitat davant la videovigilància i l'enregistrament de sons al lloc de treball.</dd>
+              </div>
+              <div>
+                <dt>Art. 90</dt>
+                <dd>Dret a la intimitat davant els sistemes de geolocalització en l'àmbit laboral.</dd>
+              </div>
+              <div>
+                <dt>Art. 91</dt>
+                <dd>Els convenis col·lectius poden establir garanties addicionals.</dd>
+              </div>
+            </dl>
+            <p class="det-prosa">Instal·lar un agent de seguretat a l'ordinador d'una persona treballadora és una forma de control sobre un dispositiu digital. Per això, abans d'instal·lar res, KAIRON demana al client dues coses: que tingui escrits els seus criteris d'ús dels equips i que hagi informat la plantilla de què es vigila i per a què.</p>
+          </section>
+
+          <!-- 4. Codi Penal -->
+          <section class="det-grupo lg-grupo" id="penal" aria-labelledby="titulo-penal">
+            <h2 class="det-h2" id="titulo-penal">Codi Penal: per què només ataquem el que és nostre</h2>
+            <p class="det-entrada">Les mateixes tècniques que fem servir al laboratori són delicte fora d'allà. La diferència no és a l'eina: és a l'autorització.</p>
+            <dl class="det-terminos">
+              <div>
+                <dt>Art. 197.1</dt>
+                <dd>Apoderar-se dels missatges, documents o efectes personals d'una altra persona, o interceptar-ne les comunicacions, per descobrir-ne els secrets o vulnerar-ne la intimitat i sense el seu consentiment. Presó d'un a quatre anys i multa de dotze a vint-i-quatre mesos.</dd>
+              </div>
+              <div>
+                <dt>Art. 197 bis.1</dt>
+                <dd>Accedir al conjunt o a una part d'un sistema d'informació vulnerant-ne les mesures de seguretat i sense estar degudament autoritzat, o mantenir-s'hi contra la voluntat de qui té dret a excloure'l. Presó de sis mesos a dos anys.</dd>
+              </div>
+              <div>
+                <dt>Art. 197 bis.2</dt>
+                <dd>Interceptar amb mitjans tècnics, sense autorització, transmissions no públiques de dades informàtiques. Presó de tres mesos a dos anys o multa de tres a dotze mesos.</dd>
+              </div>
+              <div>
+                <dt>Art. 197 ter</dt>
+                <dd>Produir, adquirir o facilitar a tercers, sense autorització i amb la intenció de facilitar aquests delictes, programes concebuts o adaptats principalment per cometre'ls, o contrasenyes i codis d'accés. Presó de sis mesos a dos anys o multa de tres a divuit mesos.</dd>
+              </div>
+              <div>
+                <dt>Art. 264</dt>
+                <dd>Danys informàtics: esborrar, danyar, alterar o fer inaccessibles dades, programes o documents electrònics aliens, sense autorització i de manera greu, quan el resultat és greu. Presó de sis mesos a tres anys. L'article 264 bis castiga obstaculitzar o interrompre el funcionament d'un sistema informàtic aliè.</dd>
+              </div>
+            </dl>
+
+            <h3 class="det-h3 lg-h3">Tres regles que en surten</h3>
+            <ol class="det-lista lg-reglas">
+              <li><b>El laboratori està aïllat i és nostre.</b> Els atacs es llancen des d'una màquina pròpia contra màquines pròpies, en una xarxa pròpia sense sortida a Internet. No es toca cap xarxa aliena.</li>
+              <li><b>Només hi ha dades sintètiques.</b> Els usuaris, les contrasenyes i els fitxers de les màquines atacades són creats per a la pràctica.</li>
+              <li><b>Cap auditoria sense autorització per escrit.</b> «Degudament autoritzat» és l'expressió que separa una auditoria d'un delicte. Abans de revisar un sol equip d'un client cal un document signat per qui té autoritat sobre aquests sistemes, amb l'abast (quins equips i adreces), les dates i hores, el que en queda exclòs i un contacte per a emergències.</li>
+            </ol>
+            <p class="det-prosa">L'auditoria inicial del pla Ègida és gratuïta, però no és una excepció: porta la mateixa autorització signada.</p>
+          </section>
+
+          <!-- 5. LSSI -->
+          <section class="det-grupo lg-grupo" id="lssi" aria-labelledby="titulo-lssi">
+            <h2 class="det-h2" id="titulo-lssi">LSSI-CE: les obligacions d'un web</h2>
+            <p class="det-entrada">La Llei 34/2002, de serveis de la societat de la informació i de comerç electrònic, regula qui ofereix serveis per Internet.</p>
+            <dl class="det-terminos">
+              <div>
+                <dt>Art. 10</dt>
+                <dd>Informació general. El prestador ha de permetre consultar de manera permanent, fàcil, directa i gratuïta el seu nom o denominació social, domicili, correu electrònic, dades d'inscripció registral i NIF, a més d'informació clara sobre els preus.</dd>
+              </div>
+              <div>
+                <dt>Art. 21</dt>
+                <dd>No es poden enviar comunicacions comercials per correu electrònic que no s'hagin sol·licitat o autoritzat expressament.</dd>
+              </div>
+              <div>
+                <dt>Art. 22.2</dt>
+                <dd>Per desar o llegir dades al dispositiu de qui visita el web (galetes i tècniques semblants) cal informar de manera clara i completa i obtenir el consentiment, tret que siguin necessàries per a la comunicació o per prestar un servei que la persona ha demanat expressament.</dd>
+              </div>
+            </dl>
+            <p class="det-prosa">Aquest web no fa servir galetes, de manera que no mostra cap avís de consentiment. Els ajustos que sí que desa són tècnics o de personalització. La guia de galetes de l'AEPD exceptua del consentiment els usos necessaris per prestar el servei que s'ha demanat i la personalització que respon a una petició del mateix usuari; entenem que aquests hi entren. Ho detallem a <a href="#esta-web">què fa aquest web amb les teves dades</a>.</p>
+          </section>
+
+          <!-- 6. NIS2 -->
+          <section class="det-grupo lg-grupo" id="nis2" aria-labelledby="titulo-nis2">
+            <h2 class="det-h2" id="titulo-nis2">NIS2: en procés de transposició</h2>
+            <p class="det-entrada">La Directiva (UE) 2022/2555 obliga les entitats de sectors clau a gestionar els seus riscos de ciberseguretat i a notificar els incidents significatius. Com que és una directiva, cada país l'ha de convertir en llei pròpia.</p>
+            <p class="det-prosa">El termini per fer-ho va acabar el 17 d'octubre de 2024. A Espanya, el Consell de Ministres va aprovar l'avantprojecte de Llei de coordinació i governança de la ciberseguretat el 14 de gener de 2025.</p>
+            <p class="lg-nota"><b>Estat el 12 de novembre de 2026.</b> A les fonts que vam consultar, la llei espanyola continuava sense publicar-se al BOE. Mentrestant continua vigent el Reial decret llei 12/2018, que va incorporar la primera directiva NIS. Abans de donar-ho per bo, comprova el BOE: pot haver canviat.</p>
+            <dl class="det-terminos">
+              <div>
+                <dt>Terminis de notificació</dt>
+                <dd>L'article 23 de la directiva fixa tres passos per a un incident significatiu: alerta primerenca en 24 hores, notificació en 72 hores i informe final un mes després de la notificació.</dd>
+              </div>
+              <div>
+                <dt>Afectaria KAIRON?</dt>
+                <dd>Els proveïdors de serveis de seguretat gestionats figuren entre els sectors de la directiva, que per regla general abasta les empreses mitjanes i grans. Una KAIRON real hauria de comprovar a la llei espanyola si l'afecta per mida.</dd>
+              </div>
+              <div>
+                <dt>I els seus clients?</dt>
+                <dd>Depèn del seu sector i de la seva mida. Els informes de KAIRON ajuden a documentar un incident, però no substitueixen les obligacions de cada empresa.</dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- 7. Europa -->
+          <section class="det-grupo lg-grupo" id="europa" aria-labelledby="titulo-europa">
+            <h2 class="det-h2" id="titulo-europa">Quatre normes europees recents</h2>
+            <p class="det-entrada">Cap obliga avui un projecte de classe. Totes quatre condicionen com s'hauria de dissenyar Data Chip si algun dia passa d'estudi a prototip.</p>
+            <dl class="det-terminos lg-normas">
+              <div>
+                <dt>eIDAS 2<small>Reglament (UE) 2024/1183</small></dt>
+                <dd>Crea el marc europeu d'identitat digital. Cada Estat membre ha d'oferir almenys una cartera europea d'identitat digital en un termini de 24 mesos des dels actes d'execució; la Comissió situa aquesta data a finals de 2026. <b>Per a Data Chip:</b> no caldria inventar una identitat pròpia. La persona es podria identificar amb la seva cartera i compartir només el que cal.</dd>
+              </div>
+              <div>
+                <dt>Reglament de Ciberresiliència<small>Reglament (UE) 2024/2847</small></dt>
+                <dd>Fixa requisits de ciberseguretat per als productes amb elements digitals. S'aplica des de l'11 de desembre de 2027; l'obligació de notificar vulnerabilitats explotades i incidents greus (article 14), des de l'11 de setembre de 2026. <b>Per a Data Chip:</b> si es distribuís com a producte comercial, caldria comprovar si entra en el seu àmbit.</dd>
+              </div>
+              <div>
+                <dt>Reglament de Dades<small>Reglament (UE) 2023/2854</small></dt>
+                <dd>Aplicable des del 12 de setembre de 2025. Regula l'accés a les dades que generen els productes connectats i el canvi entre serveis al núvol. <b>Per a Data Chip:</b> no és la seva base legal, que és l'RGPD, però comparteix la idea de fons: qui origina les dades ha de poder saber què passa amb elles.</dd>
+              </div>
+              <div>
+                <dt>Reglament d'Intel·ligència Artificial<small>Reglament (UE) 2024/1689</small></dt>
+                <dd>Les seves obligacions s'apliquen per fases i el calendari s'ha revisat: convé consultar el text consolidat. <b>Per a Data Chip:</b> el disseny actual no fa servir intel·ligència artificial ni pren decisions automatitzades: registra fets. Si en el futur un agent de KAIRON Agents llegís aquest registre, caldria revisar aquest reglament i l'article 22 de l'RGPD.</dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- 8. Marc legal de Data Chip -->
+          <section class="det-grupo lg-grupo" id="marco-data-chip" aria-labelledby="titulo-marco">
+            <h2 class="det-h2" id="titulo-marco">El marc legal de Data Chip</h2>
+            <p class="det-entrada">Data Chip no crea un dret nou. Intenta fer visible un que ja existeix: saber a qui s'han comunicat les teves dades.</p>
+            <p class="det-prosa">L'article 15.1.c de l'RGPD et dona dret a conèixer «els destinataris o les categories de destinataris». El Tribunal de Justícia de la Unió Europea va aclarir el 12 de gener de 2023 (assumpte C-154/21) que, si ho demanes, el responsable t'ha de donar la identitat concreta d'aquests destinataris, tret que sigui impossible identificar-los o que la sol·licitud sigui manifestament infundada o excessiva.</p>
+            <p class="det-prosa"><a href="data-chip.html">Data Chip</a> és un estudi sobre com donar aquesta resposta sense haver-la de demanar empresa per empresa. Aquestes són les condicions legals que el disseny ha de respectar.</p>
+            <dl class="det-terminos">
+              <div>
+                <dt>Només amb qui hi participa</dt>
+                <dd>Els registres els emeten les organitzacions que s'hi adhereixen voluntàriament. Data Chip no entra en sistemes aliens ni observa tercers: fer-ho sense autorització seria el delicte de l'<a href="#penal">article 197 bis</a>.</dd>
+              </div>
+              <div>
+                <dt>Minimització</dt>
+                <dd>El registre desa metadades del moviment (qui, quan, per a què, amb quina base legal, a quin país) i empremtes. No desa les dades que es van moure.</dd>
+              </div>
+              <div>
+                <dt>Les empremtes també són dades personals</dt>
+                <dd>Una empremta o un identificador que es pot vincular a una persona continua sent una dada personal pseudonimitzada. Tot el registre queda sota l'RGPD.</dd>
+              </div>
+              <div>
+                <dt>Qui respon</dt>
+                <dd>Cal decidir qui és responsable del registre: cada organització per les seves anotacions, qui opera la plataforma, o tots dos. És una pregunta oberta.</dd>
+              </div>
+              <div>
+                <dt>Esborrar davant de no poder alterar</dt>
+                <dd>Un registre que no es pot canviar xoca amb els drets de rectificació i supressió (articles 16 i 17). El disseny ha de permetre esborrar les dades d'una anotació sense trencar la comprovació de les altres. No està resolt.</dd>
+              </div>
+              <div>
+                <dt>Avaluació d'impacte</dt>
+                <dd>Tecnologia nova i dades sobre els moviments d'una persona: abans de qualsevol pilot amb dades reals caldria una avaluació d'impacte (article 35).</dd>
+              </div>
+              <div>
+                <dt>Menors</dt>
+                <dd>Compte propi a partir dels 14 anys; per sota, el gestiona qui tingui la pàtria potestat o la tutela.</dd>
+              </div>
+            </dl>
+            <p class="det-prosa"><a href="data-chip.html#riesgos">Tots els riscos i preguntes obertes de Data Chip</a>.</p>
+          </section>
+
+          <!-- 9. Ús ètic -->
+          <section class="det-grupo lg-grupo" id="etica" aria-labelledby="titulo-etica">
+            <h2 class="det-h2" id="titulo-etica">Ús ètic del laboratori</h2>
+            <p class="det-entrada">Sis regles que valen per al projecte de classe i valdrien igual per a una empresa.</p>
+            <ol class="det-lista lg-reglas">
+              <li><b>Només sistemes propis.</b> Els atacs s'executen dins del laboratori aïllat, amb màquines pròpies i sense tocar cap xarxa aliena.</li>
+              <li><b>L'atacant no en surt.</b> La xarxa d'atac no té sortida a Internet i no arriba a la xarxa del SOC: només veu els dos serveis que s'exposen expressament.</li>
+              <li><b>Dades sintètiques.</b> Cap màquina del laboratori conté dades de persones reals.</li>
+              <li><b>Programari maliciós simulat.</b> L'executable de la demo imita el comportament que es vol detectar. No és una mostra real ni es propaga.</li>
+              <li><b>El que s'aprèn, es fa servir per defensar.</b> Les tècniques d'atac es documenten al costat de la regla que les detecta.</li>
+              <li><b>Fora del laboratori, autorització escrita.</b> Sense el document signat no s'escaneja ni un port.</li>
+            </ol>
+          </section>
+
+          <!-- 10. Fonts -->
+          <section class="det-grupo lg-grupo" id="fuentes" aria-labelledby="titulo-fuentes">
+            <h2 class="det-h2" id="titulo-fuentes">Fonts oficials</h2>
+            <p class="det-prosa">Els textos que manen són aquests, no el nostre resum. L'estat de les normes en tramitació es va consultar el 12 de novembre de 2026. La majoria d'enllaços porten al text en castellà.</p>
+            <ul class="lg-fuentes">
+              <li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj/spa" target="_blank" rel="noopener">Reglament (UE) 2016/679, RGPD</a><span>EUR-Lex. Articles 5, 6, 12, 15 a 22, 25, 28, 30, 32 a 35 i 44 a 49.</span></li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673" target="_blank" rel="noopener">Llei orgànica 3/2018, LOPDGDD</a><span>BOE, text consolidat. Articles 7 i 87 a 91.</span></li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-1995-25444" target="_blank" rel="noopener">Llei orgànica 10/1995, Codi Penal</a><span>BOE, text consolidat. Articles 197, 197 bis, 197 ter, 264 i 264 bis.</span></li>
+              <li><a href="https://www.boe.es/buscar/doc.php?id=FIS-C-2017-00003" target="_blank" rel="noopener">Circular 3/2017 de la Fiscalia General de l'Estat</a><span>BOE. Com s'interpreten els delictes d'accés il·legal i de danys informàtics.</span></li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758" target="_blank" rel="noopener">Llei 34/2002, LSSI-CE</a><span>BOE, text consolidat. Articles 10, 21 i 22.</span></li>
+              <li><a href="https://www.aepd.es/guias/guia-cookies.pdf" target="_blank" rel="noopener">Guia sobre l'ús de les galetes</a><span>AEPD, maig de 2024. Quins usos queden exceptuats del consentiment.</span></li>
+              <li><a href="https://www.aepd.es/guias/guia-brechas-seguridad.pdf" target="_blank" rel="noopener">Guia per a la notificació de bretxes de dades personals</a><span>AEPD. Com es compta el termini de 72 hores.</span></li>
+              <li><a href="https://www.aepd.es/preguntas-frecuentes/10-menores-y-educacion" target="_blank" rel="noopener">Preguntes freqüents sobre menors</a><span>AEPD. Edat per consentir el tractament de dades.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:62021CJ0154" target="_blank" rel="noopener">Sentència del TJUE de 12 de gener de 2023, assumpte C-154/21</a><span>EUR-Lex. Dret a conèixer la identitat concreta dels destinataris.</span></li>
+              <li><a href="https://www.boe.es/buscar/doc.php?id=DOUE-L-2022-81963" target="_blank" rel="noopener">Directiva (UE) 2022/2555, NIS2</a><span>BOE (DOUE). Article 23, terminis de notificació.</span></li>
+              <li><a href="https://www.interior.gob.es/opencms/es/detalle/articulo/El-Consejo-de-Ministros-aprueba-el-anteproyecto-de-Ley-de-Coordinacion-y-Gobernanza-de-la-Ciberseguridad/" target="_blank" rel="noopener">Avantprojecte de Llei de coordinació i governança de la ciberseguretat</a><span>Ministeri de l'Interior, nota del 14 de gener de 2025.</span></li>
+              <li><a href="https://www.incibe.es/incibe-cert/sectores-estrategicos/FAQNIS2" target="_blank" rel="noopener">Preguntes freqüents sobre NIS2</a><span>INCIBE-CERT. A qui afecta i com es notifica.</span></li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2018-12257" target="_blank" rel="noopener">Reial decret llei 12/2018, de seguretat de les xarxes i sistemes d'informació</a><span>BOE. La norma vigent mentre no es publiqui la nova llei.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=celex:32024R1183" target="_blank" rel="noopener">Reglament (UE) 2024/1183, identitat digital europea</a><span>EUR-Lex. Article 5 bis, cartera europea d'identitat digital.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:32024R2847" target="_blank" rel="noopener">Reglament (UE) 2024/2847, Ciberresiliència</a><span>EUR-Lex. Dates d'aplicació i article 14.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:32023R2854" target="_blank" rel="noopener">Reglament (UE) 2023/2854, Reglament de Dades</a><span>EUR-Lex. Aplicable des del 12 de setembre de 2025.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:32024R1689" target="_blank" rel="noopener">Reglament (UE) 2024/1689, Intel·ligència Artificial</a><span>EUR-Lex.</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:52025PC0837" target="_blank" rel="noopener" lang="en" hreflang="en">Digital Omnibus, proposta COM(2025) 837</a><span>EUR-Lex, en anglès. Proposta en tramitació: no és dret vigent.</span></li>
+            </ul>
+            <p class="det-aviso">KAIRON és una empresa fictícia creada per a una pràctica de classe. Aquesta pàgina és un treball acadèmic de dos estudiants: no és assessorament jurídic i pot contenir errors.</p>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TANCAMENT ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">La llei diu què. El mètode diu com</h2>
+            <p class="det-prosa">Si vols veure com es tradueix tot això en un servei concret, comença pel mètode o escriu-nos.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="metodo.html" class="boton boton--lleno"><span class="boton__texto" data-texto="Veure el mètode">Veure el mètode</span></a>
+            <a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo pi-sin-partir" id="titulo-rel">Segueix llegint</h2>
+          <ul class="det-rel__lista">
+            <li><a href="data-chip.html"><b>KAIRON Data Chip</b><span>Un estudi per saber per on han passat les teves dades, amb una demo de dades fictícies.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>Com està muntat</b><span>El laboratori per dins: xarxes, màquines i mesures de seguretat.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="informe.html"><b>Un informe d'exemple</b><span>Cronologia, proves i empremtes SHA-256 d'un incident simulat.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="preguntas.html"><b>Preguntes i preus</b><span>El que ens pregunten, un glossari sense argot i preus orientatius.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="../img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operatiu</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="legal.html">Legalitat i privacitat</a> · <a href="../antonia-lorena-cracana/ca/">Portfolio d'Antonia Lorena Cracana</a> · <a href="../joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/intro.js?v=20261112c" defer></script>
+  <script src="../js/escena.js?v=20261112c" defer></script>
+  <script src="../js/visuales.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Data Chip y Legalidad: demo del recorrido de los datos, huellas SHA-256 encadenadas e índice de lectura (antes de paginas.js: fija primero) -->
+  <script src="../js/datachip.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
+</body>
+</html>

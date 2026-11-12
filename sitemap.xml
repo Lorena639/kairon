@@ -75,6 +75,16 @@
     <xhtml:link rel="alternate" hreflang="ca" href="ca/laboratorio.html"/>
   </url>
   <url>
+    <loc>data-chip.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="data-chip.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/data-chip.html"/>
+  </url>
+  <url>
+    <loc>legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="legal.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/legal.html"/>
+  </url>
+  <url>
     <loc>productos.html</loc>
     <xhtml:link rel="alternate" hreflang="es" href="productos.html"/>
     <xhtml:link rel="alternate" hreflang="ca" href="ca/productos.html"/>

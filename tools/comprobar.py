@@ -12,7 +12,7 @@ import io, os, sys, threading, functools, http.server, socketserver
 from html.parser import HTMLParser
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGINAS = ["index.html", "sobre-mi.html", "informe.html", "404.html", "ca/index.html", "ca/sobre-mi.html", "ca/informe.html", "servicios.html", "ca/servicios.html", "soc.html", "ca/soc.html", "contacto.html", "ca/contacto.html", "productos.html", "ca/productos.html", "proyectos.html", "ca/proyectos.html", "futuro.html", "ca/futuro.html", "kairos.html", "metodo.html", "incidente.html", "preguntas.html", "ca/kairos.html", "ca/metodo.html", "ca/incidente.html", "ca/preguntas.html", "laboratorio.html", "ca/laboratorio.html"]
+PAGINAS = ["index.html", "sobre-mi.html", "informe.html", "404.html", "ca/index.html", "ca/sobre-mi.html", "ca/informe.html", "servicios.html", "ca/servicios.html", "soc.html", "ca/soc.html", "contacto.html", "ca/contacto.html", "productos.html", "ca/productos.html", "proyectos.html", "ca/proyectos.html", "futuro.html", "ca/futuro.html", "kairos.html", "metodo.html", "incidente.html", "preguntas.html", "ca/kairos.html", "ca/metodo.html", "ca/incidente.html", "ca/preguntas.html", "laboratorio.html", "ca/laboratorio.html", "data-chip.html", "ca/data-chip.html", "legal.html", "ca/legal.html"]
 VACIAS = {"img", "br", "meta", "link", "input", "hr", "source", "path", "circle", "stop", "wbr"}
 
 
