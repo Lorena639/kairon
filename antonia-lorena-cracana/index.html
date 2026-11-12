@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antonia Lorena Cracana · Expediente</title>
   <meta name="description" content="Portfolio de Antonia Lorena Cracana: técnica SOC en prácticas y estudiante de SMX, con interés en ciberseguridad y análisis forense.">
-  <meta name="theme-color" content="#f1eadb">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#0b0a08">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Antonia Lorena Cracana · Expediente">
@@ -20,58 +20,96 @@
   <link rel="alternate" hreflang="es" href="https://lorena639.github.io/kairon/antonia-lorena-cracana/">
   <link rel="alternate" hreflang="ca" href="https://lorena639.github.io/kairon/antonia-lorena-cracana/ca/">
   <link rel="icon" href="../img/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;600&family=Courier+Prime&display=swap">
-  <link rel="stylesheet" href="portfolio.css?v=7">
+  <!-- Tipografías alojadas aquí mismo (fonts/, licencia OFL): no se pide nada a servidores de fuera -->
+  <link rel="preload" href="fonts/fraunces-300-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/courier-prime-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="portfolio.css?v=8">
+  <script src="arranque.js?v=8"></script>
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-  <header class="cinta maq">
-    <a href="#contenido">Expediente ALC</a>
-    <nav aria-label="Secciones">
-      <a href="#pruebas">Pruebas</a>
-      <a href="#custodia">Custodia</a>
-      <a href="#metodo">Método</a>
-      <a href="#sello">Sello</a>
-      
-      <a href="#casos">Casos</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-    <div class="cinta__extra">
-      <a href="ca/" hreflang="ca" aria-label="Versió en català">CA</a>
-      <button type="button" class="uv-boton" id="uv" aria-pressed="false" aria-label="Activar la luz ultravioleta">UV<span id="uv-cuenta"></span></button>
+  <!-- Franja superior del formato panorámico: marca, escenas y mandos -->
+  <header class="barra barra--sup maq">
+    <a class="marca" href="#contenido">Expediente ALC</a>
+    <button type="button" class="mando menu-boton" id="menu-boton" aria-expanded="false" aria-controls="panel">Escenas</button>
+    <div class="panel" id="panel">
+      <nav aria-label="Escenas">
+        <a href="#pruebas">Pruebas</a>
+        <a href="#custodia">Custodia</a>
+        <a href="#metodo">Método</a>
+        <a href="#sello">Sello</a>
+        <a href="#casos">Casos</a>
+        <a href="#rumbo">Continuará</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="mandos" role="group" aria-label="Ajustes">
+        <a class="mando" href="ca/" hreflang="ca" lang="ca" aria-label="Versió en català">CA</a>
+        <button type="button" class="mando" id="uv" aria-pressed="false" aria-label="Activar la luz ultravioleta">UV<span id="uv-cuenta"></span></button>
+        <button type="button" class="mando" id="tema" aria-pressed="false" aria-label="Encender las luces de la sala">Luces</button>
+        <button type="button" class="mando" id="sonido" aria-pressed="false">Sonido</button>
+        <button type="button" class="mando" id="terminal-boton">Terminal</button>
+        <button type="button" class="mando" id="movimiento" aria-pressed="false" aria-label="Reducir el movimiento">Menos movimiento</button>
+      </div>
     </div>
-    <span class="progreso" id="progreso" aria-hidden="true"></span>
   </header>
+
+  <!-- Franja inferior: claqueta de la escena, código de tiempo y avance -->
+  <div class="barra barra--inf maq" aria-hidden="true">
+    <span class="claqueta" id="claqueta"></span>
+    <span class="tiempo" id="tiempo">00:00:00:00</span>
+    <span class="progreso" id="progreso"></span>
+  </div>
+
+  <!-- Capas de película: franjas que se cierran, grano, luz UV y pistas ocultas -->
+  <div class="franja franja--sup" aria-hidden="true"></div>
+  <div class="franja franja--inf" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
   <div class="uv-capa" id="uv-capa" aria-hidden="true"></div>
+  <div class="pistas maq" id="pistas" aria-hidden="true">
+    <p class="pista" data-de="portada">El rastro empieza en la atención al cliente: escuchar también es investigar.</p>
+    <p class="pista" data-de="pruebas">Cada tarjeta dice de dónde sale. Una prueba sin origen no vale.</p>
+    <p class="pista" data-de="custodia">114 días en un SOC.</p>
+    <p class="pista" data-de="sello">Siempre 64 caracteres, escribas lo que escribas.</p>
+    <p class="pista" data-de="casos">Esta web se llamó Argos antes que KAIRON.</p>
+    <p class="pista" data-de="contacto">Si has llegado hasta aquí, escríbeme.</p>
+  </div>
   <div class="definicion" id="definicion" role="tooltip" hidden></div>
 
   <main id="contenido">
-    <section class="portada">
-      <svg class="huella" id="huella" viewBox="-30 -40 460 640" aria-hidden="true"></svg>
-      <p class="maq portada__ref">Ref. ALC-2026 · Sant Feliu de Llobregat</p>
-      <h1>Antonia<br><em>Lorena</em><br>Cracana</h1>
-      <p class="portada__texto">Sigo el rastro de lo que pasa en un sistema. Hice 114 días de prácticas en un <button type="button" class="termino" data-t="soc">SOC</button> y quiero especializarme en análisis forense.</p>
-      <a class="enlace" href="#pruebas">Abrir el expediente ↓</a>
-      <span class="sello-disp maq" aria-hidden="true">Disponible</span>
-      <p class="pista maq" aria-hidden="true">El rastro empieza en la atención al cliente: escuchar también es investigar.</p>
+    <!-- Plató de las dos primeras escenas: al bajar, la ficha se abre en iris desde el centro de la huella -->
+    <div class="plato">
+    <!-- ESCENA 01 · Portada: el nombre, la huella y hacia dónde va -->
+    <section id="portada" class="escena portada tono-noche" aria-labelledby="nombre" data-escena="Portada" data-lugar="INT. ARCHIVO · NOCHE">
+      <div class="portada__plano">
+        <svg class="huella" id="huella" viewBox="-30 -40 460 640" aria-hidden="true"></svg>
+        <p class="maq portada__ref" id="ref">Ref. ALC-2026 · Sant Feliu de Llobregat</p>
+        <h1 id="nombre"><span class="nombre__linea">Antonia</span> <span class="nombre__linea"><em>Lorena</em></span> <span class="nombre__linea">Cracana</span></h1>
+        <div class="portada__pie">
+          <p class="portada__texto">Sigo el rastro de lo que pasa en un sistema. Hice 114 días de prácticas en un <button type="button" class="termino" data-t="soc">SOC</button> y quiero especializarme en análisis forense.</p>
+          <!-- Rumbo, visible sin bajar: el mismo objetivo que desarrolla la escena «Continuará» (#rumbo) -->
+          <p class="portada__rumbo"><span class="maq">Siguiente paso</span> <strong>Especializarme en análisis forense digital.</strong> <a href="#rumbo">Ver el plan</a></p>
+          <a class="enlace" href="#pruebas">Abrir el expediente<svg class="flecha" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v13M1 9l5 5 5-5"/></svg></a>
+        </div>
+        <span class="sello-disp maq" aria-hidden="true">Disponible</span>
+      </div>
     </section>
 
-    <section class="ficha" aria-label="Ficha">
+    <!-- ESCENA 02 · Ficha -->
+    <section id="ficha" class="escena ficha tono-papel" aria-label="Ficha" data-escena="Ficha" data-lugar="INSERTO · FICHA PERSONAL">
+      <span class="ficha__marca" aria-hidden="true">ALC-2026</span>
       <dl>
         <div><dt class="maq">Formación</dt><dd>2.º de SMX en Digitech FP, hasta junio de 2027</dd></div>
         <div><dt class="maq">Experiencia</dt><dd>Técnica SOC en prácticas, Apolo Cybersecurity</dd></div>
-        <div><dt class="maq">Herramientas</dt><dd><button type="button" class="termino" data-t="wazuh">Wazuh</button>, <button type="button" class="termino" data-t="iris">IRIS</button>, <button type="button" class="termino" data-t="grafana">Grafana</button>, Windows Server, Linux</dd></div>
+        <div><dt class="maq">Herramientas</dt><dd><span class="junto"><button type="button" class="termino" data-t="wazuh">Wazuh</button>,</span> <span class="junto"><button type="button" class="termino" data-t="iris">IRIS</button>,</span> <span class="junto"><button type="button" class="termino" data-t="grafana">Grafana</button>,</span> Windows Server, Linux</dd></div>
         <div><dt class="maq">Idiomas</dt><dd>Rumano nativo, español avanzado, catalán C1, inglés B2</dd></div>
       </dl>
     </section>
+    </div>
 
-    <section id="pruebas" class="pruebas" aria-labelledby="t-pruebas">
-      <p class="pista maq" aria-hidden="true">Cada tarjeta dice de dónde sale. Una prueba sin origen no vale.</p>
+    <!-- ESCENA 03 · Pruebas aportadas: la cámara recorre la mesa -->
+    <section id="pruebas" class="escena pruebas tono-mesa" aria-labelledby="t-pruebas" data-escena="Pruebas" data-lugar="INT. MESA DE PRUEBAS · NOCHE">
       <div class="cabeza">
-        <p class="maq">Sección 01</p>
         <h2 id="t-pruebas">Pruebas <em>aportadas</em></h2>
         <p class="cabeza__nota">Cada competencia, con su origen. <span class="solo-raton">Puedes mover las tarjetas.</span></p>
         <div class="filtros" role="group" aria-label="Filtrar por origen">
@@ -81,42 +119,44 @@
           <button type="button" class="maq" data-f="curso" aria-pressed="false">En curso</button>
         </div>
       </div>
-      <ul class="mesa" id="mesa">
-        <li class="prueba" data-o="practicas"><span class="maq">E-01 · Prácticas</span><h3>Gestión de incidencias</h3><p>Análisis, prioridad, escalado y seguimiento hasta el cierre, cada día en el SOC.</p></li>
-        <li class="prueba" data-o="practicas"><span class="maq">E-02 · Prácticas</span><h3>Monitorización</h3><p>Alertas en Wazuh, datos en Grafana y descarte de <button type="button" class="termino" data-t="fp">falsos positivos</button>.</p></li>
-        <li class="prueba" data-o="practicas"><span class="maq">E-03 · Prácticas</span><h3>Ticketing e informes</h3><p>Casos en IRIS según procedimiento e informes para el equipo.</p></li>
-        <li class="prueba" data-o="ciclo"><span class="maq">E-04 · Ciclo</span><h3>Windows Server</h3><p>Equipos, usuarios, grupos y permisos. Ahora aprendiendo DHCP.</p></li>
-        <li class="prueba" data-o="ciclo"><span class="maq">E-05 · Ciclo</span><h3>Linux y redes</h3><p>Terminal, permisos, Bash sencillo, cableado y direccionamiento IP.</p></li>
-        <li class="prueba" data-o="curso"><span class="maq">E-06 · En curso</span><h3>TryHackMe</h3><p>Laboratorios de seguridad por mi cuenta.</p></li>
-        <li class="prueba" data-o="curso"><span class="maq">E-07 · En curso</span><h3>Microsoft 365 y Power BI</h3><p>Empezando con Power BI y Power Automate.</p></li>
-      </ul>
-    </section>
-
-    <section id="custodia" class="custodia" aria-labelledby="t-custodia">
-      <p class="pista maq" aria-hidden="true">114 días en un SOC.</p>
-      <div class="cabeza">
-        <p class="maq">Sección 02</p>
-        <h2 id="t-custodia">Cadena de <em>custodia</em></h2>
+      <div class="mesa-visor">
+        <ul class="mesa" id="mesa">
+          <li class="prueba" data-o="practicas"><span class="maq">E-01 · Prácticas</span><h3>Gestión de incidencias</h3><p>Análisis, prioridad, escalado y seguimiento hasta el cierre, cada día en el SOC.</p></li>
+          <li class="prueba" data-o="practicas"><span class="maq">E-02 · Prácticas</span><h3>Monitorización</h3><p>Alertas en Wazuh, datos en Grafana y descarte de <span class="junto"><button type="button" class="termino" data-t="fp">falsos positivos</button>.</span></p></li>
+          <li class="prueba" data-o="practicas"><span class="maq">E-03 · Prácticas</span><h3>Ticketing e informes</h3><p>Casos en IRIS según procedimiento e informes para el equipo.</p></li>
+          <li class="prueba" data-o="ciclo"><span class="maq">E-04 · Ciclo</span><h3>Windows Server</h3><p>Equipos, usuarios, grupos y permisos. Ahora aprendiendo DHCP.</p></li>
+          <li class="prueba" data-o="ciclo"><span class="maq">E-05 · Ciclo</span><h3>Linux y redes</h3><p>Terminal, permisos, Bash sencillo, cableado y direccionamiento IP.</p></li>
+          <li class="prueba" data-o="curso"><span class="maq">E-06 · En curso</span><h3>TryHackMe</h3><p>Laboratorios de seguridad por mi cuenta.</p></li>
+          <li class="prueba" data-o="curso"><span class="maq">E-07 · En curso</span><h3>Microsoft 365 y Power BI</h3><p>Empezando con Power BI y Power Automate.</p></li>
+        </ul>
       </div>
-      <ol class="cadena">
-        <li class="aparece"><time class="maq">2020 → 2025</time><h3>Atención al cliente</h3><p>Hostelería, logística y cuidado de personas. Aprendí a tratar con gente y a trabajar bajo presión.</p></li>
-        <li class="aparece"><time class="maq">2025 → jun. 2027</time><h3>CFGM SMX</h3><p>Digitech FP, Barcelona. El paso a la informática.</p></li>
-        <li class="aparece clave"><time class="maq">oct. 2025 → feb. 2026</time><h3>SOC, Apolo Cybersecurity</h3><p>114 días gestionando incidencias de principio a fin y ayudando al equipo en <button type="button" class="termino" data-t="th">Threat Hunting</button>.</p></li>
-        <li class="aparece"><time class="maq">Ahora</time><h3>Rumbo al forense</h3><p>KAIRON, mi TFG, y laboratorios por mi cuenta.</p></li>
-      </ol>
     </section>
 
-    <section id="metodo" class="metodo" aria-labelledby="t-metodo">
+    <!-- ESCENA 04 · Cadena de custodia: la trayectoria, eslabón a eslabón -->
+    <section id="custodia" class="escena custodia tono-noche" aria-labelledby="t-custodia" data-escena="Custodia" data-lugar="FLASHBACK · 2020 – 2026">
+      <div class="custodia__plano">
+        <h2 id="t-custodia">Cadena de <em>custodia</em></h2>
+        <ol class="cadena">
+          <li><span class="maq cuando">2020 – 2025</span><h3>Atención al cliente</h3><p>Hostelería, logística y cuidado de personas. Aprendí a tratar con gente y a trabajar bajo presión.</p></li>
+          <li><span class="maq cuando">2025 – jun. 2027</span><h3>CFGM SMX</h3><p>Digitech FP, Barcelona. El paso a la informática.</p></li>
+          <li class="clave"><span class="maq cuando">oct. 2025 – feb. 2026</span><h3>SOC, Apolo Cybersecurity</h3><p>114 días gestionando incidencias de principio a fin y ayudando al equipo en <span class="junto"><button type="button" class="termino" data-t="th">Threat Hunting</button>.</span></p></li>
+          <li><span class="maq cuando">Ahora</span><h3>Rumbo al forense</h3><p>KAIRON, mi TFG, y laboratorios por mi cuenta.</p></li>
+        </ol>
+        <div class="carril" aria-hidden="true"><span class="carril__avance"></span></div>
+      </div>
+    </section>
+
+    <!-- ESCENA 05 · Cómo trabajo -->
+    <section id="metodo" class="escena metodo tono-papel" aria-labelledby="t-metodo" data-escena="Método" data-lugar="INT. SOC · EN TURNO">
       <div class="cabeza">
-        <p class="maq">Sección 03</p>
         <h2 id="t-metodo">Cómo <em>trabajo</em></h2>
         <p class="cabeza__nota">Lo que hacía con cada incidencia en el SOC.</p>
       </div>
       <ol class="pasos">
-        <li class="aparece"><h3>Analizar</h3><p>Qué ha pasado y si es real o un falso positivo.</p></li>
-        <li class="aparece"><h3>Priorizar</h3><p>Qué urge más y qué puede esperar.</p></li>
-        <li class="aparece"><h3>Escalar</h3><p>Quién debe intervenir, si me supera.</p></li>
-        <li class="aparece"><h3>Seguir hasta el cierre</h3><p>Dejarlo documentado en IRIS y no perderlo de vista.</p></li>
+        <li><h3>Analizar</h3><p>Qué ha pasado y si es real o un falso positivo.</p></li>
+        <li><h3>Priorizar</h3><p>Qué urge más y qué puede esperar.</p></li>
+        <li><h3>Escalar</h3><p>Quién debe intervenir, si me supera.</p></li>
+        <li><h3>Seguir hasta el cierre</h3><p>Dejarlo documentado en IRIS y no perderlo de vista.</p></li>
       </ol>
       <aside class="ahora">
         <p class="maq">Aprendiendo ahora · actualizado en noviembre de 2026</p>
@@ -124,49 +164,96 @@
       </aside>
     </section>
 
-    <section id="sello" class="sello" aria-labelledby="t-sello">
-      <p class="pista maq" aria-hidden="true">Siempre 64 caracteres, escribas lo que escribas.</p>
+    <!-- ESCENA 06 · El sello: SHA-256 de verdad, calculado en el navegador -->
+    <section id="sello" class="escena sello tono-papel" aria-labelledby="t-sello" data-escena="Sello" data-lugar="INT. LABORATORIO · PRIMER PLANO">
+      <svg class="huella huella--sello" id="huella-sello" viewBox="-30 -40 460 640" aria-hidden="true"></svg>
       <div class="cabeza">
-        <p class="maq">Sección 04</p>
         <h2 id="t-sello">Si cambia una letra, <em>se nota</em></h2>
-        <p class="cabeza__nota">Así se demuestra que una prueba no se ha tocado: su huella <button type="button" class="termino" data-t="sha">SHA-256</button>. Escribe algo y cambia una sola letra. Se calcula de verdad en tu navegador y no se envía nada.</p>
+        <p class="cabeza__nota">Así se demuestra que una prueba no se ha tocado: su huella <span class="junto"><button type="button" class="termino" data-t="sha">SHA-256</button>.</span> Escribe algo y cambia una sola letra. Se calcula de verdad en tu navegador y no se envía nada.</p>
       </div>
-      <label class="maq" for="texto-hash">Prueba</label>
-      <input id="texto-hash" value="Cadena de custodia" autocomplete="off" spellcheck="false">
-      <p class="maq sello__etq">Huella SHA-256</p>
-      <output class="maq sello__hash" id="hash" for="texto-hash">—</output>
-      <p class="sello__cambios" id="cambios" aria-live="polite"></p>
-      <button type="button" class="boton maq" id="restaurar">Volver al original</button>
+      <div class="sello__banco">
+        <div class="sello__campo">
+          <label class="maq" for="texto-hash">Prueba</label>
+          <input id="texto-hash" value="Cadena de custodia" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="sello__resultado">
+          <p class="maq sello__etq">Huella SHA-256</p>
+          <output class="maq sello__hash" id="hash" for="texto-hash">—</output>
+          <span class="sello__veredicto maq" id="veredicto" aria-hidden="true"></span>
+        </div>
+        <p class="sello__cambios" id="cambios" aria-live="polite"></p>
+        <button type="button" class="boton maq" id="restaurar">Volver al original</button>
+      </div>
     </section>
 
-    <section id="casos" class="casos" aria-labelledby="t-casos">
-      <p class="pista maq" aria-hidden="true">Esta web se llamó Argos antes que KAIRON.</p>
+    <!-- ESCENA 07 · Casos abiertos -->
+    <section id="casos" class="escena casos tono-papel2" aria-labelledby="t-casos" data-escena="Casos" data-lugar="INT. ARCHIVO · CASOS ABIERTOS">
       <div class="cabeza">
-        <p class="maq">Sección 05</p>
         <h2 id="t-casos">Casos <em>abiertos</em></h2>
       </div>
-      <a class="caso aparece" href="../index.html">
+      <a class="caso" href="../index.html">
         <span class="maq">TFG · con João Daniel</span>
         <strong>KAIRON</strong>
         <span class="caso__txt">Empresa ficticia de SOC gestionado para pymes: web, identidad y plan de proyecto.</span>
       </a>
-      <a class="caso aparece" href="https://github.com/Lorena639/mochila-smx-app" target="_blank" rel="noopener">
+      <a class="caso" href="https://github.com/Lorena639/mochila-smx-app" target="_blank" rel="noopener">
         <span class="maq">Proyecto personal</span>
         <strong>Mochila SMX</strong>
         <span class="caso__txt">Mi web para organizar trabajos y apuntes del ciclo.</span>
       </a>
     </section>
 
-    <section id="contacto" class="contacto" aria-labelledby="t-contacto">
-      <p class="pista maq" aria-hidden="true">Si has llegado hasta aquí, escríbeme.</p>
-      <p class="maq">Fin del expediente</p>
+    <!-- ESCENA 08 · Continuará: lo que Lorena va a estudiar después de SMX.
+         Plan de estudios: se edita en la lista «capitulos» de aquí abajo (y en la otra versión de idioma). -->
+    <section id="rumbo" class="escena rumbo tono-noche" aria-labelledby="t-rumbo" data-escena="Continuará" data-lugar="EXT. LO QUE VIENE · AMANECER">
+      <div class="rumbo__plano">
+        <h2 id="t-rumbo">Continuará<span class="puntos" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></h2>
+        <p class="rumbo__meta">Siguiente paso: especializarme en <em>análisis forense digital</em>.</p>
+        <p class="rumbo__nota">Después de SMX, en junio de 2027, el camino sigue así. Siempre cerca de la respuesta a incidentes y la monitorización.</p>
+        <ol class="capitulos">
+          <li><span class="maq">Capítulo 1 · Después de SMX</span><h3>CFGS ASIR</h3><p>Grado Superior en Administración de Sistemas Informáticos en Red.</p></li>
+          <li><span class="maq">Capítulo 2</span><h3>Especialización en Ciberseguridad</h3><p>Curso de especialización de FP en Ciberseguridad en Entornos de las Tecnologías de la Información.</p></li>
+          <li><span class="maq">En paralelo</span><h3>Certificaciones</h3><p>De análisis forense y respuesta a incidentes.</p></li>
+        </ol>
+        <div class="rumbo__base">
+          <p class="maq">Ya en marcha</p>
+          <ul><li>2.º de SMX en Digitech FP, hasta junio de 2027</li><li>114 días de prácticas en un SOC</li><li>Laboratorios en TryHackMe</li><li>KAIRON, mi TFG: laboratorio SOC con Wazuh y herramienta forense en Python con cadena de custodia, en preparación</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESCENA 09 · Escena final: contacto -->
+    <section id="contacto" class="escena contacto tono-rojo" aria-labelledby="t-contacto" data-escena="Contacto" data-lugar="ESCENA FINAL">
       <h2 id="t-contacto">¿Abrimos un <em>caso</em>?</h2>
       <a class="correo" href="mailto:antoniacracana@gmail.com">antoniacracana@gmail.com</a>
-      <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub ↗</a>
-      <button type="button" class="enlace enlace--claro enlace--boton" id="imprimir">Imprimir el expediente</button>
+      <div class="contacto__enlaces">
+        <a class="enlace enlace--claro" href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
+        <button type="button" class="enlace enlace--claro enlace--boton" id="imprimir">Imprimir el expediente</button>
+        <button type="button" class="enlace enlace--claro enlace--boton" id="repetir">Volver a ver los títulos</button>
+      </div>
     </section>
   </main>
 
-  <script src="portfolio.js?v=7" defer></script>
+  <!-- Créditos finales -->
+  <footer class="creditos">
+    <p class="creditos__fin">Fin del expediente</p>
+    <dl class="reparto">
+      <div><dt class="maq">Investigación y textos</dt><dd>Antonia Lorena Cracana</dd></div>
+      <div><dt class="maq">Localización</dt><dd>Sant Feliu de Llobregat</dd></div>
+      <div><dt class="maq">Caso abierto</dt><dd>KAIRON, con João Daniel</dd></div>
+      <div><dt class="maq">Tipografías</dt><dd>Fraunces, Instrument Sans y Courier Prime, con licencia OFL</dd></div>
+      <div><dt class="maq">Movimiento</dt><dd>GSAP y Lenis</dd></div>
+      <div><dt class="maq">Sello</dt><dd>SHA-256 calculado en tu navegador; no se envía nada</dd></div>
+    </dl>
+    <a class="enlace creditos__volver" href="../index.html">Volver a KAIRON</a>
+  </footer>
+
+  <!-- Bibliotecas de la web de KAIRON (sin CDN) y el guion de la película -->
+  <script src="../js/vendor/gsap.min.js" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="../js/vendor/SplitText.min.js" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js" defer></script>
+  <script src="../js/vendor/lenis.min.js" defer></script>
+  <script src="portfolio.js?v=8" defer></script>
 </body>
 </html>

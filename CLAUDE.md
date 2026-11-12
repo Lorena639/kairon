@@ -86,9 +86,10 @@ La empresa ficticia se llama **KAIRON** (antes Argos; renombrada el 29-10-2026).
 
 ## Parte de Lorena
 - **Quién es:** Antonia Lorena Cracana. Lleva la ciberseguridad: análisis forense, monitorización y respuesta a incidentes. Quiere especializarse en análisis forense.
-- **Su portfolio** (`antonia-lorena-cracana/`, en castellano y catalán): estilo de **expediente forense** con una huella dactilar dibujada.
-  - Secciones: pruebas aportadas, cadena de custodia, cómo trabajo, "Si cambia una letra, se nota" (SHA-256 real para comparar huellas), casos abiertos y "¿Abrimos un caso?".
-  - Extras: pruebas que se pueden mover, luz UV, glosario (SOC, Wazuh, IRIS, Grafana, falso positivo, threat hunting), caso forense jugable de phishing, terminal, modo oscuro, sonido e intro.
+- **Su portfolio** (`antonia-lorena-cracana/`, en castellano y catalán), rediseñado el 12-11-2026 como una **película de expediente forense** al hacer scroll (GSAP, SplitText, ScrambleText, Lenis, View Transitions; fuentes alojadas en `fonts/`).
+  - Títulos de apertura y nueve escenas con franjas de cine, claqueta y código de tiempo: portada con huella, ficha, pruebas aportadas, cadena de custodia, cómo trabajo, el sello SHA-256, casos abiertos, "Continuará…" (lo que quiere estudiar) y "¿Abrimos un caso?" con créditos finales.
+  - **Lo que quiere estudiar después de SMX:** CFGS ASIR, curso de especialización de FP en Ciberseguridad en Entornos de las TI y, en paralelo, certificaciones de análisis forense y respuesta a incidentes. Meta: especializarse en análisis forense digital.
+  - Extras: luz UV con pistas, glosario, tarjetas que se mueven, terminal, sonido, "Luces" (modo claro), "Menos movimiento" e impresión.
 - **En el TFG:** monta el laboratorio Wazuh, diseña los ataques simulados y la cadena de custodia, y escribe los capítulos de detección y resultados.
 - **Cuenta compartida:** esta cuenta de Claude es de Lorena, pero la usan los dos. Si no está claro quién escribe, hay que preguntarlo antes de atribuirle ideas a uno u otro. Este archivo (`CLAUDE.md`) es el contexto que leen las sesiones de Claude en esta carpeta.
 
