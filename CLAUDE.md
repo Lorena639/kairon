@@ -1,7 +1,7 @@
 # KAIRON - Contexto del proyecto
 
 ## Qué es este proyecto
-Repositorio de Lorena y Dani (Daniel Oliva, usuario jdanioliv) para dos cosas a la vez:
+Repositorio de Lorena y Dani (João Daniel de Paiva Oliveira, "Maru" en internet, usuario jdanioliv) para dos cosas a la vez:
 1. La práctica A1-RA1 de "0228 Aplicaciones Web" del ciclo CFGM Sistemes Microinformàtics i Xarxes (SMX), 2º curso, en Digitech Barcelona.
 2. La parte web del Trabajo de Final de Curso (TFG), que combina ciberseguridad y programación.
 
@@ -34,14 +34,64 @@ La empresa ficticia se llama **KAIRON** (antes Argos; renombrada el 29-10-2026).
 
 ## Requisitos del TFG (pendiente de completar)
 - [Qué parte de ciberseguridad se refleja en la web: por ejemplo, un apartado de buenas prácticas, cabeceras de seguridad, validación del formulario, etc.]
-- [Qué funcionalidad de programación aporta Dani, si la hay más allá de la web]
+- [Qué funcionalidad de programación aporta Dani, si la hay más allá de la web] → Propuesta (sin confirmar con Lorena): el analizador de logs de su portfolio, que detecta fuerza bruta en logs HTTP y une programación y ciberseguridad.
 - [Si el proyecto técnico KAIRON Data Chip (estudio en `C:\Users\lorena\KAIRON`) forma parte del TFG o es un proyecto aparte]
 
 ## Estado actual (29-10-2026)
 - Versión local de Lorena: 2 páginas, rediseñada el 29-10-2026 al estilo Active Theory / Lusion (oscuro, tipografía gigante Space Grotesk, preloader, cursor propio, Lenis, GSAP y escena 3D de radar con Three.js). Sin commitear.
 - Versión de Dani en GitHub (`jdanioliv/Argos-TFG`, rama main): 4 páginas (index, sobre-nosotros, sobre-dani, sobre-lorena), estética "Cyber-Terminal", todavía con el nombre Argos. No fusionada.
 - Pendiente: decidir qué versión se presenta, aplicar el rename en la definitiva, validar con W3C, LinkedIn real, avatar real.
+- Actualización 12-11-2026: el portfolio de Dani ya está en este repo (`joao-daniel-oliveira/`), con estética propia; ver "Parte de Dani".
 - Plan de presentación en clase: `PRESENTACION.md`. Este archivo (`CLAUDE.md`) es el contexto que leen las sesiones de Claude en esta carpeta.
+
+## Parte de Dani (actualizado el 12-11-2026)
+Lo que Dani ha contado y decidido en sus sesiones con Claude. Rama de trabajo: `claude/awesome-hamilton-81xuyz`.
+
+### Quién es Dani
+- Estudia 2º de SMX en Digitech FP (2025–2027). Después quiere hacer DAM y, más adelante, dedicarse a datos e IA (Python, Big Data, aprendizaje automático).
+- Terminó CS50x de Harvard. Cursa CS50P y CS50W y luego quiere hacer CS50AI, CS50G y TinyML.
+- Hace juegos en Roblox con Luau. Le gustan el anime y el manga, sobre todo *Jujutsu Kaisen*.
+- Habla inglés y portugués como lenguas nativas. Vive en Barcelona.
+- Web personal: jdanioliv.github.io (CV interactivo, terminal y analizador de logs con PyScript). Busca prácticas de FP y primer empleo.
+- Escribe a Claude en español o en inglés; hay que contestarle en el idioma en que escriba.
+
+### Su portfolio: `joao-daniel-oliveira/`
+- **Estética "Santuario Malévolo" de Sukuna (JJK)**, según la especificación que dio Dani:
+  - Paleta: obsidiana `#070709` y `#111115`, carmesí `#d90429` y `#8a0014`, destello `#ff002b`, fuego `#ff4d00`, hueso `#f4f3ef` y ceniza `#8e8d94`.
+  - Fuentes: Zen Antique para títulos, Manrope para texto e IBM Plex Mono para detalles.
+  - El pie aclara que es un homenaje de fan, sin relación oficial con la obra.
+- **Efectos:**
+  - Intro "Cleave & Dismantle": la pantalla se parte en diagonal, con temblor y aberración carmesí.
+  - Tajos SVG al pasar el ratón; botones que se parten al pulsarlos; brasas en canvas en los botones rojos.
+  - Aparición con tajo al hacer scroll, barra de progreso, menú que marca la sección y kanji 解 con paralaje.
+  - Botón "Suprimir energía maldita", que quita el movimiento y respeta `prefers-reduced-motion`.
+- **Laboratorio**, que sustituye al antiguo "cifrado de encantamientos". Dani lo quitó porque no encajaba:
+  1. **Analizador de logs** (`analizador.js`): versión en JS de su analizador en Python. Avisa de posible fuerza bruta a partir de 5 respuestas 401/403 de una misma IP.
+  2. **Minijuego "Desmantelar"** (`juego.js`): cortar bugs que caen; récord en localStorage; tecla Espacio para jugar con teclado.
+  3. **Expansión de dominio** (`dominio.js`): toda la página se convierte en el Santuario durante unos 7 s. También se activa escribiendo `ryoiki tenkai`.
+- **Sonido** (`sonido.js`): tajos, cortes, golpes y fuego sintetizados con Web Audio, sin archivos. Dani lo quiere a **volumen bajo**. Hay un botón "Sonido: sí/no" en la cabecera.
+- **Ideas que Dani descartó por ahora:** terminal de comandos y visualizador de algoritmos de CS50.
+- **Vista previa privada:** https://claude.ai/artifact/C5ZNjp6BP6fNEv2K5KTyHc. Se regenera desde una copia sin la CSP propia de la página y sin `?v=` en las rutas. Dani quiere poder ver los cambios ahí.
+- En la página pone "SMX"; en su especificación Dani escribió "SMR" (el nombre del ciclo en castellano). Está por confirmar.
+
+### Ideas para la web de KAIRON (en curso)
+- **Repos elegidos para la web:**
+  - `pmndrs/postprocessing`: bloom y aberración cromática en la escena del radar.
+  - `shshaw/Splitting`: no hace falta, porque `main.js` ya divide los títulos a mano.
+  - Codrops: demos para copiar técnicas sin añadir dependencias.
+  - `barbajs/barba` queda como alternativa (transiciones entre páginas), pero da más trabajo.
+- **Postprocesado (sin commitear):**
+  - Paquete `js/vendor/postprocessing.min.js`: versión 6.34.2, compatible con Three r160, reducido a los efectos usados y adaptado al `THREE` global.
+  - Conectado en `js/escena.js`. Quedan solo bloom y aberración cromática, porque la viñeta y el grano marcaban los bordes del lienzo.
+  - Pendiente: no dibujar la escena mientras dure la intro (`.carga`), porque con WebGL por software la ralentizaba mucho.
+- **K en 3D:** Dani quiere usar la K en 3D en la web, basada en su hoja de marca: emblema de oro metálico, versiones de fondo oscuro y claro, horizontal y monocromas.
+  - Plan: extruir con Three.js el contorno del emblema (`img/kairon-emblema-dorado.png`), con el PNG original en la cara frontal y material de oro metálico.
+  - Iría en el centro del globo, en lugar de las capas CSS de `.logo3d`, que quedan como respaldo sin WebGL.
+- La web principal es sobre todo de Lorena: hay que avisarla antes de fusionar estos cambios.
+
+### Otras cosas
+- **"Rogue x Hunter"** es un proyecto aparte de Dani: no mezclarlo con KAIRON ni con el portfolio.
+- No se puede crear desde aquí un enlace público que caduque solo. Para enseñar la vista previa se usa el menú Share del artifact y luego se quita el acceso a mano.
 
 ## Reglas de trabajo
 - No sobrescribir código de la otra persona sin preguntar.
