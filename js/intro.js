@@ -46,7 +46,7 @@
   let listo = false;
 
   const imagen = new Image();
-  imagen.src = raiz + "img/kairon-logo-dorado.png";
+  imagen.src = raiz + "img/relieve/kairon-relieve-logo.png"; // logo con relieve de la hoja de marca
 
   function medir() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -149,7 +149,7 @@
     // Duraciones cortas: la intro entera dura unos 3 s (antes, casi 7 s) y se puede saltar
     const D_PARTICULAS = 1500, D_FUNDIDO = 400, D_DESTELLO = 700, D_PAUSA = 650;
     // Posición del destello: la esfera de la brújula del emblema (proporciones del PNG del logo)
-    if (lente) { lente.style.left = (objetivo.x + objetivo.w * 0.503) + "px"; lente.style.top = (objetivo.y + objetivo.h * 0.105) + "px"; }
+    if (lente) { lente.style.left = (objetivo.x + objetivo.w * 0.495) + "px"; lente.style.top = (objetivo.y + objetivo.h * 0.128) + "px"; }
     if (eslogan) { eslogan.style.top = (objetivo.y + objetivo.h + 28) + "px"; eslogan.textContent = ""; }
     let letrasEslogan = 0;
     const textoEslogan = (eslogan && eslogan.dataset.texto) || "";

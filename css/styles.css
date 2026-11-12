@@ -3559,7 +3559,7 @@ body.cursor--arrastra .cursor {
 .logo3d__capa {
   position: absolute;
   inset: 0;
-  background: url("../img/kairon-emblema-dorado.png") center / contain no-repeat;
+  background: url("../img/relieve/kairon-relieve-emblema.png") center / contain no-repeat;
   backface-visibility: hidden;
 }
 
@@ -3569,8 +3569,8 @@ body.cursor--arrastra .cursor {
   content: "";
   position: absolute;
   inset: 0;
-  -webkit-mask: url("../img/kairon-emblema-dorado.png") center / contain no-repeat;
-  mask: url("../img/kairon-emblema-dorado.png") center / contain no-repeat;
+  -webkit-mask: url("../img/relieve/kairon-relieve-emblema.png") center / contain no-repeat;
+  mask: url("../img/relieve/kairon-relieve-emblema.png") center / contain no-repeat;
   background: linear-gradient(105deg, transparent 42%, rgba(255, 248, 230, 0.35) 50%, transparent 58%);
   background-size: 260% 100%;
   mix-blend-mode: screen;
@@ -4264,8 +4264,8 @@ main, .pie { overflow-x: clip; }
   transform: translateX(-120%);
   transition: transform 1.4s var(--facil);
   pointer-events: none;
-  -webkit-mask: url("../img/kairon-wordmark-dorado.png") center / 100% 100% no-repeat;
-  mask: url("../img/kairon-wordmark-dorado.png") center / 100% 100% no-repeat;
+  -webkit-mask: url("../img/relieve/kairon-relieve-wordmark.png") center / 100% 100% no-repeat;
+  mask: url("../img/relieve/kairon-relieve-wordmark.png") center / 100% 100% no-repeat;
 }
 
 .pie__gigante:hover::after {

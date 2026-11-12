@@ -25,7 +25,7 @@
   // Si no carga, la escena se dibuja igual, solo que sin efectos.
   const rutaEfectos = document.currentScript.src.replace("escena.js", "vendor/postprocessing.min.js");
   const rutaForma = document.currentScript.src.replace("escena.js", "k3d-forma.js");
-  const rutaEmblema = new URL("../img/kairon-emblema-dorado.png", document.currentScript.src).href;
+  const rutaEmblema = new URL("../img/relieve/kairon-relieve-emblema.png", document.currentScript.src).href; // emblema con relieve de la hoja de marca
   const cargarThree = () => {
     const js = document.createElement("script");
     js.src = rutaThree;
@@ -257,45 +257,34 @@
     scrollF = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1);
   }, { passive: true });
 
-  // --- K en 3D: el emblema extruido, con el PNG original en la cara frontal ---
-  // El contorno sale de tools/k3d.py. El dibujo del logo no se toca (regla de marca):
-  // solo se le da grosor, cantos de oro y luz.
+  // --- K en 3D: el emblema en relieve de la hoja de marca, con capas de profundidad ---
+  // (Antes era el contorno extruido de tools/k3d.py; se conserva ese archivo como alternativa.)
+  // El dibujo del logo no se toca: solo se le da profundidad y luz.
   let k3d = null;
   const formaK = window.KAIRON_K;
-  if (formaK && !movil) {
-    const aVector = (lista) => { const v = []; for (let i = 0; i < lista.length; i += 2) v.push(new THREE.Vector2(lista[i], lista[i + 1])); return v; };
-    const formas = formaK.formas.map((f) => {
-      const forma = new THREE.Shape(aVector(f.c));
-      f.h.forEach((h) => forma.holes.push(new THREE.Path(aVector(h))));
-      return forma;
-    });
-    // Coordenadas de 0 a 1: así las UV de la cara frontal coinciden con el PNG sin calcular nada
-    const GROSOR = 0.07;
-    const geoK = new THREE.ExtrudeGeometry(formas, { depth: GROSOR, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.003, bevelSegments: 2, curveSegments: 4 });
-    geoK.translate(-0.5, -0.5, -GROSOR / 2);
-
-    // Entorno para los reflejos del metal: una sala oscura con tiras de luz cálidas y una fría
-    const sala = new THREE.Scene();
-    sala.add(new THREE.Mesh(new THREE.BoxGeometry(10, 10, 10), new THREE.MeshBasicMaterial({ color: 0x0b0f14, side: THREE.BackSide })));
-    [[0, 4, 0, 8, 1, 0xfff3d6, 3], [-4.5, 0, 2, 1, 6, 0xd4af7a, 2], [4.5, 1, -1, 1, 5, 0xe9cfa0, 2.2], [0, -3, 4, 6, 0.6, 0x35c6d6, 1.2]].forEach(([x, y, z, w, h, color, fuerza]) => {
-      const tira = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(fuerza), side: THREE.DoubleSide }));
-      tira.position.set(x, y, z);
-      tira.lookAt(0, 0, 0);
-      sala.add(tira);
-    });
-    const pmrem = new THREE.PMREMGenerator(render);
-    const entorno = pmrem.fromScene(sala, 0.04).texture;
-    pmrem.dispose();
-
+  if (!movil && document.querySelector(".logo3d")) {
+    // v6: la K es el emblema EN RELIEVE de la hoja de marca (oro cepillado, biseles, brillos).
+    // El PNG va en un plano; detrás, dos copias más oscuras dan grosor al girar, y un halo
+    // aditivo lo ilumina. El dibujo no se toca: solo luz y profundidad (regla de marca).
     const texturaK = new THREE.TextureLoader().load(rutaEmblema);
     texturaK.colorSpace = THREE.SRGBColorSpace;
     texturaK.anisotropy = render.capabilities.getMaxAnisotropy();
-    // Cara: el PNG tal cual (emisivo, para que sus colores no dependan de la luz) más un brillo metálico encima
-    const matCara = new THREE.MeshStandardMaterial({ map: texturaK, emissiveMap: texturaK, emissive: 0xffffff, emissiveIntensity: 0.78, metalness: 0.55, roughness: 0.3, envMap: entorno, envMapIntensity: 1.05, alphaTest: 0.35, transparent: false });
-    const matCanto = new THREE.MeshStandardMaterial({ color: 0xb58a4c, metalness: 1, roughness: 0.26, envMap: entorno, envMapIntensity: 1.25 });
-    const mallaK = new THREE.Mesh(geoK, [matCara, matCanto]);
-    const ALTO_K = enPagina ? 2.2 : 3.1;
-    mallaK.scale.set(ALTO_K * formaK.proporcion, ALTO_K, ALTO_K);
+    const PROP_RELIEVE = 444 / 335;
+    const ALTO_K = enPagina ? 2.0 : 2.9;
+    const geoPlano = new THREE.PlaneGeometry(ALTO_K * PROP_RELIEVE, ALTO_K);
+    const mallaK = new THREE.Group();
+    [[-0.05, 0.28], [-0.025, 0.5]].forEach(([z, brillo]) => {
+      const capa = new THREE.Mesh(geoPlano, new THREE.MeshBasicMaterial({ map: texturaK, color: new THREE.Color(brillo, brillo * 0.85, brillo * 0.7), transparent: true, depthWrite: false }));
+      capa.position.z = z;
+      mallaK.add(capa);
+    });
+    const frente = new THREE.Mesh(geoPlano, new THREE.MeshBasicMaterial({ map: texturaK, transparent: true, depthWrite: false }));
+    mallaK.add(frente);
+    // Reflejo que recorre el emblema: el mismo PNG en modo aditivo, con opacidad animada en el bucle
+    const reflejo = new THREE.Mesh(geoPlano, new THREE.MeshBasicMaterial({ map: texturaK, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+    reflejo.position.z = 0.005;
+    mallaK.add(reflejo);
+    mallaK.userData.reflejo = reflejo;
     k3d = new THREE.Group();
     k3d.add(mallaK);
     escena.add(k3d);
@@ -436,6 +425,9 @@
       k3d.scale.setScalar((0.55 + 0.45 * e) * (fija ? 1 : 1 - scrollF * 0.25));
       k3d.rotation.y = (1 - e) * -Math.PI * 0.9 + actual.x * 0.45 + (reducido ? 0 : Math.sin(t * 0.45) * 0.1);
       k3d.rotation.x = actual.y * 0.25;
+      // Destello que recorre el oro cada pocos segundos (luz sobre el relieve, sin cambiar el dibujo)
+      const reflejoK = k3d.children[0] && k3d.children[0].userData.reflejo;
+      if (reflejoK) reflejoK.material.opacity = reducido ? 0 : Math.pow(Math.max(0, Math.sin(t * 0.7)), 12) * 0.55;
       k3d.visible = e > 0;
     }
 

@@ -467,16 +467,28 @@ if (hayGSAP && !reducido) {
     });
   });
 
-  // Marquee: se acelera y se inclina con la velocidad del scroll (como Lusion)
-  const pistas = document.querySelectorAll(".marquee__pista");
-  if (pistas.length && lenis) {
-    let inclinacion = 0;
-    lenis.on("scroll", ({ velocity }) => {
-      inclinacion += (velocity * 0.25 - inclinacion) * 0.15;
-      const v = Math.min(Math.abs(velocity), 60);
-      pistas.forEach((p) => {
-        p.style.animationDuration = Math.max(6, 28 - v * 0.35) + "s";
-        p.style.transform = `skewX(${Math.max(-12, Math.min(12, inclinacion))}deg)`;
+  // Marquee: avanza con GSAP y se acelera e inclina con la velocidad del scroll (como Lusion).
+  // Antes se cambiaba la duración de la animación CSS en cada scroll y la cinta saltaba de posición.
+  const pistas = [...document.querySelectorAll(".marquee__pista")];
+  if (pistas.length) {
+    const estado = pistas.map((p) => ({ p, x: 0, dir: p.classList.contains("marquee__pista--inversa") ? 1 : -1 }));
+    pistas.forEach((p) => { p.style.animation = "none"; });
+    let velocidad = 0, inclinacion = 0;
+    if (lenis) lenis.on("scroll", ({ velocity }) => { velocidad = velocity; });
+    gsap.ticker.add((tiempo, delta) => {
+      const dt = Math.min(delta, 50) / 1000;
+      velocidad *= 0.92;
+      inclinacion += (Math.max(-10, Math.min(10, velocidad * 0.25)) - inclinacion) * 0.12;
+      estado.forEach((e) => {
+        // Periodo exacto: distancia entre el inicio de las dos copias (incluye el hueco entre ellas)
+        const hijos = e.p.children;
+        const mitad = hijos.length > 1 ? hijos[1].offsetLeft - hijos[0].offsetLeft : e.p.scrollWidth / 2;
+        if (!mitad) return;
+        const rapidez = mitad / 30 + Math.min(Math.abs(velocidad), 60) * 6; // px por segundo
+        e.x += e.dir * rapidez * dt;
+        if (e.x <= -mitad) e.x += mitad;
+        if (e.x > 0) e.x -= mitad;
+        e.p.style.transform = `translate3d(${e.x.toFixed(2)}px,0,0) skewX(${inclinacion.toFixed(2)}deg)`;
       });
     });
   }
