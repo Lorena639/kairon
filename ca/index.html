@@ -6,8 +6,8 @@
   <meta name="description" content="KAIRON: SOC gestionat per a particulars i empreses. Detectem a temps, responem en el moment just i ho demostrem amb proves.">
   <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark">
-  <!-- Seguretat de la mateixa web: només es carreguen recursos d'aquest lloc i de Google Fonts; sense scripts en línia -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <!-- Seguretat de la mateixa web: només es carreguen recursos d'aquest lloc (també les fonts); sense scripts en línia -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El moment just">
   <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
@@ -18,9 +18,7 @@
   <link rel="alternate" hreflang="es" href="../index.html">
   <link rel="alternate" hreflang="ca" href="index.html">
   <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/fuentes.css?v=20261112d">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,7 +35,7 @@
     "knowsAbout": ["SOC", "Wazuh", "anàlisi forense", "resposta a incidents"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112d">
   <!-- Portada v6: estilos propios de la portada inmersiva (se cargan después de la hoja común) -->
 </head>
 <body>
@@ -632,19 +630,19 @@
   <!-- Librerías guardadas en local, para no depender de internet: GSAP 3.15.1 (con ScrollTrigger, SplitText y
        ScrambleText), Lenis, Three.js 0.160 y postprocessing. fluido.js es una adaptación de
        WebGL-Fluid-Simulation (MIT) para la estela del cursor. -->
-  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/three.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/postprocessing.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/fluido.js?v=20261112c" defer></script>
-  <script src="../js/intro.js?v=20261112c" defer></script>
-  <script src="../js/escena.js?v=20261112c" defer></script>
-  <script src="../js/mundo.js?v=20261112c" defer></script>
-  <script src="../js/visuales.js?v=20261112c" defer></script>
-  <script src="../js/main.js?v=20261112c" defer></script>
-  <script src="../js/v6.js?v=20261112c" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/three.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/postprocessing.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/fluido.js?v=20261112d" defer></script>
+  <script src="../js/intro.js?v=20261112d" defer></script>
+  <script src="../js/escena.js?v=20261112d" defer></script>
+  <script src="../js/mundo.js?v=20261112d" defer></script>
+  <script src="../js/visuales.js?v=20261112d" defer></script>
+  <script src="../js/main.js?v=20261112d" defer></script>
+  <script src="../js/v6.js?v=20261112d" defer></script>
 </body>
 </html>

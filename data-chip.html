@@ -6,8 +6,8 @@
   <meta name="description" content="KAIRON Data Chip es una línea de investigación, no un producto: un registro verificable de qué organizaciones han recibido tus datos, cuándo, para qué y con qué base legal. Incluye una demo con datos ficticios.">
   <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark">
-  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio (también las fuentes); sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El momento justo">
   <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
@@ -18,9 +18,7 @@
   <link rel="alternate" hreflang="es" href="data-chip.html">
   <link rel="alternate" hreflang="ca" href="ca/data-chip.html">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/fuentes.css?v=20261112d">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,9 +35,9 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112c">
+  <link rel="stylesheet" href="css/styles.css?v=20261112d">
   <!-- Estilos propios de Data Chip y Legalidad -->
-  <link rel="stylesheet" href="css/datachip.css?v=20261112c">
+  <link rel="stylesheet" href="css/datachip.css?v=20261112d">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -270,7 +268,7 @@
                 <dl class="dc-mov__datos">
                   <div><dt>Datos</dt><dd data-campo="datos">Nombre, importe y referencia de la tarjeta</dd></div>
                   <div><dt>Finalidad</dt><dd data-campo="finalidad">Cobrar el pedido</dd></div>
-                  <div><dt>Base legal</dt><dd data-campo="base">Ejecución de un contrato (art. 6.1.b); Lumen actúa como encargado (art. 28)</dd></div>
+                  <div><dt>Base legal</dt><dd data-campo="base">Ejecución de un contrato (art. 6.1.b)</dd></div>
                   <div><dt>País</dt><dd data-campo="pais">Irlanda, dentro del EEE</dd></div>
                   <div class="dc-mov__huella"><dt>Huella</dt><dd><code>se calcula en tu navegador (necesita JavaScript)</code></dd></div>
                 </dl>
@@ -553,19 +551,19 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
-  <script src="js/intro.js?v=20261112c" defer></script>
-  <script src="js/escena.js?v=20261112c" defer></script>
-  <script src="js/visuales.js?v=20261112c" defer></script>
-  <script src="js/polvo.js?v=20261112c" defer></script>
-  <script src="js/main.js?v=20261112c" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112d" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112d" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112d" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112d" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112d" defer></script>
+  <script src="js/intro.js?v=20261112d" defer></script>
+  <script src="js/escena.js?v=20261112d" defer></script>
+  <script src="js/visuales.js?v=20261112d" defer></script>
+  <script src="js/polvo.js?v=20261112d" defer></script>
+  <script src="js/main.js?v=20261112d" defer></script>
   <!-- Data Chip y Legalidad: demo del recorrido de los datos, huellas SHA-256 encadenadas e índice de lectura (antes de paginas.js: fija primero) -->
-  <script src="js/datachip.js?v=20261112c" defer></script>
+  <script src="js/datachip.js?v=20261112d" defer></script>
   <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
-  <script src="js/paginas.js?v=20261112c" defer></script>
+  <script src="js/paginas.js?v=20261112d" defer></script>
 </body>
 </html>

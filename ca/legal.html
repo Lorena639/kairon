@@ -6,8 +6,8 @@
   <meta name="description" content="Quines normes obliguen un SOC gestionat com KAIRON (RGPD, LOPDGDD, Codi Penal, LSSI, NIS2), com les compliria, el marc legal de Data Chip i l'ús ètic del laboratori. Projecte acadèmic, no és assessorament jurídic.">
   <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark">
-  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio (también las fuentes); sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El moment just">
   <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
@@ -18,9 +18,7 @@
   <link rel="alternate" hreflang="es" href="../legal.html">
   <link rel="alternate" hreflang="ca" href="legal.html">
   <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/fuentes.css?v=20261112d">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,9 +35,9 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112d">
   <!-- Estilos propios de Data Chip y Legalidad -->
-  <link rel="stylesheet" href="../css/datachip.css?v=20261112c">
+  <link rel="stylesheet" href="../css/datachip.css?v=20261112d">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -192,7 +190,7 @@
               </div>
               <div>
                 <dt>Tipus de lletra</dt>
-                <dd>Es carreguen des de Google Fonts. Per servir-los, Google rep l'adreça IP de la teva connexió, com qualsevol servidor a qui es demana un fitxer. És l'única petició a un tercer que fan aquestes pàgines. Allotjar les fonts al mateix lloc l'eliminaria: està pendent de decidir.</dd>
+                <dd>Se serveixen des d'aquest mateix lloc (Cinzel, Space Grotesk i JetBrains Mono, amb llicència SIL Open Font License). Abans es carregaven des de Google Fonts, que rebia l'adreça IP de qui visitava el web; en allotjar-les aquí, aquestes pàgines ja no fan cap petició a tercers.</dd>
               </div>
               <div>
                 <dt>Aplicació instal·lable</dt>
@@ -574,19 +572,19 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
-  <script src="../js/intro.js?v=20261112c" defer></script>
-  <script src="../js/escena.js?v=20261112c" defer></script>
-  <script src="../js/visuales.js?v=20261112c" defer></script>
-  <script src="../js/polvo.js?v=20261112c" defer></script>
-  <script src="../js/main.js?v=20261112c" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112d" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112d" defer></script>
+  <script src="../js/intro.js?v=20261112d" defer></script>
+  <script src="../js/escena.js?v=20261112d" defer></script>
+  <script src="../js/visuales.js?v=20261112d" defer></script>
+  <script src="../js/polvo.js?v=20261112d" defer></script>
+  <script src="../js/main.js?v=20261112d" defer></script>
   <!-- Data Chip y Legalidad: demo del recorrido de los datos, huellas SHA-256 encadenadas e índice de lectura (antes de paginas.js: fija primero) -->
-  <script src="../js/datachip.js?v=20261112c" defer></script>
+  <script src="../js/datachip.js?v=20261112d" defer></script>
   <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
-  <script src="../js/paginas.js?v=20261112c" defer></script>
+  <script src="../js/paginas.js?v=20261112d" defer></script>
 </body>
 </html>

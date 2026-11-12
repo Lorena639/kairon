@@ -46,7 +46,7 @@ KAIRON es una empresa ficticia de ciberseguridad que ofrece un SOC (centro de op
 
 ## 6. Seguridad de la propia web
 
-- Política de seguridad de contenido (CSP) en `meta`: recursos solo del propio sitio y Google Fonts, sin scripts en línea.
+- Política de seguridad de contenido (CSP) en `meta`: recursos solo del propio sitio (las fuentes también se alojan en él), sin scripts en línea.
 - `Referrer-Policy` estricta, `rel="noopener"` en enlaces externos, campo trampa anti-spam en el formulario, sin cookies ni rastreadores.
 - Service worker con caché para funcionar sin conexión como app instalada (manifest + iconos).
 

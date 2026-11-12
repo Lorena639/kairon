@@ -43,7 +43,7 @@ KAIRON-TFG/
   - **Three.js** (0.160): escena 3D de la portada, un globo de nodos con barrido de radar.
   - **GSAP + ScrollTrigger** (3.12): animaciones de entrada y ligadas al scroll.
   - **Lenis** (1.1): scroll suave con inercia.
-- Tipografía: Cinzel (la serif del logo) para todos los títulos y el nombre en la portada, Space Grotesk para texto y JetBrains Mono para datos (Google Fonts).
+- Tipografía: Cinzel (la serif del logo) para todos los títulos y el nombre en la portada, Space Grotesk para texto y JetBrains Mono para datos (de Google Fonts, alojadas en `fonts/` con licencia OFL).
 - Instalable como app (manifest + iconos + service worker con caché; una vez visitada, abre sin conexión). Botón "Instalar app" en el pie cuando el navegador lo permite y aviso de "sin conexión".
 - Disponible en castellano y catalán (`ca/`), con los textos generados por JavaScript también traducidos.
 
@@ -72,7 +72,7 @@ python -m http.server 8765
 
 ## Seguridad de la propia web
 
-- **CSP** (Content Security Policy) en una etiqueta `meta`: solo se cargan scripts e imágenes de este sitio, estilos propios y fuentes de Google Fonts; nada de scripts en línea.
+- **CSP** (Content Security Policy) en una etiqueta `meta`: solo se cargan scripts e imágenes de este sitio, estilos y fuentes propios (alojados en el sitio); nada de scripts en línea ni peticiones a terceros.
 - **Referrer-Policy** estricta y enlaces externos con `rel="noopener"`.
 - Formulario con **campo trampa** (honeypot) anti-spam.
 - Sin cookies ni rastreadores.
