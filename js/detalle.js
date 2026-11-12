@@ -115,18 +115,10 @@
     calc.hidden = false;
   }
 
-  /* ---------- 6. Preguntas: abrir la respuesta enlazada y recalcular el scroll al desplegar ---------- */
-  var respuestas = document.querySelectorAll(".det-grupo details");
-  if (respuestas.length) {
-    var abrirDestino = function () {
-      if (location.hash.length < 2) return;
-      var destino = document.getElementById(decodeURIComponent(location.hash.slice(1)));
-      if (destino && destino.tagName === "DETAILS") destino.open = true;
-    };
-    abrirDestino();
-    window.addEventListener("hashchange", abrirDestino);
-    respuestas.forEach(function (d) {
-      d.addEventListener("toggle", function () { if (hayST) ScrollTrigger.refresh(); });
+  /* ---------- 6. Preguntas: al desplegar una respuesta cambia el alto de la página; se avisa a ScrollTrigger ---------- */
+  if (hayST) {
+    document.querySelectorAll(".det-grupo details").forEach(function (d) {
+      d.addEventListener("toggle", function () { ScrollTrigger.refresh(); });
     });
   }
 })();
