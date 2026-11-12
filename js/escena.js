@@ -45,8 +45,17 @@
     js.onerror = () => radar2D(contenedor);
     document.head.appendChild(js);
   };
-  if (document.readyState === "complete") cargarThree();
-  else window.addEventListener("load", cargarThree, { once: true });
+  // Si hay intro, Three.js se carga cuando termina: cargarlo a la vez la ralentizaba en equipos lentos.
+  // Por si acaso, como mucho a los 7 s se carga igualmente.
+  const hayIntro = document.querySelector(".carga") && window.kaironIntro && !window.kaironIntro.vista &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let threePedido = false;
+  const pedirThree = () => { if (!threePedido) { threePedido = true; cargarThree(); } };
+  if (hayIntro) {
+    window.addEventListener("kairon-intro-fin", () => setTimeout(pedirThree, 200), { once: true });
+    setTimeout(pedirThree, 7000);
+  } else if (document.readyState === "complete") pedirThree();
+  else window.addEventListener("load", pedirThree, { once: true });
 
   function iniciar() {
 

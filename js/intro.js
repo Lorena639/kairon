@@ -146,43 +146,62 @@
     if (objetivo.w < 8 || objetivo.h < 8) { alTerminar(); return; }
     muestrear();
     const inicio = performance.now();
-    const D_PARTICULAS = 3200, D_FUNDIDO = 600, D_DESTELLO = 1300, D_PAUSA = 1500;
+    // Duraciones cortas: la intro entera dura unos 3 s (antes, casi 7 s) y se puede saltar
+    const D_PARTICULAS = 1500, D_FUNDIDO = 400, D_DESTELLO = 700, D_PAUSA = 650;
     // Posición del destello: la esfera de la brújula del emblema (proporciones del PNG del logo)
     if (lente) { lente.style.left = (objetivo.x + objetivo.w * 0.503) + "px"; lente.style.top = (objetivo.y + objetivo.h * 0.105) + "px"; }
     if (eslogan) { eslogan.style.top = (objetivo.y + objetivo.h + 28) + "px"; eslogan.textContent = ""; }
     let letrasEslogan = 0;
     const textoEslogan = (eslogan && eslogan.dataset.texto) || "";
     let fase = 0;
+    let saltada = false;
+    // Saltar la intro: clic, toque, rueda o cualquier tecla llevan directamente a la web
+    const eventosSalto = ["pointerdown", "keydown", "wheel", "touchstart"];
+    function saltar() {
+      if (saltada || fase === 3) return;
+      saltada = true;
+      terminar();
+    }
+    eventosSalto.forEach((ev) => window.addEventListener(ev, saltar, { passive: true }));
+    // Cada fase se activa en cuanto ha pasado su hora, aunque un fotograma lento se salte su ventana:
+    // así la intro nunca se queda colgada (antes podía bloquear la página en equipos lentos).
+    const T1 = D_PARTICULAS, T2 = T1 + D_FUNDIDO, T3 = T2 + D_DESTELLO, T4 = T3 + D_PAUSA;
+    function terminar() {
+      if (fase === 3) return;
+      fase = 3;
+      clearTimeout(vigilante);
+      eventosSalto.forEach((ev) => window.removeEventListener(ev, saltar));
+      ctx.clearRect(0, 0, ancho, alto);
+      logoFinal.classList.add("visible");
+      if (eslogan) eslogan.style.opacity = "0";
+      volarACabecera();
+      alTerminar();
+    }
+    // Temporizador de seguridad: pase lo que pase, la web entra como mucho 1,5 s después de lo previsto
+    const vigilante = setTimeout(() => { saltada = true; terminar(); }, T4 + 1500);
     function cuadro(ahora) {
+      if (saltada || fase === 3) return;
       const t = ahora - inicio;
-      if (t < D_PARTICULAS) {
-        dibujar(t / D_PARTICULAS, 1);
-      } else if (t < D_PARTICULAS + D_FUNDIDO) {
-        const f = (t - D_PARTICULAS) / D_FUNDIDO;
-        if (fase === 0) {
-          fase = 1;
-          logoFinal.classList.add("visible");
-          if (fogonazo) fogonazo.classList.add("activo");
-        }
-        dibujar(1, 1 - cubicInOut(f));
-      } else if (t < D_PARTICULAS + D_FUNDIDO + D_DESTELLO) {
-        if (fase === 1) {
-          fase = 2;
-          ctx.clearRect(0, 0, ancho, alto);
-          logoFinal.classList.add("destello");
-          if (lente) setTimeout(() => lente.classList.add("activo"), 500);
-        }
-      } else if (t < D_PARTICULAS + D_FUNDIDO + D_DESTELLO + D_PAUSA) {
-        // pausa con el logo completo: se escribe el eslogan letra a letra
-        if (eslogan) {
-          eslogan.classList.add("activo");
-          const n = Math.min(textoEslogan.length, Math.floor((t - D_PARTICULAS - D_FUNDIDO - D_DESTELLO) / 55));
-          if (n !== letrasEslogan) { letrasEslogan = n; eslogan.textContent = textoEslogan.slice(0, n).toUpperCase(); }
-        }
-      } else {
-        if (fase === 2) { fase = 3; if (eslogan) eslogan.style.opacity = "0"; volarACabecera(); alTerminar(); }
-        return;
+      if (t < T1) dibujar(t / T1, 1);
+      if (t >= T1 && fase === 0) {
+        fase = 1;
+        logoFinal.classList.add("visible");
+        if (fogonazo) fogonazo.classList.add("activo");
       }
+      if (t >= T1 && t < T2) dibujar(1, 1 - cubicInOut((t - T1) / D_FUNDIDO));
+      if (t >= T2 && fase === 1) {
+        fase = 2;
+        ctx.clearRect(0, 0, ancho, alto);
+        logoFinal.classList.add("destello");
+        if (lente) setTimeout(() => lente.classList.add("activo"), 300);
+      }
+      if (t >= T3 && t < T4 && eslogan) {
+        // pausa con el logo completo: se escribe el eslogan letra a letra
+        eslogan.classList.add("activo");
+        const n = Math.min(textoEslogan.length, Math.floor((t - T3) / 30));
+        if (n !== letrasEslogan) { letrasEslogan = n; eslogan.textContent = textoEslogan.slice(0, n).toUpperCase(); }
+      }
+      if (t >= T4) { terminar(); return; }
       programar(cuadro);
     }
     programar(cuadro);
@@ -198,8 +217,22 @@
   window.addEventListener("resize", () => { if (carga.classList.contains("intro-activa")) { medir(); } });
   imagen.onload = () => { listo = true; };
 
+  // La intro completa solo se ve la primera vez de cada sesión; al volver a la portada se entra directamente
+  let vista = false;
+  try { vista = sessionStorage.getItem("kairon-intro") === "1"; } catch (e) {}
+
   window.kaironIntro = {
-    start(alTerminar) {
+    vista,
+    start(alTerminarWeb) {
+      try { sessionStorage.setItem("kairon-intro", "1"); } catch (e) {}
+      // Al acabar la intro se avisa a escena.js, que espera a ese momento para cargar Three.js
+      let avisado = false;
+      const alTerminar = () => {
+        if (avisado) return;
+        avisado = true;
+        window.dispatchEvent(new Event("kairon-intro-fin"));
+        alTerminarWeb();
+      };
       if (listo) empezar(alTerminar);
       else {
         imagen.addEventListener("load", () => empezar(alTerminar), { once: true });

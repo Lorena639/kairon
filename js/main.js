@@ -65,6 +65,16 @@ const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hayGSAP = typeof gsap !== "undefined";
 const raton = { x: innerWidth / 2, y: innerHeight / 2 };
 if (hayGSAP && typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
+// GSAP 3.15: SplitText (titulares por líneas y palabras) y ScrambleText (datos que se "descifran")
+const haySplit = hayGSAP && typeof SplitText !== "undefined";
+const hayScramble = hayGSAP && typeof ScrambleTextPlugin !== "undefined";
+if (haySplit) gsap.registerPlugin(SplitText);
+if (hayScramble) gsap.registerPlugin(ScrambleTextPlugin);
+// Las fuentes (Cinzel) cambian el ancho del texto: se parte en líneas cuando ya están cargadas
+const fuentesListas = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+// View Transitions entre páginas (Chrome, Edge y Safari recientes): si el navegador las soporta,
+// el CSS (@view-transition) hace la transición y la cortina de JavaScript queda solo como respaldo
+const hayTransicionesVista = typeof CSSViewTransitionRule !== "undefined";
 
 window.addEventListener("pointermove", (e) => {
   raton.x = e.clientX;
@@ -95,7 +105,25 @@ partirTitulo();
 
 function revelarHero() {
   const letras = document.querySelectorAll(".hero__titulo .letra, .hero__titulo .linea > .oro-brillo");
-  const resto = document.querySelectorAll(".hero__estado, .logo3d, .hero__nombre, .hero__titular, .hero__kairos, .hero__sub, .hero__acciones--centro, .hero__scroll, .cabecera, .hero__registro, .hero__marca");
+  const titular = document.querySelector(".hero__titular");
+  const resto = document.querySelectorAll(".hero__estado, .logo3d, .hero__nombre, .hero__kairos, .hero__sub, .hero__acciones--centro, .hero__scroll, .cabecera, .hero__registro");
+  if (titular && haySplit && !reducido) {
+    // Titular de la portada: cada línea sube desde detrás de una máscara y las letras pasan
+    // de desenfocadas y abiertas a nítidas, como un objetivo que enfoca en el instante justo
+    gsap.set(titular, { opacity: 1 });
+    fuentesListas.then(() => {
+      SplitText.create(titular, {
+        type: "lines,words,chars", mask: "lines", linesClass: "titular-linea", aria: "auto",
+        onSplit(self) {
+          return gsap.timeline({ delay: 0.15 })
+            .from(self.lines, { yPercent: 110, duration: 1.1, ease: "expo.out", stagger: 0.12 })
+            .from(self.chars, { opacity: 0, filter: "blur(12px)", duration: 0.9, ease: "power3.out", stagger: { each: 0.012, from: "start" } }, 0.05);
+        },
+      });
+    });
+  } else if (titular) {
+    titular.style.opacity = 1;
+  }
   if (!hayGSAP || reducido) {
     resto.forEach((r) => (r.style.opacity = 1));
     return;
@@ -121,7 +149,12 @@ function terminarCarga() {
       .to(".carga__panel--abajo", { yPercent: 100, duration: 0.9, ease: "power4.inOut" }, "<")
       .to(carga, { opacity: 0, duration: 0.2 }, "-=0.1");
     const entrar = () => { salida.play(); setTimeout(revelarHero, 500); };
-    if (window.kaironIntro) window.kaironIntro.start(entrar);
+    if (window.kaironIntro && window.kaironIntro.vista) {
+      // Ya se vio la intro en esta sesión: el velo se funde y la portada entra al momento
+      window.dispatchEvent(new Event("kairon-intro-fin"));
+      gsap.to(carga, { opacity: 0, duration: 0.4, ease: "power2.out", onComplete: () => carga.remove() });
+      revelarHero();
+    } else if (window.kaironIntro) window.kaironIntro.start(entrar);
     else entrar();
   } else {
     carga.remove();
@@ -135,7 +168,7 @@ if (carga) {
 } else {
   // Páginas sin preloader: la cortina se retira al entrar
   const cortina = document.querySelector(".cortina");
-  if (cortina && hayGSAP && !reducido) {
+  if (cortina && hayGSAP && !reducido && !hayTransicionesVista) {
     gsap.set(cortina, { scaleY: 1, transformOrigin: "top" });
     gsap.to(cortina, { scaleY: 0, duration: 0.9, ease: "power4.inOut", delay: 0.1 });
   }
@@ -183,6 +216,7 @@ if (logo3d) {
 const cortina = document.querySelector(".cortina");
 document.querySelectorAll('a[href$=".html"], a[href*=".html#"]').forEach((a) => {
   a.addEventListener("click", (e) => {
+    if (hayTransicionesVista) return; // la transición la hace el navegador con View Transitions
     if (!cortina || !hayGSAP || reducido || a.target === "_blank") return;
     e.preventDefault();
     gsap.set(cortina, { transformOrigin: "bottom" });
@@ -384,27 +418,25 @@ if (hayGSAP && !reducido) {
     });
   }
 
-  // Títulos de sección: entran palabra a palabra desde abajo
+  // Títulos de sección: SplitText los parte en líneas con máscara; cada línea sube y se asienta.
+  // Se vuelve a partir solo si cambia el ancho (autoSplit), así no se rompe al girar el móvil.
   gsap.utils.toArray(".equipo__titulo, .soc__titulo, .pagina__titulo, .contacto__titulo, .informe__titulo").forEach((t) => {
     if (t.querySelector(".oro-brillo") || t.dataset.partido) return; // los que llevan brillo se quedan enteros
     t.dataset.partido = "1";
-    const palabras = t.textContent.trim().split(/\s+/);
-    t.textContent = "";
-    palabras.forEach((p, i) => {
-      const caja = document.createElement("span");
-      caja.className = "palabra-caja";
-      const s = document.createElement("span");
-      s.textContent = p;
-      caja.appendChild(s);
-      t.appendChild(caja);
-      if (i < palabras.length - 1) t.appendChild(document.createTextNode(" "));
-    });
     t.classList.remove("revelar");
     t.style.opacity = 1;
     t.style.transform = "none";
-    gsap.from(t.querySelectorAll(".palabra-caja > span"), {
-      yPercent: 110, rotate: 4, duration: 1, ease: "power4.out", stagger: 0.07,
-      scrollTrigger: { trigger: t, start: "top 88%" },
+    if (!haySplit) return;
+    fuentesListas.then(() => {
+      SplitText.create(t, {
+        type: "lines,words", mask: "lines", autoSplit: true, aria: "auto",
+        onSplit(self) {
+          return gsap.from(self.words, {
+            yPercent: 115, rotate: 3, duration: 1.1, ease: "expo.out", stagger: 0.06,
+            scrollTrigger: { trigger: t, start: "top 88%", once: true },
+          });
+        },
+      });
     });
   });
 
@@ -417,6 +449,12 @@ if (hayGSAP && !reducido) {
     ScrollTrigger.create({
       trigger: el, start: "top 92%", once: true,
       onEnter: () => {
+        if (hayScramble) {
+          // ScrambleText: los caracteres se "descifran" de izquierda a derecha con glifos de la marca
+          gsap.to(el, { duration: Math.min(1.2, 0.35 + final.length * 0.025), ease: "none",
+            scrambleText: { text: final, chars: GLIFOS, revealDelay: 0.15, speed: 0.6, tweenLength: false } });
+          return;
+        }
         let paso = 0;
         const total = 14;
         const tic = setInterval(() => {
