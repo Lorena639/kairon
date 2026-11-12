@@ -167,12 +167,6 @@ function supportRenderTextureFormat (gl, internalFormat, format, type) {
     let status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
     return status == gl.FRAMEBUFFER_COMPLETE;
 }
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
 class Material {
     constructor (vertexShader, fragmentShaderSource) {
         this.vertexShader = vertexShader;
@@ -947,6 +941,7 @@ function hashCode (s) {
         hash |= 0; // Convert to 32bit integer
     }
     return hash;
+};
 
 return {
     pausar () { pausado = true; },

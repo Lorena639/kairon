@@ -241,8 +241,8 @@ p {
 }
 
 .brillo--logo::after {
-  -webkit-mask: url("../img/kairon-logo-horizontal-dorado-440.png") center / contain no-repeat;
-  mask: url("../img/kairon-logo-horizontal-dorado-440.png") center / contain no-repeat;
+  -webkit-mask: url("../img/relieve/kairon-relieve-horizontal.png") center / contain no-repeat;
+  mask: url("../img/relieve/kairon-relieve-horizontal.png") center / contain no-repeat;
 }
 
 .brillo--emblema::after {
@@ -251,8 +251,8 @@ p {
 }
 
 .brillo--completo::after {
-  -webkit-mask: url("../img/kairon-logo-dorado.png") center / contain no-repeat;
-  mask: url("../img/kairon-logo-dorado.png") center / contain no-repeat;
+  -webkit-mask: url("../img/relieve/kairon-relieve-logo.png") center / contain no-repeat;
+  mask: url("../img/relieve/kairon-relieve-logo.png") center / contain no-repeat;
 }
 
 /* ---------- 3. Preloader y cortina ---------- */
@@ -2757,9 +2757,9 @@ html.presentacion .mono {
   animation: destello 4s ease-in-out infinite;
 }
 
-.oro-metal--horizontal { --mascara: url("../img/kairon-logo-horizontal-dorado-440.png"); }
+.oro-metal--horizontal { --mascara: url("../img/relieve/kairon-relieve-horizontal.png"); }
 .oro-metal--emblema { --mascara: url("../img/kairon-emblema-192.png"); }
-.oro-metal--completo { --mascara: url("../img/kairon-logo-dorado.png"); }
+.oro-metal--completo { --mascara: url("../img/relieve/kairon-relieve-logo.png"); }
 
 @keyframes oro-luz {
   0% { background-position: 0% 0%; }
@@ -6320,4 +6320,777 @@ html.menos-movimiento .det-emblema__pieza {
   .det-tabla--red td:first-child:empty {
     display: none;
   }
+}
+
+/* ---------- 33. Portada v6: experiencia inmersiva (plano secuencia alrededor del globo) ----------
+   Antes en css/v6.css; integrado aquí porque la práctica pide todo el CSS en styles.css.
+   Lo específico de la portada va bajo .portada-v6 o en clases v6-*. */
+/* =========================================================
+   KAIRON · Portada v6 (12-11-2026)
+   Estilos propios de la portada inmersiva. Se carga después de css/styles.css,
+   solo desde index.html y ca/index.html, y puede sobrescribir reglas de la hoja común.
+
+   Índice
+   1. El mundo: lienzo WebGL fijo y capas
+   2. Intro: velo, zambullida y logo de la cabecera
+   3. Hero y estela de fluido
+   4. Manifiesto
+   5. Servicios
+   6. SOC: visor y panel
+   7. Planes
+   8. Incidente, medidas y piezas comunes
+   9. Cursor y superficies del navegador
+   10. Modo ligero, sin movimiento y presentación
+   11. Pantallas pequeñas
+
+   Para fusionarla en styles.css: las reglas que solo valen para la portada llevan delante la clase
+   .portada-v6 (está en <html> de index.html y ca/index.html) o usan clases v6-*, así que no afectan
+   a las páginas interiores. Dos arreglos sí conviene aplicarlos a todo el sitio: la máscara del
+   destello del logo (.oro-metal--horizontal / --completo) y la cabecera por encima del menú móvil
+   abierto (body.menu-abierto .cabecera).
+
+   Regla de visibilidad: todo es visible por defecto. Los estados ocultos de las entradas los pone
+   GSAP en línea al montar la coreografía (js/v6.js); si un script falla, no se pierde contenido.
+   ========================================================= */
+
+/* ---------- 1. El mundo: lienzo WebGL fijo y capas ---------- */
+.mundo,
+.hero__escena.mundo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  cursor: auto;
+}
+
+.mundo canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.portada-v6 main,
+.portada-v6 .pie {
+  position: relative;
+  z-index: 1;
+}
+
+/* El pie cierra la página con fondo propio: la escena no asoma detrás del nombre */
+.portada-v6 .pie {
+  background: var(--negro);
+}
+
+/* ---------- 2. Intro: velo, zambullida y logo de la cabecera ---------- */
+.carga--v6 {
+  background: var(--negro);
+  transition: background-color 0.55s ease, opacity 0.4s ease 0.5s;
+}
+
+/* Zambullida: el velo se vuelve transparente y deja ver la escena, que arranca desde el emblema */
+.carga--v6.carga--fuera {
+  background-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carga--v6 .intro__eslogan {
+  transition: opacity 0.25s ease;
+}
+
+/* El logo de la cabecera se resuelve al final de la intro: de luz desenfocada a oro nítido */
+html.portada-v6:not(.sin-js):not(.intro-fin) .cabecera .logo {
+  opacity: 0;
+  filter: blur(10px) brightness(1.8);
+}
+
+html.portada-v6.intro-fin .cabecera .logo {
+  transition: opacity 0.9s ease 0.35s, filter 1.3s var(--facil) 0.35s;
+}
+
+/* ---------- 3. Hero y estela de fluido ---------- */
+.v6-hero {
+  background: transparent;
+}
+
+.v6-fluido {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.con-fluido .v6-fluido {
+  opacity: 0.85;
+}
+
+/* Velo: oscurece la columna del texto (contraste AA aunque pase el barrido) y funde el borde inferior */
+.v6-hero .hero__velo {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(11, 15, 20, 0.86) 0%, rgba(11, 15, 20, 0.62) 34%, rgba(11, 15, 20, 0) 62%),
+    linear-gradient(180deg, rgba(11, 15, 20, 0.6) 0%, rgba(11, 15, 20, 0) 22%, rgba(11, 15, 20, 0) 74%, rgba(11, 15, 20, 0.8) 100%);
+}
+
+.v6-hero .hero__contenido {
+  position: relative;
+  z-index: 2;
+}
+
+.v6-hero .hero__registro {
+  z-index: 2;
+}
+
+/* ---------- 4. Manifiesto ---------- */
+.v6-manifiesto {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: 16vh 0;
+}
+
+/* Sombra lateral para leer el texto sobre el globo */
+.v6-manifiesto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(11, 15, 20, 0.82) 0%, rgba(11, 15, 20, 0.5) 48%, rgba(11, 15, 20, 0) 78%);
+  pointer-events: none;
+}
+
+.v6-manifiesto__marco {
+  display: grid;
+  gap: clamp(28px, 6vh, 64px);
+}
+
+.v6-manifiesto__frases {
+  display: grid;
+  gap: 0.6em;
+  font-size: clamp(2.1rem, 5.3vw, 5.4rem);
+  perspective: 900px;
+}
+
+.v6-frase {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 1.06;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+  color: var(--blanco);
+}
+
+.v6-frase em {
+  font-style: normal;
+  color: var(--oro);
+}
+
+/* Fijado: las tres frases ocupan el mismo sitio y se relevan con el scroll */
+.v6-manifiesto--fijo .v6-frase {
+  grid-area: 1 / 1;
+  align-self: center;
+  max-width: 13ch;
+  font-size: 1.12em;
+}
+
+.v6-palabra {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+}
+
+.v6-manifiesto__pie {
+  display: grid;
+  gap: 18px;
+  max-width: 34rem;
+}
+
+.v6-tiempos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--linea);
+}
+
+.v6-tiempos dt {
+  margin-bottom: 6px;
+  color: rgba(248, 245, 238, 0.66);
+}
+
+.v6-tiempos dd {
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.5;
+}
+
+.v6-tiempos__kairos dt {
+  color: var(--oro);
+}
+
+.v6-tiempos__kairos dd {
+  color: var(--blanco);
+}
+
+.v6-manifiesto__nota {
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+/* ---------- 5. Servicios ---------- */
+.v6-servicios {
+  position: relative;
+  z-index: 1;
+  padding: clamp(96px, 16vh, 180px) 0;
+}
+
+.v6-servicios__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px 40px;
+  margin-bottom: clamp(28px, 5vh, 56px);
+}
+
+.v6-servicios__indice {
+  display: none;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 238, 0.62);
+}
+
+.v6-servicios__indice li {
+  position: relative;
+  padding-top: 12px;
+  transition: color 0.4s ease;
+}
+
+.v6-servicios__indice li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--oro);
+  transform: scaleX(0.25);
+  transform-origin: left;
+  opacity: 0.5;
+  transition: transform 0.6s var(--facil), opacity 0.4s ease;
+}
+
+.v6-servicios__indice li.activo {
+  color: var(--oro-brillo);
+}
+
+.v6-servicios__indice li.activo::before {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.v6-servicios__rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 24px;
+}
+
+.v6-servicio {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 44px);
+  border: 1px solid var(--linea);
+  border-radius: 20px;
+  background: rgba(11, 15, 20, 0.84);
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+.v6-servicio__numero {
+  color: var(--oro);
+}
+
+.v6-servicio__titulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.v6-servicio__texto {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--suave);
+  line-height: 1.65;
+}
+
+.v6-servicio__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v6-servicio__datos li {
+  padding: 6px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--oro-claro);
+}
+
+.v6-servicio__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+/* Fijado (escritorio): el globo queda a la izquierda y las tarjetas se relevan a la derecha */
+.v6-servicios--fijo {
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding: 104px 0 48px;
+}
+
+.v6-servicios--fijo .v6-servicios__indice {
+  display: flex;
+}
+
+.v6-servicios--fijo .v6-servicios__rejilla {
+  grid-template-columns: 1fr;
+  width: min(580px, 46%);
+  margin-left: auto;
+}
+
+.v6-servicios--fijo .v6-servicio {
+  grid-area: 1 / 1;
+  align-self: center;
+}
+
+/* ---------- 6. SOC: visor y panel ---------- */
+.v6-soc {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.v6-soc__visor {
+  min-height: 96svh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+}
+
+.v6-soc__visor .v6-titulo {
+  max-width: 11ch;
+}
+
+.v6-soc__entrada {
+  margin: 0;
+  max-width: 32rem;
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+/* El panel va sobre fondo opaco: la escena queda apagada detrás y no compite con los datos */
+.v6-panel .panel__bloque {
+  background-color: rgba(13, 18, 25, 0.94);
+}
+
+.v6-soc .enlace-detalle {
+  margin-top: 32px;
+}
+
+/* ---------- 7. Planes ---------- */
+.v6-planes {
+  position: relative;
+  z-index: 1;
+  padding: clamp(96px, 16vh, 180px) 0;
+}
+
+.v6-planes__entrada {
+  margin: 0;
+  max-width: 44rem;
+  color: var(--suave);
+  line-height: 1.65;
+}
+
+.v6-planes__lista {
+  margin: clamp(32px, 6vh, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--linea);
+}
+
+.v6-plan {
+  display: grid;
+  grid-template-columns: minmax(9ch, 0.9fr) minmax(0, 1.1fr) minmax(0, 2fr);
+  align-items: baseline;
+  gap: 12px 40px;
+  padding: clamp(20px, 3.4vh, 34px) 0;
+  border-bottom: 1px solid var(--linea);
+  transition: background-color 0.4s ease, padding 0.5s var(--facil);
+}
+
+.v6-plan:hover {
+  background-color: rgba(212, 175, 122, 0.05);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.v6-plan h3 {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.7rem);
+  line-height: 1.05;
+}
+
+.v6-plan--empresa h3 {
+  color: var(--oro);
+}
+
+.v6-plan__precio {
+  margin: 0;
+  color: var(--suave);
+  font-size: 0.95rem;
+}
+
+.v6-plan__precio b {
+  margin-right: 6px;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-variant-numeric: tabular-nums;
+  color: var(--oro-brillo);
+}
+
+.v6-plan__para {
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+.v6-planes__nota {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+  margin: 28px 0 0;
+}
+
+/* ---------- 8. Incidente, medidas y piezas comunes ---------- */
+.v6-titulo {
+  margin: 0 0 18px;
+  max-width: 17ch;
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.6vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* Sello de honestidad: dice qué datos son simulados, ficticios o de ejemplo. Va junto al título, no encima */
+.v6-sello {
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  color: var(--oro-claro);
+}
+
+.claro .v6-sello {
+  color: #6b4f28;
+  border-color: rgba(140, 107, 63, 0.45);
+}
+
+.v6-sin-margen {
+  margin-top: 0;
+}
+
+.v6-contacto__sub {
+  margin-top: 24px;
+}
+
+.v6-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.v6-incidente .incidente__cabecera .v6-titulo {
+  margin-bottom: 14px;
+}
+
+/* Las tarjetas del incidente pasan sobre el globo: fondo opaco para leerlas */
+.v6-incidente .paso {
+  background-color: rgba(13, 18, 25, 0.92);
+}
+
+.v6-medidas {
+  position: relative;
+  z-index: 1;
+  padding: clamp(96px, 16vh, 180px) 0;
+}
+
+.v6-medidas__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 0 40px;
+  margin: clamp(32px, 6vh, 64px) 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.v6-medida {
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--linea);
+}
+
+.v6-medida__valor {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: clamp(2.5rem, 4.6vw, 4.4rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--blanco);
+  white-space: nowrap;
+}
+
+.v6-medida__valor small {
+  font-size: 0.34em;
+  letter-spacing: 0.08em;
+  color: var(--oro);
+}
+
+.v6-medida__texto {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+/* ---------- 9. Cursor y superficies del navegador ---------- */
+body.cursor--pulsa .cursor__anillo {
+  border-color: var(--oro-brillo);
+  background-color: rgba(212, 175, 122, 0.16);
+}
+
+::selection {
+  background: rgba(212, 175, 122, 0.85);
+  color: var(--negro);
+}
+
+/* ---------- 10. Modo ligero, sin movimiento y presentación ---------- */
+/* Modo ligero (sin WebGL, ahorro de datos o ?ligero): el radar 2D se queda en la primera pantalla */
+.sin-mundo .mundo,
+.sin-mundo .hero__escena.mundo {
+  position: absolute;
+  height: 100svh;
+}
+
+/* Sin movimiento: la escena queda de fondo tenue y nada se fija */
+html.menos-movimiento .v6-fluido {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v6-fluido {
+    display: none;
+  }
+
+  .carga--v6,
+  html.intro-fin .cabecera .logo {
+    transition: none;
+  }
+}
+
+html.presentacion .v6-fluido {
+  display: none;
+}
+
+html.presentacion .v6-servicio__texto,
+html.presentacion .v6-plan__para,
+html.presentacion .v6-medida__texto,
+html.presentacion .v6-manifiesto__nota {
+  font-size: 1.2rem;
+}
+
+/* ---------- 11. Pantallas pequeñas ---------- */
+@media (max-width: 1023px) {
+  /* El globo va detrás del texto: sombra uniforme en lugar de lateral */
+  .v6-hero .hero__velo {
+    background: linear-gradient(180deg, rgba(11, 15, 20, 0.55) 0%, rgba(11, 15, 20, 0.2) 30%, rgba(11, 15, 20, 0.72) 62%, rgba(11, 15, 20, 0.92) 100%);
+  }
+
+  .v6-manifiesto::before {
+    background: linear-gradient(180deg, rgba(11, 15, 20, 0.3) 0%, rgba(11, 15, 20, 0.78) 45%, rgba(11, 15, 20, 0.88) 100%);
+  }
+}
+
+@media (max-width: 720px) {
+  .v6-manifiesto {
+    padding: 12vh 0;
+  }
+
+  .v6-manifiesto__frases {
+    font-size: clamp(2rem, 9.6vw, 2.8rem);
+  }
+
+  .v6-manifiesto--fijo .v6-frase {
+    font-size: 1em;
+    align-self: end;
+  }
+
+  .v6-tiempos {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .v6-plan {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .v6-plan:hover {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* El título arriba y el visor del radar debajo, sin pisarse */
+  .v6-soc__visor {
+    min-height: 92svh;
+    align-content: start;
+    padding-top: 14vh;
+  }
+}
+
+/* ---------- 12. Ajustes tras la primera revisión visual ---------- */
+/* Una sola escala de títulos en toda la portada (antes los de equipo, preguntas y testimonios eran mayores) */
+.portada-v6 .equipo__titulo,
+.portada-v6 .contacto__titulo {
+  font-size: clamp(2rem, 4.6vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+@media (min-width: 1024px) {
+  /* Servicios fijados: título e índice van en la columna derecha, encima de la tarjeta; el globo, a la izquierda */
+  .v6-servicios--fijo .v6-servicios__cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    width: min(580px, 46%);
+    margin-left: auto;
+  }
+
+  .v6-servicios--fijo .v6-titulo {
+    font-size: clamp(1.5rem, 2.3vw, 2.2rem);
+    max-width: none;
+    margin: 0;
+    color: var(--oro-claro);
+  }
+
+  /* Incidente: la cronología ocupa la columna izquierda y el globo se ve a la derecha */
+  .v6-incidente .incidente__cabecera {
+    display: grid;
+    justify-items: start;
+    gap: 22px;
+    max-width: 58%;
+  }
+
+  .v6-incidente .pasos,
+  .v6-incidente .enlace-detalle {
+    max-width: min(780px, 58%);
+  }
+}
+
+/* Durante la intro el contenido del hero y la cabecera esperan ocultos (la clase la pone y la quita main.js) */
+.intro-en-curso .v6-hero .hero__contenido,
+.intro-en-curso .v6-hero .hero__registro,
+.intro-en-curso .cabecera {
+  opacity: 0;
+}
+
+/* El destello del logo usa como máscara el propio PNG en relieve (la hoja común apuntaba al logo plano
+   anterior y el brillo se veía desplazado, como un nombre doble) */
+.oro-metal--horizontal { --mascara: url("../img/relieve/kairon-relieve-horizontal.png"); }
+.oro-metal--completo { --mascara: url("../img/relieve/kairon-relieve-logo.png"); }
+
+@media (max-width: 720px) {
+  /* Manifiesto en móvil: las frases arriba y el globo con el anillo del tiempo debajo */
+  .v6-manifiesto--fijo .v6-manifiesto__marco {
+    align-content: start;
+    min-height: 76svh;
+  }
+
+  .v6-manifiesto--fijo .v6-frase {
+    align-self: start;
+  }
+}
+
+/* Hero en pantallas estrechas: el globo arriba y el texto debajo, alineado a la izquierda */
+@media (max-width: 1099px) {
+  .v6-hero .hero__contenido--centro {
+    justify-items: start;
+    text-align: left;
+    padding-top: 46svh;
+    padding-bottom: 40px;
+  }
+
+  .v6-hero .hero__acciones--centro {
+    justify-content: flex-start;
+  }
+
+  .v6-hero .hero__scroll--centro {
+    display: none;
+  }
+}
+
+/* Menú móvil abierto: la cabecera queda por encima del panel para poder cerrarlo con el mismo botón
+   (en la hoja común el panel tapaba el botón y en táctil solo se cerraba eligiendo un enlace) */
+body.menu-abierto .cabecera {
+  z-index: 46;
+}
+
+/* Registro del hero: fondo propio para leerlo aunque el globo o el barrido pasen por detrás (contraste AA) */
+.v6-hero .hero__registro {
+  padding: 12px 14px;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: rgba(11, 15, 20, 0.78);
 }

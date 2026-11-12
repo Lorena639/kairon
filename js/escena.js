@@ -10,7 +10,8 @@
 
 (function () {
   const contenedor = document.querySelector(".hero__escena");
-  if (!contenedor) return;
+  // En la portada v6 el contenedor es .mundo y lo dirige js/mundo.js; de este archivo solo usa radar2D (modo ligero)
+  if (!contenedor || contenedor.classList.contains("mundo")) return;
 
   // Comprobar si hay WebGL; si no, se dibuja un radar 2D con canvas normal
   function hayWebGL() {

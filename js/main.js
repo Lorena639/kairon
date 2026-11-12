@@ -10,6 +10,8 @@
    8. Formulario (aviso sin servidor). */
 
 document.documentElement.classList.remove("sin-js");
+// La preferencia guardada de "menos movimiento" se aplica cuanto antes: la intro y la portada la consultan
+try { if (localStorage.getItem("kairon-menos-movimiento") === "1") document.documentElement.classList.add("menos-movimiento"); } catch (e) {}
 
 /* Textos que genera el JavaScript, en el idioma de la página (lang="es" o "ca") */
 const CA = document.documentElement.lang === "ca";
@@ -162,7 +164,45 @@ function terminarCarga() {
   }
 }
 
-if (carga) {
+// Portada v6: la intro no se abre con cortinas; el velo se disuelve y la escena 3D toma el relevo
+// desde el emblema del logo (la zambullida la hace js/intro.js junto con js/mundo.js).
+function cargaV6() {
+  const raizHTML = document.documentElement;
+  const avisar = () => window.dispatchEvent(new Event("kairon-intro-fin"));
+  const retirar = (ms) => { raizHTML.classList.add("intro-fin"); setTimeout(() => carga.remove(), ms); };
+  if (!hayGSAP || reducido || raizHTML.classList.contains("menos-movimiento") || !window.kaironIntro) {
+    carga.remove();
+    raizHTML.classList.add("intro-fin");
+    avisar();
+    revelarHero();
+  } else if (window.kaironIntro.vista) {
+    // Ya se vio en esta sesión: entra la portada directamente, con la escena saliendo del fondo
+    avisar();
+    carga.classList.add("carga--fuera");
+    revelarHero();
+    retirar(600);
+  } else {
+    // Mientras dura la intro el contenido del hero espera oculto: al disolverse el velo solo se ve la escena
+    raizHTML.classList.add("intro-en-curso");
+    let entrada = false;
+    const entrar = () => {
+      if (entrada) return;
+      entrada = true;
+      clearTimeout(seguro);
+      carga.classList.add("carga--fuera");
+      setTimeout(() => { raizHTML.classList.remove("intro-en-curso"); revelarHero(); }, 320);
+      retirar(1000);
+    };
+    // Seguro exterior: si el PNG del logo no llega a cargar ni a fallar, la intro no empieza nunca;
+    // a los 8 s la portada entra igualmente
+    const seguro = setTimeout(() => { avisar(); entrar(); }, 8000);
+    window.kaironIntro.start(entrar);
+  }
+}
+
+if (carga && carga.classList.contains("carga--v6")) {
+  cargaV6();
+} else if (carga) {
   document.body.classList.add("sin-scroll");
   terminarCarga(); // sin contador: la intro de película empieza directamente
 } else {
@@ -229,13 +269,21 @@ const cursor = document.querySelector(".cursor");
 const anillo = document.querySelector(".cursor__anillo");
 if (cursor && anillo && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
   const suave = { x: raton.x, y: raton.y };
+  let estira = 0, anguloCursor = 0;
   (function mover() {
-    suave.x += (raton.x - suave.x) * 0.16;
-    suave.y += (raton.y - suave.y) * 0.16;
+    const dx = raton.x - suave.x, dy = raton.y - suave.y;
+    suave.x += dx * 0.16;
+    suave.y += dy * 0.16;
+    // El anillo se estira en la dirección del movimiento, como una gota, y recupera su forma al parar
+    const rapidez = Math.hypot(dx, dy);
+    estira += (Math.min(rapidez / 160, 0.45) - estira) * 0.2;
+    if (rapidez > 1.5) anguloCursor = Math.atan2(dy, dx);
     cursor.style.transform = `translate(${raton.x}px, ${raton.y}px) translate(-50%, -50%)`;
-    anillo.style.transform = `translate(${suave.x}px, ${suave.y}px) translate(-50%, -50%)`;
+    anillo.style.transform = `translate(${suave.x}px, ${suave.y}px) translate(-50%, -50%) rotate(${anguloCursor.toFixed(3)}rad) scale(${(1 + estira).toFixed(3)}, ${(1 - estira * 0.45).toFixed(3)})`;
     requestAnimationFrame(mover);
   })();
+  window.addEventListener("pointerdown", () => document.body.classList.add("cursor--pulsa"));
+  window.addEventListener("pointerup", () => document.body.classList.remove("cursor--pulsa"));
   document.querySelectorAll("a, button, input, textarea, label, .letra").forEach((el) => {
     el.addEventListener("pointerenter", () => document.body.classList.add("cursor--enlace"));
     el.addEventListener("pointerleave", () => document.body.classList.remove("cursor--enlace"));
@@ -257,6 +305,7 @@ if (cursor && anillo && window.matchMedia("(hover: hover) and (pointer: fine)").
 let lenis = null;
 if (typeof Lenis !== "undefined" && !reducido) {
   lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+  window.kaironLenis = lenis; // la portada (js/v6.js) lee de aquí la posición y la velocidad del scroll
   if (hayGSAP) {
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -622,6 +671,8 @@ function agregarAlerta(tipo, msg, desfase = 0) {
   consola.prepend(li);
   while (consola.children.length > 30) consola.removeChild(consola.lastChild);
   contarAlertas();
+  // Aviso para la escena 3D de la portada: cada alerta nueva late sobre el globo
+  if (!desfase) window.dispatchEvent(new CustomEvent("kairon-alerta", { detail: { tipo } }));
 }
 if (consola) {
   botonesFiltro.forEach((b) => b.addEventListener("click", () => {
@@ -796,6 +847,15 @@ if (botonMenu) {
     if (panel) panel.setAttribute("aria-hidden", String(!abrir));
     if (lenis) abrir ? lenis.stop() : lenis.start();
   };
+  // Con el menú cerrado sus enlaces no deben recibir el foco del teclado (antes se tabulaba por un panel invisible)
+  const panelMenu = document.querySelector(".menu-movil");
+  if (panelMenu) {
+    panelMenu.inert = true;
+    // (este oyente se ejecuta antes que el que abre o cierra: si ahora está abierto, va a cerrarse)
+    botonMenu.addEventListener("click", () => { panelMenu.inert = document.body.classList.contains("menu-abierto"); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") panelMenu.inert = true; });
+    panelMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { panelMenu.inert = true; }));
+  }
   botonMenu.addEventListener("click", () => alternar(!document.body.classList.contains("menu-abierto")));
   document.querySelectorAll(".menu-movil a").forEach((a) => a.addEventListener("click", () => alternar(false)));
   window.addEventListener("keydown", (e) => { if (e.key === "Escape") alternar(false); });
@@ -898,6 +958,18 @@ window.addEventListener("keydown", (e) => {
   if (e.key.toLowerCase() === "e") { const a = document.querySelector('a[href="sobre-mi.html"]'); if (a) a.click(); }
   if (e.key === "Home") { e.preventDefault(); irA(document.querySelector("main")); }
   if (e.key === "End") { e.preventDefault(); irA(document.querySelector("#contacto") || document.querySelector(".pie")); }
+  if ((e.key === "ArrowDown" || e.key === "ArrowUp") && typeof window.kaironParadas === "function") {
+    // Portada v6: hay secciones fijadas con varias paradas dentro; las posiciones las da js/v6.js
+    const paradas = window.kaironParadas();
+    const y = window.scrollY;
+    const destino = e.key === "ArrowDown" ? paradas.find((p) => p > y + 12) : paradas.slice().reverse().find((p) => p < y - 12);
+    if (destino !== undefined) {
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(destino, { duration: 1.4 });
+      else window.scrollTo({ top: destino, behavior: document.documentElement.classList.contains("menos-movimiento") || reducido ? "auto" : "smooth" });
+    }
+    return;
+  }
   if (e.key === "ArrowDown" || e.key === "ArrowUp") {
     const y = window.scrollY + 10;
     const idx = secciones.findIndex((s) => s.offsetTop > y);
@@ -1037,6 +1109,7 @@ if (formulario) {
     if (trampa && trampa.value) { formulario.reset(); return; } // bot detectado: no se hace nada
     const aviso = formulario.querySelector(".formulario__aviso");
     const boton = formulario.querySelector("button[type=submit]");
+    const textoBoton = boton ? boton.textContent.trim() : ""; // cada página tiene su propio texto en el botón
     if (boton) {
       boton.disabled = true;
       boton.textContent = TXT.enviando;
@@ -1045,7 +1118,7 @@ if (formulario) {
         boton.textContent = TXT.recibido;
         if (aviso) { aviso.textContent = TXT.avisoForm; aviso.hidden = false; }
         formulario.reset();
-        setTimeout(() => { boton.disabled = false; boton.classList.remove("enviado"); boton.textContent = TXT.pedir; }, 4000);
+        setTimeout(() => { boton.disabled = false; boton.classList.remove("enviado"); boton.textContent = textoBoton || TXT.pedir; }, 4000);
       }, 900);
     } else {
       if (aviso) { aviso.textContent = TXT.avisoForm; aviso.hidden = false; }

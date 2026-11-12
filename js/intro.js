@@ -1,10 +1,14 @@
-/* KAIRON · Intro del logo (JavaScript puro, sin librerías)
-   Nada más cargar la página:
-   1. Miles de partículas doradas se arremolinan y convergen hasta formar el logo completo
-      (las posiciones salen de leer los píxeles del PNG del logo en un canvas).
-   2. Las partículas se funden con el logo real, con acabado de oro metálico.
-   3. Un destello recorre el logo y un brillo salta en la esfera de la brújula.
-   4. El logo se encoge y vuela hasta su sitio en la cabecera mientras se abren las cortinas.
+/* KAIRON · Intro del logo (JavaScript puro, sin librerías) · v6
+   Nada más cargar la portada, en menos de 3 segundos:
+   1. Oscuridad y un solo punto de oro: el instante.
+   2. Del punto sale un vórtice de partículas que forja el logo en relieve
+      (las posiciones salen de leer los píxeles del PNG oficial en un canvas; el logo no se redibuja).
+   3. Las partículas se funden con el logo real y un barrido de luz cruza sus biseles.
+   4. Zambullida: el velo se disuelve y la cámara de la escena 3D (js/mundo.js) arranca justo donde
+      estaba el emblema, de modo que el emblema pasa a ser el centro del globo del radar. Sin corte.
+      (Si no hay escena 3D, el logo vuela a la cabecera como antes.)
+   Se puede saltar con clic, tecla, rueda o toque; solo se ve una vez por sesión y un temporizador
+   de seguridad garantiza que nunca se queda colgada.
    Todo con canvas 2D, transform y opacity: nada que fuerce reflow durante la animación. */
 
 (function () {
@@ -84,15 +88,16 @@
         if (a < 90) continue;
         const tx = objetivo.x + x * paso + paso / 2;
         const ty = objetivo.y + y * paso + paso / 2;
-        // Posición de partida: un anillo amplio alrededor del centro, con giro
+        // Posición de partida: el punto de oro del centro (un radio mínimo, para que no nazcan apiladas)
         const ang = Math.random() * Math.PI * 2;
-        const radio = Math.max(ancho, alto) * (0.35 + Math.random() * 0.45);
+        const radio = 2 + Math.random() * 10;
         const color = Math.random() < 0.12 ? 2 : Math.random() < 0.5 ? 0 : 1; // índice del tono
         particulas.push({
           sx: centroX + Math.cos(ang) * radio,
           sy: centroY + Math.sin(ang) * radio,
           tx, ty,
-          giro: (Math.random() < 0.5 ? -1 : 1) * (1.8 + Math.random() * 2.2), // vórtice: todas giran, en uno u otro sentido
+          giro: 2.4 + Math.random() * 2.6, // vórtice: todas giran en el mismo sentido, como un remolino
+          vuelo: Math.max(ancho, alto) * (0.12 + Math.random() * 0.3), // cuánto se abren antes de caer a su sitio
           retraso: Math.hypot(tx - centroX, ty - centroY) / Math.hypot(objetivo.w, objetivo.h) * 0.35 + Math.random() * 0.2,
           tam: 1.4 + Math.random() * 1.6,
           color,
@@ -111,12 +116,16 @@
       // Trayectoria curva: interpola en polares respecto al centro para que "orbiten" al llegar
       const ax = p.sx - centroX, ay = p.sy - centroY;
       const bx = p.tx - centroX, by = p.ty - centroY;
-      const angA = Math.atan2(ay, ax) + p.giro * (1 - t);
+      // En polares: el ángulo se desenrolla hacia el del destino y el radio se abre y vuelve a cerrarse
+      const angB = Math.atan2(by, bx);
+      const rB = Math.hypot(bx, by);
       const rA = Math.hypot(ax, ay);
-      const x = centroX + (Math.cos(angA) * rA) * (1 - t) + bx * t;
-      const y = centroY + (Math.sin(angA) * rA) * (1 - t) + by * t;
+      const ang = angB - p.giro * (1 - t);
+      const r = rA + (rB - rA) * t + Math.sin(Math.PI * t) * p.vuelo;
+      const x = centroX + Math.cos(ang) * r;
+      const y = centroY + Math.sin(ang) * r;
       const s = p.tam * (1 + (1 - t) * 1.5);
-      const a = alfaGlobal * (0.25 + 0.75 * t);
+      const a = alfaGlobal * (0.35 + 0.65 * t);
       ctx.globalAlpha = a;
       ctx.drawImage(sprites[p.color], x - s * 2, y - s * 2, s * 4, s * 4);
     }
@@ -124,7 +133,41 @@
     ctx.globalCompositeOperation = "source-over";
   }
 
-  // Vuelo final del logo hasta la cabecera
+  // El punto de oro: el instante. Crece, late una vez y de él nace el vórtice
+  function dibujarPunto(t, alfa) {
+    const cx = ancho / 2, cy = alto / 2;
+    const e = expoOut(clamp01(t));
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = alfa;
+    const r = 6 + e * 26;
+    ctx.drawImage(sprites[2], cx - r, cy - r, r * 2, r * 2);
+    ctx.globalAlpha = alfa * 0.55;
+    const largo = 20 + e * Math.min(ancho, 900) * 0.2; // destello horizontal fino, como una lente
+    ctx.drawImage(sprites[1], cx - largo, cy - 1.5, largo * 2, 3);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  // Zambullida: el logo se disuelve creciendo un poco y la escena 3D arranca desde su emblema
+  function zambullir() {
+    const mundo = window.kaironMundo;
+    if (!document.querySelector(".mundo") || !mundo || mundo.ligero) return false;
+    carga.classList.add("intro-zambullida");
+    // Caja del emblema dentro del PNG del logo (el resto es el nombre)
+    mundo.entrada({ left: objetivo.x + objetivo.w * 0.09, top: objetivo.y + objetivo.h * 0.005, width: objetivo.w * 0.82, height: objetivo.h * 0.695 });
+    // Se parte de la escala que lleve en ese momento (la animación CSS de acercamiento manda sobre el estilo)
+    const escalaActual = getComputedStyle(logoFinal).transform;
+    logoFinal.style.animation = "none";
+    logoFinal.style.transformOrigin = "50% 36%";
+    logoFinal.style.transform = escalaActual === "none" ? "scale(1)" : escalaActual;
+    void logoFinal.offsetWidth; // fuerza el estilo de partida antes de la transición
+    logoFinal.style.transition = "transform 0.7s cubic-bezier(0.3, 0, 0.6, 1), opacity 0.45s ease 0.05s";
+    logoFinal.style.transform = "scale(1.22)";
+    logoFinal.style.opacity = "0";
+    return true;
+  }
+
+  // Vuelo final del logo hasta la cabecera (respaldo sin escena 3D)
   function volarACabecera() {
     const destino = document.querySelector(".cabecera .logo");
     if (!destino) return;
@@ -147,7 +190,7 @@
     muestrear();
     const inicio = performance.now();
     // Duraciones cortas: la intro entera dura unos 3 s (antes, casi 7 s) y se puede saltar
-    const D_PARTICULAS = 1500, D_FUNDIDO = 400, D_DESTELLO = 700, D_PAUSA = 650;
+    const D_PUNTO = 380, D_PARTICULAS = 1300, D_FUNDIDO = 300, D_DESTELLO = 560, D_PAUSA = 260;
     // Posición del destello: la esfera de la brújula del emblema (proporciones del PNG del logo)
     if (lente) { lente.style.left = (objetivo.x + objetivo.w * 0.495) + "px"; lente.style.top = (objetivo.y + objetivo.h * 0.128) + "px"; }
     if (eslogan) { eslogan.style.top = (objetivo.y + objetivo.h + 28) + "px"; eslogan.textContent = ""; }
@@ -165,7 +208,7 @@
     eventosSalto.forEach((ev) => window.addEventListener(ev, saltar, { passive: true }));
     // Cada fase se activa en cuanto ha pasado su hora, aunque un fotograma lento se salte su ventana:
     // así la intro nunca se queda colgada (antes podía bloquear la página en equipos lentos).
-    const T1 = D_PARTICULAS, T2 = T1 + D_FUNDIDO, T3 = T2 + D_DESTELLO, T4 = T3 + D_PAUSA;
+    const T0 = D_PUNTO, T1 = T0 + D_PARTICULAS, T2 = T1 + D_FUNDIDO, T3 = T2 + D_DESTELLO, T4 = T3 + D_PAUSA;
     function terminar() {
       if (fase === 3) return;
       fase = 3;
@@ -174,7 +217,7 @@
       ctx.clearRect(0, 0, ancho, alto);
       logoFinal.classList.add("visible");
       if (eslogan) eslogan.style.opacity = "0";
-      volarACabecera();
+      if (!zambullir()) volarACabecera();
       alTerminar();
     }
     // Temporizador de seguridad: pase lo que pase, la web entra como mucho 1,5 s después de lo previsto
@@ -182,7 +225,10 @@
     function cuadro(ahora) {
       if (saltada || fase === 3) return;
       const t = ahora - inicio;
-      if (t < T1) dibujar(t / T1, 1);
+      if (t < T1) {
+        dibujar(clamp01((t - T0 * 0.55) / (T1 - T0 * 0.55)), 1);
+        if (t < T0 + 320) dibujarPunto(t / T0, t < T0 ? 1 : 1 - (t - T0) / 320);
+      }
       if (t >= T1 && fase === 0) {
         fase = 1;
         logoFinal.classList.add("visible");
@@ -193,12 +239,12 @@
         fase = 2;
         ctx.clearRect(0, 0, ancho, alto);
         logoFinal.classList.add("destello");
-        if (lente) setTimeout(() => lente.classList.add("activo"), 300);
+        if (lente) setTimeout(() => lente.classList.add("activo"), 180);
       }
-      if (t >= T3 && t < T4 && eslogan) {
-        // pausa con el logo completo: se escribe el eslogan letra a letra
+      if (t >= T2 && t < T4 && eslogan) {
+        // con el logo ya forjado se escribe el eslogan letra a letra
         eslogan.classList.add("activo");
-        const n = Math.min(textoEslogan.length, Math.floor((t - T3) / 30));
+        const n = Math.min(textoEslogan.length, Math.floor((t - T2) / 30));
         if (n !== letrasEslogan) { letrasEslogan = n; eslogan.textContent = textoEslogan.slice(0, n).toUpperCase(); }
       }
       if (t >= T4) { terminar(); return; }
@@ -220,6 +266,7 @@
   // La intro completa solo se ve la primera vez de cada sesión; al volver a la portada se entra directamente
   let vista = false;
   try { vista = sessionStorage.getItem("kairon-intro") === "1"; } catch (e) {}
+  if (/[?&]intro\b/.test(location.search)) vista = false; // ?intro la repite (para ensayar la presentación)
 
   window.kaironIntro = {
     vista,
