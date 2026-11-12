@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Todas las preguntas sobre el servicio de KAIRON agrupadas por tema, un glosario sin jerga y precios de ejemplo por equipo y mes.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El momento justo">
+  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>Preguntas, glosario y precios orientativos · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="preguntas.html">
+  <link rel="alternate" hreflang="ca" href="ca/preguntas.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "url": "index.html",
+    "logo": "img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguridad y análisis forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desarrollo web y sistemas", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261112a">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Secciones">
+    <a href="#contenido" data-seccion="hero"><span>Inicio</span></a>
+    <a href="#respuestas" data-seccion="respuestas"><span>Preguntas</span></a>
+    <a href="#glosario" data-seccion="glosario"><span>Glosario</span></a>
+    <a href="#precios" data-seccion="precios"><span>Precios</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/preguntas.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo revelar" id="titulo-pagina">Preguntas y precios</h1>
+        <p class="pagina__intro">Lo que nos preguntan antes de contratar, agrupado por temas. Al final hay un glosario para las palabras raras y unos precios orientativos.</p>
+        <p class="det-aviso">KAIRON es una empresa ficticia creada para una práctica de clase. Las respuestas describen cómo se prestaría el servicio.</p>
+      </div>
+    </section>
+
+    <!-- ===== PREGUNTAS POR TEMAS: índice a la izquierda y respuestas desplegables (details/summary) ===== -->
+    <section class="det-seccion det-seccion--borde" id="respuestas" aria-label="Preguntas frecuentes por temas">
+      <div class="contenedor det-faq">
+
+        <nav class="det-indice" aria-labelledby="titulo-indice">
+          <h2 id="titulo-indice">En esta página</h2>
+          <ol>
+            <li><a href="#servicio">Servicio</a></li>
+            <li><a href="#instalacion">Instalación y privacidad</a></li>
+            <li><a href="#incidentes">Incidentes y pruebas</a></li>
+            <li><a href="#contrato">Precio y contrato</a></li>
+            <li><a href="#esta-web">Esta web</a></li>
+            <li><a href="#glosario">Glosario</a></li>
+            <li><a href="#precios">Precios orientativos</a></li>
+          </ol>
+        </nav>
+
+        <div>
+          <!-- Tema 1 -->
+          <section class="det-grupo" id="servicio" aria-labelledby="titulo-servicio">
+            <h2 class="det-h2" id="titulo-servicio">Servicio</h2>
+            <details class="faq__item" open>
+              <summary>¿Qué es un SOC y por qué lo necesita una pyme?</summary>
+              <p>Un SOC es un centro de operaciones de seguridad: personas y herramientas que vigilan tus sistemas y responden si pasa algo. La mayoría de los ataques a pymes entran por un correo o una contraseña débil y, si nadie vigila, se descubren semanas después.</p>
+              <p>Montar uno propio exige varias personas y turnos. Un SOC gestionado te da lo mismo como servicio, por una cuota mensual.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Qué hace KAIRON exactamente?</summary>
+              <p>Tres cosas: detectar los ataques pronto, responder para frenar el daño y dejarlo todo demostrado en un informe. Además, auditorías para cerrar puertas y formación para la plantilla. <a href="servicios.html">Mira los servicios uno a uno</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Sustituís a mi informático o a mi antivirus?</summary>
+              <p>No. Tu informático sigue llevando el día a día y el antivirus sigue en su sitio. Nosotros añadimos lo que falta: alguien mirando lo que ocurre en todos los equipos a la vez y sabiendo qué hacer cuando algo no cuadra.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Vigiláis también de noche y en festivos?</summary>
+              <p>Depende del plan. Guardia y Custodia vigilan las 24 horas todos los días. Vigía cubre los días laborables de 8 a 20 h; fuera de ese horario las alertas se guardan y se revisan a primera hora.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Para qué tamaño de empresa está pensado?</summary>
+              <p>Para pymes de entre 10 y 250 equipos que no tienen un equipo de seguridad propio.</p>
+            </details>
+          </section>
+
+          <!-- Tema 2 -->
+          <section class="det-grupo" id="instalacion" aria-labelledby="titulo-instalacion">
+            <h2 class="det-h2" id="titulo-instalacion">Instalación y privacidad</h2>
+            <details class="faq__item">
+              <summary>¿Tengo que instalar algo?</summary>
+              <p>Un agente en cada ordenador y servidor, con Windows o Linux. Es un programa pequeño que envía la actividad del equipo al SOC. Lo instalamos nosotros, sin reiniciar y sin interrumpir el trabajo.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿El agente lee mis documentos o mis correos?</summary>
+              <p>No. Envía registros de actividad: qué programas se abren, quién inicia sesión, qué conexiones se hacen y si cambia un archivo del sistema. No envía el contenido de tus documentos ni de tus correos.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Va a ir más lento el ordenador?</summary>
+              <p>En un equipo de oficina normal no se nota. El agente trabaja en segundo plano y usa muy poca memoria.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Dónde se guardan los registros y durante cuánto tiempo?</summary>
+              <p>En servidores dentro de la Unión Europea, durante 90 días. Antes de empezar se firma un contrato de encargado del tratamiento, que es el documento que exige el RGPD (la ley europea de protección de datos) cuando un proveedor maneja datos por tu cuenta.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Cuánto tarda en estar funcionando?</summary>
+              <p>Unas dos semanas desde la primera reunión: la vigilancia está activa el noveno día laborable. <a href="metodo.html#calendario">Mira el calendario del primer mes</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Y los portátiles de quien teletrabaja? ¿Y los móviles?</summary>
+              <p>Un portátil sigue vigilado esté donde esté, siempre que tenga internet. Los móviles no entran en el servicio por ahora.</p>
+            </details>
+          </section>
+
+          <!-- Tema 3 -->
+          <section class="det-grupo" id="incidentes" aria-labelledby="titulo-incidentes">
+            <h2 class="det-h2" id="titulo-incidentes">Incidentes y pruebas</h2>
+            <details class="faq__item">
+              <summary>¿Qué pasa cuando detectáis un ataque?</summary>
+              <p>Primero lo contenemos: se aísla el equipo afectado y se bloquea la dirección del atacante. Después recogemos las pruebas y te llamamos. Ese mismo día recibes un informe en lenguaje claro. <a href="incidente.html">Mira un incidente minuto a minuto</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Me vais a llamar por cada alerta?</summary>
+              <p>No. La mayoría de las alertas son ruido, y descartarlo es nuestro trabajo. Te llamamos cuando hay algo real que te afecta o cuando necesitamos que decidas algo.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Podéis garantizar que no me atacarán?</summary>
+              <p>No, y nadie puede hacerlo con honestidad. Lo que sí se puede es ver el ataque pronto, frenarlo antes de que se extienda y dejar constancia de lo ocurrido.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Las pruebas sirven ante una auditoría o una denuncia?</summary>
+              <p>Se recogen pensando en eso. Cada evidencia lleva hora UTC, número de caso y huella SHA-256, de modo que cualquiera puede comprobar que no se ha alterado. Si el caso llega a un juzgado, quien decide su valor es el juez. <a href="incidente.html#custodia">Así es una ficha de evidencia</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Y si el ataque ya ha ocurrido y todavía no soy cliente?</summary>
+              <p>Podemos intervenir de forma puntual para contener, recoger pruebas y hacer el informe. Ese trabajo se presupuesta aparte, por horas.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Tengo que avisar a la Agencia de Protección de Datos?</summary>
+              <p>Si el incidente afecta a datos personales y supone un riesgo para esas personas, el RGPD da 72 horas para avisar. La decisión y el aviso son de tu empresa. Nosotros te damos los datos técnicos que piden: qué pasó, cuándo y qué información pudo verse afectada.</p>
+            </details>
+          </section>
+
+          <!-- Tema 4 -->
+          <section class="det-grupo" id="contrato" aria-labelledby="titulo-contrato">
+            <h2 class="det-h2" id="titulo-contrato">Precio y contrato</h2>
+            <details class="faq__item">
+              <summary>¿Cuánto cuesta?</summary>
+              <p>Un precio fijo por equipo y mes, según el plan. Con 60 equipos y el plan intermedio serían 960 € al mes. <a href="#precios">Mira los precios orientativos</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Qué cuenta como «equipo»?</summary>
+              <p>Cada ordenador o servidor que lleva el agente instalado. Los móviles, las impresoras y las pantallas no cuentan.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Hay permanencia?</summary>
+              <p>No. Se paga mes a mes y puedes darte de baja avisando con 30 días.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿La auditoría inicial es gratuita de verdad?</summary>
+              <p>Sí, y sin compromiso. Te quedas el informe aunque no contrates.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Hay costes aparte?</summary>
+              <p>El alta y la instalación están incluidas. Lo único que se presupuesta aparte es el trabajo sobre incidentes anteriores al contrato y, en el plan Vigía, la recogida de pruebas.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Y si contrato a más gente o reduzco plantilla?</summary>
+              <p>La cuota se ajusta al número de equipos del mes siguiente, hacia arriba o hacia abajo.</p>
+            </details>
+          </section>
+
+          <!-- Tema 5 -->
+          <section class="det-grupo" id="esta-web" aria-labelledby="titulo-web">
+            <h2 class="det-h2" id="titulo-web">Esta web</h2>
+            <details class="faq__item">
+              <summary>¿KAIRON existe?</summary>
+              <p>No. Es una empresa ficticia creada por Lorena y Dani para una práctica de Aplicaciones Web y su trabajo de final de curso, en el ciclo de Sistemas Microinformáticos y Redes de Digitech Barcelona. Los datos de las demostraciones son simulados, y los testimonios, los casos y los precios son ejemplos.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Está protegida esta web?</summary>
+              <p>Sí, predicamos con el ejemplo. Tiene una política de seguridad de contenido (CSP) que solo permite cargar recursos de este sitio, no usa scripts en línea, limita la información que se envía al salir a otra web y abre los enlaces externos con <code>rel="noopener"</code>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Usáis cookies o me rastreáis?</summary>
+              <p>No hay cookies, ni analítica, ni rastreadores. Solo se guardan en tu navegador tus preferencias de movimiento y de modo presentación.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Qué pasa con lo que escribo en el formulario de contacto?</summary>
+              <p>Nada: es una demostración. El formulario comprueba los campos y tiene un campo trampa contra el correo basura, pero no envía ni guarda lo que escribes.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Con qué está hecha?</summary>
+              <p>Con HTML5, CSS3 y JavaScript, sin frameworks. Las animaciones usan GSAP, Three.js y Lenis, guardadas en el propio sitio para no depender de servidores ajenos.</p>
+            </details>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GLOSARIO (sección clara, de lectura) ===== -->
+    <section class="det-seccion claro" id="glosario" aria-labelledby="titulo-glosario">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-glosario">Glosario sin jerga</h2>
+        <p class="det-entrada">Las palabras que aparecen en esta web y en nuestros informes, explicadas como se las explicaríamos a alguien que no es informático.</p>
+        <dl class="det-glosario">
+          <div><dt>Agente</dt><dd>Programa pequeño instalado en cada equipo que envía su actividad al SOC.</dd></div>
+          <div><dt>Cadena de custodia</dt><dd>Registro de quién ha tenido cada prueba, cuándo y qué ha hecho con ella, para poder demostrar que no se ha manipulado.</dd></div>
+          <div><dt>Contención</dt><dd>Frenar un ataque para que no se extienda: aislar el equipo afectado o bloquear una dirección.</dd></div>
+          <div><dt>Cortafuegos</dt><dd>Filtro entre tu red e internet que decide qué conexiones pasan. En inglés, firewall.</dd></div>
+          <div><dt>Falso positivo</dt><dd>Alerta que salta por algo que al final no era un ataque.</dd></div>
+          <div><dt>Forense</dt><dd>Recoger y estudiar las pruebas de un incidente sin alterarlas, para saber qué pasó.</dd></div>
+          <div><dt>Hardening</dt><dd>Endurecer un sistema: quitar lo que sobra y configurar bien lo demás para que sea más difícil de atacar.</dd></div>
+          <div><dt>Huella SHA-256</dt><dd>Cálculo que convierte un archivo en 64 caracteres. Si el archivo cambia, aunque sea una letra, la huella sale distinta. También se llama hash.</dd></div>
+          <div><dt>Malware</dt><dd>Cualquier programa hecho para hacer daño: robar datos, espiar o bloquear equipos.</dd></div>
+          <div><dt>Phishing</dt><dd>Mensaje que se hace pasar por alguien de confianza para que abras un archivo, pulses un enlace o des una contraseña.</dd></div>
+          <div><dt>Ransomware</dt><dd>Malware que cifra tus archivos y pide un rescate por devolvértelos.</dd></div>
+          <div><dt>RGPD</dt><dd>Reglamento General de Protección de Datos, la ley europea que regula cómo se tratan los datos personales.</dd></div>
+          <div><dt>SIEM</dt><dd>Sistema que reúne los registros de todos los equipos en un solo sitio y busca en ellos señales de ataque.</dd></div>
+          <div><dt>SOC</dt><dd>Centro de operaciones de seguridad: las personas y herramientas que vigilan y responden.</dd></div>
+          <div><dt>UTC</dt><dd>Hora universal, sin cambios de verano ni husos. Se usa para que todos los registros compartan el mismo reloj.</dd></div>
+          <div><dt>Wazuh</dt><dd>El SIEM de código abierto que usa KAIRON para vigilar los equipos.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== PRECIOS ORIENTATIVOS: tabla comparativa + calculadora (la activa js/detalle.js) ===== -->
+    <section class="det-seccion" id="precios" aria-labelledby="titulo-precios">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-precios">Precios orientativos</h2>
+        <p class="det-entrada">Un precio por equipo y mes. Sabes lo que vas a pagar antes de empezar y no cambia si hay un incidente.</p>
+        <p class="det-ficticio">Precios de ejemplo · empresa ficticia (práctica de clase)</p>
+
+        <!-- Sin JavaScript la calculadora no aparece y la tabla muestra el ejemplo de 60 equipos -->
+        <div class="det-calc" hidden>
+          <label for="equipos">¿Cuántos equipos tiene tu empresa?</label>
+          <div class="det-calc__fila">
+            <input type="range" id="equipos" min="10" max="250" step="5" value="60">
+            <output for="equipos">60</output>
+          </div>
+        </div>
+
+        <table class="det-planes">
+          <caption>Comparación de los tres planes de KAIRON (precios de ejemplo)</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="det-planes__para">Qué incluye</span></th>
+              <th scope="col"><span class="det-planes__nombre">Vigía</span><span class="det-planes__precio">9 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Vigilancia en horario de oficina</span></th>
+              <th scope="col" class="det-planes__sugerido"><span class="det-planes__nombre">Guardia</span><span class="det-planes__precio">16 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Vigilancia y respuesta a cualquier hora</span></th>
+              <th scope="col"><span class="det-planes__nombre">Custodia</span><span class="det-planes__precio">24 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Lo anterior, más prevención y cumplimiento</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Vigilancia</th>
+              <td data-plan="Vigía">Días laborables, de 8 a 20 h</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">24 horas, todos los días</td>
+              <td data-plan="Custodia">24 horas, todos los días</td>
+            </tr>
+            <tr>
+              <th scope="row">Si hay un ataque</th>
+              <td data-plan="Vigía">Aviso por teléfono y correo</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Contención en minutos y llamada</td>
+              <td data-plan="Custodia">Contención en minutos y llamada</td>
+            </tr>
+            <tr>
+              <th scope="row">Pruebas con cadena de custodia</th>
+              <td data-plan="Vigía" class="det-planes__no">Aparte, por horas</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Incluidas</td>
+              <td data-plan="Custodia">Incluidas</td>
+            </tr>
+            <tr>
+              <th scope="row">Informes</th>
+              <td data-plan="Vigía">Resumen mensual</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Informe de cada incidente y resumen mensual</td>
+              <td data-plan="Custodia">Lo mismo, más una reunión cada trimestre</td>
+            </tr>
+            <tr>
+              <th scope="row">Auditoría y hardening</th>
+              <td data-plan="Vigía">Auditoría inicial</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Auditoría inicial</td>
+              <td data-plan="Custodia">Auditoría cada año y corrección de lo que aparezca</td>
+            </tr>
+            <tr>
+              <th scope="row">Formación de la plantilla</th>
+              <td data-plan="Vigía" class="det-planes__no">No incluida</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Una sesión al año</td>
+              <td data-plan="Custodia">Dos sesiones al año y simulacros de phishing</td>
+            </tr>
+            <tr>
+              <th scope="row">Apoyo con el RGPD</th>
+              <td data-plan="Vigía" class="det-planes__no">No incluido</td>
+              <td data-plan="Guardia" class="det-planes__sugerido">Datos técnicos para el aviso</td>
+              <td data-plan="Custodia">Acompañamiento en todo el proceso</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total al mes con <span class="det-planes__equipos">60</span> equipos</th>
+              <td data-plan="Vigía" data-precio="9">540 €</td>
+              <td data-plan="Guardia" data-precio="16" class="det-planes__sugerido">960 €</td>
+              <td data-plan="Custodia" data-precio="24">1.440 €</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="det-prosa det-planes__nota">Precios sin IVA. Mínimo de 10 equipos. El alta, la instalación y la auditoría inicial están incluidas en los tres planes. Sin permanencia. La raya dorada marca el plan pensado para una empresa como la de Marta, con 60 equipos.</p>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">¿Tu pregunta no está aquí?</h2>
+            <p class="det-prosa">Pide la auditoría gratuita y pregúntanos lo que quieras en la primera reunión. Te contestamos sin tecnicismos.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a>
+            <a href="servicios.html" class="boton"><span class="boton__texto" data-texto="Ver los servicios">Ver los servicios</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo" id="titulo-rel">Sigue leyendo</h2>
+          <ul class="det-rel__lista">
+            <li><a href="metodo.html"><b>El método, paso a paso</b><span>Qué hacemos, qué te pedimos y cuánto tarda cada paso.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="incidente.html"><b>Anatomía de un incidente</b><span>Un ataque parado a tiempo, minuto a minuto.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="kairos.html"><b>La idea</b><span>Por qué KAIRON se llama así y qué significa su emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="soc.html"><b>El SOC en vivo</b><span>Una demostración con datos simulados de lo que vemos cada día.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores · <a href="antonia-lorena-cracana/">Portfolio de Antonia Lorena Cracana</a> · <a href="joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="js/vendor/gsap.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112a" defer></script>
+  <script src="js/intro.js?v=20261112a" defer></script>
+  <script src="js/escena.js?v=20261112a" defer></script>
+  <script src="js/visuales.js?v=20261112a" defer></script>
+  <script src="js/polvo.js?v=20261112a" defer></script>
+  <script src="js/main.js?v=20261112a" defer></script>
+  <!-- Comportamiento propio de las páginas de detalle (línea de tiempo, calculadora, huella) -->
+  <script src="js/detalle.js?v=20261112a" defer></script>
+</body>
+</html>

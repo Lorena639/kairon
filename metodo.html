@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Los cuatro pasos de KAIRON en detalle: qué hacemos, qué te pedimos, cuánto tarda cada uno, qué recibes y el calendario del primer mes para una empresa de 60 personas.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El momento justo">
+  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>El método, paso a paso · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="metodo.html">
+  <link rel="alternate" hreflang="ca" href="ca/metodo.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "url": "index.html",
+    "logo": "img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguridad y análisis forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desarrollo web y sistemas", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261112a">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Secciones">
+    <a href="#contenido" data-seccion="hero"><span>Inicio</span></a>
+    <a href="#pasos" data-seccion="pasos"><span>Los cuatro pasos</span></a>
+    <a href="#calendario" data-seccion="calendario"><span>El primer mes</span></a>
+    <a href="#tu-parte" data-seccion="tu-parte"><span>Tu parte</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/metodo.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo revelar" id="titulo-pagina">El método, paso a paso</h1>
+        <p class="pagina__intro">Cuatro pasos, siempre en el mismo orden. Aquí está lo que hacemos nosotros, lo que te pedimos a ti, cuánto tarda cada uno y qué tienes en la mano al terminar.</p>
+        <p class="det-aviso">KAIRON es una empresa ficticia creada para una práctica de clase. Los plazos son orientativos: describen cómo se prestaría el servicio.</p>
+      </div>
+    </section>
+
+    <!-- ===== LOS CUATRO PASOS ===== -->
+    <section class="det-seccion" id="pasos" aria-label="Los cuatro pasos del método">
+      <div class="contenedor det-pasos">
+
+        <!-- Paso 1 -->
+        <article class="det-paso" id="conocer" aria-labelledby="titulo-conocer">
+          <div class="det-paso__lado">
+            <span class="det-paso__num" aria-hidden="true">1</span>
+            <p class="det-paso__plazo">Semana 1 <small>5 días laborables</small></p>
+          </div>
+          <div>
+            <h2 class="det-h2" id="titulo-conocer">Conocer tu empresa</h2>
+            <p class="det-entrada">Antes de vigilar nada hay que saber qué hay. Empezamos con una auditoría inicial, gratuita y sin compromiso: un mapa de tus equipos, de los datos que importan y de los sitios por donde alguien podría entrar.</p>
+            <div class="det-reparto">
+              <div>
+                <h3>Lo que hacemos nosotros</h3>
+                <ul class="det-lista">
+                  <li>Una reunión de 90 minutos con dirección y con quien lleve la informática.</li>
+                  <li>Inventario de ordenadores, servidores, correo y copias de seguridad.</li>
+                  <li>Revisión de lo que se ve de tu empresa desde internet, que es lo que vería un atacante.</li>
+                  <li>Lista de riesgos ordenada por importancia.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Lo que te pedimos</h3>
+                <ul class="det-lista">
+                  <li>Una persona de contacto.</li>
+                  <li>La lista de equipos y programas que usáis, aunque sea aproximada.</li>
+                  <li>Decirnos qué no puede parar nunca: facturación, almacén, correo.</li>
+                </ul>
+              </div>
+              <div class="det-reparto__recibes">
+                <h3>Lo que recibes</h3>
+                <ul class="det-lista">
+                  <li>Un informe de auditoría de pocas páginas, en lenguaje claro.</li>
+                  <li>Los tres riesgos que arreglaríamos primero.</li>
+                  <li>Un presupuesto cerrado por equipo y mes.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Paso 2 -->
+        <article class="det-paso" id="instalar" aria-labelledby="titulo-instalar">
+          <div class="det-paso__lado">
+            <span class="det-paso__num" aria-hidden="true">2</span>
+            <p class="det-paso__plazo">Semanas 2 a 4 <small>3 días de instalación y 2 semanas de ajuste</small></p>
+          </div>
+          <div>
+            <h2 class="det-h2" id="titulo-instalar">Instalar la vigilancia</h2>
+            <p class="det-entrada">En cada equipo se instala un <dfn>agente</dfn>: un programa pequeño que envía la actividad del ordenador al <dfn>SOC</dfn>, el centro de operaciones de seguridad donde las personas de KAIRON revisan las alertas.</p>
+            <div class="det-reparto">
+              <div>
+                <h3>Lo que hacemos nosotros</h3>
+                <ul class="det-lista">
+                  <li>Instalamos el agente de <dfn>Wazuh</dfn>, un sistema de vigilancia de código abierto, en ordenadores y servidores con Windows o Linux.</li>
+                  <li>Lo hacemos por tandas y fuera de las horas de más trabajo.</li>
+                  <li>Activamos las reglas para lo más habitual: contraseñas probadas a la fuerza, programas maliciosos y cambios en archivos críticos.</li>
+                  <li>Durante dos semanas aprendemos qué es normal en tu empresa, para no avisarte por lo que no importa.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Lo que te pedimos</h3>
+                <ul class="det-lista">
+                  <li>Permiso de administrador, o que tu informático nos acompañe.</li>
+                  <li>Avisar a la plantilla. Te damos el texto escrito.</li>
+                  <li>Dos teléfonos a los que llamar si pasa algo, y a qué horas.</li>
+                </ul>
+              </div>
+              <div class="det-reparto__recibes">
+                <h3>Lo que recibes</h3>
+                <ul class="det-lista">
+                  <li>Vigilancia activa desde el noveno día laborable.</li>
+                  <li>Un panel con el estado de tus equipos.</li>
+                  <li>Por escrito, qué se vigila y qué no: el agente envía registros de actividad, no lee tus documentos ni tus correos.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Paso 3 -->
+        <article class="det-paso" id="responder" aria-labelledby="titulo-responder">
+          <div class="det-paso__lado">
+            <span class="det-paso__num" aria-hidden="true">3</span>
+            <p class="det-paso__plazo">Siempre activo <small>contención en minutos, llamada en el primer cuarto de hora</small></p>
+          </div>
+          <div>
+            <h2 class="det-h2" id="titulo-responder">Responder en minutos</h2>
+            <p class="det-entrada">Cuando una alerta es real, primero se frena el ataque y después se investiga. Las pruebas se guardan antes de limpiar nada, mientras el incidente aún está caliente.</p>
+            <div class="det-reparto">
+              <div>
+                <h3>Lo que hacemos nosotros</h3>
+                <ul class="det-lista">
+                  <li>Comprobamos que no es una falsa alarma.</li>
+                  <li>Aislamos el equipo afectado y bloqueamos la dirección del atacante.</li>
+                  <li>Recogemos las pruebas con <dfn>cadena de custodia</dfn>: el registro de quién ha tenido cada prueba y cuándo.</li>
+                  <li>Llamamos a dirección con lo que ha pasado y lo que hay que hacer.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Lo que te pedimos</h3>
+                <ul class="det-lista">
+                  <li>Coger el teléfono.</li>
+                  <li>No apagar ni reinstalar el equipo hasta que te lo digamos.</li>
+                  <li>Decidir lo que solo tú puedes decidir: avisar a clientes, al seguro o a tu asesoría.</li>
+                </ul>
+              </div>
+              <div class="det-reparto__recibes">
+                <h3>Lo que recibes</h3>
+                <ul class="det-lista">
+                  <li>Una llamada con la situación clara.</li>
+                  <li>Un caso abierto, con su número.</li>
+                  <li>Un primer informe por escrito en menos de una hora.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="det-prosa det-paso__mas"><a href="incidente.html">Mira un incidente minuto a minuto</a></p>
+          </div>
+        </article>
+
+        <!-- Paso 4 -->
+        <article class="det-paso" id="demostrar" aria-labelledby="titulo-demostrar">
+          <div class="det-paso__lado">
+            <span class="det-paso__num" aria-hidden="true">4</span>
+            <p class="det-paso__plazo">El mismo día <small>y un resumen cada mes</small></p>
+          </div>
+          <div>
+            <h2 class="det-h2" id="titulo-demostrar">Demostrarlo con un informe</h2>
+            <p class="det-entrada">Lo que no queda escrito no se puede demostrar. El informe cuenta qué pasó, qué se hizo y cómo evitar que se repita, de forma que lo entienda dirección y lo pueda comprobar una auditoría.</p>
+            <div class="det-reparto">
+              <div>
+                <h3>Lo que hacemos nosotros</h3>
+                <ul class="det-lista">
+                  <li>Ordenamos la cronología, minuto a minuto.</li>
+                  <li>Listamos cada prueba con su huella <dfn>SHA-256</dfn>: 64 caracteres que cambian si alguien toca el archivo.</li>
+                  <li>Explicamos por dónde entró el ataque y hasta dónde llegó.</li>
+                  <li>Escribimos las recomendaciones, por orden de prioridad.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Lo que te pedimos</h3>
+                <ul class="det-lista">
+                  <li>Leer la página de resumen.</li>
+                  <li>Elegir qué recomendaciones aplicamos y cuándo.</li>
+                  <li>Guardar el informe: puede pedírtelo el seguro o una auditoría.</li>
+                </ul>
+              </div>
+              <div class="det-reparto__recibes">
+                <h3>Lo que recibes</h3>
+                <ul class="det-lista">
+                  <li>El informe completo y firmado, el mismo día.</li>
+                  <li>Un resumen cada mes: qué se ha visto, qué se ha parado y qué queda pendiente.</li>
+                  <li>Los datos técnicos que necesitas si hay que avisar a Protección de Datos.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="det-prosa det-paso__mas"><a href="informe.html">Mira un informe de ejemplo</a></p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== CALENDARIO DEL PRIMER MES (sección clara). Las barras se dibujan al entrar en pantalla ===== -->
+    <section class="det-seccion claro" id="calendario" aria-labelledby="titulo-calendario">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-calendario">El primer mes de una empresa de 60 personas</h2>
+        <p class="det-entrada">Marta dirige la administración de una empresa de logística de Barcelona: 60 personas y 60 equipos, entre portátiles, ordenadores de almacén y dos servidores. Este sería su calendario.</p>
+
+        <div class="det-cal det-observar">
+          <div class="det-cal__semanas" aria-hidden="true">
+            <ol><li>Semana 1</li><li>Semana 2</li><li>Semana 3</li><li>Semana 4</li></ol>
+          </div>
+          <ol class="det-cal__filas">
+            <li class="det-cal__fila det-cal__fila--tu det-cal__fila--f1">
+              <p class="det-cal__tarea"><b>Reunión inicial</b><span>Día 1 · 90 minutos de dirección</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--f2">
+              <p class="det-cal__tarea"><b>Inventario y auditoría</b><span>Días 1 a 4</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--f3">
+              <p class="det-cal__tarea"><b>Informe de auditoría y presupuesto</b><span>Día 5</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--tu det-cal__fila--f4">
+              <p class="det-cal__tarea"><b>Aviso a la plantilla</b><span>Días 5 y 6 · un correo que te damos escrito</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--f5">
+              <p class="det-cal__tarea"><b>Instalación en los 60 equipos</b><span>Días 6 a 8 · por tandas</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--oro det-cal__fila--f6">
+              <p class="det-cal__tarea"><b>Vigilancia activa</b><span>Desde el día 9, sin interrupción</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--f7">
+              <p class="det-cal__tarea"><b>Ajuste de las reglas a tu actividad</b><span>Días 9 a 18</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--tu det-cal__fila--f8">
+              <p class="det-cal__tarea"><b>Simulacro de incidente</b><span>Día 15 · una hora, con dirección</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+            <li class="det-cal__fila det-cal__fila--f9">
+              <p class="det-cal__tarea"><b>Primer resumen mensual</b><span>Día 20</span></p>
+              <span class="det-cal__pista" aria-hidden="true"><i class="det-cal__barra"></i></span>
+            </li>
+          </ol>
+          <ul class="det-cal__leyenda">
+            <li><i aria-hidden="true"></i>Trabajo de KAIRON</li>
+            <li><i aria-hidden="true"></i>Tu parte</li>
+            <li><i aria-hidden="true"></i>Tus equipos ya están vigilados</li>
+          </ul>
+        </div>
+        <p class="det-aviso">Días laborables. Marta y su empresa son un ejemplo inventado y los plazos son orientativos.</p>
+
+        <!-- Lo que le cuesta al cliente en tiempo -->
+        <h2 class="det-h2 det-h2--sub" id="tu-parte">Tu parte, en total</h2>
+        <dl class="det-suma">
+          <div>
+            <dt>Unas 5 horas</dt>
+            <dd>De dirección en todo el mes: la reunión inicial, el simulacro y leer dos informes.</dd>
+          </div>
+          <div>
+            <dt>Media jornada</dt>
+            <dd>De quien lleve la informática, para darnos acceso y acompañar la instalación.</dd>
+          </div>
+          <div>
+            <dt>10 minutos</dt>
+            <dd>Por empleado, para leer el aviso. No tienen que instalar ni aprender nada.</dd>
+          </div>
+          <div>
+            <dt>Ningún equipo parado</dt>
+            <dd>El agente se instala sin reiniciar el ordenador y sin interrumpir el trabajo.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">El primer paso no cuesta nada</h2>
+            <p class="det-prosa">La auditoría inicial es gratuita y sin compromiso. En una semana sabes qué tienes, qué riesgo corres y cuánto costaría vigilarlo.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a>
+            <a href="preguntas.html#precios" class="boton"><span class="boton__texto" data-texto="Ver precios orientativos">Ver precios orientativos</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo" id="titulo-rel">Sigue leyendo</h2>
+          <ul class="det-rel__lista">
+            <li><a href="incidente.html"><b>Anatomía de un incidente</b><span>El paso 3 en un caso concreto, minuto a minuto.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="servicios.html"><b>Servicios</b><span>Qué incluye cada servicio: detectar, responder, demostrar, auditar y formar.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="preguntas.html"><b>Preguntas y precios</b><span>Lo que nos preguntan, un glosario sin jerga y precios orientativos.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="kairos.html"><b>La idea</b><span>Por qué KAIRON se llama así y qué significa su emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores · <a href="antonia-lorena-cracana/">Portfolio de Antonia Lorena Cracana</a> · <a href="joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="js/vendor/gsap.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112a" defer></script>
+  <script src="js/intro.js?v=20261112a" defer></script>
+  <script src="js/escena.js?v=20261112a" defer></script>
+  <script src="js/visuales.js?v=20261112a" defer></script>
+  <script src="js/polvo.js?v=20261112a" defer></script>
+  <script src="js/main.js?v=20261112a" defer></script>
+  <!-- Comportamiento propio de las páginas de detalle (línea de tiempo, calculadora, huella) -->
+  <script src="js/detalle.js?v=20261112a" defer></script>
+</body>
+</html>

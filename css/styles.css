@@ -4297,3 +4297,1690 @@ main, .pie { overflow-x: clip; }
     max-width: none;
   }
 }
+
+/* ---------- 32. Páginas de detalle (método, incidente, preguntas, idea) ----------
+   Clases propias de metodo.html, incidente.html, preguntas.html y kairos.html. Todas empiezan por "det-".
+   - El contenido se ve completo sin JavaScript: js/detalle.js añade la clase "det-mov" a <html>
+     solo cuando puede animar, y es esa clase la que prepara los estados de partida.
+   - Color con función: oro = el instante, rojo = solo la amenaza, cian = dato en movimiento.
+   - Mono (JetBrains Mono) solo para datos reales: horas, huellas, números de caso e importes. */
+
+/* --- 32.1 Base común --- */
+.det {
+  --det-acento: var(--oro-claro);   /* texto de acento sobre fondo oscuro */
+  --det-fuerte: var(--blanco);      /* texto principal */
+  --det-medida: 58ch;               /* ancho máximo de lectura: unas 72 letras por línea con Space Grotesk */
+}
+
+/* En las secciones marfil el oro claro no llega a contraste AA: se usa un oro tinta (5,6:1) */
+.det .claro {
+  --det-acento: #7a5c33;
+  --det-fuerte: var(--negro);
+}
+
+.det ::selection {
+  background: var(--oro);
+  color: var(--negro);
+}
+
+.det .claro :focus-visible {
+  outline-color: var(--negro);
+}
+
+/* Titular de página: Cinzel 500, como máximo 6rem, líneas equilibradas */
+.det .pagina__titulo {
+  max-width: 15em;
+  margin-top: 0;
+  font-size: clamp(2rem, 6.2vw, 6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.det .pagina__intro {
+  max-width: 34em;
+  margin-bottom: 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.det .pagina--cabeza {
+  padding-bottom: clamp(56px, 8vw, 110px);
+}
+
+.det-seccion {
+  position: relative;
+  padding: clamp(72px, 10vw, 150px) 0;
+}
+
+.det-seccion--borde {
+  border-top: 1px solid var(--linea);
+}
+
+.det-h2 {
+  max-width: 20em;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  font-size: clamp(1.7rem, 3.8vw, 3.3rem);
+  font-weight: 500;
+  line-height: 1.1;
+  text-wrap: balance;
+  scroll-margin-top: 110px;
+}
+
+.det-h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Párrafo de entrada: una idea, más grande */
+.det-entrada {
+  max-width: 31em;
+  font-size: clamp(1.2rem, 2.1vw, 1.6rem);
+  line-height: 1.45;
+  color: var(--det-fuerte);
+  text-wrap: pretty;
+}
+
+/* Texto corrido */
+.det-prosa {
+  max-width: var(--det-medida);
+  color: var(--suave);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.det-prosa + .det-prosa,
+.det-entrada + .det-prosa {
+  margin-top: 1.1em;
+}
+
+.det-prosa strong,
+.det-prosa b {
+  color: var(--det-fuerte);
+  font-weight: 600;
+}
+
+/* Término técnico explicado en la misma frase */
+.det dfn {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--det-fuerte);
+}
+
+.det-prosa a,
+.det-enlace {
+  color: var(--det-acento);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 0.2s;
+}
+
+.det-prosa a:hover,
+.det-enlace:hover {
+  color: var(--det-fuerte);
+}
+
+/* Aviso de empresa ficticia / datos de ejemplo: siempre visible, sin gritar */
+.det-aviso {
+  max-width: var(--det-medida);
+  margin-top: clamp(28px, 4vw, 44px);
+  padding-top: 14px;
+  border-top: 1px solid rgba(185, 167, 240, 0.4);
+  color: var(--lavanda);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.det .claro .det-aviso {
+  border-top-color: var(--linea);
+  color: var(--suave);
+}
+
+/* Lista sencilla con rayas finas */
+.det-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+.det-lista li {
+  padding: 11px 0;
+  border-top: 1px solid var(--linea);
+}
+
+/* --- 32.2 Cierre: llamada a contacto y páginas relacionadas --- */
+.det-cierre {
+  padding: clamp(80px, 11vw, 160px) 0 clamp(64px, 8vw, 110px);
+  border-top: 1px solid var(--linea);
+}
+
+.det-cta {
+  display: grid;
+  gap: 28px;
+  align-items: end;
+}
+
+.det-cta .det-h2 {
+  margin-bottom: 14px;
+}
+
+.det-cta__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.det-rel {
+  margin-top: clamp(64px, 9vw, 120px);
+}
+
+.det-rel__titulo {
+  margin-bottom: 8px;
+  font-family: var(--fuente);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--suave);
+}
+
+.det-rel__lista {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-rel__lista a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 24px;
+  align-items: center;
+  padding: 22px 0;
+  border-top: 1px solid var(--linea);
+  transition: border-color 0.3s;
+}
+
+.det-rel__lista b {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+}
+
+.det-rel__lista span {
+  grid-column: 1;
+  color: var(--suave);
+  font-size: 0.98rem;
+}
+
+.det-rel__lista svg {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--oro);
+  stroke-width: 1.4;
+  transition: transform 0.45s var(--facil);
+}
+
+.det-rel__lista a:hover,
+.det-rel__lista a:focus-visible {
+  border-top-color: var(--oro);
+}
+
+.det-rel__lista a:hover b,
+.det-rel__lista a:focus-visible b {
+  color: var(--oro-claro);
+}
+
+.det-rel__lista a:hover svg,
+.det-rel__lista a:focus-visible svg {
+  transform: translateX(8px);
+}
+
+/* --- 32.3 Incidente: línea de tiempo vertical (el momento central de la página) ---
+   Un carril fino recorre los cinco momentos. El trazo es rojo mientras la amenaza está suelta
+   y se vuelve oro en el minuto de la contención: ahí está el "instante". Con JS se rellena con el scroll. */
+.det-linea {
+  --det-carril: 232px;                          /* posición horizontal del carril */
+  --det-hora: clamp(2rem, 3.6vw, 3.2rem);       /* tamaño de las horas */
+  --det-corte: 45%;                             /* dónde pasa de rojo a oro (lo ajusta el JS) */
+  --det-avance: 1;                              /* 0 a 1: cuánto trazo se ve */
+  position: relative;
+  margin-top: clamp(48px, 7vw, 96px);
+}
+
+.det-linea::before,
+.det-linea__trazo {
+  content: "";
+  position: absolute;
+  top: calc(var(--det-hora) / 2);
+  bottom: 0;
+}
+
+.det-linea::before {
+  left: var(--det-carril);
+  width: 1px;
+  background: var(--linea);
+}
+
+.det-linea__trazo {
+  left: calc(var(--det-carril) - 1px);
+  width: 3px;
+  background: linear-gradient(180deg, var(--rojo) 0, var(--rojo) calc(var(--det-corte) - 40px), var(--oro) var(--det-corte), var(--oro-claro) 100%);
+  clip-path: inset(0 0 calc((1 - var(--det-avance)) * 100%) 0);
+}
+
+.det-linea__lista {
+  display: grid;
+  gap: clamp(64px, 9vw, 128px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-linea__momento {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--det-carril) - 44px) minmax(0, 1fr);
+  column-gap: 88px;
+  scroll-margin-top: 120px;
+}
+
+/* Nodo sobre el carril */
+.det-linea__momento::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--det-hora) / 2 - 7px);
+  left: calc(var(--det-carril) - 7px);
+  z-index: 1;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--oro);
+  box-shadow: 0 0 0 6px var(--negro);
+  transition: background 0.35s, transform 0.5s var(--facil);
+}
+
+.det-linea__momento--amenaza::before {
+  background: var(--rojo);
+}
+
+.det-linea__momento--instante::before {
+  top: calc(var(--det-hora) / 2 - 11px);
+  left: calc(var(--det-carril) - 11px);
+  width: 23px;
+  height: 23px;
+  background: var(--oro-claro);
+}
+
+.det-linea__tiempo {
+  position: sticky;
+  top: 118px;
+  align-self: start;
+  text-align: right;
+}
+
+/* Dos clases a propósito: así gana a la regla móvil "span.mono { font-size: 12px }" */
+.det-linea__hora.mono {
+  display: block;
+  color: var(--blanco);
+  font-size: var(--det-hora);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.det-linea__momento--amenaza .det-linea__hora.mono {
+  color: var(--rojo);
+}
+
+.det-linea__momento--instante .det-linea__hora.mono {
+  color: var(--oro-claro);
+}
+
+.det-linea__utc {
+  display: block;
+  margin-top: 10px;
+  color: var(--suave);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.det-linea__titulo {
+  margin-bottom: 16px;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.det-linea__momento--instante .det-linea__titulo {
+  font-size: clamp(2rem, 4.4vw, 3.9rem);
+  color: var(--oro-claro);
+}
+
+/* Dos miradas del mismo minuto: dentro del SOC y desde el despacho del cliente */
+.det-linea__vistas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px clamp(24px, 4vw, 56px);
+  max-width: 920px;
+  margin-top: 28px;
+}
+
+.det-linea__vistas > div {
+  padding-top: 16px;
+  border-top: 1px solid var(--linea);
+}
+
+.det-linea__vistas h4 {
+  margin: 0 0 8px;
+  font-family: var(--fuente);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--det-acento);
+}
+
+.det-linea__vistas p {
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+.det-linea__cliente p {
+  color: var(--blanco);
+}
+
+/* Con JS y movimiento: los nodos aún no alcanzados están vacíos y se encienden al pasar el trazo */
+.det-mov .det-linea--viva .det-linea__momento::before {
+  background: var(--negro);
+  box-shadow: 0 0 0 6px var(--negro), inset 0 0 0 1px var(--oro-oscuro);
+}
+
+.det-mov .det-linea--viva .det-linea__momento.es-pasado::before {
+  background: var(--oro);
+  box-shadow: 0 0 0 6px var(--negro);
+}
+
+.det-mov .det-linea--viva .det-linea__momento--amenaza.es-pasado::before {
+  background: var(--rojo);
+}
+
+.det-mov .det-linea--viva .det-linea__momento--instante.es-pasado::before {
+  background: var(--oro-claro);
+  animation: det-instante 1.4s var(--facil) 1;
+}
+
+/* El instante: una onda que se abre una vez al llegar el trazo a la contención */
+@keyframes det-instante {
+  0% { box-shadow: 0 0 0 6px var(--negro), 0 0 0 6px rgba(233, 207, 160, 0.9); transform: scale(0.6); }
+  100% { box-shadow: 0 0 0 6px var(--negro), 0 0 0 46px rgba(233, 207, 160, 0); transform: scale(1); }
+}
+
+/* --- 32.4 Incidente: cadena de custodia, ficha de evidencia y huella en vivo --- */
+.det-doble {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+/* Tres ingredientes de la cadena de custodia: término y explicación */
+.det-terminos {
+  display: grid;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+}
+
+.det-terminos > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.34fr) minmax(0, 1fr);
+  gap: 6px 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-terminos dt {
+  font-weight: 600;
+  color: var(--det-fuerte);
+}
+
+.det-terminos dd {
+  max-width: 56ch;
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+/* Ficha: se lee como un documento, una sola caja. En escritorio acompaña a la lectura */
+.det-ficha {
+  position: sticky;
+  top: 118px;
+  margin: 0;
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid rgba(140, 107, 63, 0.35);
+  background: #fff;
+  color: var(--negro);
+  box-shadow: 0 26px 48px -30px rgba(11, 15, 20, 0.45);
+}
+
+.det-ficha figcaption {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--negro);
+  font-weight: 600;
+}
+
+.det-ficha figcaption small {
+  display: block;
+  margin-top: 2px;
+  color: var(--suave);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.det-ficha__datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+}
+
+.det-ficha__datos dt {
+  margin-bottom: 2px;
+  color: var(--det-acento);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.det-ficha__datos dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.det-ficha__ancho {
+  grid-column: 1 / -1;
+}
+
+/* Huella SHA-256: mono, sin mayúsculas forzadas, parte donde haga falta */
+.det-hash {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.det-tabla {
+  width: 100%;
+  margin-top: 22px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.det-tabla caption {
+  padding-bottom: 8px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.det-tabla th,
+.det-tabla td {
+  padding: 9px 12px 9px 0;
+  border-top: 1px solid var(--linea);
+  text-align: left;
+  vertical-align: top;
+}
+
+.det-tabla th {
+  color: var(--det-acento);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.det-tabla td:first-child {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Prueba en vivo: el navegador calcula la huella de lo que se escribe */
+.det-huella {
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: 24px;
+  border-top: 1px solid var(--linea);
+}
+
+.det-huella[hidden],
+.det-calc[hidden] {
+  display: none;
+}
+
+.det-huella label,
+.det-calc label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--det-fuerte);
+}
+
+.det-huella input {
+  width: 100%;
+  max-width: 460px;
+  padding: 12px 14px;
+  border: 1px solid var(--negro);
+  border-radius: 0;
+  background: #fff;
+  color: var(--negro);
+  font-family: var(--mono);
+  font-size: 1rem;
+  caret-color: var(--oro-oscuro);
+}
+
+.det-huella input:focus-visible {
+  outline: 2px solid var(--negro);
+  outline-offset: 3px;
+}
+
+.det-huella output {
+  display: block;
+  max-width: 460px;
+  min-height: 3em;
+  margin-top: 12px;
+  color: var(--negro);
+}
+
+.det-huella__nota {
+  max-width: 460px;
+  margin-top: 8px;
+  color: var(--suave);
+  font-size: 0.92rem;
+}
+
+/* --- 32.5 Incidente: kairos frente a chronos, dibujado a escala --- */
+.det-escala {
+  margin: clamp(36px, 5vw, 64px) 0 0;
+}
+
+.det-escala__fila {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-escala__nombre {
+  font-weight: 600;
+}
+
+.det-escala__valor {
+  font-family: var(--mono);
+  font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.det-escala__fila--kairos .det-escala__valor {
+  color: var(--oro-claro);
+}
+
+.det-escala__barra {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 28px;
+}
+
+.det-escala__barra i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  transform-origin: left;
+}
+
+/* 40 minutos entre 21 días = 0,13 % del ancho: una raya */
+.det-escala__fila--kairos .det-escala__barra i {
+  width: max(2px, 0.132%);
+  background: var(--oro-claro);
+  box-shadow: 0 0 18px 2px rgba(212, 175, 122, 0.55);
+}
+
+.det-escala__fila--chronos .det-escala__barra i {
+  width: 100%;
+  background: linear-gradient(90deg, rgba(248, 245, 238, 0.16) 0, rgba(248, 245, 238, 0.16) calc(100% - 6px), var(--rojo) calc(100% - 6px));
+}
+
+.det-escala figcaption {
+  max-width: var(--det-medida);
+  padding-top: 16px;
+  border-top: 1px solid var(--linea);
+  color: var(--suave);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Con JS: la barra de chronos crece despacio, como pasa el tiempo; la de kairos aparece de golpe */
+.det-mov .det-escala .det-escala__fila--chronos .det-escala__barra i {
+  transform: scaleX(0);
+}
+
+.det-mov .det-escala.es-visible .det-escala__fila--chronos .det-escala__barra i {
+  transform: none;
+  transition: transform 3.2s linear 0.4s;
+}
+
+/* Crónica: lista de "cuándo · qué" (lo que habría pasado sin vigilancia) */
+.det-cronica {
+  display: grid;
+  max-width: 860px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-cronica li {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.22fr) minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-cronica b {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--det-fuerte);
+}
+
+.det-cronica span {
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+.det-cronica__fin b,
+.det-cronica__fin span {
+  color: var(--rojo);
+}
+
+/* --- 32.6 Método: los cuatro pasos y el calendario de arranque --- */
+.det-pasos {
+  display: grid;
+}
+
+.det-paso {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.24fr) minmax(0, 1fr);
+  gap: clamp(20px, 5vw, 80px);
+  padding: clamp(56px, 8vw, 120px) 0;
+  border-top: 1px solid var(--linea);
+  scroll-margin-top: 90px;
+}
+
+.det-paso__lado {
+  position: sticky;
+  top: 118px;
+  align-self: start;
+}
+
+/* El número sí aporta: es el orden real del trabajo */
+.det-paso__num {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 500;
+  line-height: 0.9;
+  color: var(--oro);
+}
+
+.det-paso__plazo {
+  display: block;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
+.det-paso__plazo small {
+  display: block;
+  margin-top: 2px;
+  color: var(--suave);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.det-paso .det-h2 {
+  margin-bottom: 18px;
+}
+
+.det-paso__mas {
+  margin-top: 28px;
+}
+
+/* Subtítulo dentro de una sección ya abierta */
+.det-h2--sub {
+  margin-top: clamp(64px, 9vw, 120px);
+  font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+}
+
+/* Reparto del trabajo: nosotros, tú, lo que recibes */
+.det-reparto {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px clamp(24px, 3vw, 48px);
+  margin-top: clamp(32px, 4vw, 52px);
+}
+
+.det-reparto h3 {
+  margin-bottom: 6px;
+  font-family: var(--fuente);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--det-acento);
+}
+
+.det-reparto__recibes .det-lista {
+  color: var(--det-fuerte);
+}
+
+/* Calendario de arranque: 4 semanas, 20 días laborables */
+.det-cal {
+  --det-cal-l: 320px; /* ancho de la columna de tareas + separación */
+  position: relative;
+  margin-top: clamp(36px, 5vw, 64px);
+}
+
+.det-cal__semanas,
+.det-cal__fila {
+  display: grid;
+  grid-template-columns: calc(var(--det-cal-l) - 24px) minmax(0, 1fr);
+  column-gap: 24px;
+  align-items: center;
+}
+
+.det-cal__semanas ol {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 0 0 10px;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--suave);
+}
+
+.det-cal__filas {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-cal__fila {
+  padding: 13px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-cal__tarea b {
+  display: block;
+  font-weight: 600;
+}
+
+.det-cal__tarea span {
+  color: var(--suave);
+  font-size: 0.9rem;
+}
+
+/* Pista de 20 días con una raya al inicio de cada semana */
+.det-cal__pista {
+  display: grid;
+  grid-template-columns: repeat(20, minmax(0, 1fr));
+  align-items: center;
+  height: 26px;
+  background: linear-gradient(90deg, var(--linea) 1px, transparent 1px) 0 0 / 25% 100%;
+}
+
+.det-cal__barra {
+  grid-column: var(--a, 1) / calc(var(--z, 1) + 1);
+  height: 12px;
+  background: var(--negro);
+  transform-origin: left;
+}
+
+/* "Tu parte": barra hueca para distinguirla sin depender del color */
+.det-cal__fila--tu .det-cal__barra {
+  border: 2px solid var(--negro);
+  background: transparent;
+}
+
+.det-cal__fila--oro .det-cal__barra {
+  height: 16px;
+  border: 1px solid var(--oro-oscuro);
+  background: var(--oro);
+}
+
+.det-cal__fila--oro .det-cal__tarea b {
+  color: var(--det-acento);
+}
+
+/* Posición de cada barra: día de inicio (--a) y de fin (--z) */
+.det-cal__fila--f1 { --a: 1; --z: 1; }
+.det-cal__fila--f2 { --a: 1; --z: 4; }
+.det-cal__fila--f3 { --a: 5; --z: 5; }
+.det-cal__fila--f4 { --a: 5; --z: 6; }
+.det-cal__fila--f5 { --a: 6; --z: 8; }
+.det-cal__fila--f6 { --a: 9; --z: 20; }
+.det-cal__fila--f7 { --a: 9; --z: 18; }
+.det-cal__fila--f8 { --a: 15; --z: 15; }
+.det-cal__fila--f9 { --a: 20; --z: 20; }
+
+.det-cal__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--suave);
+  font-size: 0.9rem;
+}
+
+.det-cal__leyenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.det-cal__leyenda i {
+  width: 28px;
+  height: 12px;
+  background: var(--negro);
+}
+
+.det-cal__leyenda li:nth-child(2) i {
+  border: 2px solid var(--negro);
+  background: transparent;
+}
+
+.det-cal__leyenda li:nth-child(3) i {
+  border: 1px solid var(--oro-oscuro);
+  background: var(--oro);
+}
+
+/* Con JS: las barras se dibujan una tras otra, de la semana 1 a la 4 */
+.det-mov .det-cal .det-cal__barra {
+  transform: scaleX(0);
+}
+
+.det-mov .det-cal.es-visible .det-cal__barra {
+  transform: none;
+  transition: transform 0.9s var(--facil) calc(var(--a, 1) * 90ms);
+}
+
+/* Tu parte, en total */
+.det-suma {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0 clamp(24px, 4vw, 56px);
+  margin: clamp(32px, 4vw, 52px) 0 0;
+}
+
+.det-suma > div {
+  padding: 18px 0;
+  border-top: 1px solid var(--negro);
+}
+
+.det-suma dt {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 500;
+  color: var(--det-fuerte);
+}
+
+.det-suma dd {
+  max-width: 34ch;
+  margin: 6px 0 0;
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+/* --- 32.7 Preguntas: índice fijo, grupos, glosario y precios --- */
+.det-faq {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.26fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.det-indice {
+  position: sticky;
+  top: 118px;
+}
+
+.det-indice h2 {
+  margin-bottom: 10px;
+  font-family: var(--fuente);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--suave);
+}
+
+.det-indice ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-indice a {
+  display: block;
+  padding: 11px 0;
+  border-top: 1px solid var(--linea);
+  transition: color 0.2s, padding-left 0.35s var(--facil);
+}
+
+.det-indice a:hover,
+.det-indice a:focus-visible {
+  padding-left: 8px;
+  color: var(--oro-claro);
+}
+
+.det-grupo + .det-grupo {
+  margin-top: clamp(56px, 8vw, 104px);
+}
+
+.det-grupo {
+  max-width: 820px;
+  scroll-margin-top: 110px;
+}
+
+.det-grupo .det-h2 {
+  margin-bottom: 12px;
+  font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+}
+
+.det-grupo .faq__item:first-of-type {
+  border-top: 1px solid var(--linea);
+}
+
+.det-grupo .faq__item p {
+  max-width: 58ch;
+}
+
+.det-grupo .faq__item p + p {
+  margin-top: -10px;
+}
+
+.det-grupo .faq__item a {
+  color: var(--oro-claro);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+/* Glosario: término a la izquierda, definición a la derecha */
+.det-glosario {
+  display: grid;
+  max-width: 980px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+}
+
+.det-glosario > div {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.3fr) minmax(0, 1fr);
+  gap: 4px 32px;
+  padding: 18px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-glosario dt {
+  font-weight: 600;
+  color: var(--det-fuerte);
+}
+
+.det-glosario dd {
+  max-width: 56ch;
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+/* Precios: tabla comparativa de verdad (tres planes, mismas filas) */
+.det-ficticio {
+  display: inline-block;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: 8px 14px;
+  border: 1px solid var(--lavanda);
+  color: var(--lavanda);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.det-calc {
+  max-width: 560px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+}
+
+.det-calc__fila {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.det-calc input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  accent-color: var(--oro);
+  cursor: pointer;
+}
+
+.det-calc output {
+  min-width: 3.2ch;
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--oro-claro);
+}
+
+.det-planes {
+  width: 100%;
+  margin-top: clamp(28px, 4vw, 44px);
+  border-collapse: collapse;
+}
+
+.det-planes caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.det-planes th,
+.det-planes td {
+  padding: 16px 20px 16px 0;
+  border-top: 1px solid var(--linea);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.det-planes tbody th {
+  width: 24%;
+  color: var(--suave);
+  font-weight: 500;
+}
+
+.det-planes tbody td {
+  width: 25.33%;
+}
+
+.det-planes thead th {
+  padding-bottom: 24px;
+  border-top: 0;
+  vertical-align: bottom;
+}
+
+.det-planes__nombre {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.det-planes__precio {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--oro-claro);
+}
+
+.det-planes__unidad,
+.det-planes__para {
+  display: block;
+  margin-top: 6px;
+  color: var(--suave);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* El plan pensado para una pyme como la de Marta: columna con un velo dorado y una raya de oro arriba */
+.det-planes .det-planes__sugerido {
+  padding-left: 20px;
+  background: rgba(212, 175, 122, 0.07);
+}
+
+.det-planes thead .det-planes__sugerido {
+  padding-top: 22px;
+  box-shadow: inset 0 2px 0 var(--oro);
+}
+
+.det-planes tfoot th,
+.det-planes tfoot td {
+  border-top: 1px solid var(--oro);
+  font-weight: 600;
+}
+
+.det-planes tfoot td {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--oro-claro);
+}
+
+.det-planes__no {
+  color: rgba(248, 245, 238, 0.62);
+}
+
+.det-planes__nota {
+  margin-top: 24px;
+  font-size: 0.95rem;
+}
+
+/* --- 32.8 La idea (kairos.html) --- */
+.det-idea .pagina--cabeza {
+  min-height: 78svh;
+}
+
+/* El emblema original, muy tenue, asoma en la portada: todavía no se le puede agarrar */
+.det-idea__fondo {
+  position: absolute;
+  right: -6vw;
+  bottom: -14%;
+  width: min(62vw, 820px);
+  height: auto;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.det-idea__pie {
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+/* Chronos y kairos, uno junto a otro */
+.det-pares {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(32px, 6vw, 96px);
+  margin-top: clamp(36px, 5vw, 64px);
+}
+
+.det-pares > div {
+  padding-top: 22px;
+  border-top: 1px solid var(--linea);
+}
+
+.det-pares h3 {
+  margin-bottom: 12px;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 500;
+  color: var(--suave);
+}
+
+.det-pares__oro {
+  border-top-color: var(--oro) !important;
+}
+
+.det-pares__oro h3 {
+  color: var(--oro-claro);
+}
+
+/* El mito: el relato a la izquierda y el diálogo a la derecha */
+.det-mito {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+
+/* El diálogo del epigrama: preguntas en pequeño, respuestas en Cinzel */
+.det-cita {
+  max-width: 900px;
+  margin: 0;
+  padding: 0;
+}
+
+.det-cita dl {
+  display: grid;
+  gap: clamp(24px, 3.4vw, 40px);
+  margin: 0;
+}
+
+.det-cita dt {
+  margin-bottom: 6px;
+  color: var(--suave);
+  font-size: 1rem;
+}
+
+.det-cita dd {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.4rem, 2.7vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.18;
+  color: var(--negro);
+  text-wrap: balance;
+}
+
+.det-cita figcaption {
+  margin-top: clamp(24px, 3vw, 36px);
+  padding-top: 14px;
+  border-top: 1px solid var(--linea);
+  color: var(--suave);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* Promesas: tres frases, cada una con su explicación */
+.det-promesas {
+  margin: clamp(28px, 4vw, 48px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-promesas li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: 12px clamp(24px, 5vw, 80px);
+  align-items: baseline;
+  padding: clamp(24px, 3.4vw, 44px) 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-promesas h3 {
+  font-size: clamp(1.6rem, 3.6vw, 3rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+/* El emblema explicado: la pieza se queda fija y una luz recorre el ala, la K y la esfera.
+   Solo se ilumina el PNG original (dos capas recortadas con su propia silueta): no se redibuja ni se recolorea. */
+@property --det-lx {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --det-ly {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+.det-emblema {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+  margin-top: clamp(32px, 5vw, 64px);
+}
+
+.det-emblema__pieza {
+  --det-lx: 50%;
+  --det-ly: 50%;
+  position: sticky;
+  top: max(110px, calc(50svh - min(21vw, 290px)));
+  width: min(100%, 620px);
+  margin: 0;
+  justify-self: center;
+  transition: --det-lx 1.1s var(--facil), --det-ly 1.1s var(--facil);
+}
+
+.det-emblema__pieza img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.det-emblema__pieza::before,
+.det-emblema__pieza::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask: url("../img/kairon-emblema-dorado.png") center / 100% 100% no-repeat;
+  mask: url("../img/kairon-emblema-dorado.png") center / 100% 100% no-repeat;
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+
+/* Sombra: baja la luz de lo que no se está explicando */
+.det-emblema__pieza::before {
+  background: radial-gradient(circle at var(--det-lx) var(--det-ly), transparent 0, transparent 20%, rgba(11, 15, 20, 0.56) 46%);
+}
+
+/* Brillo: un reflejo cálido sobre la parte explicada */
+.det-emblema__pieza::after {
+  background: radial-gradient(circle at var(--det-lx) var(--det-ly), rgba(255, 243, 214, 0.6) 0, rgba(255, 243, 214, 0) 24%);
+  mix-blend-mode: screen;
+}
+
+.det-emblema__pieza[data-parte]::before,
+.det-emblema__pieza[data-parte]::after {
+  opacity: 1;
+}
+
+.det-emblema__pieza[data-parte="ala"] { --det-lx: 21%; --det-ly: 36%; }
+.det-emblema__pieza[data-parte="k"] { --det-lx: 53%; --det-ly: 58%; }
+.det-emblema__pieza[data-parte="esfera"] { --det-lx: 80%; --det-ly: 30%; }
+
+.det-emblema__partes {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.det-emblema__parte {
+  display: grid;
+  align-content: center;
+  min-height: 62svh;
+  padding: 32px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.det-emblema__parte h3 {
+  margin-bottom: 14px;
+  font-size: clamp(1.7rem, 3.6vw, 3rem);
+  font-weight: 500;
+}
+
+/* --- 32.9 Adaptación a pantallas medianas y pequeñas --- */
+@media (max-width: 1020px) {
+  .det-faq {
+    grid-template-columns: 1fr;
+  }
+
+  .det-indice {
+    position: static;
+  }
+
+  .det-indice ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+  }
+
+  .det-indice a {
+    min-height: 44px;
+    border-top: 0;
+    text-decoration: underline;
+    text-decoration-color: var(--oro-oscuro);
+    text-underline-offset: 0.3em;
+  }
+
+  .det-reparto {
+    grid-template-columns: 1fr;
+  }
+
+  .det-cal {
+    --det-cal-l: 250px;
+  }
+}
+
+@media (max-width: 860px) {
+  .det-doble,
+  .det-pares,
+  .det-mito,
+  .det-promesas li {
+    grid-template-columns: 1fr;
+  }
+
+  .det-idea .pagina--cabeza {
+    min-height: 60svh;
+  }
+
+  .det-ficha {
+    position: static;
+  }
+
+  .det-pares {
+    row-gap: 36px;
+  }
+
+  /* Línea de tiempo: el carril pasa al borde izquierdo y la hora se pone encima del texto */
+  .det-linea {
+    --det-carril: 7px;
+    --det-hora: 2.1rem;
+  }
+
+  .det-linea__momento {
+    grid-template-columns: 1fr;
+    row-gap: 14px;
+    padding-left: 40px;
+  }
+
+  .det-linea__tiempo {
+    position: static;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .det-linea__utc {
+    margin-top: 0;
+  }
+
+  .det-linea__vistas {
+    grid-template-columns: 1fr;
+  }
+
+  .det-paso {
+    grid-template-columns: 1fr;
+  }
+
+  .det-paso__lado {
+    position: static;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .det-paso__plazo {
+    margin-top: 0;
+  }
+
+  /* Calendario: la tarea encima y la pista debajo, a todo el ancho */
+  .det-cal {
+    --det-cal-l: 0px;
+  }
+
+  .det-cal__semanas,
+  .det-cal__fila {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .det-cal__semanas ol {
+    grid-column: 1;
+  }
+
+  /* Emblema: se queda arriba, más pequeño, y el texto pasa por debajo */
+  .det-emblema {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .det-emblema__pieza {
+    top: 0;
+    z-index: 2;
+    width: auto;
+    margin-inline: -20px;
+    justify-self: stretch;
+    padding: 84px 0 18px;
+    background: linear-gradient(180deg, var(--negro) 0, var(--negro) 88%, transparent 100%);
+  }
+
+  .det-emblema__pieza img {
+    width: min(58vw, 260px);
+    margin-inline: auto;
+  }
+
+  .det-emblema__pieza::before,
+  .det-emblema__pieza::after {
+    inset: 84px auto 18px 50%;
+    width: min(58vw, 260px);
+    transform: translateX(-50%);
+  }
+
+  .det-emblema__parte {
+    min-height: 0;
+    padding: 40px 0 48px;
+  }
+
+  .det-idea__fondo {
+    right: -22vw;
+    bottom: -4%;
+    width: 110vw;
+    opacity: 0.08;
+  }
+}
+
+/* Precios en móvil: cada fila de la tabla se convierte en un bloque con el nombre del plan delante */
+@media (max-width: 720px) {
+  .det .pagina__titulo {
+    font-size: clamp(2rem, 9.5vw, 2.9rem);
+  }
+
+  .det-planes,
+  .det-planes thead,
+  .det-planes tbody,
+  .det-planes tfoot,
+  .det-planes tr,
+  .det-planes th,
+  .det-planes td {
+    display: block;
+    width: auto;
+  }
+
+  .det-planes thead tr {
+    display: grid;
+    gap: 0;
+  }
+
+  .det-planes thead th:first-child {
+    display: none;
+  }
+
+  .det-planes thead th {
+    padding: 20px 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .det-planes .det-planes__sugerido {
+    padding-left: 0;
+    background: none;
+  }
+
+  .det-planes thead .det-planes__sugerido {
+    padding-top: 20px;
+    border-top: 2px solid var(--oro);
+    box-shadow: none;
+  }
+
+  .det-planes tbody td.det-planes__sugerido,
+  .det-planes tfoot td.det-planes__sugerido {
+    color: var(--oro-claro);
+  }
+
+  .det-planes tbody tr,
+  .det-planes tfoot tr {
+    padding: 18px 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .det-planes tfoot tr {
+    border-top-color: var(--oro);
+  }
+
+  .det-planes tbody th,
+  .det-planes tfoot th {
+    width: auto;
+    padding: 0 0 8px;
+    border: 0;
+    color: var(--blanco);
+    font-weight: 600;
+  }
+
+  .det-planes tbody td,
+  .det-planes tfoot td {
+    display: grid;
+    grid-template-columns: 5.6rem minmax(0, 1fr);
+    gap: 12px;
+    width: auto;
+    padding: 5px 0;
+    border: 0;
+  }
+
+  .det-planes td::before {
+    content: attr(data-plan);
+    color: var(--suave);
+    font-family: var(--fuente);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .det-terminos > div,
+  .det-glosario > div,
+  .det-cronica li {
+    grid-template-columns: 1fr;
+  }
+
+  .det-ficha__datos {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- 32.10 Menos movimiento: nada se desplaza, todo queda en su estado final --- */
+@media (prefers-reduced-motion: reduce) {
+  .det-emblema__pieza,
+  .det-emblema__pieza::before,
+  .det-emblema__pieza::after,
+  .det-rel__lista svg,
+  .det-indice a {
+    transition: none;
+  }
+}
+
+html.menos-movimiento .det-cal .det-cal__barra,
+html.menos-movimiento .det-escala .det-escala__barra i {
+  transform: none !important;
+  transition: none !important;
+}
+
+html.menos-movimiento .det-linea__trazo {
+  clip-path: none !important;
+}
+
+html.menos-movimiento .det-emblema__pieza {
+  transition: none;
+}
+
+@media print {
+  .det-linea__trazo { clip-path: none !important; }
+  .det-cal .det-cal__barra, .det-escala .det-escala__barra i { transform: none !important; }
+}
