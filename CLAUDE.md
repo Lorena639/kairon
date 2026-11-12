@@ -37,14 +37,62 @@ La empresa ficticia se llama **KAIRON** (antes Argos; renombrada el 29-10-2026).
 - [Qué funcionalidad de programación aporta Dani, si la hay más allá de la web] → Propuesta (sin confirmar con Lorena): el analizador de logs de su portfolio, que detecta fuerza bruta en logs HTTP y une programación y ciberseguridad.
 - [Si el proyecto técnico KAIRON Data Chip (estudio en `C:\Users\lorena\KAIRON`) forma parte del TFG o es un proyecto aparte]
 
-## Estado actual (29-10-2026)
-- Versión local de Lorena: 2 páginas, rediseñada el 29-10-2026 al estilo Active Theory / Lusion (oscuro, tipografía gigante Space Grotesk, preloader, cursor propio, Lenis, GSAP y escena 3D de radar con Three.js). Sin commitear.
-- Versión de Dani en GitHub (`jdanioliv/Argos-TFG`, rama main): 4 páginas (index, sobre-nosotros, sobre-dani, sobre-lorena), estética "Cyber-Terminal", todavía con el nombre Argos. No fusionada.
-- Pendiente: decidir qué versión se presenta, aplicar el rename en la definitiva, validar con W3C, LinkedIn real, avatar real.
-- Actualización 12-11-2026: el portfolio de Dani ya está en este repo (`joao-daniel-oliveira/`), con estética propia; ver "Parte de Dani".
-- Plan de presentación en clase: `PRESENTACION.md`. Este archivo (`CLAUDE.md`) es el contexto que leen las sesiones de Claude en esta carpeta.
+## Plan general del trabajo (resumen; el detalle está en `PLAN-TFG.md`)
+**Idea:** un TFG **pequeño y terminado**, no uno grande a medias. KAIRON simula un SOC de verdad: Wazuh detecta un ataque, una herramienta forense propia en Python recoge las pruebas y la web es la cara pública de la empresa.
 
-## Parte de Dani (actualizado el 12-11-2026)
+**Qué entra en el TFG:**
+1. **Web corporativa KAIRON.** Código de Dani y contenido de Lorena. Es también la práctica A1-RA1.
+2. **Laboratorio SOC con Wazuh** (Lorena): red virtual con firewall, servidor Linux, 1–2 Windows y una máquina atacante, aislada.
+3. **Herramienta forense en Python** (Lorena en lo forense, Dani en el código):
+   - Recoge procesos, conexiones de red, usuarios e inicios de sesión, persistencia y hashes.
+   - Genera un informe con cadena de custodia: hora UTC, número de caso y SHA-256 de cada prueba.
+   - Si crece demasiado, se queda en 4 módulos.
+4. **Un ataque de ejemplo de principio a fin, que es la demo:** fuerza bruta o malware simulado → Wazuh lo detecta → la herramienta recoge las pruebas → informe.
+
+**Qué no entra:** KAIRON Data Chip, salvo como capítulo de "líneas futuras" (el estudio está en `C:\Users\lorena\KAIRON` y `futuro.html`), ni apps móviles, cifrado o trazabilidad.
+
+**Calendario:**
+- Presentación en febrero o marzo de 2027.
+- Lo gordo, hecho antes de Navidad.
+- Ensayo de la demo completa del 7 al 13 de enero.
+- **Corte de alcance el 15 de enero:** lo que no funcione se quita, no se arregla a última hora.
+- Código congelado (v1.0) del 14 al 20 de enero.
+- Memoria al tutor la primera semana de febrero.
+- Plan B de la demo: un vídeo de 3 minutos y capturas.
+
+**Memoria:**
+- 11 capítulos, listados en `PLAN-TFG.md` §5.
+- Formato del centro: Calibri 11, justificado, títulos en negrita, cada captura y fragmento de código explicado, fuentes y uso de IA declarado.
+- El borrador del capítulo de la web está en `docs/MEMORIA-WEB.md`.
+
+**Presentación en clase:** `PRESENTACION.md` (15–20 min con demo en vivo y atajos: `A` lanza el ataque, `E` abre el equipo).
+
+## Estado actual (12-11-2026)
+- **Web KAIRON en este repo.** La hizo sobre todo Lorena; su dirección creativa está en `docs/DIRECCION-CREATIVA.md`.
+  - Páginas: index, servicios, soc, productos, proyectos, futuro, contacto, informe, sobre-mi y 404, más la versión en catalán en `ca/`.
+  - Técnica: escena 3D de radar con Three.js, GSAP, ScrollTrigger y Lenis en `js/vendor/`; PWA (`sw.js`); CSP sin scripts en línea.
+  - Simulador de ataque, SOC simulado, informe con SHA-256 y modo presentación.
+  - Las comprobaciones se pasan con `tools/comprobar.py`.
+- **Regla de marca:** el logo se usa exactamente como en el manual de identidad. Se puede animar, iluminar o dar profundidad, pero nunca redibujar, recolorear ni deformar.
+- **Portfolios personales**, enlazados desde la ficha del equipo:
+  - `antonia-lorena-cracana/`: el de Lorena.
+  - `joao-daniel-oliveira/`: el de Dani.
+- **La antigua web de Dani** (`jdanioliv/Argos-TFG`, estética "Cyber-Terminal" con el nombre Argos) ya no es la que se presenta.
+- **Pendiente:**
+  - Validar con W3C.
+  - LinkedIn y avatares reales.
+  - Laboratorio Wazuh y herramienta forense (ver calendario).
+  - Confirmar qué aporta Dani en programación más allá de la web.
+
+## Parte de Lorena
+- **Quién es:** Antonia Lorena Cracana. Lleva la ciberseguridad: análisis forense, monitorización y respuesta a incidentes. Quiere especializarse en análisis forense.
+- **Su portfolio** (`antonia-lorena-cracana/`, en castellano y catalán): estilo de **expediente forense** con una huella dactilar dibujada.
+  - Secciones: pruebas aportadas, cadena de custodia, cómo trabajo, "Si cambia una letra, se nota" (SHA-256 real para comparar huellas), casos abiertos y "¿Abrimos un caso?".
+  - Extras: pruebas que se pueden mover, luz UV, glosario (SOC, Wazuh, IRIS, Grafana, falso positivo, threat hunting), caso forense jugable de phishing, terminal, modo oscuro, sonido e intro.
+- **En el TFG:** monta el laboratorio Wazuh, diseña los ataques simulados y la cadena de custodia, y escribe los capítulos de detección y resultados.
+- **Cuenta compartida:** esta cuenta de Claude es de Lorena, pero la usan los dos. Si no está claro quién escribe, hay que preguntarlo antes de atribuirle ideas a uno u otro. Este archivo (`CLAUDE.md`) es el contexto que leen las sesiones de Claude en esta carpeta.
+
+## Parte de Dani (actualizado el 12-11-2026; solo lo de Dani, no de Lorena)
 Lo que Dani ha contado y decidido en sus sesiones con Claude. Rama de trabajo: `claude/awesome-hamilton-81xuyz`.
 
 ### Quién es Dani
