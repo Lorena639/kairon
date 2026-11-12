@@ -1,0 +1,1443 @@
+/* =========================================================
+   KAIRON · Plan de empresa
+   Estilos propios de plan.html y ca/plan.html. Se carga después de styles.css y reutiliza
+   sus variables de marca y las piezas "det-" (titulares, texto, tablas, listas).
+   - Todas las clases nuevas empiezan por "pe-" (plan de empresa).
+   - La página se lee como un informe impreso: capítulos numerados, tablas con rayas finas,
+     una hoja de cuentas en marfil y un índice que acompaña la lectura.
+   - Color con función, como en el resto de la web: oro = lo que se está leyendo o el escenario
+     elegido, cian = dato de una fuente oficial, lavanda = estimación propia y avisos.
+   - Sin JavaScript todo se lee: tablas y gráficos llevan el escenario base escrito en el HTML.
+     js/plan.js añade "pe-mov" a <html> solo cuando puede animar.
+   Índice: 1 estructura · 2 índice de lectura · 3 marcas de origen y cifras · 4 tablas ·
+   5 piezas de capítulo · 6 gráficos · 7 escenarios y hoja de cuentas · 8 hitos, aviso y fuentes ·
+   9 pantallas pequeñas · 10 menos movimiento · 11 impresión
+   ========================================================= */
+
+/* ---------- 1. Estructura del documento ---------- */
+.pe {
+  --pe-fondo: var(--negro);      /* fondo detrás de las celdas fijas de las tablas */
+  --pe-neg: #ff9c94;             /* importes negativos sobre fondo oscuro (además llevan el signo −) */
+  --pe-vigia: #8c6b3f;
+  --pe-centinela: #d4af7a;
+  --pe-guardian: #f8f5ee;
+  --pe-egida: #35c6d6;
+}
+
+.pe-cuerpo {
+  grid-template-columns: minmax(190px, 236px) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 104px);
+}
+
+.pe-texto {
+  max-width: 940px;
+  min-width: 0;
+  counter-reset: pe-cap;
+}
+
+/* Capítulo: número grande en contorno, como la portadilla de un informe */
+.pe-cap {
+  counter-increment: pe-cap;
+  scroll-margin-top: 96px;
+}
+
+.pe-cap::before {
+  content: counter(pe-cap, decimal-leading-zero);
+  display: block;
+  margin-bottom: clamp(10px, 1.6vw, 20px);
+  font-family: var(--fuente-titulo);
+  font-size: clamp(3.2rem, 8vw, 6.4rem);
+  font-weight: 500;
+  line-height: 0.86;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(212, 175, 122, 0.6);
+}
+
+.pe-cap--fuentes {
+  counter-increment: none;
+}
+
+.pe-cap--fuentes::before {
+  content: none;
+}
+
+.pe .det-grupo + .det-grupo {
+  margin-top: clamp(72px, 10vw, 140px);
+  padding-top: clamp(40px, 6vw, 72px);
+  border-top: 1px solid var(--linea);
+}
+
+.pe-cap .det-h2 {
+  max-width: 17em;
+}
+
+.pe-h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: clamp(44px, 6vw, 72px) 0 14px;
+  color: var(--det-fuerte);
+}
+
+.pe .det-lista {
+  margin-top: 18px;
+}
+
+.pe .det-lista b {
+  color: var(--det-fuerte);
+  font-weight: 600;
+}
+
+.pe-tabla + .det-prosa,
+.pe-notas + .det-prosa,
+.pe .det-terminos + .det-prosa,
+.pe .det-lista + .det-prosa,
+.pe figure + .det-prosa,
+.pe-embudo + .det-prosa {
+  margin-top: clamp(22px, 3vw, 32px);
+}
+
+/* ---------- 2. Índice de lectura ---------- */
+.pe-indice {
+  --pe-avance: 0;
+  top: 104px;
+}
+
+.pe-indice__cuenta {
+  margin: 0 0 14px;
+  color: var(--suave);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.pe-indice__cuenta b {
+  color: var(--oro-claro);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.pe-indice ol {
+  position: relative;
+  counter-reset: pe-ind;
+  padding-left: 18px;
+}
+
+/* Carril y avance: la raya dorada baja con la lectura */
+.pe-indice ol::before,
+.pe-indice ol::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 1px;
+  background: var(--linea);
+}
+
+.pe-indice ol::after {
+  width: 2px;
+  left: -0.5px;
+  background: var(--oro);
+  transform: scaleY(var(--pe-avance));
+  transform-origin: top;
+}
+
+.pe-indice li {
+  counter-increment: pe-ind;
+}
+
+.pe-indice a {
+  display: grid;
+  grid-template-columns: 2.1em minmax(0, 1fr);
+  padding: 7px 0;
+  border-top: 0;
+  color: var(--suave);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.pe-indice a::before {
+  content: counter(pe-ind, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.75;
+  color: rgba(212, 175, 122, 0.7);
+}
+
+.pe-indice .pe-indice__extra {
+  counter-increment: none;
+  margin-top: 8px;
+}
+
+.pe-indice .pe-indice__extra a::before {
+  content: "";
+}
+
+.pe-indice a:hover,
+.pe-indice a:focus-visible {
+  padding-left: 0;
+  color: var(--oro-claro);
+}
+
+.pe-indice a.es-leido {
+  color: rgba(248, 245, 238, 0.52);
+}
+
+.pe-indice a[aria-current] {
+  color: var(--blanco);
+}
+
+.pe-indice a[aria-current]::before {
+  color: var(--oro-brillo);
+}
+
+.pe-indice a:focus-visible {
+  outline: 2px solid var(--oro-brillo);
+  outline-offset: 3px;
+}
+
+/* ---------- 3. Marcas de origen y cifras clave ---------- */
+/* De dónde sale cada número: capítulo 2 (oro), fuente oficial (cian) o estimación propia (lavanda) */
+.pe-origen {
+  display: inline-block;
+  padding: 3px 8px 2px;
+  border: 1px solid currentColor;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: 0.15em;
+}
+
+.pe-origen--cap { color: var(--oro-claro); }
+.pe-origen--fue { color: var(--cian-claro); }
+.pe-origen--est { color: var(--lavanda); }
+
+.pe-cifras {
+  margin: clamp(20px, 3vw, 32px) 0 0;
+}
+
+.pe-cifras > div {
+  display: grid;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  gap: 8px 32px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.pe-cifras > div:last-child {
+  border-bottom: 1px solid var(--linea);
+}
+
+.pe-cifras dt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--det-fuerte);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.pe-cifras dd {
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.5;
+}
+
+.pe-cifras b {
+  margin-right: 4px;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.5rem, 2.9vw, 2.3rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--oro-claro);
+  white-space: nowrap;
+}
+
+.pe-cifras--fuente b {
+  color: var(--cian-claro);
+}
+
+.pe-cifras small {
+  font-size: 0.95rem;
+}
+
+.pe-leyenda,
+.pe-notas {
+  margin: clamp(18px, 2.4vw, 26px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pe-leyenda li {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  gap: 6px 20px;
+  align-items: start;
+  max-width: 50rem;
+  padding: 14px 0;
+  border-top: 1px solid var(--linea);
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+.pe-leyenda .pe-origen {
+  justify-self: start;
+  margin-top: 3px;
+}
+
+.pe-leyenda a,
+.pe-notas a,
+.pe-hitos a,
+.pe-fuentes a {
+  color: var(--det-acento);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.pe-leyenda a:hover,
+.pe-notas a:hover,
+.pe-hitos a:hover,
+.pe-fuentes a:hover {
+  color: var(--det-fuerte);
+}
+
+/* Notas al pie de una tabla: cómo se ha calculado */
+.pe-notas li {
+  max-width: 46rem;
+  padding: 10px 0;
+  border-top: 1px solid var(--linea);
+  color: var(--suave);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.pe-notas b {
+  color: var(--det-fuerte);
+  font-weight: 600;
+}
+
+/* ---------- 4. Tablas ---------- */
+/* La región se desplaza en horizontal si la tabla no cabe: la página nunca se desborda */
+.pe-tabla {
+  max-width: 100%;
+  margin-top: clamp(24px, 3.4vw, 40px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--oro-oscuro) transparent;
+}
+
+.pe-tabla:focus-visible {
+  outline: 2px solid var(--oro-brillo);
+  outline-offset: 4px;
+}
+
+.pe-t {
+  min-width: 560px;
+  margin-top: 0;
+  line-height: 1.45;
+}
+
+.pe-t--texto { min-width: 680px; }
+.pe-t--planes { min-width: 780px; }
+.pe-t--cuentas { min-width: 520px; }
+
+.pe-t caption {
+  padding-bottom: 12px;
+  color: var(--det-fuerte);
+  font-size: 0.98rem;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.pe-t th,
+.pe-t td {
+  padding: 11px 16px 11px 0;
+}
+
+.pe-t td {
+  color: var(--suave);
+}
+
+.pe-t td:first-child {
+  font-family: inherit;
+  white-space: normal;
+}
+
+.pe-t thead th {
+  vertical-align: bottom;
+  line-height: 1.3;
+}
+
+.pe-t tbody th,
+.pe-t tfoot th {
+  min-width: 9.5em;
+  color: var(--det-fuerte);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* Columnas de cifras: a la derecha, con números de ancho fijo */
+.pe-t .n {
+  padding-right: 0;
+  padding-left: 16px;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.pe-t thead .n {
+  white-space: normal;
+}
+
+/* Una columna de texto después de una de cifras necesita aire */
+.pe-t .n + :not(.n) {
+  padding-left: 28px;
+}
+
+.pe-t td.n {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+}
+
+.pe-t .pe-fuerte {
+  color: var(--det-acento);
+  font-weight: 500;
+}
+
+.pe-t .es-negativo {
+  color: var(--pe-neg);
+}
+
+.pe-t small {
+  display: block;
+  color: var(--suave);
+  font-size: 0.8rem;
+}
+
+.pe-t .pe-precio td {
+  color: var(--det-acento);
+  font-weight: 600;
+}
+
+/* Fila de total: raya de oro y texto fuerte; el resultado final lleva doble raya, como en un balance */
+.pe-t .pe-total th,
+.pe-t .pe-total td {
+  border-top-color: var(--oro);
+  color: var(--det-fuerte);
+  font-weight: 600;
+}
+
+.pe-t .pe-total--fin th,
+.pe-t .pe-total--fin td {
+  border-top: 3px double var(--oro);
+  border-bottom: 1px solid var(--oro);
+}
+
+.pe-t .pe-total .es-negativo {
+  color: var(--pe-neg);
+}
+
+/* ---------- 5. Piezas de capítulo ---------- */
+/* 5.1 Marta: la ficha de la clienta */
+.pe-persona {
+  display: grid;
+  grid-template-columns: minmax(0, 0.38fr) minmax(0, 1fr);
+  gap: 20px clamp(28px, 4vw, 56px);
+  margin: clamp(44px, 6vw, 72px) 0 0;
+  padding: clamp(22px, 3.4vw, 40px);
+  background: var(--negro-2);
+  border: 1px solid var(--linea);
+}
+
+.pe-persona__rol {
+  margin: 12px 0 0;
+  color: var(--suave);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.pe-persona .det-terminos {
+  margin: 0;
+}
+
+.pe-persona .det-terminos > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.pe-persona dd b {
+  color: var(--det-fuerte);
+  font-weight: 600;
+}
+
+/* 5.2 Embudo: del mercado total al objetivo; cada escalón entra un poco más */
+.pe-embudo {
+  margin: clamp(24px, 3.4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pe-embudo > li {
+  display: grid;
+  grid-template-columns: 3.6rem minmax(7ch, 0.38fr) minmax(0, 1fr);
+  gap: 6px 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.pe-embudo > li:nth-child(2) { margin-left: 6%; }
+.pe-embudo > li:nth-child(3) { margin-left: 12%; }
+.pe-embudo > li:nth-child(4) { margin-left: 18%; }
+
+.pe-embudo > li:last-child {
+  border-top-color: var(--oro);
+}
+
+.pe-embudo__sigla {
+  color: var(--suave);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.pe-embudo__n {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--blanco);
+  white-space: nowrap;
+}
+
+.pe-embudo > li:last-child .pe-embudo__n {
+  color: var(--oro-claro);
+}
+
+.pe-embudo p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.55;
+}
+
+.pe-embudo--ventas > li {
+  grid-template-columns: minmax(4ch, 5.5rem) minmax(0, 1fr);
+}
+
+/* 5.3 DAFO: cuatro cuadrantes separados por una cruz, sin cajas */
+.pe-dafo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(20px, 3vw, 32px);
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
+
+.pe-dafo > div {
+  padding: clamp(20px, 3vw, 34px) clamp(16px, 3vw, 36px) clamp(22px, 3vw, 36px) 0;
+}
+
+.pe-dafo > div:nth-child(even) {
+  padding-left: clamp(16px, 3vw, 36px);
+  padding-right: 0;
+  border-left: 1px solid var(--linea);
+}
+
+.pe-dafo > div:nth-child(n + 3) {
+  border-top: 1px solid var(--linea);
+}
+
+.pe-dafo h4 {
+  margin: 0 0 14px;
+  font-family: var(--fuente-titulo);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--oro-claro);
+}
+
+.pe-dafo ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--suave);
+  line-height: 1.5;
+}
+
+.pe-dafo li {
+  position: relative;
+  padding: 6px 0 6px 18px;
+}
+
+.pe-dafo li::before {
+  content: "";
+  position: absolute;
+  top: 0.95em;
+  left: 0;
+  width: 8px;
+  height: 1px;
+  background: var(--oro);
+}
+
+/* ---------- 6. Gráficos (SVG escrito en el HTML; plan.js los anima) ---------- */
+.pe figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pe svg text {
+  font-family: var(--fuente);
+}
+
+.pe-graf__eje line {
+  stroke: rgba(248, 245, 238, 0.14);
+  stroke-width: 1;
+}
+
+.pe-graf__anio {
+  stroke: rgba(248, 245, 238, 0.14);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+}
+
+.pe-graf__marcas text {
+  fill: var(--suave);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+/* 6.1 Mapa de posicionamiento */
+.pe-mapa {
+  max-width: 660px;
+  margin-top: clamp(32px, 4.5vw, 56px);
+  margin-bottom: 0;
+}
+
+.pe-mapa svg,
+.pe-graf svg,
+.pe-barras svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.pe-mapa figcaption,
+.pe-graf figcaption p {
+  max-width: 44rem;
+  margin: 12px 0 0;
+  color: var(--suave);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.pe-mapa__punto circle {
+  fill: var(--negro);
+  stroke: rgba(248, 245, 238, 0.7);
+  stroke-width: 1.3;
+}
+
+.pe-mapa__punto text {
+  fill: var(--suave);
+  font-size: 12.5px;
+}
+
+.pe-mapa__kairon line {
+  stroke: var(--oro);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.pe-mapa__kairon circle {
+  fill: var(--oro);
+  stroke: var(--oro-brillo);
+}
+
+.pe-mapa__kairon text {
+  fill: var(--oro-claro);
+  font-weight: 600;
+}
+
+.pe-mapa__kairon .pe-mapa__marca {
+  fill: var(--blanco);
+  font-family: var(--fuente-titulo);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+/* 6.2 Barras: reparto del precio y clientes por plan */
+.pe-barras {
+  margin-top: clamp(28px, 4vw, 48px);
+  margin-bottom: 0;
+}
+
+.pe-barras figcaption,
+.pe-barras__clave,
+.pe-graf__clave {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 14px 0 0;
+  color: var(--suave);
+  font-size: 0.86rem;
+}
+
+.pe-barras--clientes figcaption {
+  margin: 0 0 16px;
+}
+
+.pe-barras__anio {
+  fill: var(--blanco);
+  font-size: 14px;
+}
+
+.pe-barras__total {
+  fill: var(--oro-claro);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.pe-barras__guia {
+  stroke: rgba(248, 245, 238, 0.12);
+  stroke-width: 1;
+}
+
+.pe-plan--vigia { --pe-c: var(--pe-vigia); }
+.pe-plan--centinela { --pe-c: var(--pe-centinela); }
+.pe-plan--guardian { --pe-c: var(--pe-guardian); }
+.pe-plan--egida { --pe-c: var(--pe-egida); }
+.pe-unidad--infra { --pe-c: #6d5330; }
+.pe-unidad--analista { --pe-c: var(--oro); }
+.pe-unidad--pago { --pe-c: var(--lavanda); }
+.pe-unidad--margen { --pe-c: var(--blanco); }
+
+.pe-barras rect {
+  fill: var(--pe-c);
+  stroke: var(--negro);
+  stroke-width: 1;
+}
+
+.pe-clave {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pe-clave::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background: var(--pe-c);
+}
+
+.pe-clave--activa::before,
+.pe-clave--otra::before {
+  width: 26px;
+  height: 0;
+  border-top: 3px solid var(--oro);
+  background: none;
+}
+
+.pe-clave--otra::before {
+  border-top: 1px solid rgba(248, 245, 238, 0.5);
+}
+
+/* 6.3 Curvas de los tres escenarios: la elegida en oro, las otras dos de referencia */
+.pe-grafs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.pe-graf {
+  min-width: 0;
+  margin: 0;
+}
+
+.pe-graf figcaption {
+  margin-bottom: 14px;
+}
+
+.pe-graf figcaption p {
+  margin-top: 6px;
+}
+
+.pe-graf__linea {
+  fill: none;
+  stroke: rgba(248, 245, 238, 0.36);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke 0.5s, stroke-width 0.5s;
+}
+
+.pe-graf__area {
+  fill: var(--oro);
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.pe-graf__fin {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.pe-graf__fin circle {
+  fill: var(--oro-brillo);
+}
+
+.pe-graf__fin text {
+  fill: var(--oro-claro);
+  font-family: var(--mono);
+  font-size: 15px;
+}
+
+.pe-graf__serie.es-activa .pe-graf__linea {
+  stroke: var(--oro);
+  stroke-width: 2.6;
+}
+
+.pe-graf__serie.es-activa .pe-graf__area {
+  opacity: 0.09;
+}
+
+.pe-graf__serie.es-activa .pe-graf__fin {
+  opacity: 1;
+}
+
+/* ---------- 7. Selector de escenario y hoja de cuentas ---------- */
+/* El selector se queda a la vista mientras se lee el capítulo */
+.pe-esc-caja {
+  position: sticky;
+  top: 92px;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 28px;
+  margin-top: clamp(28px, 4vw, 44px);
+  padding: 12px 0;
+  background: rgba(11, 15, 20, 0.95);
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
+
+.pe-esc {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.pe-esc[hidden] {
+  display: none;
+}
+
+.pe-esc legend {
+  float: left;
+  margin-right: 14px;
+  padding: 0;
+  color: var(--suave);
+  font-size: 0.86rem;
+}
+
+.pe-esc label {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.pe-esc input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.pe-esc span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 clamp(12px, 2vw, 20px);
+  border: 1px solid rgba(212, 175, 122, 0.55);
+  color: var(--oro-claro);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.25s, color 0.25s;
+}
+
+.pe-esc label + label span {
+  border-left: 0;
+}
+
+.pe-esc input:hover + span {
+  background: rgba(212, 175, 122, 0.14);
+}
+
+.pe-esc input:checked + span {
+  background: var(--oro);
+  border-color: var(--oro);
+  color: var(--negro);
+}
+
+.pe-esc input:focus-visible + span {
+  outline: 2px solid var(--oro-brillo);
+  outline-offset: 3px;
+}
+
+.pe-esc__estado {
+  flex: 1 1 18rem;
+  margin: 0;
+  color: var(--suave);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+/* Hoja de cuentas: papel marfil sobre la mesa oscura */
+.pe-hoja {
+  --det-fuerte: var(--negro);
+  --det-acento: #7a5c33;
+  --suave: rgba(11, 15, 20, 0.76);
+  --linea: rgba(11, 15, 20, 0.18);
+  --oro: #8c6b3f;
+  --pe-fondo: var(--blanco);
+  --pe-neg: #a12a22;
+  margin-top: clamp(36px, 5vw, 64px);
+  padding: clamp(18px, 4vw, 52px);
+  background: var(--blanco);
+  color: var(--negro);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.5);
+}
+
+.pe-hoja .pe-tabla:first-child {
+  margin-top: 0;
+}
+
+.pe-hoja .pe-tabla + .pe-tabla {
+  margin-top: clamp(32px, 4.4vw, 56px);
+}
+
+.pe-hoja .pe-tabla:focus-visible {
+  outline-color: var(--negro);
+}
+
+.pe-hoja .pe-t caption {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  font-weight: 500;
+}
+
+.pe-hoja .pe-t thead th {
+  color: var(--det-acento);
+}
+
+.pe-hoja__pie {
+  max-width: 46rem;
+  margin: clamp(20px, 3vw, 32px) 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--linea);
+  color: var(--suave);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+/* ---------- 8. Hitos, aviso final y fuentes ---------- */
+.pe-hitos {
+  margin: clamp(24px, 3.4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pe-hitos > li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  gap: 6px clamp(24px, 4vw, 56px);
+  padding: 22px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.pe-hitos h4 {
+  grid-column: 1;
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.12rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--blanco);
+}
+
+.pe-hitos__cuando {
+  grid-column: 1;
+  margin: 0;
+  color: var(--oro-claro);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.pe-hitos > li > p:last-child {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  max-width: 36rem;
+  margin: 0;
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+.pe-aviso {
+  max-width: 46rem;
+  margin-top: clamp(44px, 6vw, 72px);
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(185, 167, 240, 0.45);
+  color: var(--suave);
+  line-height: 1.6;
+}
+
+.pe-aviso .det-h3 {
+  margin-bottom: 12px;
+  color: var(--lavanda);
+}
+
+.pe-aviso p {
+  margin: 0;
+}
+
+.pe-aviso p + p {
+  margin-top: 0.9em;
+}
+
+.pe-fuentes {
+  margin: clamp(20px, 3vw, 32px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pe-fuentes li {
+  display: grid;
+  gap: 4px;
+  max-width: 48rem;
+  padding: 14px 0;
+  border-top: 1px solid var(--linea);
+  line-height: 1.5;
+}
+
+.pe-fuentes li > span {
+  color: var(--suave);
+  font-size: 0.9rem;
+}
+
+.pe-fuentes .pe-fuentes__propia {
+  color: var(--det-fuerte);
+  font-size: 1rem;
+}
+
+.pe-fuentes a {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 9. Pantallas medianas y pequeñas ---------- */
+@media (max-width: 1020px) {
+  .pe-cuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* El índice deja de acompañar: queda como lista al principio, en dos columnas */
+  .pe-indice ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+    padding-left: 0;
+  }
+
+  .pe-indice ol::before,
+  .pe-indice ol::after,
+  .pe-indice__cuenta {
+    display: none;
+  }
+
+  .pe-indice a {
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+    border-top: 1px solid var(--linea);
+  }
+
+  .pe-indice .pe-indice__extra {
+    margin-top: 0;
+  }
+
+  .pe-indice a.es-leido {
+    color: var(--suave);
+  }
+}
+
+@media (max-width: 860px) {
+  .pe-grafs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pe-persona,
+  .pe-hitos > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pe-hitos > li > p:last-child {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pe-indice ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pe-cifras > div,
+  .pe-leyenda li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pe-cifras b {
+    white-space: normal;
+  }
+
+  .pe-embudo > li {
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+  }
+
+  .pe-embudo > li p {
+    grid-column: 1 / -1;
+  }
+
+  .pe-embudo--ventas > li {
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+  }
+
+  .pe-embudo--ventas > li p {
+    grid-column: 2;
+  }
+
+  .pe-embudo > li:nth-child(2) { margin-left: 4%; }
+  .pe-embudo > li:nth-child(3) { margin-left: 8%; }
+  .pe-embudo > li:nth-child(4) { margin-left: 12%; }
+
+  .pe-dafo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pe-dafo > div,
+  .pe-dafo > div:nth-child(even) {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 0;
+  }
+
+  .pe-dafo > div + div {
+    border-top: 1px solid var(--linea);
+  }
+
+  /* En el móvil la primera columna de cada tabla se queda fija mientras se desplaza el resto */
+  .pe-t tbody th,
+  .pe-t tfoot th:not([colspan]),
+  .pe-t thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 7.5em;
+    max-width: 11em;
+    background: var(--pe-fondo);
+  }
+
+  .pe-esc-caja {
+    top: 90px;
+  }
+
+  /* El título de la tabla no se desplaza con ella: se queda a la vista y parte en líneas */
+  .pe-t caption > span {
+    display: inline-block;
+    position: sticky;
+    left: 0;
+    max-width: calc(100vw - 80px);
+  }
+
+  .pe-t--cuentas {
+    min-width: 0;
+  }
+
+  .pe-t--cuentas .n {
+    padding-left: 8px;
+  }
+
+  .pe-t--cuentas td.n {
+    font-size: 0.76rem;
+  }
+
+  .pe-esc legend {
+    display: none;
+  }
+
+  .pe-esc__estado {
+    flex-basis: 100%;
+    font-size: 0.8rem;
+  }
+
+  .pe-mapa__punto text {
+    font-size: 15px;
+  }
+
+  .pe-graf__marcas text {
+    font-size: 15px;
+  }
+
+  .pe-graf__fin text,
+  .pe-barras__total,
+  .pe-barras__anio {
+    font-size: 16px;
+  }
+}
+
+/* ---------- 10. Menos movimiento y modo presentación ---------- */
+html.menos-movimiento .pe *,
+html.presentacion .pe * {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pe * {
+    transition: none !important;
+  }
+}
+
+html.presentacion .pe-indice {
+  position: static;
+}
+
+/* ---------- 11. Impresión: el plan como informe en papel ---------- */
+@media print {
+  @page {
+    margin: 18mm 16mm;
+  }
+
+  main.pe {
+    --det-fuerte: #111;
+    --det-acento: #6b4f2a;
+    --blanco: #111;
+    --suave: #333;
+    --linea: #b9b3a6;
+    --oro: #8c6b3f;
+    --oro-claro: #6b4f2a;
+    --oro-brillo: #6b4f2a;
+    --cian-claro: #0b6470;
+    --lavanda: #4a3f8a;
+    --negro: #fff;
+    --negro-2: #fff;
+    --pe-fondo: #fff;
+    --pe-neg: #a12a22;
+    --pe-guardian: #e9e2d2;
+    color: #111;
+  }
+
+  .pe-indice,
+  .pe-esc,
+  .pe .pagina__escena,
+  .pe .det-cierre,
+  .controles,
+  .salto,
+  .pie__estado,
+  .pie__gigante,
+  .avisos {
+    display: none !important;
+  }
+
+  .pe .pi-datos {
+    display: flex;
+    color: #333;
+  }
+
+  .pe .pagina--cabeza {
+    min-height: 0;
+    padding: 0 0 24px;
+  }
+
+  .pe .pagina__titulo,
+  .pe .pagina__intro,
+  .pe h2,
+  .pe h3,
+  .pe h4 {
+    color: #111 !important;
+  }
+
+  .pe .det-seccion {
+    padding: 0;
+    border: 0;
+  }
+
+  .pe-cuerpo {
+    display: block;
+  }
+
+  .pe-texto {
+    max-width: none;
+  }
+
+  .pe-cap {
+    break-before: page;
+  }
+
+  .pe-cap:first-child {
+    break-before: auto;
+  }
+
+  .pe .det-grupo + .det-grupo {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .pe-cap::before {
+    font-size: 40pt;
+    -webkit-text-stroke: 0.6pt #8c6b3f;
+  }
+
+  .pe h2,
+  .pe h3,
+  .pe h4,
+  .pe-t caption {
+    break-after: avoid;
+  }
+
+  .pe-tabla {
+    overflow: visible;
+  }
+
+  .pe-t,
+  .pe-t--texto,
+  .pe-t--planes,
+  .pe-t--cuentas {
+    min-width: 0;
+    font-size: 8.5pt;
+  }
+
+  .pe-t tr,
+  .pe-cifras > div,
+  .pe-embudo > li,
+  .pe-hitos > li,
+  .pe-persona,
+  .pe figure,
+  .pe-aviso {
+    break-inside: avoid;
+  }
+
+  .pe-t .n {
+    white-space: normal;
+  }
+
+  .pe-esc-caja {
+    position: static;
+    background: none;
+  }
+
+  .pe-hoja {
+    --det-fuerte: #111;
+    --suave: #333;
+    --linea: #b9b3a6;
+    padding: 0;
+    background: none;
+    color: #111;
+    box-shadow: none;
+  }
+
+  .pe-persona {
+    border-color: #b9b3a6;
+  }
+
+  .pe-grafs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pe-graf__eje line,
+  .pe-graf__anio,
+  .pe-barras__guia {
+    stroke: #c9c4b8;
+  }
+
+  .pe-graf__linea {
+    stroke: #8a8578;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .pe-barras rect {
+    stroke: #6b6558;
+    stroke-width: 0.5;
+  }
+
+  /* La regla general de impresión pone opacidad 1 a todo: aquí solo debe verse el escenario elegido */
+  .pe-graf__area,
+  .pe-graf__serie:not(.es-activa) .pe-graf__fin {
+    display: none;
+  }
+
+  .pe-graf__serie.es-activa .pe-graf__linea {
+    stroke: #8c6b3f;
+  }
+
+  /* Los fondos no se imprimen: las claves de color pasan a ser bordes */
+  .pe-clave::before {
+    width: 0;
+    height: 0;
+    border: 6px solid var(--pe-c);
+    background: none;
+  }
+
+  .pe-clave--activa::before,
+  .pe-clave--otra::before {
+    width: 26px;
+    border: 0;
+    border-top: 3px solid #8c6b3f;
+  }
+
+  .pe-clave--otra::before {
+    border-top: 1px solid #8a8578;
+  }
+
+  .pe-mapa__punto circle {
+    stroke: #555;
+  }
+
+  .pe-clave--otra::before {
+    border-top-color: #8a8578;
+  }
+
+  .pe-fuentes a::after {
+    content: " (" attr(href) ")";
+    font-size: 7.5pt;
+    color: #555;
+  }
+
+  .pe a {
+    color: #111;
+  }
+}

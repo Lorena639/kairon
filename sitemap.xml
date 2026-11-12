@@ -85,6 +85,11 @@
     <xhtml:link rel="alternate" hreflang="ca" href="ca/legal.html"/>
   </url>
   <url>
+    <loc>plan.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="plan.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/plan.html"/>
+  </url>
+  <url>
     <loc>productos.html</loc>
     <xhtml:link rel="alternate" hreflang="es" href="productos.html"/>
     <xhtml:link rel="alternate" hreflang="ca" href="ca/productos.html"/>

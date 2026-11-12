@@ -3,11 +3,11 @@
    la app instalada abre al instante y funciona aunque no haya conexión.
    Estrategia: primero red (para ver cambios), y si falla, caché. */
 
-const VERSION = "kairon-v26";
+const VERSION = "kairon-v27";
 const ARCHIVOS = [
   "./", "./index.html", "./sobre-mi.html", "./informe.html",
-  "./servicios.html", "./soc.html", "./contacto.html", "./productos.html", "./proyectos.html", "./futuro.html", "./kairos.html", "./metodo.html", "./incidente.html", "./preguntas.html", "./laboratorio.html", "./ca/index.html", "./ca/servicios.html", "./ca/soc.html", "./ca/contacto.html", "./ca/productos.html", "./ca/proyectos.html", "./ca/futuro.html", "./ca/sobre-mi.html", "./ca/informe.html", "./ca/kairos.html", "./ca/metodo.html", "./ca/incidente.html", "./ca/preguntas.html", "./ca/laboratorio.html", "./data-chip.html", "./legal.html", "./ca/data-chip.html", "./ca/legal.html",
-  "./css/styles.css", "./js/main.js", "./js/escena.js", "./js/intro.js", "./js/polvo.js", "./js/visuales.js", "./js/detalle.js", "./js/paginas.js", "./js/datachip.js", "./css/datachip.css", "./js/mundo.js", "./js/v6.js", "./js/vendor/fluido.js", "./img/relieve/kairon-relieve-logo.png", "./img/relieve/kairon-relieve-emblema.png", "./img/relieve/kairon-relieve-horizontal.png", "./img/relieve/kairon-relieve-wordmark.png", "./img/relieve/kairon-relieve-mini.png",
+  "./servicios.html", "./soc.html", "./contacto.html", "./productos.html", "./proyectos.html", "./futuro.html", "./kairos.html", "./metodo.html", "./incidente.html", "./preguntas.html", "./laboratorio.html", "./ca/index.html", "./ca/servicios.html", "./ca/soc.html", "./ca/contacto.html", "./ca/productos.html", "./ca/proyectos.html", "./ca/futuro.html", "./ca/sobre-mi.html", "./ca/informe.html", "./ca/kairos.html", "./ca/metodo.html", "./ca/incidente.html", "./ca/preguntas.html", "./ca/laboratorio.html", "./data-chip.html", "./legal.html", "./ca/data-chip.html", "./ca/legal.html", "./plan.html", "./ca/plan.html",
+  "./css/styles.css", "./js/main.js", "./js/escena.js", "./js/intro.js", "./js/polvo.js", "./js/visuales.js", "./js/detalle.js", "./js/paginas.js", "./js/datachip.js", "./css/datachip.css", "./js/plan.js", "./css/plan.css", "./js/mundo.js", "./js/v6.js", "./js/vendor/fluido.js", "./img/relieve/kairon-relieve-logo.png", "./img/relieve/kairon-relieve-emblema.png", "./img/relieve/kairon-relieve-horizontal.png", "./img/relieve/kairon-relieve-wordmark.png", "./img/relieve/kairon-relieve-mini.png",
   "./js/vendor/three.min.js", "./js/vendor/postprocessing.min.js", "./js/k3d-forma.js", "./js/vendor/gsap.min.js", "./js/vendor/ScrollTrigger.min.js", "./js/vendor/SplitText.min.js", "./js/vendor/ScrambleTextPlugin.min.js", "./js/vendor/lenis.min.js",
   "./manifest.webmanifest", "./img/favicon.ico", "./img/apple-touch-icon.png",
   "./img/app-icon-192.png", "./img/app-icon-512.png", "./img/kairon-emblema-192.png",

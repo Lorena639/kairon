@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan de empresa de KAIRON, un SOC gestionado para particulares y pymes: mercado, competencia, planes y precios, economía por cliente, marketing, operaciones, equipo, proyecciones a tres años en tres escenarios, financiación y riesgos. Empresa ficticia: proyecto académico con cifras simuladas.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El momento justo">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>Plan de empresa: mercado, cuentas y tres años de proyecciones · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="plan.html">
+  <link rel="alternate" hreflang="ca" href="ca/plan.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "url": "index.html",
+    "logo": "img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguridad y análisis forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desarrollo web y sistemas", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
+  <!-- Estilos propios del plan de empresa -->
+  <link rel="stylesheet" href="css/plan.css?v=20261112c">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
+    </ul>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/plan.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det pe" data-escenario="base">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Plan de empresa</h1>
+        <p class="pagina__intro">Cómo un laboratorio de dos estudiantes se convertiría en un SOC gestionado que se paga solo: mercado, precios, costes, equipo y tres años de cuentas, con cada supuesto a la vista.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li class="pi-datos__aviso">Empresa ficticia: cifras simuladas con supuestos explícitos</li><li>Versión 1.0 · 12-11-2026</li><li>Horizonte: 3 años</li><li>12 capítulos</li></ul>
+      </div>
+    </section>
+
+    <!-- ===== DOCUMENTO: índice fijo a la izquierda y un bloque por capítulo ===== -->
+    <section class="det-seccion det-seccion--borde pe-doc" aria-label="Plan de empresa de KAIRON">
+      <div class="contenedor det-faq pe-cuerpo">
+
+        <nav class="det-indice pe-indice" aria-labelledby="titulo-indice">
+          <h2 id="titulo-indice" class="pi-sin-partir">En este documento</h2>
+          <p class="pe-indice__cuenta" aria-hidden="true"><b>01</b> / 12</p>
+          <ol>
+            <li><a href="#resumen">Resumen ejecutivo</a></li>
+            <li><a href="#mercado">Problema y mercado</a></li>
+            <li><a href="#competencia">Competencia y posición</a></li>
+            <li><a href="#oferta">Servicios y planes</a></li>
+            <li><a href="#modelo">Modelo de negocio</a></li>
+            <li><a href="#marketing">Marketing y ventas</a></li>
+            <li><a href="#operaciones">Operaciones</a></li>
+            <li><a href="#equipo">Equipo y contratación</a></li>
+            <li><a href="#proyecciones">Proyecciones a 3 años</a></li>
+            <li><a href="#financiacion">Financiación</a></li>
+            <li><a href="#riesgos">Riesgos, indicadores e hitos</a></li>
+            <li><a href="#forma">Forma jurídica y avisos</a></li>
+            <li class="pe-indice__extra"><a href="#fuentes">Fuentes</a></li>
+          </ol>
+        </nav>
+
+        <div class="pe-texto">
+
+          <!-- 1. Resumen ejecutivo -->
+          <section class="det-grupo pe-cap" id="resumen" aria-labelledby="titulo-resumen">
+            <h2 class="det-h2" id="titulo-resumen">Resumen ejecutivo</h2>
+            <p class="det-entrada">KAIRON vende vigilancia de seguridad por suscripción a quien no puede tener un equipo propio: particulares, autónomos y pymes.</p>
+            <p class="det-prosa"><strong>Misión.</strong> Detectar un ataque a tiempo y responder en el momento justo, que es lo que significa <i lang="grc-Latn">kairos</i> en griego, y dejarlo documentado para que el cliente pueda demostrar qué pasó.</p>
+            <p class="det-prosa"><strong>Qué vendemos.</strong> Un SOC gestionado (un centro de operaciones de seguridad que vigila los equipos del cliente) en cuatro planes: Vigía, Centinela y Guardián para el público general, desde 9,90 € al mes, y Égida para empresas, desde 590 € al mes más IVA. Los cuatro usan la misma tecnología: agentes de Wazuh, un cortafuegos pfSense y una herramienta forense propia en Python. Lo que cambia de un plan a otro es cuánta atención humana incluye.</p>
+            <p class="det-prosa"><strong>Qué no vendemos.</strong> Vigilancia humana a todas horas. Las alertas y el bloqueo automático funcionan a cualquier hora; los analistas trabajan de lunes a viernes, de 9 a 19 h.</p>
+            <p class="det-prosa"><strong>Qué pedimos.</strong> Nada a un banco. El plan arranca con 10.000 € de fondos propios, 5.000 € por socio, y se sostiene con las suscripciones. Las ayudas públicas, si llegan, aceleran el plan, pero las cuentas no dependen de ellas.</p>
+
+            <h3 class="det-h3 pe-h3">Cifras clave</h3>
+            <dl class="pe-cifras">
+              <div>
+                <dt>Precio de entrada <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt>
+                <dd><b data-cuenta="9.9" data-f="e2">9,90 €</b> <small>al mes, IVA incluido (plan Vigía)</small></dd>
+              </div>
+              <div>
+                <dt>Margen por cliente <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt>
+                <dd><b data-cuenta="30.600254237288137" data-f="p1">30,6 %</b> <small>en el plan más ajustado (Guardián)</small> · <b data-cuenta="70.27966101694915" data-f="p1">70,3 %</b> <small>en Égida</small></dd>
+              </div>
+              <div>
+                <dt>Punto de equilibrio operativo <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt>
+                <dd><b data-cuenta="19" data-f="n">19</b> <small>clientes Vigía, o 1 solo cliente Égida, cubren los 60 € de costes fijos al mes</small></dd>
+              </div>
+              <div>
+                <dt>Mes 12, hipótesis prudente <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt>
+                <dd><b data-cuenta="96" data-f="n">96</b> <small>clientes</small> · <b data-cuenta="3204.462809917355" data-f="e2">3.204,46 €</b> <small>de ingresos netos al mes</small> · <b data-cuenta="1684.1273099173552" data-f="e2">1.684,13 €</b> <small>de resultado mensual antes de impuestos</small></dd>
+              </div>
+              <div>
+                <dt>Año 3, escenario base <span class="pe-origen pe-origen--est">Estimación propia</span></dt>
+                <dd><b data-cuenta="526" data-f="n">526</b> <small>clientes</small> · <b data-cuenta="161570" data-f="e0">161.570 €</b> <small>de ingresos</small> · <b data-cuenta="22347" data-f="e0">22.347 €</b> <small>de EBITDA</small></dd>
+              </div>
+              <div>
+                <dt>Fondos propios <span class="pe-origen pe-origen--est">Estimación propia</span></dt>
+                <dd><b data-cuenta="10000" data-f="e0">10.000 €</b> <small>sin deuda; la caja no baja de cero ni en el escenario pesimista</small></dd>
+              </div>
+            </dl>
+
+            <h3 class="det-h3 pe-h3">De dónde sale cada cifra</h3>
+            <p class="det-prosa">Cada número de este documento lleva una de tres marcas, para que se sepa cuánto fiarse de él.</p>
+            <ul class="pe-leyenda">
+              <li><span class="pe-origen pe-origen--cap">Capítulo 2</span> <span>Sale del capítulo de diseño del proyecto (actividad ACT1 RA2, entregada el 12-11-2026): precios, costes por cliente, costes fijos y punto de equilibrio. Son una simulación razonada.</span></li>
+              <li><span class="pe-origen pe-origen--fue">Fuente oficial</span> <span>Dato publicado por un organismo (INE, Idescat, INCIBE), con su enlace en <a href="#fuentes">Fuentes</a>.</span></li>
+              <li><span class="pe-origen pe-origen--est">Estimación propia</span> <span>Un supuesto nuestro. Siempre va acompañado de cómo se ha calculado, para que se pueda discutir y cambiar.</span></li>
+            </ul>
+          </section>
+
+          <!-- 2. Problema y mercado -->
+          <section class="det-grupo pe-cap" id="mercado" aria-labelledby="titulo-mercado">
+            <h2 class="det-h2" id="titulo-mercado">El ataque es el mismo. Lo que cambia es quién lo ve</h2>
+            <p class="det-entrada">Un particular, un autónomo y una pyme reciben el mismo phishing y el mismo ransomware que una gran empresa, pero no tienen a nadie mirando.</p>
+
+            <h3 class="det-h3 pe-h3">El problema, en datos</h3>
+            <dl class="pe-cifras pe-cifras--fuente">
+              <div>
+                <dt>Incidentes de ciberseguridad gestionados por INCIBE en 2025 <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>122.223</b> <small>un 26 % más que en 2024</small></dd>
+              </div>
+              <div>
+                <dt>De ellos, casos de malware <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>55.411</b> <small>incluidos 392 de ransomware</small></dd>
+              </div>
+              <div>
+                <dt>Y casos de fraude en línea <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>45.445</b> <small>de los que 25.133 fueron phishing</small></dd>
+              </div>
+              <div>
+                <dt>Empresas con especialistas en informática en plantilla <span class="pe-origen pe-origen--fue">INE</span></dt>
+                <dd><b>16,8 %</b> <small>primer trimestre de 2025, entre las empresas de la encuesta (población de referencia por comprobar)</small></dd>
+              </div>
+            </dl>
+            <p class="det-prosa">INCIBE no publica en esa nota cuántos de esos incidentes afectaron a pymes, así que no damos esa cifra. Lo que sí dicen los datos es que el volumen crece y que, entre las empresas que encuesta el INE, solo una de cada seis tiene especialistas propios. Ese es el hueco: alguien que vigile, avise en lenguaje claro y actúe.</p>
+
+            <h3 class="det-h3 pe-h3">A quién nos dirigimos</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-segmentos">
+              <table class="det-tabla pe-t">
+                <caption id="cap-segmentos"><span>Segmentos de cliente y plan que encaja con cada uno</span></caption>
+                <thead>
+                  <tr><th scope="col">Segmento</th><th scope="col">Qué le preocupa</th><th scope="col">Qué compra</th><th scope="col">Plan</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Particular o autónomo, 1 o 2 equipos</th><td>Perder sus archivos o que le roben una cuenta</td><td>Que alguien le avise y le diga qué hacer</td><td>Vigía</td></tr>
+                  <tr><th scope="row">Familia o autónomo, hasta 5 equipos</th><td>Los equipos de casa y del trabajo mezclados</td><td>Un analista que revise las alertas en horario laboral</td><td>Centinela</td></tr>
+                  <tr><th scope="row">Teletrabajo o microempresa, hasta 10 equipos</th><td>Parar la actividad por un ataque</td><td>Analista asignado, contención remota y un caso forense al año</td><td>Guardián</td></tr>
+                  <tr><th scope="row">Pyme de 10 a 100 equipos</th><td>Ransomware, RGPD y dar explicaciones a clientes o a un seguro</td><td>Equipo dedicado, informes para dirección y apoyo al RGPD</td><td>Égida</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-persona">
+              <figcaption>
+                <h3 class="det-h3">Marta, la clienta en la que pensamos</h3>
+                <p class="pe-persona__rol">45 años · directora administrativa · empresa de logística de 60 empleados en Barcelona</p>
+              </figcaption>
+              <dl class="det-terminos">
+                <div><dt>Qué teme</dt><dd>Un ransomware que pare el almacén y una sanción por el RGPD si se pierden datos de clientes.</dd></div>
+                <div><dt>Qué quiere</dt><dd>Claridad, precios previsibles y que le hablen sin jerga. No quiere aprender seguridad: quiere saber que alguien se ocupa.</dd></div>
+                <div><dt>Qué pagaría</dt><dd>Con 60 equipos, plan Égida: 590 € + 35 equipos adicionales × 12 € = <b>1.010 € al mes más IVA</b>, unos 16,83 € por equipo. Precio fijo, sin sorpresas. <span class="pe-origen pe-origen--cap">Capítulo 2</span></dd></div>
+                <div><dt>Cómo decide</dt><dd>Pregunta a su gestoría y a su informático de confianza, compara dos o tres presupuestos y necesita un documento que pueda enseñar a gerencia.</dd></div>
+              </dl>
+            </figure>
+
+            <h3 class="det-h3 pe-h3">Tamaño del mercado: del total al objetivo</h3>
+            <p class="det-prosa">Medimos el mercado en número de empresas, que es lo que publican las estadísticas oficiales, y bajamos en tres escalones: todo el mercado (TAM), la parte a la que podemos llegar (SAM) y la parte que nos proponemos conseguir (SOM).</p>
+            <ol class="pe-embudo">
+              <li>
+                <span class="pe-embudo__sigla">TAM</span>
+                <b class="pe-embudo__n" data-cuenta="3310824" data-f="n">3.310.824</b>
+                <p>empresas activas en España a 1 de enero de 2025. De ellas, 1,80 millones (el 54,4 %) no tienen asalariados. <span class="pe-origen pe-origen--fue">INE, DIRCE</span></p>
+              </li>
+              <li>
+                <span class="pe-embudo__sigla">SAM</span>
+                <b class="pe-embudo__n" data-cuenta="618781" data-f="n">618.781</b>
+                <p>empresas con establecimiento en Cataluña en la misma fecha. Es el territorio que dos personas pueden atender desde Barcelona, en castellano y en catalán. <span class="pe-origen pe-origen--fue">Idescat</span></p>
+              </li>
+              <li>
+                <span class="pe-embudo__sigla">SOM</span>
+                <b class="pe-embudo__n" data-cuenta="526" data-f="n">526</b>
+                <p>clientes al final del año 3 en el escenario base: el 0,09 % de esas empresas. <span class="pe-origen pe-origen--est">Estimación propia</span></p>
+              </li>
+            </ol>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sam">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sam"><span>Empresas de Cataluña por tamaño, plan que encaja y objetivo del año 3 (escenario base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Tamaño (asalariados)</th><th scope="col" class="n">Empresas</th><th scope="col">Plan que encaja</th><th scope="col" class="n">Objetivo año 3</th><th scope="col" class="n">Cuota</th><th scope="col" class="n">Techo teórico al año</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Sin asalariados</th><td class="n">342.901</td><td>Vigía y Centinela</td><td class="n">450</td><td class="n">0,13 %</td><td class="n">33.666.644 €</td></tr>
+                  <tr><th scope="row">De 1 a 9</th><td class="n">239.964</td><td>Guardián</td><td class="n">60</td><td class="n">0,03 %</td><td class="n">154.449.556 €</td></tr>
+                  <tr><th scope="row">De 10 a 199</th><td class="n">32.760</td><td>Égida</td><td class="n">16</td><td class="n">0,05 %</td><td class="n">231.940.800 €</td></tr>
+                  <tr><th scope="row">200 o más</th><td class="n">3.156</td><td>Fuera del público objetivo</td><td class="n">0</td><td class="n">—</td><td class="n">—</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row">Total</th><td class="n">618.781</td><td></td><td class="n">526</td><td class="n">0,09 %</td><td class="n">420.057.000 €</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Empresas:</b> Idescat, a partir del DIRCE del INE, a 1 de enero de 2025. El tramo de 10 a 199 suma los de 10 a 49 (27.090) y de 50 a 199 (5.670).</li>
+              <li><b>Techo teórico</b> (estimación propia): empresas del tramo × precio neto mensual del plan × 12. Para el primer tramo se usa Vigía y para el último, la cuota base de Égida. Es lo que se facturaría si todas contrataran, cosa que no va a pasar: sirve para ver el orden de magnitud, no como previsión.</li>
+              <li><b>Lo que este cálculo no sabe.</b> Asalariados no es lo mismo que equipos: una empresa de 12 personas puede tener 5 ordenadores o 30. No hemos encontrado el desglose de la provincia de Barcelona, por eso usamos Cataluña. Y no contamos a los particulares y las familias, que también pueden contratar Vigía y Centinela, porque no tenemos una fuente para dimensionarlos: el cálculo queda del lado prudente.</li>
+              <li><b>Otra forma de contar.</b> La estadística Cifras PYME del Ministerio de Industria, que parte de la Seguridad Social y no del DIRCE, da 2.956.165 pymes en abril de 2026. Las dos cifras no se pueden sumar ni comparar directamente; usamos el DIRCE porque es el que desglosa Idescat.</li>
+            </ul>
+          </section>
+
+          <!-- 3. Competencia y posicionamiento -->
+          <section class="det-grupo pe-cap" id="competencia" aria-labelledby="titulo-competencia">
+            <h2 class="det-h2" id="titulo-competencia">Entre el antivirus y el gran proveedor hay un hueco</h2>
+            <p class="det-entrada">Quien tiene poco presupuesto compra un antivirus y se queda solo ante las alertas. Quien tiene mucho contrata un proveedor con equipo dedicado. En medio casi nadie publica un precio.</p>
+            <p class="det-prosa">No comparamos con empresas concretas porque no tenemos datos contrastados de sus precios. Describimos tipos de competidor, que es con lo que se encuentra un cliente cuando busca. La valoración es nuestra. <span class="pe-origen pe-origen--est">Estimación propia</span></p>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-competencia">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-competencia"><span>Tipos de competidor y hueco que deja cada uno</span></caption>
+                <thead>
+                  <tr><th scope="col">Tipo</th><th scope="col">Qué ofrece</th><th scope="col">Su punto fuerte</th><th scope="col">El hueco que deja</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Gran proveedor de seguridad gestionada</th><td>SOC con turnos, equipo dedicado y contratos a medida</td><td>Cobertura y experiencia</td><td>Precio a consultar y proyectos pensados para empresas grandes</td></tr>
+                  <tr><th scope="row">SOC de operadora, en paquete</th><td>Seguridad añadida a la línea o a la fibra</td><td>Ya es su proveedor y va en la misma factura</td><td>Servicio estándar, poco trato directo con un analista</td></tr>
+                  <tr><th scope="row">Antivirus o EDR de autoservicio</th><td>Un programa que bloquea y avisa</td><td>Barato y fácil de instalar</td><td>Nadie lee las alertas ni recoge pruebas si pasa algo</td></tr>
+                  <tr><th scope="row">Informático de confianza</th><td>Mantenimiento de equipos y redes</td><td>Cercanía: conoce la empresa</td><td>No vigila de forma continua ni hace análisis forense</td></tr>
+                  <tr><th scope="row">No hacer nada</th><td>Confiar en que no pase</td><td>No cuesta dinero, hasta que pasa</td><td>Es el competidor más habitual</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-mapa">
+              <svg class="pe-mapa__svg" viewBox="0 0 560 420" role="img" aria-labelledby="mapa-t mapa-d" focusable="false">
+<title id="mapa-t">Mapa de posicionamiento: precio de entrada y atención humana</title>
+<desc id="mapa-d">Valoración cualitativa propia. El antivirus de autoservicio es barato y no incluye atención humana; el gran proveedor gestionado ofrece equipo dedicado a un precio alto; KAIRON cubre el tramo intermedio, desde Vigía hasta Égida.</desc>
+<g class="pe-graf__eje"><line x1="54" x2="530" y1="356" y2="356"/><line x1="54" x2="54" y1="24" y2="356"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="380">Precio de entrada bajo</text><text x="530" y="380" text-anchor="end">alto</text><text transform="translate(40 356) rotate(-90)">Sin atención humana</text><text transform="translate(40 24) rotate(-90)" text-anchor="end">equipo dedicado</text></g>
+<g class="pe-mapa__punto"><circle cx="82.6" cy="339.4" r="6"/><text x="94.6" y="344.4" text-anchor="start">No hacer nada</text></g>
+<g class="pe-mapa__punto"><circle cx="149.2" cy="309.5" r="6"/><text x="161.2" y="314.5" text-anchor="start">Antivirus de autoservicio</text></g>
+<g class="pe-mapa__punto"><circle cx="292" cy="223.2" r="6"/><text x="304" y="228.2" text-anchor="start">Informático de confianza</text></g>
+<g class="pe-mapa__punto"><circle cx="396.7" cy="276.3" r="6"/><text x="384.7" y="281.3" text-anchor="end">SOC de operadora en paquete</text></g>
+<g class="pe-mapa__punto"><circle cx="482.4" cy="57.2" r="6"/><text x="470.4" y="62.2" text-anchor="end">Gran proveedor gestionado</text></g>
+<g class="pe-mapa__punto pe-mapa__kairon"><line x1="101.6" y1="256.4" x2="253.9" y2="97"/><circle cx="101.6" cy="256.4" r="7"/><circle cx="253.9" cy="97" r="7"/><text x="115.6" y="261.4">Vigía</text><text x="267.9" y="102">Égida</text><text class="pe-mapa__marca" x="149.2" y="150.2" text-anchor="end">KAIRON</text></g>
+</svg>
+              <figcaption>Dónde se coloca cada opción según lo que cuesta entrar y cuánta atención humana incluye. Valoración cualitativa propia, sin escala numérica.</figcaption>
+            </figure>
+
+            <h3 class="det-h3 pe-h3">En qué nos diferenciamos</h3>
+            <ul class="det-lista">
+              <li><b>Precio publicado.</b> Los cuatro planes tienen su precio en la web. Marta puede calcular su cuota antes de hablar con nadie.</li>
+              <li><b>Lenguaje claro.</b> Las alertas y los informes se escriben para quien dirige la empresa, no para otro técnico.</li>
+              <li><b>Pruebas que se pueden comprobar.</b> Cada evidencia lleva hora UTC, número de caso y huella SHA-256. El informe sirve ante una auditoría o un seguro.</li>
+              <li><b>Horario dicho con honestidad.</b> No prometemos lo que dos personas no pueden cumplir: el bloqueo automático actúa a cualquier hora y los analistas, de lunes a viernes de 9 a 19 h.</li>
+              <li><b>Sin licencias de pago.</b> Wazuh y pfSense son de código abierto. Eso es lo que permite un plan de 9,90 €.</li>
+            </ul>
+
+            <h3 class="det-h3 pe-h3">DAFO</h3>
+            <div class="pe-dafo">
+              <div>
+                <h4>Debilidades</h4>
+                <ul>
+                  <li>Equipo de dos personas, todavía estudiantes</li>
+                  <li>Sin clientes ni marca conocida</li>
+                  <li>Sin vigilancia humana de noche ni en fin de semana</li>
+                  <li>Sin cobertura para móviles: Wazuh no tiene agente</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Amenazas</h4>
+                <ul>
+                  <li>Un proveedor grande puede bajar precios</li>
+                  <li>Un incidente mal gestionado daña la reputación</li>
+                  <li>Cambios en Wazuh o en su licencia</li>
+                  <li>Más obligaciones legales (NIS2, RGPD) de las que una empresa pequeña puede asumir</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Fortalezas</h4>
+                <ul>
+                  <li>Costes muy bajos: software libre y 60 € fijos al mes</li>
+                  <li>Herramienta forense propia con cadena de custodia</li>
+                  <li>Todo lo que se promete se demuestra en el laboratorio</li>
+                  <li>Precios publicados y servicio en castellano y catalán</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Oportunidades</h4>
+                <ul>
+                  <li>Los incidentes crecen un 26 % en un año (INCIBE)</li>
+                  <li>Solo el 16,8 % de las empresas encuestadas tiene especialistas propios (INE)</li>
+                  <li>Ayudas públicas a la ciberseguridad de las pymes</li>
+                  <li>Gestorías e informáticos locales como prescriptores</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. Producto y servicios -->
+          <section class="det-grupo pe-cap" id="oferta" aria-labelledby="titulo-oferta">
+            <h2 class="det-h2" id="titulo-oferta">Cinco servicios, cuatro planes, una sola tecnología</h2>
+            <p class="det-entrada">Todos los clientes reciben el mismo agente y las mismas reglas de detección. El plan decide cuántas horas de analista hay detrás.</p>
+
+            <h3 class="det-h3 pe-h3">Los cinco servicios</h3>
+            <dl class="det-terminos">
+              <div><dt>Vigilancia y detección</dt><dd>Agentes de Wazuh en Windows, macOS y Linux, con reglas propias para fuerza bruta, malware y persistencia.</dd></div>
+              <div><dt>Respuesta y análisis forense</dt><dd>Bloqueo automático del atacante y recogida de pruebas con la herramienta propia: hora UTC, número de caso y SHA-256.</dd></div>
+              <div><dt>Informes y cumplimiento</dt><dd>Resumen para dirección, cronología, evidencias y recomendaciones. Apoyo para las obligaciones del RGPD.</dd></div>
+              <div><dt>Auditoría y hardening</dt><dd>Inventario, vulnerabilidades y configuración segura. La auditoría inicial es gratuita solo en el plan Égida.</dd></div>
+              <div><dt>Concienciación y formación</dt><dd>Phishing, contraseñas y qué hacer si algo parece raro, para gente que no es técnica.</dd></div>
+            </dl>
+            <p class="det-prosa">El detalle de cada servicio está en <a href="servicios.html">Servicios</a> y el recorrido de un caso real, en <a href="incidente.html">Anatomía de un incidente</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Los cuatro planes <span class="pe-origen pe-origen--cap">Capítulo 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-planes">
+              <table class="det-tabla pe-t pe-t--planes">
+                <caption id="cap-planes"><span>Qué incluye cada plan (tabla 6 del capítulo 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Característica</th><th scope="col">Vigía</th><th scope="col">Centinela</th><th scope="col">Guardián</th><th scope="col">Égida</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Pensado para</th><td>1 o 2 equipos: un particular o un autónomo</td><td>Familia o autónomo, hasta 5 equipos</td><td>Teletrabajo o microempresa, hasta 10 equipos</td><td>Pymes de 10 a 100 equipos</td></tr>
+                  <tr class="pe-precio"><th scope="row">Precio al mes</th><td>9,90 € <small>IVA incl.</small></td><td>24,90 € <small>IVA incl.</small></td><td>64,90 € <small>IVA incl.</small></td><td>Desde 590 € + IVA <small>12 € por equipo adicional</small></td></tr>
+                  <tr><th scope="row">Equipos incluidos</th><td>2</td><td>5</td><td>10</td><td>25, hasta 100</td></tr>
+                  <tr><th scope="row">Detección</th><td>Reglas estándar</td><td>Reglas estándar y ajuste inicial</td><td>Ajuste continuo</td><td>Reglas a medida</td></tr>
+                  <tr><th scope="row">Revisión humana de alertas</th><td>Solo alertas críticas</td><td>Analista, en horario laboral</td><td>Analista asignado</td><td>Equipo dedicado</td></tr>
+                  <tr><th scope="row">Respuesta (lunes a viernes, 9–19 h)</th><td>2 días laborables</td><td>24 h (críticas: 8 h)</td><td>4 h</td><td>1 h</td></tr>
+                  <tr><th scope="row">Respuesta a incidentes</th><td>Guía paso a paso</td><td>Guía y asistencia remota por chat</td><td>Contención remota y 1 caso forense al año</td><td>Contención y hasta 2 casos forenses al año</td></tr>
+                  <tr><th scope="row">Informes</th><td>Resumen mensual de 1 página</td><td>Informe mensual</td><td>Mensual e informe de incidente con SHA-256</td><td>Mensual para dirección e informe trimestral de apoyo al RGPD</td></tr>
+                  <tr><th scope="row">Formación</th><td>Guía y minicurso antiphishing</td><td>Lo anterior y una sesión en línea cada trimestre</td><td>Lo anterior y un simulacro de phishing al año</td><td>2 sesiones al año para la plantilla</td></tr>
+                  <tr><th scope="row">Auditoría y hardening</th><td>—</td><td>Lista de autocomprobación</td><td>Auditoría de hardening anual</td><td>Auditoría inicial gratuita y hardening anual</td></tr>
+                  <tr><th scope="row">Retención de registros</th><td>30 días</td><td>90 días</td><td>90 días</td><td>180 días</td></tr>
+                  <tr><th scope="row">Permanencia</th><td>Ninguna</td><td>Ninguna</td><td>Ninguna</td><td>12 meses</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">La tabla completa, con una calculadora de cuota según el número de equipos, está en <a href="preguntas.html#precios">Preguntas y precios</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Lo que no prometemos</h3>
+            <ul class="det-lista">
+              <li><b>Vigilancia humana a todas horas.</b> Fuera del horario de los analistas actúan las alertas y el bloqueo automático. El plan Égida podría ampliar el horario cuando haya más personal.</li>
+              <li><b>Protección de móviles.</b> Wazuh no tiene agente para móviles: los planes cubren ordenadores y servidores.</li>
+              <li><b>Recuperar datos tras un ataque.</b> Contenemos, investigamos y documentamos. Las copias de seguridad son responsabilidad del cliente, y la auditoría las revisa.</li>
+            </ul>
+          </section>
+
+          <!-- 5. Modelo de negocio y economía por cliente -->
+          <section class="det-grupo pe-cap" id="modelo" aria-labelledby="titulo-modelo">
+            <h2 class="det-h2" id="titulo-modelo">Cada cliente deja margen desde el primer mes</h2>
+            <p class="det-entrada">El ingreso es una cuota mensual. El coste de atender a un cliente son tres cosas: servidor, minutos de analista y la comisión del cobro.</p>
+
+            <h3 class="det-h3 pe-h3">Los tres supuestos de coste <span class="pe-origen pe-origen--cap">Capítulo 2</span></h3>
+            <dl class="det-terminos">
+              <div><dt>Infraestructura</dt><dd>0,60 € por equipo y mes. Un servidor de 8 vCPU y 16 GB atiende 100 agentes según el dimensionamiento oficial de Wazuh; a unos 50 € al mes salen 0,50 € por agente, más el almacenamiento de las copias.</dd></div>
+              <div><dt>Analista</dt><dd>20 € por hora. Cada plan tiene asignado un tiempo al mes: 10 minutos en Vigía, 30 en Centinela, 90 en Guardián y 8 horas en Égida.</dd></div>
+              <div><dt>Cobro</dt><dd>0,25 € más el 1,5 % con tarjeta; 0,35 € por domiciliación SEPA en Égida.</dd></div>
+              <div><dt>IVA</dt><dd>Los precios a particulares incluyen el 21 % de IVA. Para calcular el margen se usa el precio sin IVA, que es lo que ingresa la empresa.</dd></div>
+            </dl>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-unidad">
+              <table class="det-tabla pe-t">
+                <caption id="cap-unidad"><span>Economía mensual por cliente (tabla 7 del capítulo 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Plan</th><th scope="col" class="n">Ingreso neto</th><th scope="col" class="n">Infraestructura</th><th scope="col" class="n">Analista</th><th scope="col" class="n">Cobro</th><th scope="col" class="n">Coste total</th><th scope="col" class="n">Margen</th><th scope="col" class="n">% margen</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td class="n">8,18 €</td><td class="n">1,20 €</td><td class="n">3,33 €</td><td class="n">0,40 €</td><td class="n">4,93 €</td><td class="n pe-fuerte">3,25 €</td><td class="n">39,7 %</td></tr>
+                  <tr><th scope="row">Centinela</th><td class="n">20,58 €</td><td class="n">3,00 €</td><td class="n">10,00 €</td><td class="n">0,62 €</td><td class="n">13,62 €</td><td class="n pe-fuerte">6,96 €</td><td class="n">33,8 %</td></tr>
+                  <tr><th scope="row">Guardián</th><td class="n">53,64 €</td><td class="n">6,00 €</td><td class="n">30,00 €</td><td class="n">1,22 €</td><td class="n">37,22 €</td><td class="n pe-fuerte">16,41 €</td><td class="n">30,6 %</td></tr>
+                  <tr><th scope="row">Égida</th><td class="n">590,00 €</td><td class="n">15,00 €</td><td class="n">160,00 €</td><td class="n">0,35 €</td><td class="n">175,35 €</td><td class="n pe-fuerte">414,65 €</td><td class="n">70,3 %</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-unidad pe-barras">
+              <svg class="pe-unidad__svg" viewBox="0 0 800 204" role="img" aria-labelledby="unidad-t unidad-d" focusable="false">
+<title id="unidad-t">Reparto del precio neto de cada plan</title>
+<desc id="unidad-d">De cada euro que entra, qué parte se va en infraestructura, analista y pasarela de pago y qué parte queda como margen. Margen: Vigía 39,7 %, Centinela 33,8 %, Guardián 30,6 %, Égida 70,3 %.</desc>
+<text class="pe-barras__anio" x="0" y="22">Vigía</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="4" width="82.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="192.1" y="4" width="228.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="420.3" y="4" width="27.3" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="447.6" y="4" width="222.4" height="26"/><text class="pe-barras__total" x="680" y="22">39,7 %</text>
+<text class="pe-barras__anio" x="0" y="72">Centinela</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="54" width="81.6" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="191.6" y="54" width="272.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="463.8" y="54" width="17" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="480.7" y="54" width="189.3" height="26"/><text class="pe-barras__total" x="680" y="72">33,8 %</text>
+<text class="pe-barras__anio" x="0" y="122">Guardián</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="104" width="62.6" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="172.6" y="104" width="313.2" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="485.9" y="104" width="12.8" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="498.6" y="104" width="171.4" height="26"/><text class="pe-barras__total" x="680" y="122">30,6 %</text>
+<text class="pe-barras__anio" x="0" y="172">Égida</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="154" width="14.2" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="124.2" y="154" width="151.9" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="276.1" y="154" width="0.3" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="276.4" y="154" width="393.6" height="26"/><text class="pe-barras__total" x="680" y="172">70,3 %</text>
+</svg>
+              <figcaption>
+                <span class="pe-clave pe-unidad--infra">Infraestructura</span>
+                <span class="pe-clave pe-unidad--analista">Analista</span>
+                <span class="pe-clave pe-unidad--pago">Cobro</span>
+                <span class="pe-clave pe-unidad--margen">Margen</span>
+              </figcaption>
+            </figure>
+            <p class="det-prosa">En los tres planes para el público general, el tiempo de analista es el mayor coste: entre el 41 % y el 56 % del precio neto. Por eso el margen depende de que ese tiempo se cumpla, y por eso se mide en el laboratorio durante la demo.</p>
+
+            <h3 class="det-h3 pe-h3">Costes fijos y punto de equilibrio <span class="pe-origen pe-origen--cap">Capítulo 2</span></h3>
+            <p class="det-prosa">Los costes que no dependen del número de clientes suman 60 € al mes: seguro de responsabilidad civil y ciberriesgo (40 €), dominio, web y correo (5 €), copia de seguridad externa cifrada (10 €) y herramientas como el gestor de contraseñas y la VPN (5 €).</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-equilibrio">
+              <table class="det-tabla pe-t">
+                <caption id="cap-equilibrio"><span>Clientes necesarios para cubrir 60 € al mes (tabla 8 del capítulo 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Si solo se vendiera</th><th scope="col" class="n">Margen por cliente</th><th scope="col" class="n">Clientes</th><th scope="col" class="n">Ingreso neto mensual</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td class="n">3,25 €</td><td class="n pe-fuerte">19</td><td class="n">155,45 €</td></tr>
+                  <tr><th scope="row">Centinela</th><td class="n">6,96 €</td><td class="n pe-fuerte">9</td><td class="n">185,21 €</td></tr>
+                  <tr><th scope="row">Guardián</th><td class="n">16,41 €</td><td class="n pe-fuerte">4</td><td class="n">214,55 €</td></tr>
+                  <tr><th scope="row">Égida</th><td class="n">414,65 €</td><td class="n pe-fuerte">1</td><td class="n">590,00 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">Ese punto de equilibrio solo cubre los 60 € de operación. Una empresa constituida tiene además gestoría y cuotas de autónomos: en el año 1 las estimamos en 240 € al mes, así que el gasto fijo real sería de 300 €. Con la mezcla de clientes del mes 12, cada cliente deja de media 18,17 €, y harían falta <b>17 clientes</b> para cubrirlo. <span class="pe-origen pe-origen--est">Estimación propia</span></p>
+
+            <h3 class="det-h3 pe-h3">El mes 12, con una mezcla prudente <span class="pe-origen pe-origen--cap">Capítulo 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-mes12">
+              <table class="det-tabla pe-t">
+                <caption id="cap-mes12"><span>Escenario del mes 12 (tabla 9 del capítulo 2), importes mensuales</span></caption>
+                <thead>
+                  <tr><th scope="col">Plan</th><th scope="col" class="n">Clientes</th><th scope="col" class="n">Ingresos netos</th><th scope="col" class="n">Costes variables</th><th scope="col" class="n">Margen de contribución</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td class="n">60</td><td class="n">490,91 €</td><td class="n">295,91 €</td><td class="n">195,00 €</td></tr>
+                  <tr><th scope="row">Centinela</th><td class="n">25</td><td class="n">514,46 €</td><td class="n">340,59 €</td><td class="n">173,88 €</td></tr>
+                  <tr><th scope="row">Guardián</th><td class="n">8</td><td class="n">429,09 €</td><td class="n">297,79 €</td><td class="n">131,30 €</td></tr>
+                  <tr><th scope="row">Égida</th><td class="n">3</td><td class="n">1.770,00 €</td><td class="n">526,05 €</td><td class="n">1.243,95 €</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row">Total</th><td class="n">96</td><td class="n">3.204,46 €</td><td class="n">1.460,34 €</td><td class="n">1.744,13 €</td></tr>
+                  <tr><th scope="row" colspan="4">Costes fijos</th><td class="n">−60,00 €</td></tr>
+                  <tr class="pe-total"><th scope="row" colspan="4">Resultado mensual antes de impuestos</th><td class="n pe-fuerte">1.684,13 €</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="det-prosa">Esa mezcla supone 58,5 horas de analista al mes, unas 13,5 por semana entre los dos socios, y 400 equipos como máximo. El resultado es antes de impuestos y de cuotas de autónomos, pero las horas de analista ya están pagadas a 20 € dentro de los costes variables.</p>
+
+            <h3 class="det-h3 pe-h3">Cuánto cuesta conseguir un cliente y cuánto tarda en devolverlo <span class="pe-origen pe-origen--est">Estimación propia</span></h3>
+            <p class="det-prosa">El capítulo 2 no calcula el coste de captación. Lo añadimos aquí con supuestos que habrá que corregir con datos reales en cuanto haya clientes.</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-cac">
+              <table class="det-tabla pe-t">
+                <caption id="cap-cac"><span>Captación, retorno y valor de un cliente (escenario base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Plan</th><th scope="col" class="n">Coste de captación (CAC)</th><th scope="col" class="n">Margen mensual</th><th scope="col" class="n">Meses para recuperarlo</th><th scope="col" class="n">Bajas al año</th><th scope="col" class="n">Vida media (meses)</th><th scope="col" class="n">Margen en toda la vida</th><th scope="col" class="n">Veces el CAC</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td class="n">25 €</td><td class="n">3,25 €</td><td class="n pe-fuerte">7,7</td><td class="n">30 %</td><td class="n">40</td><td class="n">130 €</td><td class="n">5,2</td></tr>
+                  <tr><th scope="row">Centinela</th><td class="n">45 €</td><td class="n">6,96 €</td><td class="n pe-fuerte">6,5</td><td class="n">30 %</td><td class="n">40</td><td class="n">278 €</td><td class="n">6,2</td></tr>
+                  <tr><th scope="row">Guardián</th><td class="n">90 €</td><td class="n">16,41 €</td><td class="n pe-fuerte">5,5</td><td class="n">30 %</td><td class="n">40</td><td class="n">657 €</td><td class="n">7,3</td></tr>
+                  <tr><th scope="row">Égida</th><td class="n">1.200 €</td><td class="n">414,65 €</td><td class="n pe-fuerte">2,9</td><td class="n">10 %</td><td class="n">120</td><td class="n">49.758 €</td><td class="n">41,5</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Meses para recuperarlo</b> = CAC ÷ margen mensual. <b>Vida media</b> = 12 ÷ tasa de bajas anual. <b>Margen en toda la vida</b> = margen mensual × vida media, sin descontar.</li>
+              <li><b>CAC de Égida:</b> por cada contrato suponemos tres auditorías iniciales gratuitas, de unas 6 horas cada una a 20 € (360 €), más tiempo comercial y materiales.</li>
+              <li><b>Cautela.</b> La cifra de Égida sale muy alta porque suponemos pocas bajas gracias a la permanencia de 12 meses. Con un solo cliente perdido de más, cambia mucho. No tenemos datos propios todavía.</li>
+            </ul>
+
+            <h3 class="det-h3 pe-h3">Qué pasa si el analista tarda el doble</h3>
+            <p class="det-prosa">Es el supuesto que más pesa. Si el tiempo real de analista por cliente fuera el doble del previsto, los planes para el público general perderían dinero y habría que subir el precio o recortar el servicio:</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sensibilidad">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sensibilidad"><span>Margen mensual por cliente con el tiempo de analista previsto y con el doble</span></caption>
+                <thead>
+                  <tr><th scope="col">Plan</th><th scope="col" class="n">Tiempo previsto</th><th scope="col" class="n">Margen previsto</th><th scope="col" class="n">Margen con el doble de tiempo</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td class="n">10 min</td><td class="n">3,25 €</td><td class="n es-negativo">−0,08 €</td></tr>
+                  <tr><th scope="row">Centinela</th><td class="n">30 min</td><td class="n">6,96 €</td><td class="n es-negativo">−3,04 €</td></tr>
+                  <tr><th scope="row">Guardián</th><td class="n">90 min</td><td class="n">16,41 €</td><td class="n es-negativo">−13,59 €</td></tr>
+                  <tr><th scope="row">Égida</th><td class="n">8 h</td><td class="n">414,65 €</td><td class="n">254,65 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 6. Marketing y ventas -->
+          <section class="det-grupo pe-cap" id="marketing" aria-labelledby="titulo-marketing">
+            <h2 class="det-h2" id="titulo-marketing">Llegar a Marta por quien ya tiene su confianza</h2>
+            <p class="det-entrada">Una pyme no busca «SOC gestionado» en internet. Pregunta a su gestoría y a su informático. El plan de ventas empieza por ellos.</p>
+            <p class="det-prosa">Todo este capítulo es un plan y sus cifras son supuestos nuestros. <span class="pe-origen pe-origen--est">Estimación propia</span></p>
+
+            <h3 class="det-h3 pe-h3">Mensaje</h3>
+            <p class="det-prosa">«Vigilancia de seguridad profesional para tu pyme, sin contratar un equipo interno.» Tres ideas lo sostienen, siempre en este orden: <b>detectar</b> a tiempo, <b>responder</b> en el momento justo y <b>demostrar</b> lo que pasó. Nada de miedo ni de cifras alarmistas: precio, horario y límites a la vista.</p>
+
+            <h3 class="det-h3 pe-h3">Canales</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-canales">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-canales"><span>Canales de captación, a quién llegan y qué se hace en cada uno</span></caption>
+                <thead>
+                  <tr><th scope="col">Canal</th><th scope="col">Llega a</th><th scope="col">Qué hacemos</th><th scope="col">Coste principal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Gestorías y asesorías</th><td>Égida, Guardián</td><td>Una charla breve para sus clientes y una hoja de una página que puedan reenviar</td><td>Tiempo de los socios</td></tr>
+                  <tr><th scope="row">Informáticos y tiendas locales</th><td>Todos los planes</td><td>Acuerdo de colaboración: ellos mantienen los equipos, KAIRON los vigila</td><td>Tiempo y material de apoyo</td></tr>
+                  <tr><th scope="row">Auditoría inicial gratuita</th><td>Solo Égida</td><td>Revisión de equipos y riesgos con un informe corto: es la puerta de entrada al plan de empresa</td><td>Unas 6 horas de analista por auditoría</td></tr>
+                  <tr><th scope="row">Web y contenidos</th><td>Vigía, Centinela</td><td>Guías sin jerga, la demo del SOC, el informe de ejemplo y la calculadora de precios</td><td>Tiempo de redacción</td></tr>
+                  <tr><th scope="row">Charlas en asociaciones y centros de formación</th><td>Autónomos y microempresas</td><td>Taller de una hora: reconocer un phishing y qué hacer después</td><td>Desplazamiento</td></tr>
+                  <tr><th scope="row">Recomendación de clientes</th><td>Todos los planes</td><td>Pedir la recomendación después de cada informe mensual bien recibido</td><td>Ninguno</td></tr>
+                  <tr><th scope="row">Anuncios de pago</th><td>Vigía, Centinela</td><td>Pruebas pequeñas y medidas, solo cuando la web convierta</td><td>Lo que quede del presupuesto de captación</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Embudo de ventas del plan Égida en el año 1</h3>
+            <ol class="pe-embudo pe-embudo--ventas">
+              <li><b class="pe-embudo__n">60</b><p>empresas contactadas a través de gestorías, informáticos y charlas</p></li>
+              <li><b class="pe-embudo__n">20</b><p>primeras reuniones (1 de cada 3)</p></li>
+              <li><b class="pe-embudo__n">9</b><p>auditorías iniciales gratuitas (casi la mitad de las reuniones)</p></li>
+              <li><b class="pe-embudo__n">3</b><p>contratos Égida (1 de cada 3 auditorías): el objetivo del mes 12</p></li>
+            </ol>
+            <p class="det-prosa">Las proporciones son un supuesto de partida, no un dato del sector. El primer trimestre sirve para medirlas y rehacer este embudo.</p>
+
+            <h3 class="det-h3 pe-h3">Calendario del primer año</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-calendario">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-calendario"><span>Acciones comerciales por trimestre y objetivo de clientes acumulados (escenario base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Trimestre</th><th scope="col">Qué se hace</th><th scope="col" class="n">Clientes acumulados</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">T1</th><td>Constitución, seguro y contratos tipo. Diez clientes de prueba entre conocidos, con precio normal, para medir el tiempo real de analista. Primeras tres gestorías visitadas.</td><td class="n">24</td></tr>
+                  <tr><th scope="row">T2</th><td>Acuerdos con informáticos locales. Primera charla en una asociación. Primeras auditorías iniciales de Égida.</td><td class="n">48</td></tr>
+                  <tr><th scope="row">T3</th><td>Primer contrato Égida. Guías y casos publicados en la web. Revisión de precios con los tiempos medidos.</td><td class="n">72</td></tr>
+                  <tr><th scope="row">T4</th><td>Programa de recomendación. Prueba pequeña de anuncios. Cierre del año y revisión de este plan.</td><td class="n">96</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Política de precios</h3>
+            <ul class="det-lista">
+              <li>Precios publicados y los mismos para todos. Sin descuentos de lanzamiento que luego haya que retirar.</li>
+              <li>Sin permanencia en los planes para el público general: quien se queda es porque le sirve.</li>
+              <li>Doce meses de permanencia en Égida, porque incluye una auditoría inicial que tiene un coste.</li>
+              <li>El camino natural es subir de plan: de Vigía a Centinela cuando hay más equipos, y a Guardián cuando hay actividad profesional.</li>
+            </ul>
+          </section>
+
+          <!-- 7. Operaciones -->
+          <section class="det-grupo pe-cap" id="operaciones" aria-labelledby="titulo-operaciones">
+            <h2 class="det-h2" id="titulo-operaciones">Cómo se presta el servicio, minuto a minuto</h2>
+            <p class="det-entrada">La máquina hace lo que tiene que ser inmediato y la persona, lo que necesita criterio.</p>
+
+            <h3 class="det-h3 pe-h3">Herramientas</h3>
+            <dl class="det-terminos">
+              <div><dt>Wazuh</dt><dd>El SIEM: reúne los registros de los agentes, aplica las reglas, genera las alertas y ordena la respuesta activa. Código abierto.</dd></div>
+              <div><dt>pfSense</dt><dd>Cortafuegos y segmentación de redes. Su registro también se envía a Wazuh. Código abierto.</dd></div>
+              <div><dt>Herramienta forense propia</dt><dd>Programa en Python con cuatro módulos: procesos, conexiones de red, usuarios e inicios de sesión, y persistencia. Marca cada prueba con hora UTC, número de caso y SHA-256, y solo lee: no modifica el equipo analizado.</dd></div>
+              <div><dt>Sysmon y WireGuard</dt><dd>Sysmon da detalle de procesos en Windows. WireGuard es la VPN por la que los analistas entran a la red de gestión, con una clave por persona.</dd></div>
+            </dl>
+            <p class="det-prosa">Hoy todo esto se está montando en un laboratorio virtual aislado, repartido en dos ordenadores. Está descrito en <a href="laboratorio.html">Cómo está montado el laboratorio</a>.</p>
+
+            <h3 class="det-h3 pe-h3">El proceso de un incidente</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-proceso">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-proceso"><span>Pasos, responsable y tiempo objetivo (los tiempos son los que se medirán en el ensayo de la demo)</span></caption>
+                <thead>
+                  <tr><th scope="col">Paso</th><th scope="col">Quién</th><th scope="col">Qué ocurre</th><th scope="col" class="n">Tiempo objetivo</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Detectar</th><td>Wazuh</td><td>La regla propia 100100 salta cuando una misma IP falla 5 accesos en 60 segundos</td><td class="n">menos de 60 s</td></tr>
+                  <tr><th scope="row">Contener</th><td>Wazuh</td><td>La respuesta activa bloquea la IP atacante y la desbloquea sola a los 10 minutos</td><td class="n">30 s como máximo</td></tr>
+                  <tr><th scope="row">Confirmar</th><td>Analista</td><td>Comprueba que el incidente es real y avisa al cliente</td><td class="n">según el plan</td></tr>
+                  <tr><th scope="row">Recoger pruebas</th><td>Herramienta forense</td><td>Recoge las evidencias con hora UTC, número de caso y SHA-256</td><td class="n">menos de 5 min</td></tr>
+                  <tr><th scope="row">Informar</th><td>Analista</td><td>Informe con cronología, evidencias y recomendaciones</td><td class="n">unos 40 min</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">El caso completo está contado en <a href="incidente.html">Anatomía de un incidente</a>, el método en <a href="metodo.html">El método, paso a paso</a> y el resultado en el <a href="informe.html">informe de ejemplo</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Compromisos de servicio <span class="pe-origen pe-origen--cap">Capítulo 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sla">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sla"><span>Tiempo de respuesta de un analista, retención de registros y tiempo de analista asignado por plan</span></caption>
+                <thead>
+                  <tr><th scope="col">Plan</th><th scope="col">Respuesta de un analista (lunes a viernes, 9–19 h)</th><th scope="col">Alertas y bloqueo automático</th><th scope="col" class="n">Retención</th><th scope="col" class="n">Analista al mes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigía</th><td>2 días laborables</td><td>A cualquier hora</td><td class="n">30 días</td><td class="n">10 min</td></tr>
+                  <tr><th scope="row">Centinela</th><td>24 h (críticas: 8 h)</td><td>A cualquier hora</td><td class="n">90 días</td><td class="n">30 min</td></tr>
+                  <tr><th scope="row">Guardián</th><td>4 h</td><td>A cualquier hora</td><td class="n">90 días</td><td class="n">90 min</td></tr>
+                  <tr><th scope="row">Égida</th><td>1 h</td><td>A cualquier hora</td><td class="n">180 días</td><td class="n">8 h</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Del laboratorio a producción</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-servidor">
+              <table class="det-tabla pe-t">
+                <caption id="cap-servidor"><span>Servidor necesario según los equipos protegidos (dimensionamiento oficial de Wazuh)</span></caption>
+                <thead>
+                  <tr><th scope="col">Equipos protegidos</th><th scope="col" class="n">vCPU</th><th scope="col" class="n">RAM</th><th scope="col" class="n">Disco (90 días)</th><th scope="col">Despliegue</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">1–25</th><td class="n">4</td><td class="n">8 GB</td><td class="n">50 GB</td><td>Servidor único</td></tr>
+                  <tr><th scope="row">26–50</th><td class="n">8</td><td class="n">16 GB</td><td class="n">100 GB</td><td>Servidor único</td></tr>
+                  <tr><th scope="row">51–100</th><td class="n">8</td><td class="n">16 GB</td><td class="n">200 GB</td><td>Servidor único</td></tr>
+                  <tr><th scope="row">Más de 100</th><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>Varios nodos</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">A partir de 100 equipos hay que repartir Wazuh en varios nodos. El escenario base llega a 400 equipos al final del año 1, así que ese paso se da pronto; su coste está dentro de los 0,60 € por equipo, pero no tenemos todavía un presupuesto de proveedor que lo confirme.</p>
+
+            <h3 class="det-h3 pe-h3">Cómo evitamos romper lo que funciona</h3>
+            <ul class="det-lista">
+              <li><b>Copia antes de tocar.</b> Instantáneas de las máquinas y copia de la configuración antes de cada cambio.</li>
+              <li><b>Prueba antes de aplicar.</b> Las reglas nuevas se validan y, si el servicio no arranca, un script restaura la copia anterior sin intervención humana, en menos de 2 minutos.</li>
+              <li><b>Bloqueos que se deshacen solos.</b> La respuesta activa desbloquea a los 10 minutos y hay una lista blanca de direcciones propias.</li>
+              <li><b>Datos del cliente.</b> Contrato de encargado del tratamiento con cada cliente (artículo 28 del RGPD), solo los registros necesarios y retención de 30 a 180 días según el plan. Más detalle en <a href="legal.html">Legalidad y privacidad</a>.</li>
+            </ul>
+          </section>
+
+          <!-- 8. Equipo y plan de contratación -->
+          <section class="det-grupo pe-cap" id="equipo" aria-labelledby="titulo-equipo">
+            <h2 class="det-h2" id="titulo-equipo">Dos personas hoy; la tercera, cuando las horas lo pidan</h2>
+            <p class="det-entrada">No se contrata por calendario. Se contrata cuando las horas de analista que piden los clientes ya no caben en las personas que hay.</p>
+
+            <h3 class="det-h3 pe-h3">Quién hace qué</h3>
+            <dl class="det-terminos">
+              <div><dt>Antonia Lorena Cracana</dt><dd>Ciberseguridad y análisis forense. Diseña y monta el laboratorio, escribe las reglas de detección, prepara los ataques simulados y define la cadena de custodia y los informes. En la empresa sería la responsable del SOC.</dd></div>
+              <div><dt>João Daniel de Paiva Oliveira</dt><dd>Programación y web. Desarrolla la herramienta forense en Python, la web corporativa y el repositorio. En la empresa sería el responsable de producto y de las herramientas internas.</dd></div>
+              <div><dt>Lo que no tenemos</dt><dd>Experiencia comercial, jurídica y contable. Se cubre con una gestoría desde el primer día y con asesoramiento jurídico para los contratos tipo.</dd></div>
+            </dl>
+            <p class="det-prosa">Más sobre los dos en <a href="sobre-mi.html">Equipo</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Plan de contratación <span class="pe-origen pe-origen--est">Estimación propia</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-contratacion">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-contratacion"><span>Plan de contratación por año (escenario base). Es un plan, no un compromiso</span></caption>
+                <thead>
+                  <tr><th scope="col">Año</th><th scope="col" class="n">Horas de analista al mes, al cierre</th><th scope="col" class="n">Analistas a jornada completa</th><th scope="col">Personas</th><th scope="col">Qué cambia</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Año 1</th><td class="n">58,5</td><td class="n">0,4</td><td>Los dos socios, a tiempo parcial</td><td>Compatible con seguir estudiando. Ventas y administración las hacen los socios sin cobrar esas horas.</td></tr>
+                  <tr><th scope="row">Año 2</th><td class="n">161,5</td><td class="n">1,2</td><td>Los dos socios, uno ya a jornada completa</td><td>Se empiezan a pagar horas de ventas y soporte: 450 al año.</td></tr>
+                  <tr><th scope="row">Año 3</th><td class="n">343,0</td><td class="n">2,5</td><td>Los dos socios y una primera contratación: analista júnior</td><td>Soporte y ventas a media jornada: 1.200 horas al año. Con tres personas se podría estudiar ampliar el horario de Égida.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Horas de analista</b> = clientes de cada plan × tiempo asignado al plan (capítulo 2). <b>Analistas a jornada completa</b> = esas horas ÷ 140 horas útiles al mes por persona (supuesto propio: el resto de la jornada se va en formación, reuniones y mejoras).</li>
+              <li>Las horas de analista ya están pagadas a 20 € dentro del coste de cada cliente. Esa partida es la que paga el trabajo de los socios y, después, el sueldo del analista contratado.</li>
+              <li>En el escenario optimista la primera contratación se adelanta al año 2; en el pesimista no hay ninguna en los tres años.</li>
+            </ul>
+          </section>
+
+          <!-- 9. Proyecciones financieras a 3 años -->
+          <section class="det-grupo pe-cap" id="proyecciones" aria-labelledby="titulo-proyecciones">
+            <h2 class="det-h2" id="titulo-proyecciones">Tres años de cuentas, en tres escenarios</h2>
+            <p class="pi-sello">Estimación: nada de esto ha ocurrido</p>
+            <p class="det-entrada">El año 1 del escenario base termina donde termina el capítulo 2: 96 clientes. Lo que viene después es una proyección nuestra, con todos sus supuestos escritos debajo.</p>
+            <p class="det-prosa">Los años no tienen fecha: el año 1 empieza el día en que la empresa se constituya y venda su primera suscripción, cosa que hoy no está decidida.</p>
+
+            <div class="pe-esc-caja">
+              <fieldset class="pe-esc" hidden>
+                <legend>Escenario</legend>
+                <label><input type="radio" name="escenario" value="pesimista"><span>Pesimista</span></label>
+                <label><input type="radio" name="escenario" value="base" checked><span>Base</span></label>
+                <label><input type="radio" name="escenario" value="optimista"><span>Optimista</span></label>
+              </fieldset>
+              <p class="pe-esc__estado" role="status" aria-live="polite" data-plantilla="Escenario {n}: {c} clientes, {i} de ingresos y {e} de EBITDA en el año 3. Caja mínima en los tres años: {m}.">Escenario base: 526 clientes, 161.570 € de ingresos y 22.347 € de EBITDA en el año 3. Caja mínima en los tres años: 3.703 €.</p>
+            </div>
+
+            <div class="pe-grafs">
+              <figure class="pe-graf">
+                <figcaption><h3 class="det-h3">Ingresos netos al mes</h3><p>Lo que entra cada mes por suscripciones, sin IVA.</p></figcaption>
+                <svg class="pe-graf__svg" viewBox="0 0 560 330" role="img" aria-labelledby="graf-mrr-t graf-mrr-d" focusable="false">
+<title id="graf-mrr-t">Ingresos netos mensuales en los tres escenarios</title>
+<desc id="graf-mrr-d">Tres curvas a 36 meses. Al final del año 3: pesimista 7.018 €, base 18.200 €, optimista 30.956 €. Las cifras exactas están en las tablas de este capítulo.</desc>
+<g class="pe-graf__eje"><line x1="62" x2="440" y1="276" y2="276"/><line x1="62" x2="440" y1="211.5" y2="211.5"/><line x1="62" x2="440" y1="147" y2="147"/><line x1="62" x2="440" y1="82.5" y2="82.5"/><line x1="62" x2="440" y1="18" y2="18"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="280" text-anchor="end">0</text><text x="54" y="215.5" text-anchor="end">8k</text><text x="54" y="151" text-anchor="end">16k</text><text x="54" y="86.5" text-anchor="end">24k</text><text x="54" y="22" text-anchor="end">32k</text><text x="62" y="298" text-anchor="start">Inicio</text><text x="188" y="298" text-anchor="middle">Año 1</text><line class="pe-graf__anio" x1="188" x2="188" y1="18" y2="276"/><text x="314" y="298" text-anchor="middle">Año 2</text><line class="pe-graf__anio" x1="314" x2="314" y1="18" y2="276"/><text x="440" y="298" text-anchor="middle">Año 3</text><line class="pe-graf__anio" x1="440" x2="440" y1="18" y2="276"/></g>
+<g class="pe-graf__serie" data-linea="pesimista"><path class="pe-graf__area" d="M62 276 L72.5 275.1 L83 274.3 L93.5 273.4 L104 272.5 L114.5 271.6 L125 270.8 L135.5 269.9 L146 269 L156.5 268.2 L167 267.3 L177.5 266.4 L188 265.5 L198.5 264.1 L209 262.6 L219.5 261.1 L230 259.6 L240.5 258.2 L251 256.7 L261.5 255.2 L272 253.7 L282.5 252.2 L293 250.8 L303.5 249.3 L314 247.8 L324.5 245.4 L335 243.1 L345.5 240.7 L356 238.3 L366.5 236 L377 233.6 L387.5 231.2 L398 228.9 L408.5 226.5 L419 224.1 L429.5 221.8 L440 219.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 275.1 L83 274.3 L93.5 273.4 L104 272.5 L114.5 271.6 L125 270.8 L135.5 269.9 L146 269 L156.5 268.2 L167 267.3 L177.5 266.4 L188 265.5 L198.5 264.1 L209 262.6 L219.5 261.1 L230 259.6 L240.5 258.2 L251 256.7 L261.5 255.2 L272 253.7 L282.5 252.2 L293 250.8 L303.5 249.3 L314 247.8 L324.5 245.4 L335 243.1 L345.5 240.7 L356 238.3 L366.5 236 L377 233.6 L387.5 231.2 L398 228.9 L408.5 226.5 L419 224.1 L429.5 221.8 L440 219.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="219.4" r="4.5"/><text x="452" y="224.4">7.018 €</text></g></g>
+<g class="pe-graf__serie" data-linea="optimista"><path class="pe-graf__area" d="M62 276 L72.5 272.5 L83 268.9 L93.5 265.4 L104 261.9 L114.5 258.3 L125 254.8 L135.5 251.3 L146 247.7 L156.5 244.2 L167 240.7 L177.5 237.1 L188 233.6 L198.5 227 L209 220.4 L219.5 213.7 L230 207.1 L240.5 200.5 L251 193.9 L261.5 187.3 L272 180.7 L282.5 174 L293 167.4 L303.5 160.8 L314 154.2 L324.5 143.6 L335 132.9 L345.5 122.3 L356 111.6 L366.5 101 L377 90.3 L387.5 79.7 L398 69 L408.5 58.4 L419 47.7 L429.5 37.1 L440 26.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 272.5 L83 268.9 L93.5 265.4 L104 261.9 L114.5 258.3 L125 254.8 L135.5 251.3 L146 247.7 L156.5 244.2 L167 240.7 L177.5 237.1 L188 233.6 L198.5 227 L209 220.4 L219.5 213.7 L230 207.1 L240.5 200.5 L251 193.9 L261.5 187.3 L272 180.7 L282.5 174 L293 167.4 L303.5 160.8 L314 154.2 L324.5 143.6 L335 132.9 L345.5 122.3 L356 111.6 L366.5 101 L377 90.3 L387.5 79.7 L398 69 L408.5 58.4 L419 47.7 L429.5 37.1 L440 26.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="26.4" r="4.5"/><text x="452" y="31.4">30.956 €</text></g></g>
+<g class="pe-graf__serie es-activa" data-linea="base"><path class="pe-graf__area" d="M62 276 L72.5 273.8 L83 271.7 L93.5 269.5 L104 267.4 L114.5 265.2 L125 263.1 L135.5 260.9 L146 258.8 L156.5 256.6 L167 254.5 L177.5 252.3 L188 250.2 L198.5 246.5 L209 242.7 L219.5 239 L230 235.3 L240.5 231.6 L251 227.9 L261.5 224.2 L272 220.5 L282.5 216.8 L293 213 L303.5 209.3 L314 205.6 L324.5 199.3 L335 192.9 L345.5 186.5 L356 180.2 L366.5 173.8 L377 167.4 L387.5 161.1 L398 154.7 L408.5 148.4 L419 142 L429.5 135.6 L440 129.3 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 273.8 L83 271.7 L93.5 269.5 L104 267.4 L114.5 265.2 L125 263.1 L135.5 260.9 L146 258.8 L156.5 256.6 L167 254.5 L177.5 252.3 L188 250.2 L198.5 246.5 L209 242.7 L219.5 239 L230 235.3 L240.5 231.6 L251 227.9 L261.5 224.2 L272 220.5 L282.5 216.8 L293 213 L303.5 209.3 L314 205.6 L324.5 199.3 L335 192.9 L345.5 186.5 L356 180.2 L366.5 173.8 L377 167.4 L387.5 161.1 L398 154.7 L408.5 148.4 L419 142 L429.5 135.6 L440 129.3"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="129.3" r="4.5"/><text x="452" y="134.3">18.200 €</text></g></g>
+</svg>
+              </figure>
+              <figure class="pe-graf">
+                <figcaption><h3 class="det-h3">Caja a fin de mes</h3><p>Parte de los 10.000 € de fondos propios. Antes de impuestos.</p></figcaption>
+                <svg class="pe-graf__svg" viewBox="0 0 560 330" role="img" aria-labelledby="graf-caja-t graf-caja-d" focusable="false">
+<title id="graf-caja-t">Caja a fin de mes en los tres escenarios</title>
+<desc id="graf-caja-d">Tres curvas a 36 meses. Al final del año 3: pesimista 10.332 €, base 30.449 €, optimista 94.807 €. Las cifras exactas están en las tablas de este capítulo.</desc>
+<g class="pe-graf__eje"><line x1="62" x2="440" y1="276" y2="276"/><line x1="62" x2="440" y1="211.5" y2="211.5"/><line x1="62" x2="440" y1="147" y2="147"/><line x1="62" x2="440" y1="82.5" y2="82.5"/><line x1="62" x2="440" y1="18" y2="18"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="280" text-anchor="end">0</text><text x="54" y="215.5" text-anchor="end">25k</text><text x="54" y="151" text-anchor="end">50k</text><text x="54" y="86.5" text-anchor="end">75k</text><text x="54" y="22" text-anchor="end">100k</text><text x="62" y="298" text-anchor="start">Inicio</text><text x="188" y="298" text-anchor="middle">Año 1</text><line class="pe-graf__anio" x1="188" x2="188" y1="18" y2="276"/><text x="314" y="298" text-anchor="middle">Año 2</text><line class="pe-graf__anio" x1="314" x2="314" y1="18" y2="276"/><text x="440" y="298" text-anchor="middle">Año 3</text><line class="pe-graf__anio" x1="440" x2="440" y1="18" y2="276"/></g>
+<g class="pe-graf__serie" data-linea="pesimista"><path class="pe-graf__area" d="M62 250.2 L72.5 258.1 L83 259.5 L93.5 260.7 L104 261.8 L114.5 262.7 L125 263.5 L135.5 264.2 L146 264.7 L156.5 265 L167 265.2 L177.5 265.3 L188 265.3 L198.5 268.2 L209 269.5 L219.5 270.7 L230 271.5 L240.5 272.1 L251 272.5 L261.5 272.6 L272 272.4 L282.5 272 L293 271.4 L303.5 270.5 L314 269.3 L324.5 272.2 L335 272.1 L345.5 271.6 L356 270.7 L366.5 269.4 L377 267.7 L387.5 265.7 L398 263.2 L408.5 260.3 L419 257.1 L429.5 253.4 L440 249.3 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 258.1 L83 259.5 L93.5 260.7 L104 261.8 L114.5 262.7 L125 263.5 L135.5 264.2 L146 264.7 L156.5 265 L167 265.2 L177.5 265.3 L188 265.3 L198.5 268.2 L209 269.5 L219.5 270.7 L230 271.5 L240.5 272.1 L251 272.5 L261.5 272.6 L272 272.4 L282.5 272 L293 271.4 L303.5 270.5 L314 269.3 L324.5 272.2 L335 272.1 L345.5 271.6 L356 270.7 L366.5 269.4 L377 267.7 L387.5 265.7 L398 263.2 L408.5 260.3 L419 257.1 L429.5 253.4 L440 249.3"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="249.3" r="4.5"/><text x="452" y="254.3">10.332 €</text></g></g>
+<g class="pe-graf__serie" data-linea="optimista"><path class="pe-graf__area" d="M62 250.2 L72.5 259.1 L83 260.9 L93.5 262 L104 262.6 L114.5 262.5 L125 261.8 L135.5 260.5 L146 258.6 L156.5 256.1 L167 253 L177.5 249.2 L188 244.8 L198.5 250 L209 250.2 L219.5 249.3 L230 247.2 L240.5 244 L251 239.6 L261.5 234.1 L272 227.5 L282.5 219.7 L293 210.8 L303.5 200.8 L314 189.7 L324.5 193.5 L335 187.8 L345.5 180.3 L356 170.9 L366.5 159.8 L377 146.9 L387.5 132.1 L398 115.6 L408.5 97.3 L419 77.1 L429.5 55.2 L440 31.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 259.1 L83 260.9 L93.5 262 L104 262.6 L114.5 262.5 L125 261.8 L135.5 260.5 L146 258.6 L156.5 256.1 L167 253 L177.5 249.2 L188 244.8 L198.5 250 L209 250.2 L219.5 249.3 L230 247.2 L240.5 244 L251 239.6 L261.5 234.1 L272 227.5 L282.5 219.7 L293 210.8 L303.5 200.8 L314 189.7 L324.5 193.5 L335 187.8 L345.5 180.3 L356 170.9 L366.5 159.8 L377 146.9 L387.5 132.1 L398 115.6 L408.5 97.3 L419 77.1 L429.5 55.2 L440 31.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="31.4" r="4.5"/><text x="452" y="36.4">94.807 €</text></g></g>
+<g class="pe-graf__serie es-activa" data-linea="base"><path class="pe-graf__area" d="M62 250.2 L72.5 258.7 L83 260.4 L93.5 261.8 L104 262.7 L114.5 263.3 L125 263.5 L135.5 263.3 L146 262.8 L156.5 261.9 L167 260.6 L177.5 258.9 L188 256.9 L198.5 263.1 L209 264.9 L219.5 266 L230 266.4 L240.5 266.3 L251 265.5 L261.5 264.1 L272 262 L282.5 259.3 L293 255.9 L303.5 252 L314 247.4 L324.5 256.1 L335 256.1 L345.5 255 L356 252.9 L366.5 249.6 L377 245.4 L387.5 240 L398 233.6 L408.5 226.2 L419 217.7 L429.5 208.1 L440 197.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 258.7 L83 260.4 L93.5 261.8 L104 262.7 L114.5 263.3 L125 263.5 L135.5 263.3 L146 262.8 L156.5 261.9 L167 260.6 L177.5 258.9 L188 256.9 L198.5 263.1 L209 264.9 L219.5 266 L230 266.4 L240.5 266.3 L251 265.5 L261.5 264.1 L272 262 L282.5 259.3 L293 255.9 L303.5 252 L314 247.4 L324.5 256.1 L335 256.1 L345.5 255 L356 252.9 L366.5 249.6 L377 245.4 L387.5 240 L398 233.6 L408.5 226.2 L419 217.7 L429.5 208.1 L440 197.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="197.4" r="4.5"/><text x="452" y="202.4">30.449 €</text></g></g>
+</svg>
+              </figure>
+            </div>
+            <p class="pe-graf__clave"><span class="pe-clave pe-clave--activa">Escenario elegido</span> <span class="pe-clave pe-clave--otra">Los otros dos escenarios</span></p>
+
+            <figure class="pe-barras pe-barras--clientes">
+              <figcaption><h3 class="det-h3">Clientes por plan al cierre de cada año</h3></figcaption>
+              <svg class="pe-barras__svg" viewBox="0 0 800 194" role="img" aria-labelledby="barras-t barras-d" focusable="false">
+<title id="barras-t">Clientes por plan al cierre de cada año</title>
+<desc id="barras-d">Barras apiladas por plan. Las cifras exactas están en la tabla de clientes de este capítulo y cambian con el escenario elegido.</desc>
+<text class="pe-barras__anio" x="0" y="34">Año 1</text><line class="pe-barras__guia" x1="96" x2="736" y1="50" y2="50"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="0.0" x="96" y="14" width="42.7" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="0.1" x="138.7" y="14" width="17.8" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="0.2" x="156.4" y="14" width="5.7" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="0.3" x="162.1" y="14" width="2.1" height="30"/><text class="pe-barras__total" data-barra-total="0" x="174.3" y="34"><tspan data-k="a1.total" data-f="n">96</tspan></text>
+<text class="pe-barras__anio" x="0" y="92">Año 2</text><line class="pe-barras__guia" x1="96" x2="736" y1="108" y2="108"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="1.0" x="96" y="72" width="106.7" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="1.1" x="202.7" y="72" width="49.8" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="1.2" x="252.4" y="72" width="17.8" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="1.3" x="270.2" y="72" width="5.7" height="30"/><text class="pe-barras__total" data-barra-total="1" x="285.9" y="92"><tspan data-k="a2.total" data-f="n">253</tspan></text>
+<text class="pe-barras__anio" x="0" y="150">Año 3</text><line class="pe-barras__guia" x1="96" x2="736" y1="166" y2="166"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="2.0" x="96" y="130" width="213.3" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="2.1" x="309.3" y="130" width="106.7" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="2.2" x="416" y="130" width="42.7" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="2.3" x="458.7" y="130" width="11.4" height="30"/><text class="pe-barras__total" data-barra-total="2" x="480" y="150"><tspan data-k="a3.total" data-f="n">526</tspan></text>
+</svg>
+              <p class="pe-barras__clave"><span class="pe-clave pe-plan--vigia">Vigía</span> <span class="pe-clave pe-plan--centinela">Centinela</span> <span class="pe-clave pe-plan--guardian">Guardián</span> <span class="pe-clave pe-plan--egida">Égida</span></p>
+            </figure>
+
+            <div class="pe-hoja">
+              <div class="pe-tabla" role="region" aria-labelledby="cap-clientes">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-clientes"><span>Clientes y capacidad al cierre de cada año (estimación)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepto</th><th scope="col" class="n">Año 1</th><th scope="col" class="n">Año 2</th><th scope="col" class="n">Año 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Clientes Vigía</th><td class="n" data-k="a1.clientes.0" data-f="n">60</td><td class="n" data-k="a2.clientes.0" data-f="n">150</td><td class="n" data-k="a3.clientes.0" data-f="n">300</td></tr>
+                    <tr><th scope="row">Clientes Centinela</th><td class="n" data-k="a1.clientes.1" data-f="n">25</td><td class="n" data-k="a2.clientes.1" data-f="n">70</td><td class="n" data-k="a3.clientes.1" data-f="n">150</td></tr>
+                    <tr><th scope="row">Clientes Guardián</th><td class="n" data-k="a1.clientes.2" data-f="n">8</td><td class="n" data-k="a2.clientes.2" data-f="n">25</td><td class="n" data-k="a3.clientes.2" data-f="n">60</td></tr>
+                    <tr><th scope="row">Clientes Égida</th><td class="n" data-k="a1.clientes.3" data-f="n">3</td><td class="n" data-k="a2.clientes.3" data-f="n">8</td><td class="n" data-k="a3.clientes.3" data-f="n">16</td></tr>
+                    <tr class="pe-total"><th scope="row">Total de clientes</th><td class="n" data-k="a1.total" data-f="n">96</td><td class="n" data-k="a2.total" data-f="n">253</td><td class="n" data-k="a3.total" data-f="n">526</td></tr>
+                    <tr><th scope="row">Altas del año</th><td class="n" data-k="a1.altasTotal" data-f="n">96</td><td class="n" data-k="a2.altasTotal" data-f="n">185</td><td class="n" data-k="a3.altasTotal" data-f="n">348</td></tr>
+                    <tr><th scope="row">Bajas del año</th><td class="n" data-k="a1.bajasTotal" data-f="n">0</td><td class="n" data-k="a2.bajasTotal" data-f="n">28</td><td class="n" data-k="a3.bajasTotal" data-f="n">75</td></tr>
+                    <tr><th scope="row">Equipos protegidos (máximo incluido)</th><td class="n" data-k="a1.equipos" data-f="n">400</td><td class="n" data-k="a2.equipos" data-f="n">1.100</td><td class="n" data-k="a3.equipos" data-f="n">2.350</td></tr>
+                    <tr><th scope="row">Horas de analista al mes</th><td class="n" data-k="a1.horas" data-f="d1">58,5</td><td class="n" data-k="a2.horas" data-f="d1">161,5</td><td class="n" data-k="a3.horas" data-f="d1">343,0</td></tr>
+                    <tr><th scope="row">Analistas a jornada completa</th><td class="n" data-k="a1.analistas" data-f="d1">0,4</td><td class="n" data-k="a2.analistas" data-f="d1">1,2</td><td class="n" data-k="a3.analistas" data-f="d1">2,5</td></tr>
+                    <tr><th scope="row">Ingresos netos del último mes</th><td class="n" data-k="a1.mrr" data-f="e0">3.204 €</td><td class="n" data-k="a2.mrr" data-f="e0">8.729 €</td><td class="n" data-k="a3.mrr" data-f="e0">18.200 €</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pe-tabla" role="region" aria-labelledby="cap-resultados">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-resultados"><span>Cuenta de resultados anual hasta el EBITDA (estimación)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepto</th><th scope="col" class="n">Año 1</th><th scope="col" class="n">Año 2</th><th scope="col" class="n">Año 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Ingresos Vigía</th><td class="n" data-k="a1.ingresos.0" data-f="e0">2.945 €</td><td class="n" data-k="a2.ingresos.0" data-f="e0">10.309 €</td><td class="n" data-k="a3.ingresos.0" data-f="e0">22.091 €</td></tr>
+                    <tr><th scope="row">Ingresos Centinela</th><td class="n" data-k="a1.ingresos.1" data-f="e0">3.087 €</td><td class="n" data-k="a2.ingresos.1" data-f="e0">11.730 €</td><td class="n" data-k="a3.ingresos.1" data-f="e0">27.164 €</td></tr>
+                    <tr><th scope="row">Ingresos Guardián</th><td class="n" data-k="a1.ingresos.2" data-f="e0">2.575 €</td><td class="n" data-k="a2.ingresos.2" data-f="e0">10.620 €</td><td class="n" data-k="a3.ingresos.2" data-f="e0">27.355 €</td></tr>
+                    <tr><th scope="row">Ingresos Égida</th><td class="n" data-k="a1.ingresos.3" data-f="e0">10.620 €</td><td class="n" data-k="a2.ingresos.3" data-f="e0">38.940 €</td><td class="n" data-k="a3.ingresos.3" data-f="e0">84.960 €</td></tr>
+                    <tr class="pe-total"><th scope="row">Ingresos netos</th><td class="n" data-k="a1.ingresosTotal" data-f="e0">19.227 €</td><td class="n" data-k="a2.ingresosTotal" data-f="e0">71.599 €</td><td class="n" data-k="a3.ingresosTotal" data-f="e0">161.570 €</td></tr>
+                    <tr><th scope="row">Costes variables (servidor, analista y cobro)</th><td class="n" data-k="a1.variablesTotal" data-f="e0">8.762 €</td><td class="n" data-k="a2.variablesTotal" data-f="e0">32.922 €</td><td class="n" data-k="a3.variablesTotal" data-f="e0">75.533 €</td></tr>
+                    <tr class="pe-total"><th scope="row">Margen de contribución</th><td class="n" data-k="a1.contribucion" data-f="e0">10.465 €</td><td class="n" data-k="a2.contribucion" data-f="e0">38.677 €</td><td class="n" data-k="a3.contribucion" data-f="e0">86.037 €</td></tr>
+                    <tr><th scope="row">Costes fijos de operación</th><td class="n" data-k="a1.fijos" data-f="e0">720 €</td><td class="n" data-k="a2.fijos" data-f="e0">1.800 €</td><td class="n" data-k="a3.fijos" data-f="e0">3.600 €</td></tr>
+                    <tr><th scope="row">Captación de clientes</th><td class="n" data-k="a1.marketing" data-f="e0">6.945 €</td><td class="n" data-k="a2.marketing" data-f="e0">12.795 €</td><td class="n" data-k="a3.marketing" data-f="e0">24.090 €</td></tr>
+                    <tr><th scope="row">Estructura (gestoría, cuotas, herramientas)</th><td class="n" data-k="a1.estructura" data-f="e0">2.880 €</td><td class="n" data-k="a2.estructura" data-f="e0">9.900 €</td><td class="n" data-k="a3.estructura" data-f="e0">12.000 €</td></tr>
+                    <tr><th scope="row">Horas propias de ventas y soporte</th><td class="n" data-k="a1.personal" data-f="e0">0 €</td><td class="n" data-k="a2.personal" data-f="e0">9.000 €</td><td class="n" data-k="a3.personal" data-f="e0">24.000 €</td></tr>
+                    <tr class="pe-total pe-total--fin"><th scope="row">EBITDA</th><td class="n es-negativo" data-k="a1.ebitda" data-f="e0">−80 €</td><td class="n" data-k="a2.ebitda" data-f="e0">5.182 €</td><td class="n" data-k="a3.ebitda" data-f="e0">22.347 €</td></tr>
+                    <tr><th scope="row">EBITDA sobre ingresos</th><td class="n es-negativo" data-k="a1.ebitdaPct" data-f="p1">−0,4 %</td><td class="n" data-k="a2.ebitdaPct" data-f="p1">7,2 %</td><td class="n" data-k="a3.ebitdaPct" data-f="p1">13,8 %</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pe-tabla" role="region" aria-labelledby="cap-caja">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-caja"><span>Caja anual, antes de impuestos (estimación)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepto</th><th scope="col" class="n">Año 1</th><th scope="col" class="n">Año 2</th><th scope="col" class="n">Año 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Caja al inicio del año</th><td class="n" data-k="a1.cajaIni" data-f="e0">10.000 €</td><td class="n" data-k="a2.cajaIni" data-f="e0">7.420 €</td><td class="n" data-k="a3.cajaIni" data-f="e0">11.102 €</td></tr>
+                    <tr><th scope="row">EBITDA</th><td class="n es-negativo" data-k="a1.ebitda" data-f="e0">−80 €</td><td class="n" data-k="a2.ebitda" data-f="e0">5.182 €</td><td class="n" data-k="a3.ebitda" data-f="e0">22.347 €</td></tr>
+                    <tr><th scope="row">Inversión (constitución, equipos, servidor)</th><td class="n" data-k="a1.inversion" data-f="e0">2.500 €</td><td class="n" data-k="a2.inversion" data-f="e0">1.500 €</td><td class="n" data-k="a3.inversion" data-f="e0">3.000 €</td></tr>
+                    <tr class="pe-total pe-total--fin"><th scope="row">Caja al cierre del año</th><td class="n" data-k="a1.cajaFin" data-f="e0">7.420 €</td><td class="n" data-k="a2.cajaFin" data-f="e0">11.102 €</td><td class="n" data-k="a3.cajaFin" data-f="e0">30.449 €</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="pe-hoja__pie">Importes redondeados al euro. Ingresos sin IVA. La inversión se resta de la caja, no del EBITDA. No se han calculado impuestos ni amortizaciones: el capítulo 2 tampoco lo hace y no queremos dar un tipo impositivo de memoria.</p>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Supuestos de las proyecciones</h3>
+            <dl class="det-terminos">
+              <div><dt>Precios y costes por cliente <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt><dd>Los de la tabla 7, sin cambios en los tres años. No se sube ningún precio.</dd></div>
+              <div><dt>Cuota de Égida <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Se cuenta solo la cuota base de 590 €, con 25 equipos. Los equipos adicionales a 12 € no se incluyen: es un supuesto prudente.</dd></div>
+              <div><dt>Ritmo de altas <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Los clientes llegan repartidos por igual durante el año. Por eso los ingresos de un año se calculan con la media entre los clientes del inicio y los del cierre.</dd></div>
+              <div><dt>Bajas <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Cada año se pierde una parte de los clientes que había al empezarlo, y hay que captar otros para reponerlos.</dd></div>
+              <div><dt>Captación <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Altas del año × coste de captación de cada plan: 25 € en Vigía, 45 € en Centinela, 90 € en Guardián y 1.200 € en Égida.</dd></div>
+              <div><dt>Costes fijos de operación</dt><dd>60 € al mes el año 1 (capítulo 2). Suponemos 150 € el año 2 y 300 € el año 3, porque el seguro y las copias crecen con los clientes.</dd></div>
+              <div><dt>Estructura <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Año 1: gestoría a 80 € al mes y cuota de autónomos de 80 € al mes por socio. Años 2 y 3: gestoría a 100 y 150 € al mes, cuota de 300 € al mes por socio, y herramientas y formación (1.500 y 3.000 € al año). Las cuotas de autónomos son un supuesto: hay que comprobarlas con la Seguridad Social.</dd></div>
+              <div><dt>Horas propias <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>Horas de ventas, soporte y administración que no están dentro del tiempo de analista, pagadas a 20 €. El año 1 los socios no las cobran.</dd></div>
+              <div><dt>Cobros</dt><dd>Las suscripciones se cobran por adelantado cada mes, así que no hay clientes pendientes de pago ni existencias.</dd></div>
+            </dl>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-escenarios">
+              <table class="det-tabla pe-t">
+                <caption id="cap-escenarios"><span>Qué cambia de un escenario a otro (estimación propia)</span></caption>
+                <thead>
+                  <tr><th scope="col">Supuesto</th><th scope="col" class="n">Pesimista</th><th scope="col" class="n">Base</th><th scope="col" class="n">Optimista</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Clientes al cierre del año 1</th><td class="n">47</td><td class="n">96</td><td class="n">149</td></tr>
+                  <tr><th scope="row">Clientes al cierre del año 2</th><td class="n">113</td><td class="n">253</td><td class="n">419</td></tr>
+                  <tr><th scope="row">Clientes al cierre del año 3</th><td class="n">218</td><td class="n">526</td><td class="n">858</td></tr>
+                  <tr><th scope="row">De ellos, Égida en el año 3</th><td class="n">6</td><td class="n">16</td><td class="n">28</td></tr>
+                  <tr><th scope="row">Bajas al año, público general</th><td class="n">40 %</td><td class="n">30 %</td><td class="n">20 %</td></tr>
+                  <tr><th scope="row">Bajas al año, Égida</th><td class="n">15 %</td><td class="n">10 %</td><td class="n">5 %</td></tr>
+                  <tr><th scope="row">Coste de captación, sobre el base</th><td class="n">130 %</td><td class="n">100 %</td><td class="n">80 %</td></tr>
+                  <tr><th scope="row">Horas propias pagadas, año 3</th><td class="n">0</td><td class="n">1.200</td><td class="n">1.900</td></tr>
+                  <tr><th scope="row">Estructura, año 3</th><td class="n">9.000 €</td><td class="n">12.000 €</td><td class="n">12.000 €</td></tr>
+                  <tr><th scope="row">Inversión en los tres años</th><td class="n">4.000 €</td><td class="n">7.000 €</td><td class="n">7.000 €</td></tr>
+                  <tr class="pe-total"><th scope="row">EBITDA del año 3</th><td class="n">8.728 €</td><td class="n">22.347 €</td><td class="n">64.339 €</td></tr>
+                  <tr class="pe-total"><th scope="row">Caja mínima en los tres años</th><td class="n">1.320 €</td><td class="n">3.703 €</td><td class="n">5.200 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">En el escenario pesimista la empresa pierde dinero los dos primeros años y reacciona gastando menos: no paga horas propias, contiene la estructura y aplaza inversiones. Aun así la caja no llega a cero. En el optimista el límite no es el dinero sino las personas: harían falta más de cuatro analistas a jornada completa al final del año 3.</p>
+          </section>
+
+          <!-- 10. Financiación -->
+          <section class="det-grupo pe-cap" id="financiacion" aria-labelledby="titulo-financiacion">
+            <h2 class="det-h2" id="titulo-financiacion">Fondos propios primero; las ayudas, para ir más rápido</h2>
+            <p class="det-entrada">El plan no necesita deuda. Los costes fijos son bajos y cada cliente deja margen, así que la actividad se paga con las propias suscripciones.</p>
+
+            <h3 class="det-h3 pe-h3">Dos fases</h3>
+            <dl class="det-terminos">
+              <div><dt>Fase de TFG <span class="pe-origen pe-origen--cap">Capítulo 2</span></dt><dd>Recursos propios. El desembolso real es de unos 100 € (disco externo, dominio y cable de red), a partes iguales. Los ordenadores ya existen y todo el software es libre o de evaluación.</dd></div>
+              <div><dt>Fase comercial <span class="pe-origen pe-origen--est">Estimación propia</span></dt><dd>10.000 € de fondos propios, 5.000 € por socio. La cifra sale del escenario pesimista: es la aportación con la que la caja no baja de 1.320 € en ningún mes de los tres años.</dd></div>
+            </dl>
+
+            <h3 class="det-h3 pe-h3">Uso de los fondos <span class="pe-origen pe-origen--est">Estimación propia</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-fondos">
+              <table class="det-tabla pe-t">
+                <caption id="cap-fondos"><span>A qué se destinan los 10.000 € de fondos propios</span></caption>
+                <thead>
+                  <tr><th scope="col">Destino</th><th scope="col">Para qué</th><th scope="col" class="n">Importe</th><th scope="col" class="n">%</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Puesta en marcha</th><td>Constitución de la sociedad, alta de actividad, primer servidor de producción y contratos tipo revisados por un abogado. Es la inversión del año 1.</td><td class="n" data-uso="2500">2.500 €</td><td class="n">25 %</td></tr>
+                  <tr><th scope="row">Captación de los primeros clientes</th><td>Auditorías iniciales de Égida, materiales para gestorías y primeras pruebas de anuncios, hasta que los ingresos cubran la captación.</td><td class="n" data-uso="3500">3.500 €</td><td class="n">35 %</td></tr>
+                  <tr><th scope="row">Estructura de los primeros seis meses</th><td>Gestoría, cuotas y seguro mientras hay pocos clientes.</td><td class="n" data-uso="1800">1.800 €</td><td class="n">18 %</td></tr>
+                  <tr><th scope="row">Reserva</th><td>Colchón para el escenario pesimista. No se gasta si el plan va como el base.</td><td class="n" data-uso="2200">2.200 €</td><td class="n">22 %</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row" colspan="2">Total</th><td class="n">10.000 €</td><td class="n">100 %</td></tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Ayudas: un acelerador, no la base</h3>
+            <p class="det-prosa">Ninguna de estas vías está en las tablas del capítulo anterior. Si alguna llega, sirve para contratar antes o para abaratar la cuota del cliente, no para tapar un agujero.</p>
+            <dl class="det-terminos">
+              <div><dt>Kit Digital</dt><dd>Programa con fondos NextGenerationEU que incluye una categoría de ciberseguridad para pymes. KAIRON podría adherirse como agente digitalizador para ofrecer Égida con la cuota subvencionada. En las fuentes consultadas para el capítulo 2 la convocatoria figura cerrada: hay que comprobar en el portal oficial si hay una nueva antes de contar con ella.</dd></div>
+              <div><dt>Otras ayudas a la ciberseguridad</dt><dd>El programa Kit Consulting, las convocatorias «Pyme Cibersegura» de las cámaras de comercio (2026) y las ayudas autonómicas. Todas reducen lo que paga el cliente empresa, no el margen de KAIRON.</dd></div>
+              <div><dt>Préstamos participativos de ENISA</dt><dd>ENISA, la Empresa Nacional de Innovación (una sociedad pública española; no es la agencia europea de ciberseguridad, que usa las mismas siglas), concede préstamos participativos a empresas de nueva creación. No hemos podido comprobar en su web las condiciones vigentes y las fuentes secundarias no coinciden entre sí, así que no damos importes, edades ni plazos. Sería la vía para adelantar la primera contratación si el plan fuera mejor de lo previsto.</dd></div>
+            </dl>
+          </section>
+
+          <!-- 11. Riesgos, indicadores e hitos -->
+          <section class="det-grupo pe-cap" id="riesgos" aria-labelledby="titulo-riesgos">
+            <h2 class="det-h2" id="titulo-riesgos">Qué puede salir mal y cómo sabremos si va bien</h2>
+            <p class="det-entrada">Un plan sirve si dice de antemano qué lo rompería y qué número hay que mirar cada mes.</p>
+
+            <h3 class="det-h3 pe-h3">Riesgos y mitigación</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-riesgos">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-riesgos"><span>Riesgos principales, con probabilidad e impacto según nuestra valoración</span></caption>
+                <thead>
+                  <tr><th scope="col">Riesgo</th><th scope="col">Probabilidad</th><th scope="col">Impacto</th><th scope="col">Qué hacemos</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">El analista tarda más de lo previsto por cliente</th><td>Alta</td><td>Alto</td><td>Medirlo en el laboratorio y con los diez primeros clientes. Si se desvía, subir el precio o recortar el servicio antes de crecer.</td></tr>
+                  <tr><th scope="row">Llegan menos clientes de los previstos</th><td>Media</td><td>Medio</td><td>Es el escenario pesimista: gasto contenido y reserva de fondos propios. La caja no llega a cero.</td></tr>
+                  <tr><th scope="row">Un ataque a un cliente pasa sin detectar</th><td>Media</td><td>Alto</td><td>Contrato que explica el horario y los límites, seguro de responsabilidad civil y ciberriesgo, y revisión de reglas después de cada caso.</td></tr>
+                  <tr><th scope="row">Un incidente grave ocurre de noche o en fin de semana</th><td>Alta</td><td>Medio</td><td>El bloqueo automático actúa a cualquier hora. El cliente lo sabe antes de firmar. Ampliar el horario de Égida cuando haya tres personas.</td></tr>
+                  <tr><th scope="row">El servidor en la nube o el seguro cuestan más de lo estimado</th><td>Media</td><td>Medio</td><td>Pedir presupuestos reales antes de vender. Son los dos supuestos del capítulo 2 que no tienen presupuesto de proveedor.</td></tr>
+                  <tr><th scope="row">Uno de los dos socios no puede seguir</th><td>Media</td><td>Alto</td><td>Todo documentado en el repositorio, procedimientos escritos y pacto de socios que diga qué pasa en ese caso.</td></tr>
+                  <tr><th scope="row">Wazuh cambia de licencia o deja de mantenerse</th><td>Baja</td><td>Alto</td><td>Las reglas y la herramienta forense son propias y no dependen de una versión concreta. Seguir las versiones y tener prevista una alternativa.</td></tr>
+                  <tr><th scope="row">Fuga de datos de un cliente desde KAIRON</th><td>Baja</td><td>Alto</td><td>Solo se guardan registros, con retención limitada, cifrado, acceso por VPN con clave personal y mínimo privilegio.</td></tr>
+                  <tr><th scope="row">Un competidor grande baja el precio</th><td>Media</td><td>Medio</td><td>No competir en precio sino en trato, lenguaje e informe. Reforzar el canal de gestorías e informáticos locales.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Indicadores</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-kpi">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-kpi"><span>Indicadores que se revisan cada mes y su objetivo</span></caption>
+                <thead>
+                  <tr><th scope="col">Indicador</th><th scope="col">Objetivo</th><th scope="col">De dónde sale</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Tiempo hasta la alerta</th><td>Menos de 60 segundos</td><td>Capítulo 2, objetivo 2</td></tr>
+                  <tr><th scope="row">Tiempo hasta el bloqueo automático</th><td>30 segundos como máximo</td><td>Capítulo 2, objetivo 4</td></tr>
+                  <tr><th scope="row">Pruebas con hora UTC, número de caso y SHA-256</th><td>100 %</td><td>Capítulo 2, objetivo 5</td></tr>
+                  <tr><th scope="row">Margen de cada plan</th><td>Al menos el 30 % en los planes para el público general</td><td>Capítulo 2, objetivo 8</td></tr>
+                  <tr><th scope="row">Minutos de analista por cliente y mes</th><td>10, 30, 90 y 480 según el plan</td><td>Capítulo 2, tabla 7</td></tr>
+                  <tr><th scope="row">Respuestas dentro del plazo del plan</th><td>Al menos el 95 %</td><td>Objetivo propio</td></tr>
+                  <tr><th scope="row">Clientes e ingresos netos del mes</th><td>96 clientes y 3.204 € en el mes 12</td><td>Capítulo 2, tabla 9</td></tr>
+                  <tr><th scope="row">Bajas al año</th><td>Menos del 30 % en el público general y del 10 % en Égida</td><td>Objetivo propio</td></tr>
+                  <tr><th scope="row">Coste de captación por plan</th><td>25, 45, 90 y 1.200 € como máximo</td><td>Objetivo propio</td></tr>
+                  <tr><th scope="row">Alertas que resultan ser falsas</th><td>Que baje cada trimestre: se medirá a partir del primer mes</td><td>Objetivo propio</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Hitos</h3>
+            <p class="det-prosa">El negocio de este documento (los cuatro planes del SOC) y las seis fases de producto de <a href="futuro.html#plan">El siguiente instante</a> avanzan en paralelo. Los ingresos salen solo de los planes: KAIRON Agents y KAIRON Data Chip no aportan ni un euro a las tablas.</p>
+            <ol class="pe-hitos">
+              <li>
+                <h4>Antes de empezar: el TFG</h4>
+                <p class="pe-hitos__cuando">Noviembre de 2026 a marzo de 2027</p>
+                <p>Laboratorio Wazuh y herramienta forense antes de Navidad. Ensayo de la demo y corte de alcance en enero. Presentación en febrero o marzo. Aquí se mide el tiempo real de analista.</p>
+              </li>
+              <li>
+                <h4>Año 1: vender los cuatro planes</h4>
+                <p class="pe-hitos__cuando">Fases 1 y 2 del producto: fundación y primer prototipo de Agents</p>
+                <p>Constitución, seguro y contratos. Primer cliente Égida en el tercer trimestre. 96 clientes al cierre. Paso de Wazuh a varios nodos al superar los 100 equipos.</p>
+              </li>
+              <li>
+                <h4>Año 2: dejar de depender de los socios</h4>
+                <p class="pe-hitos__cuando">Fases 3 y 4: plataforma central y primeros servicios de seguridad sobre ella</p>
+                <p>253 clientes. Un socio a jornada completa. Procedimientos escritos para que una tercera persona pueda atender alertas. Primer año con EBITDA positivo en el escenario base.</p>
+              </li>
+              <li>
+                <h4>Año 3: primera contratación</h4>
+                <p class="pe-hitos__cuando">Fase 5: investigación de Data Chip, sin producto y sin ingresos</p>
+                <p>526 clientes y un analista júnior contratado. Con tres personas se estudia ampliar el horario de Égida. La investigación de <a href="data-chip.html">Data Chip</a> empieza como estudio, pagada con el margen del SOC.</p>
+              </li>
+              <li>
+                <h4>Después: expansión</h4>
+                <p class="pe-hitos__cuando">Fase 6, fuera del horizonte de este plan</p>
+                <p>Identidad digital, filtraciones y servicios a empresas. No tiene cifras porque todavía no hay nada que las sostenga.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- 12. Forma jurídica y avisos -->
+          <section class="det-grupo pe-cap" id="forma" aria-labelledby="titulo-forma">
+            <h2 class="det-h2" id="titulo-forma">Una sociedad limitada, cuando haya algo que constituir</h2>
+            <p class="det-entrada">KAIRON no existe como empresa. Si existiera, sería una sociedad limitada de dos socios a partes iguales.</p>
+
+            <h3 class="det-h3 pe-h3">Por qué una sociedad limitada</h3>
+            <ul class="det-lista">
+              <li><b>Responsabilidad limitada.</b> Un servicio de seguridad puede recibir una reclamación. La sociedad responde con su patrimonio, no con el de los socios, y el seguro cubre el resto.</li>
+              <li><b>Confianza.</b> Una pyme firma con más tranquilidad un contrato de 12 meses con una sociedad que con dos autónomos.</li>
+              <li><b>Dos socios, reglas claras.</b> Un pacto de socios desde el principio: reparto, dedicación de cada uno y qué pasa si uno lo deja.</li>
+              <li><b>Acceso a financiación.</b> Los préstamos participativos y muchas ayudas se dirigen a sociedades.</li>
+            </ul>
+            <p class="det-prosa">Esta elección es una propuesta nuestra y habría que confirmarla con una gestoría: no somos juristas ni asesores fiscales.</p>
+
+            <h3 class="det-h3 pe-h3">Obligaciones que ya conocemos</h3>
+            <p class="det-prosa">Vigilar los equipos de un cliente es tratar sus datos por su cuenta: hace falta un contrato de encargado del tratamiento con cada uno (artículo 28 del RGPD). La web tendría que publicar los datos de identificación de la sociedad (LSSI). Y habría que revisar si la directiva NIS2 alcanza a KAIRON o a sus clientes. Todo esto está explicado, con sus textos oficiales, en <a href="legal.html">Legalidad y privacidad</a>.</p>
+
+            <aside class="pe-aviso" aria-labelledby="titulo-aviso">
+              <h3 class="det-h3" id="titulo-aviso">Este documento es un trabajo académico</h3>
+              <p>KAIRON es una empresa ficticia creada por Antonia Lorena Cracana y João Daniel de Paiva Oliveira, estudiantes de 2.º de SMX en Digitech Barcelona, para su proyecto de final de ciclo. No tiene NIF, domicilio, clientes ni ingresos, y no inventamos ninguno.</p>
+              <p>Los precios, los clientes y las cifras de negocio son una simulación razonada. Los datos de mercado son de organismos oficiales y están enlazados. Nada de esto es una oferta comercial, ni asesoramiento financiero o jurídico.</p>
+              <p>Uso de inteligencia artificial: se ha usado como apoyo para estructurar el documento, calcular las tablas y revisar el texto. El equipo tiene que revisar todo el contenido y poder explicarlo antes de entregarlo.</p>
+            </aside>
+          </section>
+
+          <!-- Fuentes -->
+          <section class="det-grupo pe-cap pe-cap--fuentes" id="fuentes" aria-labelledby="titulo-fuentes">
+            <h2 class="det-h2" id="titulo-fuentes">Fuentes</h2>
+            <p class="det-prosa">Recopiladas el 12-11-2026. Las cifras oficiales están pendientes de cotejar una a una con la nota o la tabla enlazada: hay que abrir cada enlace y comprobar el número antes de entregar el trabajo.</p>
+            <ul class="pe-fuentes">
+              <li><a href="https://www.ine.es/dyngs/Prensa/es/DIRCE2025.htm" target="_blank" rel="noopener">INE. Directorio Central de Empresas (DIRCE), a 1 de enero de 2025</a><span>Nota de prensa del 11-12-2025. Empresas activas en España y empresas sin asalariados.</span></li>
+              <li><a href="https://www.idescat.cat/pub/?id=ee&amp;n=10449" target="_blank" rel="noopener">Idescat. Empresas y establecimientos a 1 de enero, por número de asalariados</a><span>Empresas con establecimiento en Cataluña, por tamaño.</span></li>
+              <li><a href="https://www.incibe.es/incibe/sala-de-prensa/incibe-detecto-mas-de-122000-incidentes-de-ciberseguridad-en-2025" target="_blank" rel="noopener">INCIBE. Balance de ciberseguridad 2025</a><span>Incidentes gestionados, malware, ransomware, fraude y phishing.</span></li>
+              <li><a href="https://www.ine.es/dyngs/Prensa/es/ETICCE20241T2025.htm" target="_blank" rel="noopener">INE. Encuesta sobre el uso de TIC y del comercio electrónico en las empresas, 2024 y primer trimestre de 2025</a><span>Nota de prensa del 22-10-2025. Empresas con especialistas TIC. Falta comprobar a qué tamaño de empresa se refiere el dato.</span></li>
+              <li><a href="https://ipyme.org/Publicaciones/Cifras%20PYME/CifrasPyme_abril_2026.pdf" target="_blank" rel="noopener">Ministerio de Industria y Turismo (DGIPYME). Cifras PYME, abril de 2026</a><span>Número de pymes según la Seguridad Social.</span></li>
+              <li><a href="https://documentation.wazuh.com/current/quickstart.html" target="_blank" rel="noopener">Wazuh. Guía de inicio rápido y requisitos de hardware</a><span>Dimensionamiento del servidor según los agentes.</span></li>
+              <li><a href="https://espanadigital.gob.es/lineas-de-actuacion/programa-kit-digital" target="_blank" rel="noopener">Programa Kit Digital (Red.es y Ministerio para la Transformación Digital)</a><span>Ayudas a la digitalización y a la ciberseguridad de las pymes.</span></li>
+              <li><a href="https://www.enisa.es/" target="_blank" rel="noopener">ENISA, Empresa Nacional de Innovación</a><span>Préstamos participativos. Condiciones pendientes de comprobar.</span></li>
+              <li><span class="pe-fuentes__propia">KAIRON. Capítulo 2: diseño del proyecto (actividad ACT1 RA2, 12-11-2026)</span><span>Precios, planes, costes por cliente, costes fijos, punto de equilibrio, escenario del mes 12 y financiación.</span></li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">Lo que ya se puede comprobar</h2>
+            <p class="det-prosa">Las cuentas son una proyección. Lo que KAIRON demuestra hoy está en el laboratorio: detectar un ataque, contenerlo y documentarlo con pruebas que se pueden verificar.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="preguntas.html#precios" class="boton boton--lleno"><span class="boton__texto" data-texto="Planes y precios">Planes y precios</span></a>
+            <a href="futuro.html" class="boton"><span class="boton__texto" data-texto="Las seis fases">Las seis fases</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo pi-sin-partir" id="titulo-rel">Sigue leyendo</h2>
+          <ul class="det-rel__lista">
+            <li><a href="futuro.html"><b>El siguiente instante</b><span>La visión de producto en seis fases, de Agents a Data Chip.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>El laboratorio</b><span>Las máquinas, las redes y las reglas que sostienen el servicio.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="legal.html"><b>Legalidad y privacidad</b><span>Las normas que obligarían a KAIRON, con sus fuentes.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="data-chip.html"><b>KAIRON Data Chip</b><span>La línea de investigación de la fase 5, con sus límites.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores · <a href="plan.html">Plan de empresa</a> · <a href="legal.html">Legalidad y privacidad</a> · <a href="antonia-lorena-cracana/">Portfolio de Antonia Lorena Cracana</a> · <a href="joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Plan de empresa: modelo económico, selector de escenario, índice de lectura y gráficos (antes de paginas.js) -->
+  <script src="js/plan.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
+</body>
+</html>

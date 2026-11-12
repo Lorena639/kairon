@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pla d'empresa de KAIRON, un SOC gestionat per a particulars i pimes: mercat, competència, plans i preus, economia per client, màrqueting, operacions, equip, projeccions a tres anys en tres escenaris, finançament i riscos. Empresa fictícia: projecte acadèmic amb xifres simulades.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>Pla d'empresa: mercat, comptes i tres anys de projeccions · KAIRON</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../plan.html">
+  <link rel="alternate" hreflang="ca" href="plan.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
+  <!-- Estils propis del pla d'empresa -->
+  <link rel="stylesheet" href="../css/plan.css?v=20261112c">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Salta al contingut</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+    </ul>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Secció següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../plan.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="servicios.html">Serveis</a></li>
+          <li><a href="soc.html">SOC en directe</a></li>
+          <li><a href="productos.html">Productes</a></li>
+          <li><a href="proyectos.html">Projectes</a></li>
+          <li><a href="futuro.html">Futur</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det pe" data-escenario="base">
+
+    <!-- ===== CAPÇALERA DE PÀGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Pla d'empresa</h1>
+        <p class="pagina__intro">Com un laboratori de dos estudiants es convertiria en un SOC gestionat que es paga sol: mercat, preus, costos, equip i tres anys de comptes, amb cada supòsit a la vista.</p>
+        <ul class="pi-datos" aria-label="En resum"><li class="pi-datos__aviso">Empresa fictícia: xifres simulades amb supòsits explícits</li><li>Versió 1.0 · 12-11-2026</li><li>Horitzó: 3 anys</li><li>12 capítols</li></ul>
+      </div>
+    </section>
+
+    <!-- ===== DOCUMENT: índex fix a l'esquerra i un bloc per capítol ===== -->
+    <section class="det-seccion det-seccion--borde pe-doc" aria-label="Pla d'empresa de KAIRON">
+      <div class="contenedor det-faq pe-cuerpo">
+
+        <nav class="det-indice pe-indice" aria-labelledby="titulo-indice">
+          <h2 id="titulo-indice" class="pi-sin-partir">En aquest document</h2>
+          <p class="pe-indice__cuenta" aria-hidden="true"><b>01</b> / 12</p>
+          <ol>
+            <li><a href="#resumen">Resum executiu</a></li>
+            <li><a href="#mercado">Problema i mercat</a></li>
+            <li><a href="#competencia">Competència i posició</a></li>
+            <li><a href="#oferta">Serveis i plans</a></li>
+            <li><a href="#modelo">Model de negoci</a></li>
+            <li><a href="#marketing">Màrqueting i vendes</a></li>
+            <li><a href="#operaciones">Operacions</a></li>
+            <li><a href="#equipo">Equip i contractació</a></li>
+            <li><a href="#proyecciones">Projeccions a 3 anys</a></li>
+            <li><a href="#financiacion">Finançament</a></li>
+            <li><a href="#riesgos">Riscos, indicadors i fites</a></li>
+            <li><a href="#forma">Forma jurídica i avisos</a></li>
+            <li class="pe-indice__extra"><a href="#fuentes">Fonts</a></li>
+          </ol>
+        </nav>
+
+        <div class="pe-texto">
+
+          <!-- 1. Resum executiu -->
+          <section class="det-grupo pe-cap" id="resumen" aria-labelledby="titulo-resumen">
+            <h2 class="det-h2" id="titulo-resumen">Resum executiu</h2>
+            <p class="det-entrada">KAIRON ven vigilància de seguretat per subscripció a qui no pot tenir un equip propi: particulars, autònoms i pimes.</p>
+            <p class="det-prosa"><strong>Missió.</strong> Detectar un atac a temps i respondre en el moment just, que és el que significa <i lang="grc-Latn">kairos</i> en grec, i deixar-ho documentat perquè el client pugui demostrar què va passar.</p>
+            <p class="det-prosa"><strong>Què venem.</strong> Un SOC gestionat (un centre d'operacions de seguretat que vigila els equips del client) en quatre plans: Vigia, Sentinella i Guardià per al públic general, des de 9,90 € al mes, i Ègida per a empreses, des de 590 € al mes més IVA. Tots quatre fan servir la mateixa tecnologia: agents de Wazuh, un tallafoc pfSense i una eina forense pròpia en Python. El que canvia d'un pla a un altre és quanta atenció humana inclou.</p>
+            <p class="det-prosa"><strong>Què no venem.</strong> Vigilància humana a totes hores. Les alertes i el bloqueig automàtic funcionen a qualsevol hora; els analistes treballen de dilluns a divendres, de 9 a 19 h.</p>
+            <p class="det-prosa"><strong>Què demanem.</strong> Res a un banc. El pla arrenca amb 10.000 € de fons propis, 5.000 € per soci, i se sosté amb les subscripcions. Els ajuts públics, si arriben, acceleren el pla, però els comptes no en depenen.</p>
+
+            <h3 class="det-h3 pe-h3">Xifres clau</h3>
+            <dl class="pe-cifras">
+              <div>
+                <dt>Preu d'entrada <span class="pe-origen pe-origen--cap">Capítol 2</span></dt>
+                <dd><b data-cuenta="9.9" data-f="e2">9,90 €</b> <small>al mes, IVA inclòs (pla Vigia)</small></dd>
+              </div>
+              <div>
+                <dt>Marge per client <span class="pe-origen pe-origen--cap">Capítol 2</span></dt>
+                <dd><b data-cuenta="30.600254237288137" data-f="p1">30,6 %</b> <small>en el pla més ajustat (Guardià)</small> · <b data-cuenta="70.27966101694915" data-f="p1">70,3 %</b> <small>a Ègida</small></dd>
+              </div>
+              <div>
+                <dt>Punt d'equilibri operatiu <span class="pe-origen pe-origen--cap">Capítol 2</span></dt>
+                <dd><b data-cuenta="19" data-f="n">19</b> <small>clients Vigia, o 1 sol client Ègida, cobreixen els 60 € de costos fixos al mes</small></dd>
+              </div>
+              <div>
+                <dt>Mes 12, hipòtesi prudent <span class="pe-origen pe-origen--cap">Capítol 2</span></dt>
+                <dd><b data-cuenta="96" data-f="n">96</b> <small>clients</small> · <b data-cuenta="3204.462809917355" data-f="e2">3.204,46 €</b> <small>d'ingressos nets al mes</small> · <b data-cuenta="1684.1273099173552" data-f="e2">1.684,13 €</b> <small>de resultat mensual abans d'impostos</small></dd>
+              </div>
+              <div>
+                <dt>Any 3, escenari base <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt>
+                <dd><b data-cuenta="526" data-f="n">526</b> <small>clients</small> · <b data-cuenta="161570" data-f="e0">161.570 €</b> <small>d'ingressos</small> · <b data-cuenta="22347" data-f="e0">22.347 €</b> <small>d'EBITDA</small></dd>
+              </div>
+              <div>
+                <dt>Fons propis <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt>
+                <dd><b data-cuenta="10000" data-f="e0">10.000 €</b> <small>sense deute; la caixa no baixa de zero ni en l'escenari pessimista</small></dd>
+              </div>
+            </dl>
+
+            <h3 class="det-h3 pe-h3">D'on surt cada xifra</h3>
+            <p class="det-prosa">Cada nombre d'aquest document porta una de tres marques, perquè se sàpiga fins a quin punt fiar-se'n.</p>
+            <ul class="pe-leyenda">
+              <li><span class="pe-origen pe-origen--cap">Capítol 2</span> <span>Surt del capítol de disseny del projecte (activitat ACT1 RA2, lliurada el 12-11-2026): preus, costos per client, costos fixos i punt d'equilibri. Són una simulació raonada.</span></li>
+              <li><span class="pe-origen pe-origen--fue">Font oficial</span> <span>Dada publicada per un organisme (INE, Idescat, INCIBE), amb el seu enllaç a <a href="#fuentes">Fonts</a>.</span></li>
+              <li><span class="pe-origen pe-origen--est">Estimació pròpia</span> <span>Un supòsit nostre. Sempre va acompanyat de com s'ha calculat, perquè es pugui discutir i canviar.</span></li>
+            </ul>
+          </section>
+
+          <!-- 2. Problema i mercat -->
+          <section class="det-grupo pe-cap" id="mercado" aria-labelledby="titulo-mercado">
+            <h2 class="det-h2" id="titulo-mercado">L'atac és el mateix. El que canvia és qui el veu</h2>
+            <p class="det-entrada">Un particular, un autònom i una pime reben el mateix phishing i el mateix ransomware que una gran empresa, però no tenen ningú mirant.</p>
+
+            <h3 class="det-h3 pe-h3">El problema, en dades</h3>
+            <dl class="pe-cifras pe-cifras--fuente">
+              <div>
+                <dt>Incidents de ciberseguretat gestionats per l'INCIBE el 2025 <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>122.223</b> <small>un 26 % més que el 2024</small></dd>
+              </div>
+              <div>
+                <dt>D'aquests, casos de programari maliciós <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>55.411</b> <small>inclosos 392 de ransomware</small></dd>
+              </div>
+              <div>
+                <dt>I casos de frau en línia <span class="pe-origen pe-origen--fue">INCIBE</span></dt>
+                <dd><b>45.445</b> <small>dels quals 25.133 van ser phishing</small></dd>
+              </div>
+              <div>
+                <dt>Empreses amb especialistes en informàtica en plantilla <span class="pe-origen pe-origen--fue">INE</span></dt>
+                <dd><b>16,8 %</b> <small>primer trimestre de 2025, entre les empreses de l'enquesta (població de referència per comprovar)</small></dd>
+              </div>
+            </dl>
+            <p class="det-prosa">L'INCIBE no publica en aquesta nota quants d'aquests incidents van afectar pimes, de manera que no donem aquesta xifra. El que sí que diuen les dades és que el volum creix i que, entre les empreses que enquesta l'INE, només una de cada sis té especialistes propis. Aquest és el buit: algú que vigili, avisi en llenguatge clar i actuï.</p>
+
+            <h3 class="det-h3 pe-h3">A qui ens adrecem</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-segmentos">
+              <table class="det-tabla pe-t">
+                <caption id="cap-segmentos"><span>Segments de client i pla que encaixa amb cadascun</span></caption>
+                <thead>
+                  <tr><th scope="col">Segment</th><th scope="col">Què el preocupa</th><th scope="col">Què compra</th><th scope="col">Pla</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Particular o autònom, 1 o 2 equips</th><td>Perdre els arxius o que li robin un compte</td><td>Que algú l'avisi i li digui què ha de fer</td><td>Vigia</td></tr>
+                  <tr><th scope="row">Família o autònom, fins a 5 equips</th><td>Els equips de casa i de la feina barrejats</td><td>Un analista que revisi les alertes en horari laboral</td><td>Sentinella</td></tr>
+                  <tr><th scope="row">Teletreball o microempresa, fins a 10 equips</th><td>Aturar l'activitat per un atac</td><td>Analista assignat, contenció remota i un cas forense a l'any</td><td>Guardià</td></tr>
+                  <tr><th scope="row">Pime de 10 a 100 equips</th><td>Ransomware, RGPD i donar explicacions a clients o a una assegurança</td><td>Equip dedicat, informes per a direcció i suport al RGPD</td><td>Ègida</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-persona">
+              <figcaption>
+                <h3 class="det-h3">La Marta, la clienta en qui pensem</h3>
+                <p class="pe-persona__rol">45 anys · directora administrativa · empresa de logística de 60 empleats a Barcelona</p>
+              </figcaption>
+              <dl class="det-terminos">
+                <div><dt>Què tem</dt><dd>Un ransomware que aturi el magatzem i una sanció pel RGPD si es perden dades de clients.</dd></div>
+                <div><dt>Què vol</dt><dd>Claredat, preus previsibles i que li parlin sense argot. No vol aprendre seguretat: vol saber que algú se n'ocupa.</dd></div>
+                <div><dt>Què pagaria</dt><dd>Amb 60 equips, pla Ègida: 590 € + 35 equips addicionals × 12 € = <b>1.010 € al mes més IVA</b>, uns 16,83 € per equip. Preu fix, sense sorpreses. <span class="pe-origen pe-origen--cap">Capítol 2</span></dd></div>
+                <div><dt>Com decideix</dt><dd>Pregunta a la seva gestoria i al seu informàtic de confiança, compara dos o tres pressupostos i necessita un document que pugui ensenyar a gerència.</dd></div>
+              </dl>
+            </figure>
+
+            <h3 class="det-h3 pe-h3">Mida del mercat: del total a l'objectiu</h3>
+            <p class="det-prosa">Mesurem el mercat en nombre d'empreses, que és el que publiquen les estadístiques oficials, i baixem en tres esglaons: tot el mercat (TAM), la part a la qual podem arribar (SAM) i la part que ens proposem aconseguir (SOM).</p>
+            <ol class="pe-embudo">
+              <li>
+                <span class="pe-embudo__sigla">TAM</span>
+                <b class="pe-embudo__n" data-cuenta="3310824" data-f="n">3.310.824</b>
+                <p>empreses actives a Espanya a 1 de gener de 2025. D'aquestes, 1,80 milions (el 54,4 %) no tenen assalariats. <span class="pe-origen pe-origen--fue">INE, DIRCE</span></p>
+              </li>
+              <li>
+                <span class="pe-embudo__sigla">SAM</span>
+                <b class="pe-embudo__n" data-cuenta="618781" data-f="n">618.781</b>
+                <p>empreses amb establiment a Catalunya en la mateixa data. És el territori que dues persones poden atendre des de Barcelona, en castellà i en català. <span class="pe-origen pe-origen--fue">Idescat</span></p>
+              </li>
+              <li>
+                <span class="pe-embudo__sigla">SOM</span>
+                <b class="pe-embudo__n" data-cuenta="526" data-f="n">526</b>
+                <p>clients al final de l'any 3 en l'escenari base: el 0,09 % d'aquestes empreses. <span class="pe-origen pe-origen--est">Estimació pròpia</span></p>
+              </li>
+            </ol>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sam">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sam"><span>Empreses de Catalunya per mida, pla que encaixa i objectiu de l'any 3 (escenari base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Mida (assalariats)</th><th scope="col" class="n">Empreses</th><th scope="col">Pla que encaixa</th><th scope="col" class="n">Objectiu any 3</th><th scope="col" class="n">Quota</th><th scope="col" class="n">Sostre teòric a l'any</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Sense assalariats</th><td class="n">342.901</td><td>Vigia i Sentinella</td><td class="n">450</td><td class="n">0,13 %</td><td class="n">33.666.644 €</td></tr>
+                  <tr><th scope="row">D'1 a 9</th><td class="n">239.964</td><td>Guardià</td><td class="n">60</td><td class="n">0,03 %</td><td class="n">154.449.556 €</td></tr>
+                  <tr><th scope="row">De 10 a 199</th><td class="n">32.760</td><td>Ègida</td><td class="n">16</td><td class="n">0,05 %</td><td class="n">231.940.800 €</td></tr>
+                  <tr><th scope="row">200 o més</th><td class="n">3.156</td><td>Fora del públic objectiu</td><td class="n">0</td><td class="n">—</td><td class="n">—</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row">Total</th><td class="n">618.781</td><td></td><td class="n">526</td><td class="n">0,09 %</td><td class="n">420.057.000 €</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Empreses:</b> Idescat, a partir del DIRCE de l'INE, a 1 de gener de 2025. El tram de 10 a 199 suma els de 10 a 49 (27.090) i de 50 a 199 (5.670).</li>
+              <li><b>Sostre teòric</b> (estimació pròpia): empreses del tram × preu net mensual del pla × 12. Per al primer tram es fa servir Vigia i per a l'últim, la quota base d'Ègida. És el que es facturaria si totes contractessin, cosa que no passarà: serveix per veure l'ordre de magnitud, no com a previsió.</li>
+              <li><b>El que aquest càlcul no sap.</b> Assalariats no és el mateix que equips: una empresa de 12 persones pot tenir 5 ordinadors o 30. No hem trobat el desglossament de la província de Barcelona, per això fem servir Catalunya. I no comptem els particulars i les famílies, que també poden contractar Vigia i Sentinella, perquè no tenim una font per dimensionar-los: el càlcul queda del costat prudent.</li>
+              <li><b>Una altra manera de comptar.</b> L'estadística Cifras PYME del Ministeri d'Indústria, que parteix de la Seguretat Social i no del DIRCE, dona 2.956.165 pimes l'abril de 2026. Les dues xifres no es poden sumar ni comparar directament; fem servir el DIRCE perquè és el que desglossa l'Idescat.</li>
+            </ul>
+          </section>
+
+          <!-- 3. Competència i posicionament -->
+          <section class="det-grupo pe-cap" id="competencia" aria-labelledby="titulo-competencia">
+            <h2 class="det-h2" id="titulo-competencia">Entre l'antivirus i el gran proveïdor hi ha un buit</h2>
+            <p class="det-entrada">Qui té poc pressupost compra un antivirus i es queda sol davant de les alertes. Qui en té molt contracta un proveïdor amb equip dedicat. Al mig gairebé ningú publica un preu.</p>
+            <p class="det-prosa">No comparem amb empreses concretes perquè no tenim dades contrastades dels seus preus. Descrivim tipus de competidor, que és amb el que es troba un client quan busca. La valoració és nostra. <span class="pe-origen pe-origen--est">Estimació pròpia</span></p>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-competencia">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-competencia"><span>Tipus de competidor i buit que deixa cadascun</span></caption>
+                <thead>
+                  <tr><th scope="col">Tipus</th><th scope="col">Què ofereix</th><th scope="col">El seu punt fort</th><th scope="col">El buit que deixa</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Gran proveïdor de seguretat gestionada</th><td>SOC amb torns, equip dedicat i contractes a mida</td><td>Cobertura i experiència</td><td>Preu a consultar i projectes pensats per a empreses grans</td></tr>
+                  <tr><th scope="row">SOC d'operadora, en paquet</th><td>Seguretat afegida a la línia o a la fibra</td><td>Ja és el seu proveïdor i va a la mateixa factura</td><td>Servei estàndard, poc tracte directe amb un analista</td></tr>
+                  <tr><th scope="row">Antivirus o EDR d'autoservei</th><td>Un programa que bloqueja i avisa</td><td>Barat i fàcil d'instal·lar</td><td>Ningú llegeix les alertes ni recull proves si passa alguna cosa</td></tr>
+                  <tr><th scope="row">Informàtic de confiança</th><td>Manteniment d'equips i xarxes</td><td>Proximitat: coneix l'empresa</td><td>No vigila de manera contínua ni fa anàlisi forense</td></tr>
+                  <tr><th scope="row">No fer res</th><td>Confiar que no passi</td><td>No costa diners, fins que passa</td><td>És el competidor més habitual</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-mapa">
+              <svg class="pe-mapa__svg" viewBox="0 0 560 420" role="img" aria-labelledby="mapa-t mapa-d" focusable="false">
+<title id="mapa-t">Mapa de posicionament: preu d'entrada i atenció humana</title>
+<desc id="mapa-d">Valoració qualitativa pròpia. L'antivirus d'autoservei és barat i no inclou atenció humana; el gran proveïdor gestionat ofereix equip dedicat a un preu alt; KAIRON cobreix el tram intermedi, des de Vigia fins a Ègida.</desc>
+<g class="pe-graf__eje"><line x1="54" x2="530" y1="356" y2="356"/><line x1="54" x2="54" y1="24" y2="356"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="380">Preu d'entrada baix</text><text x="530" y="380" text-anchor="end">alt</text><text transform="translate(40 356) rotate(-90)">Sense atenció humana</text><text transform="translate(40 24) rotate(-90)" text-anchor="end">equip dedicat</text></g>
+<g class="pe-mapa__punto"><circle cx="82.6" cy="339.4" r="6"/><text x="94.6" y="344.4" text-anchor="start">No fer res</text></g>
+<g class="pe-mapa__punto"><circle cx="149.2" cy="309.5" r="6"/><text x="161.2" y="314.5" text-anchor="start">Antivirus d'autoservei</text></g>
+<g class="pe-mapa__punto"><circle cx="292" cy="223.2" r="6"/><text x="304" y="228.2" text-anchor="start">Informàtic de confiança</text></g>
+<g class="pe-mapa__punto"><circle cx="396.7" cy="276.3" r="6"/><text x="384.7" y="281.3" text-anchor="end">SOC d'operadora en paquet</text></g>
+<g class="pe-mapa__punto"><circle cx="482.4" cy="57.2" r="6"/><text x="470.4" y="62.2" text-anchor="end">Gran proveïdor gestionat</text></g>
+<g class="pe-mapa__punto pe-mapa__kairon"><line x1="101.6" y1="256.4" x2="253.9" y2="97"/><circle cx="101.6" cy="256.4" r="7"/><circle cx="253.9" cy="97" r="7"/><text x="115.6" y="261.4">Vigia</text><text x="267.9" y="102">Ègida</text><text class="pe-mapa__marca" x="149.2" y="150.2" text-anchor="end">KAIRON</text></g>
+</svg>
+              <figcaption>On se situa cada opció segons el que costa entrar-hi i quanta atenció humana inclou. Valoració qualitativa pròpia, sense escala numèrica.</figcaption>
+            </figure>
+
+            <h3 class="det-h3 pe-h3">En què ens diferenciem</h3>
+            <ul class="det-lista">
+              <li><b>Preu publicat.</b> Els quatre plans tenen el preu al web. La Marta pot calcular la seva quota abans de parlar amb ningú.</li>
+              <li><b>Llenguatge clar.</b> Les alertes i els informes s'escriuen per a qui dirigeix l'empresa, no per a un altre tècnic.</li>
+              <li><b>Proves que es poden comprovar.</b> Cada evidència porta hora UTC, número de cas i empremta SHA-256. L'informe serveix davant d'una auditoria o d'una assegurança.</li>
+              <li><b>Horari dit amb honestedat.</b> No prometem el que dues persones no poden complir: el bloqueig automàtic actua a qualsevol hora i els analistes, de dilluns a divendres de 9 a 19 h.</li>
+              <li><b>Sense llicències de pagament.</b> Wazuh i pfSense són de codi obert. Això és el que permet un pla de 9,90 €.</li>
+            </ul>
+
+            <h3 class="det-h3 pe-h3">DAFO</h3>
+            <div class="pe-dafo">
+              <div>
+                <h4>Debilitats</h4>
+                <ul>
+                  <li>Equip de dues persones, encara estudiants</li>
+                  <li>Sense clients ni marca coneguda</li>
+                  <li>Sense vigilància humana de nit ni en cap de setmana</li>
+                  <li>Sense cobertura per a mòbils: Wazuh no té agent</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Amenaces</h4>
+                <ul>
+                  <li>Un proveïdor gran pot abaixar preus</li>
+                  <li>Un incident mal gestionat perjudica la reputació</li>
+                  <li>Canvis a Wazuh o a la seva llicència</li>
+                  <li>Més obligacions legals (NIS2, RGPD) de les que una empresa petita pot assumir</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Fortaleses</h4>
+                <ul>
+                  <li>Costos molt baixos: programari lliure i 60 € fixos al mes</li>
+                  <li>Eina forense pròpia amb cadena de custòdia</li>
+                  <li>Tot el que es promet es demostra al laboratori</li>
+                  <li>Preus publicats i servei en castellà i català</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Oportunitats</h4>
+                <ul>
+                  <li>Els incidents creixen un 26 % en un any (INCIBE)</li>
+                  <li>Només el 16,8 % de les empreses enquestades té especialistes propis (INE)</li>
+                  <li>Ajuts públics a la ciberseguretat de les pimes</li>
+                  <li>Gestories i informàtics locals com a prescriptors</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. Producte i serveis -->
+          <section class="det-grupo pe-cap" id="oferta" aria-labelledby="titulo-oferta">
+            <h2 class="det-h2" id="titulo-oferta">Cinc serveis, quatre plans, una sola tecnologia</h2>
+            <p class="det-entrada">Tots els clients reben el mateix agent i les mateixes regles de detecció. El pla decideix quantes hores d'analista hi ha al darrere.</p>
+
+            <h3 class="det-h3 pe-h3">Els cinc serveis</h3>
+            <dl class="det-terminos">
+              <div><dt>Vigilància i detecció</dt><dd>Agents de Wazuh a Windows, macOS i Linux, amb regles pròpies per a força bruta, programari maliciós i persistència.</dd></div>
+              <div><dt>Resposta i anàlisi forense</dt><dd>Bloqueig automàtic de l'atacant i recollida de proves amb l'eina pròpia: hora UTC, número de cas i SHA-256.</dd></div>
+              <div><dt>Informes i compliment</dt><dd>Resum per a direcció, cronologia, evidències i recomanacions. Suport per a les obligacions del RGPD.</dd></div>
+              <div><dt>Auditoria i hardening</dt><dd>Inventari, vulnerabilitats i configuració segura. L'auditoria inicial és gratuïta només en el pla Ègida.</dd></div>
+              <div><dt>Conscienciació i formació</dt><dd>Phishing, contrasenyes i què fer si alguna cosa sembla estranya, per a gent que no és tècnica.</dd></div>
+            </dl>
+            <p class="det-prosa">El detall de cada servei és a <a href="servicios.html">Serveis</a> i el recorregut d'un cas real, a <a href="incidente.html">Anatomia d'un incident</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Els quatre plans <span class="pe-origen pe-origen--cap">Capítol 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-planes">
+              <table class="det-tabla pe-t pe-t--planes">
+                <caption id="cap-planes"><span>Què inclou cada pla (taula 6 del capítol 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Característica</th><th scope="col">Vigia</th><th scope="col">Sentinella</th><th scope="col">Guardià</th><th scope="col">Ègida</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Pensat per a</th><td>1 o 2 equips: un particular o un autònom</td><td>Família o autònom, fins a 5 equips</td><td>Teletreball o microempresa, fins a 10 equips</td><td>Pimes de 10 a 100 equips</td></tr>
+                  <tr class="pe-precio"><th scope="row">Preu al mes</th><td>9,90 € <small>IVA incl.</small></td><td>24,90 € <small>IVA incl.</small></td><td>64,90 € <small>IVA incl.</small></td><td>Des de 590 € + IVA <small>12 € per equip addicional</small></td></tr>
+                  <tr><th scope="row">Equips inclosos</th><td>2</td><td>5</td><td>10</td><td>25, fins a 100</td></tr>
+                  <tr><th scope="row">Detecció</th><td>Regles estàndard</td><td>Regles estàndard i ajust inicial</td><td>Ajust continu</td><td>Regles a mida</td></tr>
+                  <tr><th scope="row">Revisió humana d'alertes</th><td>Només alertes crítiques</td><td>Analista, en horari laboral</td><td>Analista assignat</td><td>Equip dedicat</td></tr>
+                  <tr><th scope="row">Resposta (dilluns a divendres, 9–19 h)</th><td>2 dies laborables</td><td>24 h (crítiques: 8 h)</td><td>4 h</td><td>1 h</td></tr>
+                  <tr><th scope="row">Resposta a incidents</th><td>Guia pas a pas</td><td>Guia i assistència remota per xat</td><td>Contenció remota i 1 cas forense a l'any</td><td>Contenció i fins a 2 casos forenses a l'any</td></tr>
+                  <tr><th scope="row">Informes</th><td>Resum mensual d'1 pàgina</td><td>Informe mensual</td><td>Mensual i informe d'incident amb SHA-256</td><td>Mensual per a direcció i informe trimestral de suport al RGPD</td></tr>
+                  <tr><th scope="row">Formació</th><td>Guia i minicurs antiphishing</td><td>L'anterior i una sessió en línia cada trimestre</td><td>L'anterior i un simulacre de phishing a l'any</td><td>2 sessions a l'any per a la plantilla</td></tr>
+                  <tr><th scope="row">Auditoria i hardening</th><td>—</td><td>Llista d'autocomprovació</td><td>Auditoria de hardening anual</td><td>Auditoria inicial gratuïta i hardening anual</td></tr>
+                  <tr><th scope="row">Retenció de registres</th><td>30 dies</td><td>90 dies</td><td>90 dies</td><td>180 dies</td></tr>
+                  <tr><th scope="row">Permanència</th><td>Cap</td><td>Cap</td><td>Cap</td><td>12 mesos</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">La taula completa, amb una calculadora de quota segons el nombre d'equips, és a <a href="preguntas.html#precios">Preguntes i preus</a>.</p>
+
+            <h3 class="det-h3 pe-h3">El que no prometem</h3>
+            <ul class="det-lista">
+              <li><b>Vigilància humana a totes hores.</b> Fora de l'horari dels analistes actuen les alertes i el bloqueig automàtic. El pla Ègida podria ampliar l'horari quan hi hagi més personal.</li>
+              <li><b>Protecció de mòbils.</b> Wazuh no té agent per a mòbils: els plans cobreixen ordinadors i servidors.</li>
+              <li><b>Recuperar dades després d'un atac.</b> Contenim, investiguem i documentem. Les còpies de seguretat són responsabilitat del client, i l'auditoria les revisa.</li>
+            </ul>
+          </section>
+
+          <!-- 5. Model de negoci i economia per client -->
+          <section class="det-grupo pe-cap" id="modelo" aria-labelledby="titulo-modelo">
+            <h2 class="det-h2" id="titulo-modelo">Cada client deixa marge des del primer mes</h2>
+            <p class="det-entrada">L'ingrés és una quota mensual. El cost d'atendre un client són tres coses: servidor, minuts d'analista i la comissió del cobrament.</p>
+
+            <h3 class="det-h3 pe-h3">Els tres supòsits de cost <span class="pe-origen pe-origen--cap">Capítol 2</span></h3>
+            <dl class="det-terminos">
+              <div><dt>Infraestructura</dt><dd>0,60 € per equip i mes. Un servidor de 8 vCPU i 16 GB atén 100 agents segons el dimensionament oficial de Wazuh; a uns 50 € al mes surten 0,50 € per agent, més l'emmagatzematge de les còpies.</dd></div>
+              <div><dt>Analista</dt><dd>20 € per hora. Cada pla té assignat un temps al mes: 10 minuts a Vigia, 30 a Sentinella, 90 a Guardià i 8 hores a Ègida.</dd></div>
+              <div><dt>Cobrament</dt><dd>0,25 € més l'1,5 % amb targeta; 0,35 € per domiciliació SEPA a Ègida.</dd></div>
+              <div><dt>IVA</dt><dd>Els preus a particulars inclouen el 21 % d'IVA. Per calcular el marge es fa servir el preu sense IVA, que és el que ingressa l'empresa.</dd></div>
+            </dl>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-unidad">
+              <table class="det-tabla pe-t">
+                <caption id="cap-unidad"><span>Economia mensual per client (taula 7 del capítol 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Pla</th><th scope="col" class="n">Ingrés net</th><th scope="col" class="n">Infraestructura</th><th scope="col" class="n">Analista</th><th scope="col" class="n">Cobrament</th><th scope="col" class="n">Cost total</th><th scope="col" class="n">Marge</th><th scope="col" class="n">% marge</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td class="n">8,18 €</td><td class="n">1,20 €</td><td class="n">3,33 €</td><td class="n">0,40 €</td><td class="n">4,93 €</td><td class="n pe-fuerte">3,25 €</td><td class="n">39,7 %</td></tr>
+                  <tr><th scope="row">Sentinella</th><td class="n">20,58 €</td><td class="n">3,00 €</td><td class="n">10,00 €</td><td class="n">0,62 €</td><td class="n">13,62 €</td><td class="n pe-fuerte">6,96 €</td><td class="n">33,8 %</td></tr>
+                  <tr><th scope="row">Guardià</th><td class="n">53,64 €</td><td class="n">6,00 €</td><td class="n">30,00 €</td><td class="n">1,22 €</td><td class="n">37,22 €</td><td class="n pe-fuerte">16,41 €</td><td class="n">30,6 %</td></tr>
+                  <tr><th scope="row">Ègida</th><td class="n">590,00 €</td><td class="n">15,00 €</td><td class="n">160,00 €</td><td class="n">0,35 €</td><td class="n">175,35 €</td><td class="n pe-fuerte">414,65 €</td><td class="n">70,3 %</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="pe-unidad pe-barras">
+              <svg class="pe-unidad__svg" viewBox="0 0 800 204" role="img" aria-labelledby="unidad-t unidad-d" focusable="false">
+<title id="unidad-t">Repartiment del preu net de cada pla</title>
+<desc id="unidad-d">De cada euro que entra, quina part se'n va en infraestructura, analista i passarel·la de pagament i quina part queda com a marge. Marge: Vigia 39,7 %, Sentinella 33,8 %, Guardià 30,6 %, Ègida 70,3 %.</desc>
+<text class="pe-barras__anio" x="0" y="22">Vigia</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="4" width="82.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="192.1" y="4" width="228.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="420.3" y="4" width="27.3" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="447.6" y="4" width="222.4" height="26"/><text class="pe-barras__total" x="680" y="22">39,7 %</text>
+<text class="pe-barras__anio" x="0" y="72">Sentinella</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="54" width="81.6" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="191.6" y="54" width="272.1" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="463.8" y="54" width="17" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="480.7" y="54" width="189.3" height="26"/><text class="pe-barras__total" x="680" y="72">33,8 %</text>
+<text class="pe-barras__anio" x="0" y="122">Guardià</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="104" width="62.6" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="172.6" y="104" width="313.2" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="485.9" y="104" width="12.8" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="498.6" y="104" width="171.4" height="26"/><text class="pe-barras__total" x="680" y="122">30,6 %</text>
+<text class="pe-barras__anio" x="0" y="172">Ègida</text><rect class="pe-unidad__tramo pe-unidad--infra" x="110" y="154" width="14.2" height="26"/><rect class="pe-unidad__tramo pe-unidad--analista" x="124.2" y="154" width="151.9" height="26"/><rect class="pe-unidad__tramo pe-unidad--pago" x="276.1" y="154" width="0.3" height="26"/><rect class="pe-unidad__tramo pe-unidad--margen" x="276.4" y="154" width="393.6" height="26"/><text class="pe-barras__total" x="680" y="172">70,3 %</text>
+</svg>
+              <figcaption>
+                <span class="pe-clave pe-unidad--infra">Infraestructura</span>
+                <span class="pe-clave pe-unidad--analista">Analista</span>
+                <span class="pe-clave pe-unidad--pago">Cobrament</span>
+                <span class="pe-clave pe-unidad--margen">Marge</span>
+              </figcaption>
+            </figure>
+            <p class="det-prosa">En els tres plans per al públic general, el temps d'analista és el cost més gran: entre el 41 % i el 56 % del preu net. Per això el marge depèn que aquest temps es compleixi, i per això es mesura al laboratori durant la demo.</p>
+
+            <h3 class="det-h3 pe-h3">Costos fixos i punt d'equilibri <span class="pe-origen pe-origen--cap">Capítol 2</span></h3>
+            <p class="det-prosa">Els costos que no depenen del nombre de clients sumen 60 € al mes: assegurança de responsabilitat civil i ciberrisc (40 €), domini, web i correu (5 €), còpia de seguretat externa xifrada (10 €) i eines com el gestor de contrasenyes i la VPN (5 €).</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-equilibrio">
+              <table class="det-tabla pe-t">
+                <caption id="cap-equilibrio"><span>Clients necessaris per cobrir 60 € al mes (taula 8 del capítol 2)</span></caption>
+                <thead>
+                  <tr><th scope="col">Si només es vengués</th><th scope="col" class="n">Marge per client</th><th scope="col" class="n">Clients</th><th scope="col" class="n">Ingrés net mensual</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td class="n">3,25 €</td><td class="n pe-fuerte">19</td><td class="n">155,45 €</td></tr>
+                  <tr><th scope="row">Sentinella</th><td class="n">6,96 €</td><td class="n pe-fuerte">9</td><td class="n">185,21 €</td></tr>
+                  <tr><th scope="row">Guardià</th><td class="n">16,41 €</td><td class="n pe-fuerte">4</td><td class="n">214,55 €</td></tr>
+                  <tr><th scope="row">Ègida</th><td class="n">414,65 €</td><td class="n pe-fuerte">1</td><td class="n">590,00 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">Aquest punt d'equilibri només cobreix els 60 € d'operació. Una empresa constituïda té a més gestoria i quotes d'autònoms: l'any 1 les estimem en 240 € al mes, de manera que la despesa fixa real seria de 300 €. Amb la barreja de clients del mes 12, cada client deixa de mitjana 18,17 €, i caldrien <b>17 clients</b> per cobrir-la. <span class="pe-origen pe-origen--est">Estimació pròpia</span></p>
+
+            <h3 class="det-h3 pe-h3">El mes 12, amb una barreja prudent <span class="pe-origen pe-origen--cap">Capítol 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-mes12">
+              <table class="det-tabla pe-t">
+                <caption id="cap-mes12"><span>Escenari del mes 12 (taula 9 del capítol 2), imports mensuals</span></caption>
+                <thead>
+                  <tr><th scope="col">Pla</th><th scope="col" class="n">Clients</th><th scope="col" class="n">Ingressos nets</th><th scope="col" class="n">Costos variables</th><th scope="col" class="n">Marge de contribució</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td class="n">60</td><td class="n">490,91 €</td><td class="n">295,91 €</td><td class="n">195,00 €</td></tr>
+                  <tr><th scope="row">Sentinella</th><td class="n">25</td><td class="n">514,46 €</td><td class="n">340,59 €</td><td class="n">173,88 €</td></tr>
+                  <tr><th scope="row">Guardià</th><td class="n">8</td><td class="n">429,09 €</td><td class="n">297,79 €</td><td class="n">131,30 €</td></tr>
+                  <tr><th scope="row">Ègida</th><td class="n">3</td><td class="n">1.770,00 €</td><td class="n">526,05 €</td><td class="n">1.243,95 €</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row">Total</th><td class="n">96</td><td class="n">3.204,46 €</td><td class="n">1.460,34 €</td><td class="n">1.744,13 €</td></tr>
+                  <tr><th scope="row" colspan="4">Costos fixos</th><td class="n">−60,00 €</td></tr>
+                  <tr class="pe-total"><th scope="row" colspan="4">Resultat mensual abans d'impostos</th><td class="n pe-fuerte">1.684,13 €</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="det-prosa">Aquesta barreja suposa 58,5 hores d'analista al mes, unes 13,5 per setmana entre els dos socis, i 400 equips com a màxim. El resultat és abans d'impostos i de quotes d'autònoms, però les hores d'analista ja estan pagades a 20 € dins dels costos variables.</p>
+
+            <h3 class="det-h3 pe-h3">Quant costa aconseguir un client i quant triga a tornar-ho <span class="pe-origen pe-origen--est">Estimació pròpia</span></h3>
+            <p class="det-prosa">El capítol 2 no calcula el cost de captació. L'afegim aquí amb supòsits que caldrà corregir amb dades reals tan bon punt hi hagi clients.</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-cac">
+              <table class="det-tabla pe-t">
+                <caption id="cap-cac"><span>Captació, retorn i valor d'un client (escenari base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Pla</th><th scope="col" class="n">Cost de captació (CAC)</th><th scope="col" class="n">Marge mensual</th><th scope="col" class="n">Mesos per recuperar-lo</th><th scope="col" class="n">Baixes a l'any</th><th scope="col" class="n">Vida mitjana (mesos)</th><th scope="col" class="n">Marge en tota la vida</th><th scope="col" class="n">Vegades el CAC</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td class="n">25 €</td><td class="n">3,25 €</td><td class="n pe-fuerte">7,7</td><td class="n">30 %</td><td class="n">40</td><td class="n">130 €</td><td class="n">5,2</td></tr>
+                  <tr><th scope="row">Sentinella</th><td class="n">45 €</td><td class="n">6,96 €</td><td class="n pe-fuerte">6,5</td><td class="n">30 %</td><td class="n">40</td><td class="n">278 €</td><td class="n">6,2</td></tr>
+                  <tr><th scope="row">Guardià</th><td class="n">90 €</td><td class="n">16,41 €</td><td class="n pe-fuerte">5,5</td><td class="n">30 %</td><td class="n">40</td><td class="n">657 €</td><td class="n">7,3</td></tr>
+                  <tr><th scope="row">Ègida</th><td class="n">1.200 €</td><td class="n">414,65 €</td><td class="n pe-fuerte">2,9</td><td class="n">10 %</td><td class="n">120</td><td class="n">49.758 €</td><td class="n">41,5</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Mesos per recuperar-lo</b> = CAC ÷ marge mensual. <b>Vida mitjana</b> = 12 ÷ taxa de baixes anual. <b>Marge en tota la vida</b> = marge mensual × vida mitjana, sense descomptar.</li>
+              <li><b>CAC d'Ègida:</b> per cada contracte suposem tres auditories inicials gratuïtes, d'unes 6 hores cadascuna a 20 € (360 €), més temps comercial i materials.</li>
+              <li><b>Cautela.</b> La xifra d'Ègida surt molt alta perquè suposem poques baixes gràcies a la permanència de 12 mesos. Amb un sol client perdut de més, canvia molt. Encara no tenim dades pròpies.</li>
+            </ul>
+
+            <h3 class="det-h3 pe-h3">Què passa si l'analista triga el doble</h3>
+            <p class="det-prosa">És el supòsit que més pesa. Si el temps real d'analista per client fos el doble del previst, els plans per al públic general perdrien diners i caldria apujar el preu o retallar el servei:</p>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sensibilidad">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sensibilidad"><span>Marge mensual per client amb el temps d'analista previst i amb el doble</span></caption>
+                <thead>
+                  <tr><th scope="col">Pla</th><th scope="col" class="n">Temps previst</th><th scope="col" class="n">Marge previst</th><th scope="col" class="n">Marge amb el doble de temps</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td class="n">10 min</td><td class="n">3,25 €</td><td class="n es-negativo">−0,08 €</td></tr>
+                  <tr><th scope="row">Sentinella</th><td class="n">30 min</td><td class="n">6,96 €</td><td class="n es-negativo">−3,04 €</td></tr>
+                  <tr><th scope="row">Guardià</th><td class="n">90 min</td><td class="n">16,41 €</td><td class="n es-negativo">−13,59 €</td></tr>
+                  <tr><th scope="row">Ègida</th><td class="n">8 h</td><td class="n">414,65 €</td><td class="n">254,65 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 6. Màrqueting i vendes -->
+          <section class="det-grupo pe-cap" id="marketing" aria-labelledby="titulo-marketing">
+            <h2 class="det-h2" id="titulo-marketing">Arribar a la Marta per qui ja té la seva confiança</h2>
+            <p class="det-entrada">Una pime no busca «SOC gestionat» a internet. Pregunta a la seva gestoria i al seu informàtic. El pla de vendes comença per ells.</p>
+            <p class="det-prosa">Tot aquest capítol és un pla i les seves xifres són supòsits nostres. <span class="pe-origen pe-origen--est">Estimació pròpia</span></p>
+
+            <h3 class="det-h3 pe-h3">Missatge</h3>
+            <p class="det-prosa">«Vigilància de seguretat professional per a la teva pime, sense contractar un equip intern.» Tres idees el sostenen, sempre en aquest ordre: <b>detectar</b> a temps, <b>respondre</b> en el moment just i <b>demostrar</b> què va passar. Res de por ni de xifres alarmistes: preu, horari i límits a la vista.</p>
+
+            <h3 class="det-h3 pe-h3">Canals</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-canales">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-canales"><span>Canals de captació, a qui arriben i què es fa en cadascun</span></caption>
+                <thead>
+                  <tr><th scope="col">Canal</th><th scope="col">Arriba a</th><th scope="col">Què fem</th><th scope="col">Cost principal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Gestories i assessories</th><td>Ègida, Guardià</td><td>Una xerrada breu per als seus clients i un full d'una pàgina que puguin reenviar</td><td>Temps dels socis</td></tr>
+                  <tr><th scope="row">Informàtics i botigues locals</th><td>Tots els plans</td><td>Acord de col·laboració: ells mantenen els equips, KAIRON els vigila</td><td>Temps i material de suport</td></tr>
+                  <tr><th scope="row">Auditoria inicial gratuïta</th><td>Només Ègida</td><td>Revisió d'equips i riscos amb un informe curt: és la porta d'entrada al pla d'empresa</td><td>Unes 6 hores d'analista per auditoria</td></tr>
+                  <tr><th scope="row">Web i continguts</th><td>Vigia, Sentinella</td><td>Guies sense argot, la demo del SOC, l'informe d'exemple i la calculadora de preus</td><td>Temps de redacció</td></tr>
+                  <tr><th scope="row">Xerrades en associacions i centres de formació</th><td>Autònoms i microempreses</td><td>Taller d'una hora: reconèixer un phishing i què fer després</td><td>Desplaçament</td></tr>
+                  <tr><th scope="row">Recomanació de clients</th><td>Tots els plans</td><td>Demanar la recomanació després de cada informe mensual ben rebut</td><td>Cap</td></tr>
+                  <tr><th scope="row">Anuncis de pagament</th><td>Vigia, Sentinella</td><td>Proves petites i mesurades, només quan el web converteixi</td><td>El que quedi del pressupost de captació</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Embut de vendes del pla Ègida l'any 1</h3>
+            <ol class="pe-embudo pe-embudo--ventas">
+              <li><b class="pe-embudo__n">60</b><p>empreses contactades a través de gestories, informàtics i xerrades</p></li>
+              <li><b class="pe-embudo__n">20</b><p>primeres reunions (1 de cada 3)</p></li>
+              <li><b class="pe-embudo__n">9</b><p>auditories inicials gratuïtes (gairebé la meitat de les reunions)</p></li>
+              <li><b class="pe-embudo__n">3</b><p>contractes Ègida (1 de cada 3 auditories): l'objectiu del mes 12</p></li>
+            </ol>
+            <p class="det-prosa">Les proporcions són un supòsit de partida, no una dada del sector. El primer trimestre serveix per mesurar-les i refer aquest embut.</p>
+
+            <h3 class="det-h3 pe-h3">Calendari del primer any</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-calendario">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-calendario"><span>Accions comercials per trimestre i objectiu de clients acumulats (escenari base)</span></caption>
+                <thead>
+                  <tr><th scope="col">Trimestre</th><th scope="col">Què es fa</th><th scope="col" class="n">Clients acumulats</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">T1</th><td>Constitució, assegurança i contractes tipus. Deu clients de prova entre coneguts, amb preu normal, per mesurar el temps real d'analista. Primeres tres gestories visitades.</td><td class="n">24</td></tr>
+                  <tr><th scope="row">T2</th><td>Acords amb informàtics locals. Primera xerrada en una associació. Primeres auditories inicials d'Ègida.</td><td class="n">48</td></tr>
+                  <tr><th scope="row">T3</th><td>Primer contracte Ègida. Guies i casos publicats al web. Revisió de preus amb els temps mesurats.</td><td class="n">72</td></tr>
+                  <tr><th scope="row">T4</th><td>Programa de recomanació. Prova petita d'anuncis. Tancament de l'any i revisió d'aquest pla.</td><td class="n">96</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Política de preus</h3>
+            <ul class="det-lista">
+              <li>Preus publicats i els mateixos per a tothom. Sense descomptes de llançament que després calgui retirar.</li>
+              <li>Sense permanència en els plans per al públic general: qui es queda és perquè li serveix.</li>
+              <li>Dotze mesos de permanència a Ègida, perquè inclou una auditoria inicial que té un cost.</li>
+              <li>El camí natural és pujar de pla: de Vigia a Sentinella quan hi ha més equips, i a Guardià quan hi ha activitat professional.</li>
+            </ul>
+          </section>
+
+          <!-- 7. Operacions -->
+          <section class="det-grupo pe-cap" id="operaciones" aria-labelledby="titulo-operaciones">
+            <h2 class="det-h2" id="titulo-operaciones">Com es presta el servei, minut a minut</h2>
+            <p class="det-entrada">La màquina fa el que ha de ser immediat i la persona, el que necessita criteri.</p>
+
+            <h3 class="det-h3 pe-h3">Eines</h3>
+            <dl class="det-terminos">
+              <div><dt>Wazuh</dt><dd>El SIEM: reuneix els registres dels agents, aplica les regles, genera les alertes i ordena la resposta activa. Codi obert.</dd></div>
+              <div><dt>pfSense</dt><dd>Tallafoc i segmentació de xarxes. El seu registre també s'envia a Wazuh. Codi obert.</dd></div>
+              <div><dt>Eina forense pròpia</dt><dd>Programa en Python amb quatre mòduls: processos, connexions de xarxa, usuaris i inicis de sessió, i persistència. Marca cada prova amb hora UTC, número de cas i SHA-256, i només llegeix: no modifica l'equip analitzat.</dd></div>
+              <div><dt>Sysmon i WireGuard</dt><dd>Sysmon dona detall de processos a Windows. WireGuard és la VPN per la qual els analistes entren a la xarxa de gestió, amb una clau per persona.</dd></div>
+            </dl>
+            <p class="det-prosa">Avui tot això s'està muntant en un laboratori virtual aïllat, repartit en dos ordinadors. Està descrit a <a href="laboratorio.html">Com està muntat el laboratori</a>.</p>
+
+            <h3 class="det-h3 pe-h3">El procés d'un incident</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-proceso">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-proceso"><span>Passos, responsable i temps objectiu (els temps són els que es mesuraran en l'assaig de la demo)</span></caption>
+                <thead>
+                  <tr><th scope="col">Pas</th><th scope="col">Qui</th><th scope="col">Què passa</th><th scope="col" class="n">Temps objectiu</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Detectar</th><td>Wazuh</td><td>La regla pròpia 100100 salta quan una mateixa IP falla 5 accessos en 60 segons</td><td class="n">menys de 60 s</td></tr>
+                  <tr><th scope="row">Contenir</th><td>Wazuh</td><td>La resposta activa bloqueja la IP atacant i la desbloqueja sola al cap de 10 minuts</td><td class="n">30 s com a màxim</td></tr>
+                  <tr><th scope="row">Confirmar</th><td>Analista</td><td>Comprova que l'incident és real i avisa el client</td><td class="n">segons el pla</td></tr>
+                  <tr><th scope="row">Recollir proves</th><td>Eina forense</td><td>Recull les evidències amb hora UTC, número de cas i SHA-256</td><td class="n">menys de 5 min</td></tr>
+                  <tr><th scope="row">Informar</th><td>Analista</td><td>Informe amb cronologia, evidències i recomanacions</td><td class="n">uns 40 min</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">El cas complet està explicat a <a href="incidente.html">Anatomia d'un incident</a>, el mètode a <a href="metodo.html">El mètode, pas a pas</a> i el resultat a l'<a href="informe.html">informe d'exemple</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Compromisos de servei <span class="pe-origen pe-origen--cap">Capítol 2</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-sla">
+              <table class="det-tabla pe-t">
+                <caption id="cap-sla"><span>Temps de resposta d'un analista, retenció de registres i temps d'analista assignat per pla</span></caption>
+                <thead>
+                  <tr><th scope="col">Pla</th><th scope="col">Resposta d'un analista (dilluns a divendres, 9–19 h)</th><th scope="col">Alertes i bloqueig automàtic</th><th scope="col" class="n">Retenció</th><th scope="col" class="n">Analista al mes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Vigia</th><td>2 dies laborables</td><td>A qualsevol hora</td><td class="n">30 dies</td><td class="n">10 min</td></tr>
+                  <tr><th scope="row">Sentinella</th><td>24 h (crítiques: 8 h)</td><td>A qualsevol hora</td><td class="n">90 dies</td><td class="n">30 min</td></tr>
+                  <tr><th scope="row">Guardià</th><td>4 h</td><td>A qualsevol hora</td><td class="n">90 dies</td><td class="n">90 min</td></tr>
+                  <tr><th scope="row">Ègida</th><td>1 h</td><td>A qualsevol hora</td><td class="n">180 dies</td><td class="n">8 h</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Del laboratori a producció</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-servidor">
+              <table class="det-tabla pe-t">
+                <caption id="cap-servidor"><span>Servidor necessari segons els equips protegits (dimensionament oficial de Wazuh)</span></caption>
+                <thead>
+                  <tr><th scope="col">Equips protegits</th><th scope="col" class="n">vCPU</th><th scope="col" class="n">RAM</th><th scope="col" class="n">Disc (90 dies)</th><th scope="col">Desplegament</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">1–25</th><td class="n">4</td><td class="n">8 GB</td><td class="n">50 GB</td><td>Servidor únic</td></tr>
+                  <tr><th scope="row">26–50</th><td class="n">8</td><td class="n">16 GB</td><td class="n">100 GB</td><td>Servidor únic</td></tr>
+                  <tr><th scope="row">51–100</th><td class="n">8</td><td class="n">16 GB</td><td class="n">200 GB</td><td>Servidor únic</td></tr>
+                  <tr><th scope="row">Més de 100</th><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>Diversos nodes</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">A partir de 100 equips cal repartir Wazuh en diversos nodes. L'escenari base arriba a 400 equips al final de l'any 1, de manera que aquest pas es fa aviat; el seu cost és dins dels 0,60 € per equip, però encara no tenim un pressupost de proveïdor que ho confirmi.</p>
+
+            <h3 class="det-h3 pe-h3">Com evitem trencar el que funciona</h3>
+            <ul class="det-lista">
+              <li><b>Còpia abans de tocar.</b> Instantànies de les màquines i còpia de la configuració abans de cada canvi.</li>
+              <li><b>Prova abans d'aplicar.</b> Les regles noves es validen i, si el servei no arrenca, un script restaura la còpia anterior sense intervenció humana, en menys de 2 minuts.</li>
+              <li><b>Bloquejos que es desfan sols.</b> La resposta activa desbloqueja al cap de 10 minuts i hi ha una llista blanca d'adreces pròpies.</li>
+              <li><b>Dades del client.</b> Contracte d'encarregat del tractament amb cada client (article 28 del RGPD), només els registres necessaris i retenció de 30 a 180 dies segons el pla. Més detall a <a href="legal.html">Legalitat i privacitat</a>.</li>
+            </ul>
+          </section>
+
+          <!-- 8. Equip i pla de contractació -->
+          <section class="det-grupo pe-cap" id="equipo" aria-labelledby="titulo-equipo">
+            <h2 class="det-h2" id="titulo-equipo">Dues persones avui; la tercera, quan les hores ho demanin</h2>
+            <p class="det-entrada">No es contracta per calendari. Es contracta quan les hores d'analista que demanen els clients ja no caben en les persones que hi ha.</p>
+
+            <h3 class="det-h3 pe-h3">Qui fa què</h3>
+            <dl class="det-terminos">
+              <div><dt>Antonia Lorena Cracana</dt><dd>Ciberseguretat i anàlisi forense. Dissenya i munta el laboratori, escriu les regles de detecció, prepara els atacs simulats i defineix la cadena de custòdia i els informes. A l'empresa seria la responsable del SOC.</dd></div>
+              <div><dt>João Daniel de Paiva Oliveira</dt><dd>Programació i web. Desenvolupa l'eina forense en Python, el web corporatiu i el repositori. A l'empresa seria el responsable de producte i de les eines internes.</dd></div>
+              <div><dt>El que no tenim</dt><dd>Experiència comercial, jurídica i comptable. Es cobreix amb una gestoria des del primer dia i amb assessorament jurídic per als contractes tipus.</dd></div>
+            </dl>
+            <p class="det-prosa">Més sobre tots dos a <a href="sobre-mi.html">Equip</a>.</p>
+
+            <h3 class="det-h3 pe-h3">Pla de contractació <span class="pe-origen pe-origen--est">Estimació pròpia</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-contratacion">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-contratacion"><span>Pla de contractació per any (escenari base). És un pla, no un compromís</span></caption>
+                <thead>
+                  <tr><th scope="col">Any</th><th scope="col" class="n">Hores d'analista al mes, al tancament</th><th scope="col" class="n">Analistes a jornada completa</th><th scope="col">Persones</th><th scope="col">Què canvia</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Any 1</th><td class="n">58,5</td><td class="n">0,4</td><td>Els dos socis, a temps parcial</td><td>Compatible amb continuar estudiant. Vendes i administració les fan els socis sense cobrar aquestes hores.</td></tr>
+                  <tr><th scope="row">Any 2</th><td class="n">161,5</td><td class="n">1,2</td><td>Els dos socis, un ja a jornada completa</td><td>Es comencen a pagar hores de vendes i suport: 450 a l'any.</td></tr>
+                  <tr><th scope="row">Any 3</th><td class="n">343,0</td><td class="n">2,5</td><td>Els dos socis i una primera contractació: analista júnior</td><td>Suport i vendes a mitja jornada: 1.200 hores a l'any. Amb tres persones es podria estudiar ampliar l'horari d'Ègida.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pe-notas">
+              <li><b>Hores d'analista</b> = clients de cada pla × temps assignat al pla (capítol 2). <b>Analistes a jornada completa</b> = aquestes hores ÷ 140 hores útils al mes per persona (supòsit propi: la resta de la jornada se'n va en formació, reunions i millores).</li>
+              <li>Les hores d'analista ja estan pagades a 20 € dins del cost de cada client. Aquesta partida és la que paga la feina dels socis i, després, el sou de l'analista contractat.</li>
+              <li>En l'escenari optimista la primera contractació s'avança a l'any 2; en el pessimista no n'hi ha cap en els tres anys.</li>
+            </ul>
+          </section>
+
+          <!-- 9. Projeccions financeres a 3 anys -->
+          <section class="det-grupo pe-cap" id="proyecciones" aria-labelledby="titulo-proyecciones">
+            <h2 class="det-h2" id="titulo-proyecciones">Tres anys de comptes, en tres escenaris</h2>
+            <p class="pi-sello">Estimació: res d'això ha passat</p>
+            <p class="det-entrada">L'any 1 de l'escenari base acaba on acaba el capítol 2: 96 clients. El que ve després és una projecció nostra, amb tots els supòsits escrits a sota.</p>
+            <p class="det-prosa">Els anys no tenen data: l'any 1 comença el dia que l'empresa es constitueixi i vengui la primera subscripció, cosa que avui no està decidida.</p>
+
+            <div class="pe-esc-caja">
+              <fieldset class="pe-esc" hidden>
+                <legend>Escenari</legend>
+                <label><input type="radio" name="escenario" value="pesimista"><span>Pessimista</span></label>
+                <label><input type="radio" name="escenario" value="base" checked><span>Base</span></label>
+                <label><input type="radio" name="escenario" value="optimista"><span>Optimista</span></label>
+              </fieldset>
+              <p class="pe-esc__estado" role="status" aria-live="polite" data-plantilla="Escenari {n}: {c} clients, {i} d'ingressos i {e} d'EBITDA l'any 3. Caixa mínima en els tres anys: {m}.">Escenari base: 526 clients, 161.570 € d'ingressos i 22.347 € d'EBITDA l'any 3. Caixa mínima en els tres anys: 3.703 €.</p>
+            </div>
+
+            <div class="pe-grafs">
+              <figure class="pe-graf">
+                <figcaption><h3 class="det-h3">Ingressos nets al mes</h3><p>El que entra cada mes per subscripcions, sense IVA.</p></figcaption>
+                <svg class="pe-graf__svg" viewBox="0 0 560 330" role="img" aria-labelledby="graf-mrr-t graf-mrr-d" focusable="false">
+<title id="graf-mrr-t">Ingressos nets mensuals en els tres escenaris</title>
+<desc id="graf-mrr-d">Tres corbes a 36 mesos. Al final de l'any 3: pessimista 7.018 €, base 18.200 €, optimista 30.956 €. Les xifres exactes són a les taules d'aquest capítol.</desc>
+<g class="pe-graf__eje"><line x1="62" x2="440" y1="276" y2="276"/><line x1="62" x2="440" y1="211.5" y2="211.5"/><line x1="62" x2="440" y1="147" y2="147"/><line x1="62" x2="440" y1="82.5" y2="82.5"/><line x1="62" x2="440" y1="18" y2="18"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="280" text-anchor="end">0</text><text x="54" y="215.5" text-anchor="end">8k</text><text x="54" y="151" text-anchor="end">16k</text><text x="54" y="86.5" text-anchor="end">24k</text><text x="54" y="22" text-anchor="end">32k</text><text x="62" y="298" text-anchor="start">Inici</text><text x="188" y="298" text-anchor="middle">Any 1</text><line class="pe-graf__anio" x1="188" x2="188" y1="18" y2="276"/><text x="314" y="298" text-anchor="middle">Any 2</text><line class="pe-graf__anio" x1="314" x2="314" y1="18" y2="276"/><text x="440" y="298" text-anchor="middle">Any 3</text><line class="pe-graf__anio" x1="440" x2="440" y1="18" y2="276"/></g>
+<g class="pe-graf__serie" data-linea="pesimista"><path class="pe-graf__area" d="M62 276 L72.5 275.1 L83 274.3 L93.5 273.4 L104 272.5 L114.5 271.6 L125 270.8 L135.5 269.9 L146 269 L156.5 268.2 L167 267.3 L177.5 266.4 L188 265.5 L198.5 264.1 L209 262.6 L219.5 261.1 L230 259.6 L240.5 258.2 L251 256.7 L261.5 255.2 L272 253.7 L282.5 252.2 L293 250.8 L303.5 249.3 L314 247.8 L324.5 245.4 L335 243.1 L345.5 240.7 L356 238.3 L366.5 236 L377 233.6 L387.5 231.2 L398 228.9 L408.5 226.5 L419 224.1 L429.5 221.8 L440 219.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 275.1 L83 274.3 L93.5 273.4 L104 272.5 L114.5 271.6 L125 270.8 L135.5 269.9 L146 269 L156.5 268.2 L167 267.3 L177.5 266.4 L188 265.5 L198.5 264.1 L209 262.6 L219.5 261.1 L230 259.6 L240.5 258.2 L251 256.7 L261.5 255.2 L272 253.7 L282.5 252.2 L293 250.8 L303.5 249.3 L314 247.8 L324.5 245.4 L335 243.1 L345.5 240.7 L356 238.3 L366.5 236 L377 233.6 L387.5 231.2 L398 228.9 L408.5 226.5 L419 224.1 L429.5 221.8 L440 219.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="219.4" r="4.5"/><text x="452" y="224.4">7.018 €</text></g></g>
+<g class="pe-graf__serie" data-linea="optimista"><path class="pe-graf__area" d="M62 276 L72.5 272.5 L83 268.9 L93.5 265.4 L104 261.9 L114.5 258.3 L125 254.8 L135.5 251.3 L146 247.7 L156.5 244.2 L167 240.7 L177.5 237.1 L188 233.6 L198.5 227 L209 220.4 L219.5 213.7 L230 207.1 L240.5 200.5 L251 193.9 L261.5 187.3 L272 180.7 L282.5 174 L293 167.4 L303.5 160.8 L314 154.2 L324.5 143.6 L335 132.9 L345.5 122.3 L356 111.6 L366.5 101 L377 90.3 L387.5 79.7 L398 69 L408.5 58.4 L419 47.7 L429.5 37.1 L440 26.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 272.5 L83 268.9 L93.5 265.4 L104 261.9 L114.5 258.3 L125 254.8 L135.5 251.3 L146 247.7 L156.5 244.2 L167 240.7 L177.5 237.1 L188 233.6 L198.5 227 L209 220.4 L219.5 213.7 L230 207.1 L240.5 200.5 L251 193.9 L261.5 187.3 L272 180.7 L282.5 174 L293 167.4 L303.5 160.8 L314 154.2 L324.5 143.6 L335 132.9 L345.5 122.3 L356 111.6 L366.5 101 L377 90.3 L387.5 79.7 L398 69 L408.5 58.4 L419 47.7 L429.5 37.1 L440 26.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="26.4" r="4.5"/><text x="452" y="31.4">30.956 €</text></g></g>
+<g class="pe-graf__serie es-activa" data-linea="base"><path class="pe-graf__area" d="M62 276 L72.5 273.8 L83 271.7 L93.5 269.5 L104 267.4 L114.5 265.2 L125 263.1 L135.5 260.9 L146 258.8 L156.5 256.6 L167 254.5 L177.5 252.3 L188 250.2 L198.5 246.5 L209 242.7 L219.5 239 L230 235.3 L240.5 231.6 L251 227.9 L261.5 224.2 L272 220.5 L282.5 216.8 L293 213 L303.5 209.3 L314 205.6 L324.5 199.3 L335 192.9 L345.5 186.5 L356 180.2 L366.5 173.8 L377 167.4 L387.5 161.1 L398 154.7 L408.5 148.4 L419 142 L429.5 135.6 L440 129.3 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 276 L72.5 273.8 L83 271.7 L93.5 269.5 L104 267.4 L114.5 265.2 L125 263.1 L135.5 260.9 L146 258.8 L156.5 256.6 L167 254.5 L177.5 252.3 L188 250.2 L198.5 246.5 L209 242.7 L219.5 239 L230 235.3 L240.5 231.6 L251 227.9 L261.5 224.2 L272 220.5 L282.5 216.8 L293 213 L303.5 209.3 L314 205.6 L324.5 199.3 L335 192.9 L345.5 186.5 L356 180.2 L366.5 173.8 L377 167.4 L387.5 161.1 L398 154.7 L408.5 148.4 L419 142 L429.5 135.6 L440 129.3"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="129.3" r="4.5"/><text x="452" y="134.3">18.200 €</text></g></g>
+</svg>
+              </figure>
+              <figure class="pe-graf">
+                <figcaption><h3 class="det-h3">Caixa a final de mes</h3><p>Parteix dels 10.000 € de fons propis. Abans d'impostos.</p></figcaption>
+                <svg class="pe-graf__svg" viewBox="0 0 560 330" role="img" aria-labelledby="graf-caja-t graf-caja-d" focusable="false">
+<title id="graf-caja-t">Caixa a final de mes en els tres escenaris</title>
+<desc id="graf-caja-d">Tres corbes a 36 mesos. Al final de l'any 3: pessimista 10.332 €, base 30.449 €, optimista 94.807 €. Les xifres exactes són a les taules d'aquest capítol.</desc>
+<g class="pe-graf__eje"><line x1="62" x2="440" y1="276" y2="276"/><line x1="62" x2="440" y1="211.5" y2="211.5"/><line x1="62" x2="440" y1="147" y2="147"/><line x1="62" x2="440" y1="82.5" y2="82.5"/><line x1="62" x2="440" y1="18" y2="18"/></g>
+<g class="pe-graf__marcas" aria-hidden="true"><text x="54" y="280" text-anchor="end">0</text><text x="54" y="215.5" text-anchor="end">25k</text><text x="54" y="151" text-anchor="end">50k</text><text x="54" y="86.5" text-anchor="end">75k</text><text x="54" y="22" text-anchor="end">100k</text><text x="62" y="298" text-anchor="start">Inici</text><text x="188" y="298" text-anchor="middle">Any 1</text><line class="pe-graf__anio" x1="188" x2="188" y1="18" y2="276"/><text x="314" y="298" text-anchor="middle">Any 2</text><line class="pe-graf__anio" x1="314" x2="314" y1="18" y2="276"/><text x="440" y="298" text-anchor="middle">Any 3</text><line class="pe-graf__anio" x1="440" x2="440" y1="18" y2="276"/></g>
+<g class="pe-graf__serie" data-linea="pesimista"><path class="pe-graf__area" d="M62 250.2 L72.5 258.1 L83 259.5 L93.5 260.7 L104 261.8 L114.5 262.7 L125 263.5 L135.5 264.2 L146 264.7 L156.5 265 L167 265.2 L177.5 265.3 L188 265.3 L198.5 268.2 L209 269.5 L219.5 270.7 L230 271.5 L240.5 272.1 L251 272.5 L261.5 272.6 L272 272.4 L282.5 272 L293 271.4 L303.5 270.5 L314 269.3 L324.5 272.2 L335 272.1 L345.5 271.6 L356 270.7 L366.5 269.4 L377 267.7 L387.5 265.7 L398 263.2 L408.5 260.3 L419 257.1 L429.5 253.4 L440 249.3 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 258.1 L83 259.5 L93.5 260.7 L104 261.8 L114.5 262.7 L125 263.5 L135.5 264.2 L146 264.7 L156.5 265 L167 265.2 L177.5 265.3 L188 265.3 L198.5 268.2 L209 269.5 L219.5 270.7 L230 271.5 L240.5 272.1 L251 272.5 L261.5 272.6 L272 272.4 L282.5 272 L293 271.4 L303.5 270.5 L314 269.3 L324.5 272.2 L335 272.1 L345.5 271.6 L356 270.7 L366.5 269.4 L377 267.7 L387.5 265.7 L398 263.2 L408.5 260.3 L419 257.1 L429.5 253.4 L440 249.3"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="249.3" r="4.5"/><text x="452" y="254.3">10.332 €</text></g></g>
+<g class="pe-graf__serie" data-linea="optimista"><path class="pe-graf__area" d="M62 250.2 L72.5 259.1 L83 260.9 L93.5 262 L104 262.6 L114.5 262.5 L125 261.8 L135.5 260.5 L146 258.6 L156.5 256.1 L167 253 L177.5 249.2 L188 244.8 L198.5 250 L209 250.2 L219.5 249.3 L230 247.2 L240.5 244 L251 239.6 L261.5 234.1 L272 227.5 L282.5 219.7 L293 210.8 L303.5 200.8 L314 189.7 L324.5 193.5 L335 187.8 L345.5 180.3 L356 170.9 L366.5 159.8 L377 146.9 L387.5 132.1 L398 115.6 L408.5 97.3 L419 77.1 L429.5 55.2 L440 31.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 259.1 L83 260.9 L93.5 262 L104 262.6 L114.5 262.5 L125 261.8 L135.5 260.5 L146 258.6 L156.5 256.1 L167 253 L177.5 249.2 L188 244.8 L198.5 250 L209 250.2 L219.5 249.3 L230 247.2 L240.5 244 L251 239.6 L261.5 234.1 L272 227.5 L282.5 219.7 L293 210.8 L303.5 200.8 L314 189.7 L324.5 193.5 L335 187.8 L345.5 180.3 L356 170.9 L366.5 159.8 L377 146.9 L387.5 132.1 L398 115.6 L408.5 97.3 L419 77.1 L429.5 55.2 L440 31.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="31.4" r="4.5"/><text x="452" y="36.4">94.807 €</text></g></g>
+<g class="pe-graf__serie es-activa" data-linea="base"><path class="pe-graf__area" d="M62 250.2 L72.5 258.7 L83 260.4 L93.5 261.8 L104 262.7 L114.5 263.3 L125 263.5 L135.5 263.3 L146 262.8 L156.5 261.9 L167 260.6 L177.5 258.9 L188 256.9 L198.5 263.1 L209 264.9 L219.5 266 L230 266.4 L240.5 266.3 L251 265.5 L261.5 264.1 L272 262 L282.5 259.3 L293 255.9 L303.5 252 L314 247.4 L324.5 256.1 L335 256.1 L345.5 255 L356 252.9 L366.5 249.6 L377 245.4 L387.5 240 L398 233.6 L408.5 226.2 L419 217.7 L429.5 208.1 L440 197.4 L440 276 L62 276 Z"/><path class="pe-graf__linea" pathLength="1" d="M62 250.2 L72.5 258.7 L83 260.4 L93.5 261.8 L104 262.7 L114.5 263.3 L125 263.5 L135.5 263.3 L146 262.8 L156.5 261.9 L167 260.6 L177.5 258.9 L188 256.9 L198.5 263.1 L209 264.9 L219.5 266 L230 266.4 L240.5 266.3 L251 265.5 L261.5 264.1 L272 262 L282.5 259.3 L293 255.9 L303.5 252 L314 247.4 L324.5 256.1 L335 256.1 L345.5 255 L356 252.9 L366.5 249.6 L377 245.4 L387.5 240 L398 233.6 L408.5 226.2 L419 217.7 L429.5 208.1 L440 197.4"/><g class="pe-graf__fin" aria-hidden="true"><circle cx="440" cy="197.4" r="4.5"/><text x="452" y="202.4">30.449 €</text></g></g>
+</svg>
+              </figure>
+            </div>
+            <p class="pe-graf__clave"><span class="pe-clave pe-clave--activa">Escenari triat</span> <span class="pe-clave pe-clave--otra">Els altres dos escenaris</span></p>
+
+            <figure class="pe-barras pe-barras--clientes">
+              <figcaption><h3 class="det-h3">Clients per pla al tancament de cada any</h3></figcaption>
+              <svg class="pe-barras__svg" viewBox="0 0 800 194" role="img" aria-labelledby="barras-t barras-d" focusable="false">
+<title id="barras-t">Clients per pla al tancament de cada any</title>
+<desc id="barras-d">Barres apilades per pla. Les xifres exactes són a la taula de clients d'aquest capítol i canvien amb l'escenari triat.</desc>
+<text class="pe-barras__anio" x="0" y="34">Any 1</text><line class="pe-barras__guia" x1="96" x2="736" y1="50" y2="50"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="0.0" x="96" y="14" width="42.7" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="0.1" x="138.7" y="14" width="17.8" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="0.2" x="156.4" y="14" width="5.7" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="0.3" x="162.1" y="14" width="2.1" height="30"/><text class="pe-barras__total" data-barra-total="0" x="174.3" y="34"><tspan data-k="a1.total" data-f="n">96</tspan></text>
+<text class="pe-barras__anio" x="0" y="92">Any 2</text><line class="pe-barras__guia" x1="96" x2="736" y1="108" y2="108"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="1.0" x="96" y="72" width="106.7" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="1.1" x="202.7" y="72" width="49.8" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="1.2" x="252.4" y="72" width="17.8" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="1.3" x="270.2" y="72" width="5.7" height="30"/><text class="pe-barras__total" data-barra-total="1" x="285.9" y="92"><tspan data-k="a2.total" data-f="n">253</tspan></text>
+<text class="pe-barras__anio" x="0" y="150">Any 3</text><line class="pe-barras__guia" x1="96" x2="736" y1="166" y2="166"/><rect class="pe-barras__tramo pe-plan--vigia" data-barra="2.0" x="96" y="130" width="213.3" height="30"/><rect class="pe-barras__tramo pe-plan--centinela" data-barra="2.1" x="309.3" y="130" width="106.7" height="30"/><rect class="pe-barras__tramo pe-plan--guardian" data-barra="2.2" x="416" y="130" width="42.7" height="30"/><rect class="pe-barras__tramo pe-plan--egida" data-barra="2.3" x="458.7" y="130" width="11.4" height="30"/><text class="pe-barras__total" data-barra-total="2" x="480" y="150"><tspan data-k="a3.total" data-f="n">526</tspan></text>
+</svg>
+              <p class="pe-barras__clave"><span class="pe-clave pe-plan--vigia">Vigia</span> <span class="pe-clave pe-plan--centinela">Sentinella</span> <span class="pe-clave pe-plan--guardian">Guardià</span> <span class="pe-clave pe-plan--egida">Ègida</span></p>
+            </figure>
+
+            <div class="pe-hoja">
+              <div class="pe-tabla" role="region" aria-labelledby="cap-clientes">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-clientes"><span>Clients i capacitat al tancament de cada any (estimació)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepte</th><th scope="col" class="n">Any 1</th><th scope="col" class="n">Any 2</th><th scope="col" class="n">Any 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Clients Vigia</th><td class="n" data-k="a1.clientes.0" data-f="n">60</td><td class="n" data-k="a2.clientes.0" data-f="n">150</td><td class="n" data-k="a3.clientes.0" data-f="n">300</td></tr>
+                    <tr><th scope="row">Clients Sentinella</th><td class="n" data-k="a1.clientes.1" data-f="n">25</td><td class="n" data-k="a2.clientes.1" data-f="n">70</td><td class="n" data-k="a3.clientes.1" data-f="n">150</td></tr>
+                    <tr><th scope="row">Clients Guardià</th><td class="n" data-k="a1.clientes.2" data-f="n">8</td><td class="n" data-k="a2.clientes.2" data-f="n">25</td><td class="n" data-k="a3.clientes.2" data-f="n">60</td></tr>
+                    <tr><th scope="row">Clients Ègida</th><td class="n" data-k="a1.clientes.3" data-f="n">3</td><td class="n" data-k="a2.clientes.3" data-f="n">8</td><td class="n" data-k="a3.clientes.3" data-f="n">16</td></tr>
+                    <tr class="pe-total"><th scope="row">Total de clients</th><td class="n" data-k="a1.total" data-f="n">96</td><td class="n" data-k="a2.total" data-f="n">253</td><td class="n" data-k="a3.total" data-f="n">526</td></tr>
+                    <tr><th scope="row">Altes de l'any</th><td class="n" data-k="a1.altasTotal" data-f="n">96</td><td class="n" data-k="a2.altasTotal" data-f="n">185</td><td class="n" data-k="a3.altasTotal" data-f="n">348</td></tr>
+                    <tr><th scope="row">Baixes de l'any</th><td class="n" data-k="a1.bajasTotal" data-f="n">0</td><td class="n" data-k="a2.bajasTotal" data-f="n">28</td><td class="n" data-k="a3.bajasTotal" data-f="n">75</td></tr>
+                    <tr><th scope="row">Equips protegits (màxim inclòs)</th><td class="n" data-k="a1.equipos" data-f="n">400</td><td class="n" data-k="a2.equipos" data-f="n">1.100</td><td class="n" data-k="a3.equipos" data-f="n">2.350</td></tr>
+                    <tr><th scope="row">Hores d'analista al mes</th><td class="n" data-k="a1.horas" data-f="d1">58,5</td><td class="n" data-k="a2.horas" data-f="d1">161,5</td><td class="n" data-k="a3.horas" data-f="d1">343,0</td></tr>
+                    <tr><th scope="row">Analistes a jornada completa</th><td class="n" data-k="a1.analistas" data-f="d1">0,4</td><td class="n" data-k="a2.analistas" data-f="d1">1,2</td><td class="n" data-k="a3.analistas" data-f="d1">2,5</td></tr>
+                    <tr><th scope="row">Ingressos nets de l'últim mes</th><td class="n" data-k="a1.mrr" data-f="e0">3.204 €</td><td class="n" data-k="a2.mrr" data-f="e0">8.729 €</td><td class="n" data-k="a3.mrr" data-f="e0">18.200 €</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pe-tabla" role="region" aria-labelledby="cap-resultados">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-resultados"><span>Compte de resultats anual fins a l'EBITDA (estimació)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepte</th><th scope="col" class="n">Any 1</th><th scope="col" class="n">Any 2</th><th scope="col" class="n">Any 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Ingressos Vigia</th><td class="n" data-k="a1.ingresos.0" data-f="e0">2.945 €</td><td class="n" data-k="a2.ingresos.0" data-f="e0">10.309 €</td><td class="n" data-k="a3.ingresos.0" data-f="e0">22.091 €</td></tr>
+                    <tr><th scope="row">Ingressos Sentinella</th><td class="n" data-k="a1.ingresos.1" data-f="e0">3.087 €</td><td class="n" data-k="a2.ingresos.1" data-f="e0">11.730 €</td><td class="n" data-k="a3.ingresos.1" data-f="e0">27.164 €</td></tr>
+                    <tr><th scope="row">Ingressos Guardià</th><td class="n" data-k="a1.ingresos.2" data-f="e0">2.575 €</td><td class="n" data-k="a2.ingresos.2" data-f="e0">10.620 €</td><td class="n" data-k="a3.ingresos.2" data-f="e0">27.355 €</td></tr>
+                    <tr><th scope="row">Ingressos Ègida</th><td class="n" data-k="a1.ingresos.3" data-f="e0">10.620 €</td><td class="n" data-k="a2.ingresos.3" data-f="e0">38.940 €</td><td class="n" data-k="a3.ingresos.3" data-f="e0">84.960 €</td></tr>
+                    <tr class="pe-total"><th scope="row">Ingressos nets</th><td class="n" data-k="a1.ingresosTotal" data-f="e0">19.227 €</td><td class="n" data-k="a2.ingresosTotal" data-f="e0">71.599 €</td><td class="n" data-k="a3.ingresosTotal" data-f="e0">161.570 €</td></tr>
+                    <tr><th scope="row">Costos variables (servidor, analista i cobrament)</th><td class="n" data-k="a1.variablesTotal" data-f="e0">8.762 €</td><td class="n" data-k="a2.variablesTotal" data-f="e0">32.922 €</td><td class="n" data-k="a3.variablesTotal" data-f="e0">75.533 €</td></tr>
+                    <tr class="pe-total"><th scope="row">Marge de contribució</th><td class="n" data-k="a1.contribucion" data-f="e0">10.465 €</td><td class="n" data-k="a2.contribucion" data-f="e0">38.677 €</td><td class="n" data-k="a3.contribucion" data-f="e0">86.037 €</td></tr>
+                    <tr><th scope="row">Costos fixos d'operació</th><td class="n" data-k="a1.fijos" data-f="e0">720 €</td><td class="n" data-k="a2.fijos" data-f="e0">1.800 €</td><td class="n" data-k="a3.fijos" data-f="e0">3.600 €</td></tr>
+                    <tr><th scope="row">Captació de clients</th><td class="n" data-k="a1.marketing" data-f="e0">6.945 €</td><td class="n" data-k="a2.marketing" data-f="e0">12.795 €</td><td class="n" data-k="a3.marketing" data-f="e0">24.090 €</td></tr>
+                    <tr><th scope="row">Estructura (gestoria, quotes, eines)</th><td class="n" data-k="a1.estructura" data-f="e0">2.880 €</td><td class="n" data-k="a2.estructura" data-f="e0">9.900 €</td><td class="n" data-k="a3.estructura" data-f="e0">12.000 €</td></tr>
+                    <tr><th scope="row">Hores pròpies de vendes i suport</th><td class="n" data-k="a1.personal" data-f="e0">0 €</td><td class="n" data-k="a2.personal" data-f="e0">9.000 €</td><td class="n" data-k="a3.personal" data-f="e0">24.000 €</td></tr>
+                    <tr class="pe-total pe-total--fin"><th scope="row">EBITDA</th><td class="n es-negativo" data-k="a1.ebitda" data-f="e0">−80 €</td><td class="n" data-k="a2.ebitda" data-f="e0">5.182 €</td><td class="n" data-k="a3.ebitda" data-f="e0">22.347 €</td></tr>
+                    <tr><th scope="row">EBITDA sobre ingressos</th><td class="n es-negativo" data-k="a1.ebitdaPct" data-f="p1">−0,4 %</td><td class="n" data-k="a2.ebitdaPct" data-f="p1">7,2 %</td><td class="n" data-k="a3.ebitdaPct" data-f="p1">13,8 %</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pe-tabla" role="region" aria-labelledby="cap-caja">
+                <table class="det-tabla pe-t pe-t--cuentas">
+                  <caption id="cap-caja"><span>Caixa anual, abans d'impostos (estimació)</span></caption>
+                  <thead>
+                    <tr><th scope="col">Concepte</th><th scope="col" class="n">Any 1</th><th scope="col" class="n">Any 2</th><th scope="col" class="n">Any 3</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Caixa a l'inici de l'any</th><td class="n" data-k="a1.cajaIni" data-f="e0">10.000 €</td><td class="n" data-k="a2.cajaIni" data-f="e0">7.420 €</td><td class="n" data-k="a3.cajaIni" data-f="e0">11.102 €</td></tr>
+                    <tr><th scope="row">EBITDA</th><td class="n es-negativo" data-k="a1.ebitda" data-f="e0">−80 €</td><td class="n" data-k="a2.ebitda" data-f="e0">5.182 €</td><td class="n" data-k="a3.ebitda" data-f="e0">22.347 €</td></tr>
+                    <tr><th scope="row">Inversió (constitució, equips, servidor)</th><td class="n" data-k="a1.inversion" data-f="e0">2.500 €</td><td class="n" data-k="a2.inversion" data-f="e0">1.500 €</td><td class="n" data-k="a3.inversion" data-f="e0">3.000 €</td></tr>
+                    <tr class="pe-total pe-total--fin"><th scope="row">Caixa al tancament de l'any</th><td class="n" data-k="a1.cajaFin" data-f="e0">7.420 €</td><td class="n" data-k="a2.cajaFin" data-f="e0">11.102 €</td><td class="n" data-k="a3.cajaFin" data-f="e0">30.449 €</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="pe-hoja__pie">Imports arrodonits a l'euro. Ingressos sense IVA. La inversió es resta de la caixa, no de l'EBITDA. No s'han calculat impostos ni amortitzacions: el capítol 2 tampoc ho fa i no volem donar un tipus impositiu de memòria.</p>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Supòsits de les projeccions</h3>
+            <dl class="det-terminos">
+              <div><dt>Preus i costos per client <span class="pe-origen pe-origen--cap">Capítol 2</span></dt><dd>Els de la taula 7, sense canvis en els tres anys. No s'apuja cap preu.</dd></div>
+              <div><dt>Quota d'Ègida <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Es compta només la quota base de 590 €, amb 25 equips. Els equips addicionals a 12 € no s'hi inclouen: és un supòsit prudent.</dd></div>
+              <div><dt>Ritme d'altes <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Els clients arriben repartits per igual durant l'any. Per això els ingressos d'un any es calculen amb la mitjana entre els clients de l'inici i els del tancament.</dd></div>
+              <div><dt>Baixes <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Cada any es perd una part dels clients que hi havia en començar-lo, i cal captar-ne d'altres per reposar-los.</dd></div>
+              <div><dt>Captació <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Altes de l'any × cost de captació de cada pla: 25 € a Vigia, 45 € a Sentinella, 90 € a Guardià i 1.200 € a Ègida.</dd></div>
+              <div><dt>Costos fixos d'operació</dt><dd>60 € al mes l'any 1 (capítol 2). Suposem 150 € l'any 2 i 300 € l'any 3, perquè l'assegurança i les còpies creixen amb els clients.</dd></div>
+              <div><dt>Estructura <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Any 1: gestoria a 80 € al mes i quota d'autònoms de 80 € al mes per soci. Anys 2 i 3: gestoria a 100 i 150 € al mes, quota de 300 € al mes per soci, i eines i formació (1.500 i 3.000 € a l'any). Les quotes d'autònoms són un supòsit: cal comprovar-les amb la Seguretat Social.</dd></div>
+              <div><dt>Hores pròpies <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>Hores de vendes, suport i administració que no són dins del temps d'analista, pagades a 20 €. L'any 1 els socis no les cobren.</dd></div>
+              <div><dt>Cobraments</dt><dd>Les subscripcions es cobren per avançat cada mes, de manera que no hi ha clients pendents de pagament ni existències.</dd></div>
+            </dl>
+
+            <div class="pe-tabla" role="region" aria-labelledby="cap-escenarios">
+              <table class="det-tabla pe-t">
+                <caption id="cap-escenarios"><span>Què canvia d'un escenari a un altre (estimació pròpia)</span></caption>
+                <thead>
+                  <tr><th scope="col">Supòsit</th><th scope="col" class="n">Pessimista</th><th scope="col" class="n">Base</th><th scope="col" class="n">Optimista</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Clients al tancament de l'any 1</th><td class="n">47</td><td class="n">96</td><td class="n">149</td></tr>
+                  <tr><th scope="row">Clients al tancament de l'any 2</th><td class="n">113</td><td class="n">253</td><td class="n">419</td></tr>
+                  <tr><th scope="row">Clients al tancament de l'any 3</th><td class="n">218</td><td class="n">526</td><td class="n">858</td></tr>
+                  <tr><th scope="row">D'aquests, Ègida l'any 3</th><td class="n">6</td><td class="n">16</td><td class="n">28</td></tr>
+                  <tr><th scope="row">Baixes a l'any, públic general</th><td class="n">40 %</td><td class="n">30 %</td><td class="n">20 %</td></tr>
+                  <tr><th scope="row">Baixes a l'any, Ègida</th><td class="n">15 %</td><td class="n">10 %</td><td class="n">5 %</td></tr>
+                  <tr><th scope="row">Cost de captació, sobre el base</th><td class="n">130 %</td><td class="n">100 %</td><td class="n">80 %</td></tr>
+                  <tr><th scope="row">Hores pròpies pagades, any 3</th><td class="n">0</td><td class="n">1.200</td><td class="n">1.900</td></tr>
+                  <tr><th scope="row">Estructura, any 3</th><td class="n">9.000 €</td><td class="n">12.000 €</td><td class="n">12.000 €</td></tr>
+                  <tr><th scope="row">Inversió en els tres anys</th><td class="n">4.000 €</td><td class="n">7.000 €</td><td class="n">7.000 €</td></tr>
+                  <tr class="pe-total"><th scope="row">EBITDA de l'any 3</th><td class="n">8.728 €</td><td class="n">22.347 €</td><td class="n">64.339 €</td></tr>
+                  <tr class="pe-total"><th scope="row">Caixa mínima en els tres anys</th><td class="n">1.320 €</td><td class="n">3.703 €</td><td class="n">5.200 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="det-prosa">En l'escenari pessimista l'empresa perd diners els dos primers anys i reacciona gastant menys: no paga hores pròpies, conté l'estructura i ajorna inversions. Tot i això la caixa no arriba a zero. En l'optimista el límit no són els diners sinó les persones: caldrien més de quatre analistes a jornada completa al final de l'any 3.</p>
+          </section>
+
+          <!-- 10. Finançament -->
+          <section class="det-grupo pe-cap" id="financiacion" aria-labelledby="titulo-financiacion">
+            <h2 class="det-h2" id="titulo-financiacion">Fons propis primer; els ajuts, per anar més de pressa</h2>
+            <p class="det-entrada">El pla no necessita deute. Els costos fixos són baixos i cada client deixa marge, de manera que l'activitat es paga amb les mateixes subscripcions.</p>
+
+            <h3 class="det-h3 pe-h3">Dues fases</h3>
+            <dl class="det-terminos">
+              <div><dt>Fase de TFG <span class="pe-origen pe-origen--cap">Capítol 2</span></dt><dd>Recursos propis. El desemborsament real és d'uns 100 € (disc extern, domini i cable de xarxa), a parts iguals. Els ordinadors ja existeixen i tot el programari és lliure o d'avaluació.</dd></div>
+              <div><dt>Fase comercial <span class="pe-origen pe-origen--est">Estimació pròpia</span></dt><dd>10.000 € de fons propis, 5.000 € per soci. La xifra surt de l'escenari pessimista: és l'aportació amb què la caixa no baixa de 1.320 € en cap mes dels tres anys.</dd></div>
+            </dl>
+
+            <h3 class="det-h3 pe-h3">Ús dels fons <span class="pe-origen pe-origen--est">Estimació pròpia</span></h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-fondos">
+              <table class="det-tabla pe-t">
+                <caption id="cap-fondos"><span>A què es destinen els 10.000 € de fons propis</span></caption>
+                <thead>
+                  <tr><th scope="col">Destinació</th><th scope="col">Per a què</th><th scope="col" class="n">Import</th><th scope="col" class="n">%</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Posada en marxa</th><td>Constitució de la societat, alta d'activitat, primer servidor de producció i contractes tipus revisats per un advocat. És la inversió de l'any 1.</td><td class="n" data-uso="2500">2.500 €</td><td class="n">25 %</td></tr>
+                  <tr><th scope="row">Captació dels primers clients</th><td>Auditories inicials d'Ègida, materials per a gestories i primeres proves d'anuncis, fins que els ingressos cobreixin la captació.</td><td class="n" data-uso="3500">3.500 €</td><td class="n">35 %</td></tr>
+                  <tr><th scope="row">Estructura dels primers sis mesos</th><td>Gestoria, quotes i assegurança mentre hi ha pocs clients.</td><td class="n" data-uso="1800">1.800 €</td><td class="n">18 %</td></tr>
+                  <tr><th scope="row">Reserva</th><td>Coixí per a l'escenari pessimista. No es gasta si el pla va com el base.</td><td class="n" data-uso="2200">2.200 €</td><td class="n">22 %</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr class="pe-total"><th scope="row" colspan="2">Total</th><td class="n">10.000 €</td><td class="n">100 %</td></tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Ajuts: un accelerador, no la base</h3>
+            <p class="det-prosa">Cap d'aquestes vies és a les taules del capítol anterior. Si n'arriba alguna, serveix per contractar abans o per abaratir la quota del client, no per tapar un forat.</p>
+            <dl class="det-terminos">
+              <div><dt>Kit Digital</dt><dd>Programa amb fons NextGenerationEU que inclou una categoria de ciberseguretat per a pimes. KAIRON s'hi podria adherir com a agent digitalitzador per oferir Ègida amb la quota subvencionada. A les fonts consultades per al capítol 2 la convocatòria figura tancada: cal comprovar al portal oficial si n'hi ha una de nova abans de comptar-hi.</dd></div>
+              <div><dt>Altres ajuts a la ciberseguretat</dt><dd>El programa Kit Consulting, les convocatòries «Pyme Cibersegura» de les cambres de comerç (2026) i els ajuts autonòmics. Totes redueixen el que paga el client empresa, no el marge de KAIRON.</dd></div>
+              <div><dt>Préstecs participatius d'ENISA</dt><dd>ENISA, l'Empresa Nacional d'Innovació (una societat pública espanyola; no és l'agència europea de ciberseguretat, que fa servir les mateixes sigles), concedeix préstecs participatius a empreses de nova creació. No hem pogut comprovar al seu web les condicions vigents i les fonts secundàries no coincideixen entre si, de manera que no donem imports, edats ni terminis. Seria la via per avançar la primera contractació si el pla anés millor del previst.</dd></div>
+            </dl>
+          </section>
+
+          <!-- 11. Riscos, indicadors i fites -->
+          <section class="det-grupo pe-cap" id="riesgos" aria-labelledby="titulo-riesgos">
+            <h2 class="det-h2" id="titulo-riesgos">Què pot sortir malament i com sabrem si va bé</h2>
+            <p class="det-entrada">Un pla serveix si diu per endavant què el trencaria i quin nombre cal mirar cada mes.</p>
+
+            <h3 class="det-h3 pe-h3">Riscos i mitigació</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-riesgos">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-riesgos"><span>Riscos principals, amb probabilitat i impacte segons la nostra valoració</span></caption>
+                <thead>
+                  <tr><th scope="col">Risc</th><th scope="col">Probabilitat</th><th scope="col">Impacte</th><th scope="col">Què fem</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">L'analista triga més del previst per client</th><td>Alta</td><td>Alt</td><td>Mesurar-ho al laboratori i amb els deu primers clients. Si es desvia, apujar el preu o retallar el servei abans de créixer.</td></tr>
+                  <tr><th scope="row">Arriben menys clients dels previstos</th><td>Mitjana</td><td>Mitjà</td><td>És l'escenari pessimista: despesa continguda i reserva de fons propis. La caixa no arriba a zero.</td></tr>
+                  <tr><th scope="row">Un atac a un client passa sense detectar</th><td>Mitjana</td><td>Alt</td><td>Contracte que explica l'horari i els límits, assegurança de responsabilitat civil i ciberrisc, i revisió de regles després de cada cas.</td></tr>
+                  <tr><th scope="row">Un incident greu passa de nit o en cap de setmana</th><td>Alta</td><td>Mitjà</td><td>El bloqueig automàtic actua a qualsevol hora. El client ho sap abans de signar. Ampliar l'horari d'Ègida quan hi hagi tres persones.</td></tr>
+                  <tr><th scope="row">El servidor al núvol o l'assegurança costen més del que s'ha estimat</th><td>Mitjana</td><td>Mitjà</td><td>Demanar pressupostos reals abans de vendre. Són els dos supòsits del capítol 2 que no tenen pressupost de proveïdor.</td></tr>
+                  <tr><th scope="row">Un dels dos socis no pot continuar</th><td>Mitjana</td><td>Alt</td><td>Tot documentat al repositori, procediments escrits i pacte de socis que digui què passa en aquest cas.</td></tr>
+                  <tr><th scope="row">Wazuh canvia de llicència o deixa de mantenir-se</th><td>Baixa</td><td>Alt</td><td>Les regles i l'eina forense són pròpies i no depenen d'una versió concreta. Seguir les versions i tenir prevista una alternativa.</td></tr>
+                  <tr><th scope="row">Fuga de dades d'un client des de KAIRON</th><td>Baixa</td><td>Alt</td><td>Només es desen registres, amb retenció limitada, xifratge, accés per VPN amb clau personal i mínim privilegi.</td></tr>
+                  <tr><th scope="row">Un competidor gran abaixa el preu</th><td>Mitjana</td><td>Mitjà</td><td>No competir en preu sinó en tracte, llenguatge i informe. Reforçar el canal de gestories i informàtics locals.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Indicadors</h3>
+            <div class="pe-tabla" role="region" aria-labelledby="cap-kpi">
+              <table class="det-tabla pe-t pe-t--texto">
+                <caption id="cap-kpi"><span>Indicadors que es revisen cada mes i el seu objectiu</span></caption>
+                <thead>
+                  <tr><th scope="col">Indicador</th><th scope="col">Objectiu</th><th scope="col">D'on surt</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Temps fins a l'alerta</th><td>Menys de 60 segons</td><td>Capítol 2, objectiu 2</td></tr>
+                  <tr><th scope="row">Temps fins al bloqueig automàtic</th><td>30 segons com a màxim</td><td>Capítol 2, objectiu 4</td></tr>
+                  <tr><th scope="row">Proves amb hora UTC, número de cas i SHA-256</th><td>100 %</td><td>Capítol 2, objectiu 5</td></tr>
+                  <tr><th scope="row">Marge de cada pla</th><td>Almenys el 30 % en els plans per al públic general</td><td>Capítol 2, objectiu 8</td></tr>
+                  <tr><th scope="row">Minuts d'analista per client i mes</th><td>10, 30, 90 i 480 segons el pla</td><td>Capítol 2, taula 7</td></tr>
+                  <tr><th scope="row">Respostes dins del termini del pla</th><td>Almenys el 95 %</td><td>Objectiu propi</td></tr>
+                  <tr><th scope="row">Clients i ingressos nets del mes</th><td>96 clients i 3.204 € el mes 12</td><td>Capítol 2, taula 9</td></tr>
+                  <tr><th scope="row">Baixes a l'any</th><td>Menys del 30 % en el públic general i del 10 % a Ègida</td><td>Objectiu propi</td></tr>
+                  <tr><th scope="row">Cost de captació per pla</th><td>25, 45, 90 i 1.200 € com a màxim</td><td>Objectiu propi</td></tr>
+                  <tr><th scope="row">Alertes que resulten ser falses</th><td>Que baixi cada trimestre: es mesurarà a partir del primer mes</td><td>Objectiu propi</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="det-h3 pe-h3">Fites</h3>
+            <p class="det-prosa">El negoci d'aquest document (els quatre plans del SOC) i les sis fases de producte d'<a href="futuro.html#plan">El següent instant</a> avancen en paral·lel. Els ingressos surten només dels plans: KAIRON Agents i KAIRON Data Chip no aporten ni un euro a les taules.</p>
+            <ol class="pe-hitos">
+              <li>
+                <h4>Abans de començar: el TFG</h4>
+                <p class="pe-hitos__cuando">Novembre de 2026 a març de 2027</p>
+                <p>Laboratori Wazuh i eina forense abans de Nadal. Assaig de la demo i tall d'abast al gener. Presentació al febrer o al març. Aquí es mesura el temps real d'analista.</p>
+              </li>
+              <li>
+                <h4>Any 1: vendre els quatre plans</h4>
+                <p class="pe-hitos__cuando">Fases 1 i 2 del producte: fundació i primer prototip d'Agents</p>
+                <p>Constitució, assegurança i contractes. Primer client Ègida en el tercer trimestre. 96 clients al tancament. Pas de Wazuh a diversos nodes en superar els 100 equips.</p>
+              </li>
+              <li>
+                <h4>Any 2: deixar de dependre dels socis</h4>
+                <p class="pe-hitos__cuando">Fases 3 i 4: plataforma central i primers serveis de seguretat a sobre</p>
+                <p>253 clients. Un soci a jornada completa. Procediments escrits perquè una tercera persona pugui atendre alertes. Primer any amb EBITDA positiu en l'escenari base.</p>
+              </li>
+              <li>
+                <h4>Any 3: primera contractació</h4>
+                <p class="pe-hitos__cuando">Fase 5: recerca de Data Chip, sense producte i sense ingressos</p>
+                <p>526 clients i un analista júnior contractat. Amb tres persones s'estudia ampliar l'horari d'Ègida. La recerca de <a href="data-chip.html">Data Chip</a> comença com a estudi, pagada amb el marge del SOC.</p>
+              </li>
+              <li>
+                <h4>Després: expansió</h4>
+                <p class="pe-hitos__cuando">Fase 6, fora de l'horitzó d'aquest pla</p>
+                <p>Identitat digital, filtracions i serveis a empreses. No té xifres perquè encara no hi ha res que les sostingui.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- 12. Forma jurídica i avisos -->
+          <section class="det-grupo pe-cap" id="forma" aria-labelledby="titulo-forma">
+            <h2 class="det-h2" id="titulo-forma">Una societat limitada, quan hi hagi alguna cosa a constituir</h2>
+            <p class="det-entrada">KAIRON no existeix com a empresa. Si existís, seria una societat limitada de dos socis a parts iguals.</p>
+
+            <h3 class="det-h3 pe-h3">Per què una societat limitada</h3>
+            <ul class="det-lista">
+              <li><b>Responsabilitat limitada.</b> Un servei de seguretat pot rebre una reclamació. La societat respon amb el seu patrimoni, no amb el dels socis, i l'assegurança cobreix la resta.</li>
+              <li><b>Confiança.</b> Una pime signa amb més tranquil·litat un contracte de 12 mesos amb una societat que amb dos autònoms.</li>
+              <li><b>Dos socis, regles clares.</b> Un pacte de socis des del principi: repartiment, dedicació de cadascun i què passa si un ho deixa.</li>
+              <li><b>Accés a finançament.</b> Els préstecs participatius i molts ajuts s'adrecen a societats.</li>
+            </ul>
+            <p class="det-prosa">Aquesta elecció és una proposta nostra i caldria confirmar-la amb una gestoria: no som juristes ni assessors fiscals.</p>
+
+            <h3 class="det-h3 pe-h3">Obligacions que ja coneixem</h3>
+            <p class="det-prosa">Vigilar els equips d'un client és tractar les seves dades per compte seu: cal un contracte d'encarregat del tractament amb cadascun (article 28 del RGPD). El web hauria de publicar les dades d'identificació de la societat (LSSI). I caldria revisar si la directiva NIS2 arriba a KAIRON o als seus clients. Tot això està explicat, amb els textos oficials, a <a href="legal.html">Legalitat i privacitat</a>.</p>
+
+            <aside class="pe-aviso" aria-labelledby="titulo-aviso">
+              <h3 class="det-h3" id="titulo-aviso">Aquest document és un treball acadèmic</h3>
+              <p>KAIRON és una empresa fictícia creada per Antonia Lorena Cracana i João Daniel de Paiva Oliveira, estudiants de 2n de SMX a Digitech Barcelona, per al seu projecte de final de cicle. No té NIF, domicili, clients ni ingressos, i no n'inventem cap.</p>
+              <p>Els preus, els clients i les xifres de negoci són una simulació raonada. Les dades de mercat són d'organismes oficials i estan enllaçades. Res d'això és una oferta comercial, ni assessorament financer o jurídic.</p>
+              <p>Ús d'intel·ligència artificial: s'ha fet servir com a suport per estructurar el document, calcular les taules i revisar el text. L'equip ha de revisar tot el contingut i poder explicar-lo abans de lliurar-lo.</p>
+            </aside>
+          </section>
+
+          <!-- Fonts -->
+          <section class="det-grupo pe-cap pe-cap--fuentes" id="fuentes" aria-labelledby="titulo-fuentes">
+            <h2 class="det-h2" id="titulo-fuentes">Fonts</h2>
+            <p class="det-prosa">Recopilades el 12-11-2026. Les xifres oficials estan pendents de comparar una a una amb la nota o la taula enllaçada: cal obrir cada enllaç i comprovar el nombre abans de lliurar el treball.</p>
+            <ul class="pe-fuentes">
+              <li><a href="https://www.ine.es/dyngs/Prensa/es/DIRCE2025.htm" target="_blank" rel="noopener">INE. Directori Central d'Empreses (DIRCE), a 1 de gener de 2025</a><span>Nota de premsa de l'11-12-2025. Empreses actives a Espanya i empreses sense assalariats.</span></li>
+              <li><a href="https://www.idescat.cat/pub/?id=ee&amp;n=10449" target="_blank" rel="noopener">Idescat. Empreses i establiments a 1 de gener, per nombre d'assalariats</a><span>Empreses amb establiment a Catalunya, per mida.</span></li>
+              <li><a href="https://www.incibe.es/incibe/sala-de-prensa/incibe-detecto-mas-de-122000-incidentes-de-ciberseguridad-en-2025" target="_blank" rel="noopener">INCIBE. Balanç de ciberseguretat 2025</a><span>Incidents gestionats, programari maliciós, ransomware, frau i phishing.</span></li>
+              <li><a href="https://www.ine.es/dyngs/Prensa/es/ETICCE20241T2025.htm" target="_blank" rel="noopener">INE. Enquesta sobre l'ús de TIC i del comerç electrònic a les empreses, 2024 i primer trimestre de 2025</a><span>Nota de premsa del 22-10-2025. Empreses amb especialistes TIC. Falta comprovar a quina mida d'empresa es refereix la dada.</span></li>
+              <li><a href="https://ipyme.org/Publicaciones/Cifras%20PYME/CifrasPyme_abril_2026.pdf" target="_blank" rel="noopener">Ministeri d'Indústria i Turisme (DGIPYME). Cifras PYME, abril de 2026</a><span>Nombre de pimes segons la Seguretat Social.</span></li>
+              <li><a href="https://documentation.wazuh.com/current/quickstart.html" target="_blank" rel="noopener">Wazuh. Guia d'inici ràpid i requisits de maquinari</a><span>Dimensionament del servidor segons els agents.</span></li>
+              <li><a href="https://espanadigital.gob.es/lineas-de-actuacion/programa-kit-digital" target="_blank" rel="noopener">Programa Kit Digital (Red.es i Ministeri per a la Transformació Digital)</a><span>Ajuts a la digitalització i a la ciberseguretat de les pimes.</span></li>
+              <li><a href="https://www.enisa.es/" target="_blank" rel="noopener">ENISA, Empresa Nacional d'Innovació</a><span>Préstecs participatius. Condicions pendents de comprovar.</span></li>
+              <li><span class="pe-fuentes__propia">KAIRON. Capítol 2: disseny del projecte (activitat ACT1 RA2, 12-11-2026)</span><span>Preus, plans, costos per client, costos fixos, punt d'equilibri, escenari del mes 12 i finançament.</span></li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TANCAMENT ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">El que ja es pot comprovar</h2>
+            <p class="det-prosa">Els comptes són una projecció. El que KAIRON demostra avui és al laboratori: detectar un atac, contenir-lo i documentar-lo amb proves que es poden verificar.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="preguntas.html#precios" class="boton boton--lleno"><span class="boton__texto" data-texto="Plans i preus">Plans i preus</span></a>
+            <a href="futuro.html" class="boton"><span class="boton__texto" data-texto="Les sis fases">Les sis fases</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo pi-sin-partir" id="titulo-rel">Continua llegint</h2>
+          <ul class="det-rel__lista">
+            <li><a href="futuro.html"><b>El següent instant</b><span>La visió de producte en sis fases, d'Agents a Data Chip.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>El laboratori</b><span>Les màquines, les xarxes i les regles que sostenen el servei.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="legal.html"><b>Legalitat i privacitat</b><span>Les normes que obligarien KAIRON, amb les seves fonts.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="data-chip.html"><b>KAIRON Data Chip</b><span>La línia de recerca de la fase 5, amb els seus límits.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="../img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operatiu</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="plan.html">Pla d'empresa</a> · <a href="legal.html">Legalitat i privacitat</a> · <a href="../antonia-lorena-cracana/ca/">Portfolio d'Antonia Lorena Cracana</a> · <a href="../joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/intro.js?v=20261112c" defer></script>
+  <script src="../js/escena.js?v=20261112c" defer></script>
+  <script src="../js/visuales.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Pla d'empresa: model econòmic, selector d'escenari, índex de lectura i gràfics (abans de paginas.js) -->
+  <script src="../js/plan.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
+</body>
+</html>
