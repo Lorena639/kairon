@@ -192,7 +192,7 @@
         float ang = atan(vPos.y, vPos.x);
         float cola = smoothstep(0.0, 0.9, ang);
         float radio = length(vPos) / ${(RADIO * 1.02).toFixed(3)};
-        float alfa = cola * 0.9 * smoothstep(0.0, 0.25, radio);
+        float alfa = cola * 0.9 * smoothstep(0.62, 0.92, radio); // v5: hueco en el centro para no tapar la K
         gl_FragColor = vec4(mix(color, vec3(1.0), cola * 0.5), alfa);
       }`,
   });
@@ -208,8 +208,9 @@
   let tPulso = 0;
 
   // --- Halo central ---
-  const nucleo = new THREE.Sprite(new THREE.SpriteMaterial({ map: textura, color: 0xd4af7a, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
-  nucleo.scale.set(7.5, 7.5, 1);
+  const nucleo = new THREE.Sprite(new THREE.SpriteMaterial({ map: textura, color: 0xd4af7a, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false }));
+  // v5: halo más tenue; con 0,5 se veía como un disco beige que apagaba el oro de la K
+  nucleo.scale.set(6, 6, 1);
   grupo.add(nucleo);
 
   // --- Polvo: partículas alrededor, fuera del grupo para que no giren con él ---
@@ -290,7 +291,7 @@
     texturaK.colorSpace = THREE.SRGBColorSpace;
     texturaK.anisotropy = render.capabilities.getMaxAnisotropy();
     // Cara: el PNG tal cual (emisivo, para que sus colores no dependan de la luz) más un brillo metálico encima
-    const matCara = new THREE.MeshStandardMaterial({ map: texturaK, emissiveMap: texturaK, emissive: 0xffffff, emissiveIntensity: 0.92, metalness: 0.35, roughness: 0.38, envMap: entorno, envMapIntensity: 0.55, alphaTest: 0.35, transparent: false });
+    const matCara = new THREE.MeshStandardMaterial({ map: texturaK, emissiveMap: texturaK, emissive: 0xffffff, emissiveIntensity: 0.78, metalness: 0.55, roughness: 0.3, envMap: entorno, envMapIntensity: 1.05, alphaTest: 0.35, transparent: false });
     const matCanto = new THREE.MeshStandardMaterial({ color: 0xb58a4c, metalness: 1, roughness: 0.26, envMap: entorno, envMapIntensity: 1.25 });
     const mallaK = new THREE.Mesh(geoK, [matCara, matCanto]);
     const ALTO_K = enPagina ? 2.2 : 3.1;

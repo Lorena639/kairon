@@ -501,15 +501,8 @@ if (hayGSAP && !reducido) {
       scrollTrigger: { trigger: c, start: "top 90%" } });
   });
 
-  // Palabras gigantes de fondo que se desplazan con el scroll
-  gsap.utils.toArray("[data-fondo]").forEach((sec) => {
-    const palabra = document.createElement("span");
-    palabra.className = "fondo-palabra";
-    palabra.setAttribute("aria-hidden", "true");
-    palabra.textContent = sec.dataset.fondo;
-    sec.prepend(palabra);
-    gsap.fromTo(palabra, { xPercent: 10 }, { xPercent: -40, ease: "none", scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: true } });
-  });
+  // (Las palabras gigantes de contorno detrás de cada sección se quitaron en el rediseño v5:
+  // repetían el nombre en texto tipográfico, contra el manual de marca, y recargaban la página.)
 
   // El método: el paso que está a la altura del centro se marca como activo
   const pasosMetodo = document.querySelectorAll(".metodo__paso");

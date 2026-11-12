@@ -4161,3 +4161,139 @@ main, .pie { overflow-x: clip; }
   padding-bottom: 0.08em;
   margin-bottom: -0.08em;
 }
+
+/* ---------- 31. Portada v5 (12-11-2026): un solo objeto, un titular, una entrada ----------
+   Tras el critique de diseño: la marca aparecía cuatro veces en la primera pantalla y la K chocaba
+   con el titular y con el registro. Ahora:
+   - el único objeto es la K del emblema dentro del globo (WebGL, o capas CSS como respaldo);
+   - el titular es el texto más grande de la pantalla (Cinzel 500, como en la hoja de marca);
+   - el registro del SOC es una sola línea discreta bajo el globo;
+   - sin marca de agua tipográfica ni etiqueta encima del titular. */
+.hero__contenido--centro {
+  gap: 28px;
+}
+
+.hero__titular {
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.4vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  max-width: 12.5ch;
+  text-wrap: balance;
+  text-shadow: 0 2px 40px rgba(11, 15, 20, 0.6);
+}
+
+.hero__titular em {
+  color: var(--oro);
+}
+
+.hero__sub--centro {
+  max-width: 44ch;
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  line-height: 1.6;
+  color: rgba(248, 245, 238, 0.82);
+}
+
+/* Registro en vivo: una línea bajo el globo, sin caja (solo la última alerta, la más reciente) */
+.hero__registro {
+  top: auto;
+  bottom: 36px;
+  right: 72px;
+  width: min(360px, 32vw);
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid var(--linea);
+  border-radius: 0;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  font-size: 0.75rem;
+}
+
+.hero__registro-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero__registro-lista .registro__linea:not(:last-child) {
+  display: none;
+}
+
+.hero__registro .registro__linea {
+  white-space: normal;
+}
+
+/* Legibilidad: horas del registro y etiquetas pequeñas con contraste AA (antes 3,2:1) */
+.registro__linea time {
+  color: rgba(248, 245, 238, 0.66);
+}
+
+.panel__alertas .etiqueta,
+.panel__detalle .etiqueta {
+  font-size: 0.68rem;
+}
+
+.etiqueta--alerta {
+  background: rgba(255, 77, 77, 0.12);
+  color: #ff8a8a;
+}
+
+/* Pie: el nombre gigante es el wordmark original (la O con el punto orbital), no texto tipográfico.
+   Solo se ilumina con un reflejo que lo recorre al pasar el ratón; el dibujo no cambia. */
+.pie__gigante {
+  position: relative;
+  width: min(1100px, 92%);
+  margin: 0 auto 48px;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.pie__gigante img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 40px rgba(212, 175, 122, 0.18));
+}
+
+.pie__gigante::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgba(255, 243, 214, 0.45) 50%, transparent 65%);
+  mix-blend-mode: overlay;
+  transform: translateX(-120%);
+  transition: transform 1.4s var(--facil);
+  pointer-events: none;
+  -webkit-mask: url("../img/kairon-wordmark-dorado.png") center / 100% 100% no-repeat;
+  mask: url("../img/kairon-wordmark-dorado.png") center / 100% 100% no-repeat;
+}
+
+.pie__gigante:hover::after {
+  transform: translateX(120%);
+}
+
+/* Áreas táctiles de al menos 44 px en móvil */
+@media (max-width: 1024px) {
+  .menu-boton {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .boton,
+  .filtro {
+    min-height: 44px;
+  }
+
+  .cabecera .oro-metal--horizontal {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero__titular {
+    font-size: clamp(2.2rem, 10.5vw, 3rem);
+    max-width: none;
+  }
+}
