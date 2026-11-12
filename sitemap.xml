@@ -50,6 +50,26 @@
     <xhtml:link rel="alternate" hreflang="ca" href="ca/futuro.html"/>
   </url>
   <url>
+    <loc>kairos.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="kairos.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/kairos.html"/>
+  </url>
+  <url>
+    <loc>metodo.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="metodo.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/metodo.html"/>
+  </url>
+  <url>
+    <loc>incidente.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="incidente.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/incidente.html"/>
+  </url>
+  <url>
+    <loc>preguntas.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="preguntas.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/preguntas.html"/>
+  </url>
+  <url>
     <loc>productos.html</loc>
     <xhtml:link rel="alternate" hreflang="es" href="productos.html"/>
     <xhtml:link rel="alternate" hreflang="ca" href="ca/productos.html"/>

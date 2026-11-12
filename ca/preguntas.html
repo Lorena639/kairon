@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Totes les preguntes sobre el servei de KAIRON agrupades per tema, un glossari sense argot i preus d'exemple per equip i mes.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>Preguntes, glossari i preus orientatius · KAIRON</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../preguntas.html">
+  <link rel="alternate" hreflang="ca" href="preguntas.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20261112a">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Salta al contingut</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Secció següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Seccions">
+    <a href="#contenido" data-seccion="hero"><span>Inici</span></a>
+    <a href="#respuestas" data-seccion="respuestas"><span>Preguntes</span></a>
+    <a href="#glosario" data-seccion="glosario"><span>Glossari</span></a>
+    <a href="#precios" data-seccion="precios"><span>Preus</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../preguntas.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="servicios.html">Serveis</a></li>
+          <li><a href="soc.html">SOC en directe</a></li>
+              <li><a href="proyectos.html">Projectes</a></li>
+          <li><a href="futuro.html">Futur</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo revelar" id="titulo-pagina">Preguntes i preus</h1>
+        <p class="pagina__intro">El que ens pregunten abans de contractar, agrupat per temes. Al final hi ha un glossari per a les paraules rares i uns preus orientatius.</p>
+        <p class="det-aviso">KAIRON és una empresa fictícia creada per a una pràctica de classe. Les respostes descriuen com es prestaria el servei.</p>
+      </div>
+    </section>
+
+    <!-- ===== PREGUNTAS POR TEMAS: índice a la izquierda y respuestas desplegables (details/summary) ===== -->
+    <section class="det-seccion det-seccion--borde" id="respuestas" aria-label="Preguntes freqüents per temes">
+      <div class="contenedor det-faq">
+
+        <nav class="det-indice" aria-labelledby="titulo-indice">
+          <h2 id="titulo-indice">En aquesta pàgina</h2>
+          <ol>
+            <li><a href="#servicio">Servei</a></li>
+            <li><a href="#instalacion">Instal·lació i privadesa</a></li>
+            <li><a href="#incidentes">Incidents i proves</a></li>
+            <li><a href="#contrato">Preu i contracte</a></li>
+            <li><a href="#esta-web">Aquest web</a></li>
+            <li><a href="#glosario">Glossari</a></li>
+            <li><a href="#precios">Preus orientatius</a></li>
+          </ol>
+        </nav>
+
+        <div>
+          <!-- Tema 1 -->
+          <section class="det-grupo" id="servicio" aria-labelledby="titulo-servicio">
+            <h2 class="det-h2" id="titulo-servicio">Servei</h2>
+            <details class="faq__item" open>
+              <summary>Què és un SOC i per què el necessita una pime?</summary>
+              <p>Un SOC és un centre d'operacions de seguretat: persones i eines que vigilen els teus sistemes i responen si passa alguna cosa. La majoria dels atacs a pimes entren per un correu o una contrasenya feble i, si ningú vigila, es descobreixen setmanes després.</p>
+              <p>Muntar-ne un de propi exigeix diverses persones i torns. Un SOC gestionat et dona el mateix com a servei, per una quota mensual.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Què fa KAIRON exactament?</summary>
+              <p>Tres coses: detectar els atacs aviat, respondre per frenar el dany i deixar-ho tot demostrat en un informe. A més, auditories per tancar portes i formació per a la plantilla. <a href="servicios.html">Mira els serveis un per un</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Substituïu el meu informàtic o el meu antivirus?</summary>
+              <p>No. El teu informàtic continua portant el dia a dia i l'antivirus continua al seu lloc. Nosaltres afegim el que falta: algú mirant què passa a tots els equips alhora i sabent què fer quan alguna cosa no quadra.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Vigileu també de nit i en festius?</summary>
+              <p>Depèn del pla. Guàrdia i Custòdia vigilen les 24 hores tots els dies. Vigia cobreix els dies laborables de 8 a 20 h; fora d'aquest horari les alertes es guarden i es revisen a primera hora.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Per a quina mida d'empresa està pensat?</summary>
+              <p>Per a pimes d'entre 10 i 250 equips que no tenen un equip de seguretat propi.</p>
+            </details>
+          </section>
+
+          <!-- Tema 2 -->
+          <section class="det-grupo" id="instalacion" aria-labelledby="titulo-instalacion">
+            <h2 class="det-h2" id="titulo-instalacion">Instal·lació i privadesa</h2>
+            <details class="faq__item">
+              <summary>He d'instal·lar alguna cosa?</summary>
+              <p>Un agent a cada ordinador i servidor, amb Windows o Linux. És un programa petit que envia l'activitat de l'equip al SOC. L'instal·lem nosaltres, sense reiniciar i sense interrompre la feina.</p>
+            </details>
+            <details class="faq__item">
+              <summary>L'agent llegeix els meus documents o els meus correus?</summary>
+              <p>No. Envia registres d'activitat: quins programes s'obren, qui inicia sessió, quines connexions es fan i si canvia un arxiu del sistema. No envia el contingut dels teus documents ni dels teus correus.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Anirà més lent l'ordinador?</summary>
+              <p>En un equip d'oficina normal no es nota. L'agent treballa en segon pla i fa servir molt poca memòria.</p>
+            </details>
+            <details class="faq__item">
+              <summary>On es guarden els registres i durant quant de temps?</summary>
+              <p>En servidors dins de la Unió Europea, durant 90 dies. Abans de començar se signa un contracte d'encarregat del tractament, que és el document que exigeix el RGPD (la llei europea de protecció de dades) quan un proveïdor maneja dades per compte teu.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Quant triga a estar funcionant?</summary>
+              <p>Unes dues setmanes des de la primera reunió: la vigilància està activa el novè dia laborable. <a href="metodo.html#calendario">Mira el calendari del primer mes</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>I els portàtils de qui teletreballa? I els mòbils?</summary>
+              <p>Un portàtil continua vigilat estigui on estigui, sempre que tingui internet. Els mòbils no entren en el servei per ara.</p>
+            </details>
+          </section>
+
+          <!-- Tema 3 -->
+          <section class="det-grupo" id="incidentes" aria-labelledby="titulo-incidentes">
+            <h2 class="det-h2" id="titulo-incidentes">Incidents i proves</h2>
+            <details class="faq__item">
+              <summary>Què passa quan detecteu un atac?</summary>
+              <p>Primer el contenim: s'aïlla l'equip afectat i es bloqueja l'adreça de l'atacant. Després recollim les proves i et truquem. Aquell mateix dia rebràs un informe en llenguatge clar. <a href="incidente.html">Mira un incident minut a minut</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Em trucareu per cada alerta?</summary>
+              <p>No. La majoria de les alertes són soroll, i descartar-lo és feina nostra. Et truquem quan hi ha alguna cosa real que t'afecta o quan necessitem que decideixis alguna cosa.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Podeu garantir que no m'atacaran?</summary>
+              <p>No, i ningú no ho pot fer amb honestedat. El que sí que es pot és veure l'atac aviat, frenar-lo abans que s'estengui i deixar constància del que ha passat.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Les proves serveixen davant d'una auditoria o d'una denúncia?</summary>
+              <p>Es recullen pensant en això. Cada evidència porta hora UTC, número de cas i empremta SHA-256, de manera que qualsevol pot comprovar que no s'ha alterat. Si el cas arriba a un jutjat, qui en decideix el valor és el jutge. <a href="incidente.html#custodia">Així és una fitxa d'evidència</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>I si l'atac ja ha passat i encara no sóc client?</summary>
+              <p>Podem intervenir de manera puntual per contenir, recollir proves i fer l'informe. Aquesta feina es pressuposta a part, per hores.</p>
+            </details>
+            <details class="faq__item">
+              <summary>He d'avisar l'Agència de Protecció de Dades?</summary>
+              <p>Si l'incident afecta dades personals i suposa un risc per a aquestes persones, el RGPD dona 72 hores per avisar. La decisió i l'avís són de la teva empresa. Nosaltres et donem les dades tècniques que demanen: què va passar, quan i quina informació es va poder veure afectada.</p>
+            </details>
+          </section>
+
+          <!-- Tema 4 -->
+          <section class="det-grupo" id="contrato" aria-labelledby="titulo-contrato">
+            <h2 class="det-h2" id="titulo-contrato">Preu i contracte</h2>
+            <details class="faq__item">
+              <summary>Quant costa?</summary>
+              <p>Un preu fix per equip i mes, segons el pla. Amb 60 equips i el pla intermedi serien 960 € al mes. <a href="#precios">Mira els preus orientatius</a>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Què compta com a «equip»?</summary>
+              <p>Cada ordinador o servidor que du l'agent instal·lat. Els mòbils, les impressores i les pantalles no compten.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Hi ha permanència?</summary>
+              <p>No. Es paga mes a mes i et pots donar de baixa avisant amb 30 dies.</p>
+            </details>
+            <details class="faq__item">
+              <summary>L'auditoria inicial és gratuïta de debò?</summary>
+              <p>Sí, i sense compromís. Et quedes l'informe encara que no contractis.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Hi ha costos a part?</summary>
+              <p>L'alta i la instal·lació estan incloses. L'únic que es pressuposta a part és la feina sobre incidents anteriors al contracte i, al pla Vigia, la recollida de proves.</p>
+            </details>
+            <details class="faq__item">
+              <summary>I si contracto més gent o redueixo plantilla?</summary>
+              <p>La quota s'ajusta al nombre d'equips del mes següent, amunt o avall.</p>
+            </details>
+          </section>
+
+          <!-- Tema 5 -->
+          <section class="det-grupo" id="esta-web" aria-labelledby="titulo-web">
+            <h2 class="det-h2" id="titulo-web">Aquest web</h2>
+            <details class="faq__item">
+              <summary>KAIRON existeix?</summary>
+              <p>No. És una empresa fictícia creada per la Lorena i el Dani per a una pràctica d'Aplicacions Web i el seu treball de final de curs, al cicle de Sistemes Microinformàtics i Xarxes de Digitech Barcelona. Les dades de les demostracions són simulades, i els testimonis, els casos i els preus són exemples.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Està protegit aquest web?</summary>
+              <p>Sí, prediquem amb l'exemple. Té una política de seguretat de contingut (CSP) que només permet carregar recursos d'aquest lloc, no fa servir scripts en línia, limita la informació que s'envia en sortir cap a un altre web i obre els enllaços externs amb <code>rel="noopener"</code>.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Feu servir galetes o em rastrejeu?</summary>
+              <p>No hi ha galetes, ni analítica, ni rastrejadors. Al teu navegador només es guarden les teves preferències (menys moviment, mode presentació i si ja has vist la introducció) i una còpia de les pàgines perquè el web funcioni sense connexió.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Què passa amb el que escric al formulari de contacte?</summary>
+              <p>Res: és una demostració. El formulari comprova els camps i té un camp trampa contra el correu brossa, però no envia ni guarda el que escrius.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Amb què està fet?</summary>
+              <p>Amb HTML5, CSS3 i JavaScript, sense frameworks. Les animacions fan servir GSAP, Three.js i Lenis, desades al mateix lloc per no dependre de servidors aliens.</p>
+            </details>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GLOSARIO (sección clara, de lectura) ===== -->
+    <section class="det-seccion claro" id="glosario" aria-labelledby="titulo-glosario">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-glosario">Glossari sense argot</h2>
+        <p class="det-entrada">Les paraules que apareixen en aquest web i en els nostres informes, explicades com les hi explicaríem a algú que no és informàtic.</p>
+        <dl class="det-glosario">
+          <div><dt>Agent</dt><dd>Programa petit instal·lat a cada equip que envia la seva activitat al SOC.</dd></div>
+          <div><dt>Cadena de custòdia</dt><dd>Registre de qui ha tingut cada prova, quan i què n'ha fet, per poder demostrar que no s'ha manipulat.</dd></div>
+          <div><dt>Contenció</dt><dd>Frenar un atac perquè no s'estengui: aïllar l'equip afectat o bloquejar una adreça.</dd></div>
+          <div><dt>Tallafoc</dt><dd>Filtre entre la teva xarxa i internet que decideix quines connexions passen. En anglès, firewall.</dd></div>
+          <div><dt>Fals positiu</dt><dd>Alerta que salta per alguna cosa que al final no era un atac.</dd></div>
+          <div><dt>Forense</dt><dd>Recollir i estudiar les proves d'un incident sense alterar-les, per saber què va passar.</dd></div>
+          <div><dt>Hardening</dt><dd>Enduriment d'un sistema: treure el que sobra i configurar bé la resta perquè sigui més difícil d'atacar.</dd></div>
+          <div><dt>Empremta SHA-256</dt><dd>Càlcul que converteix un arxiu en 64 caràcters. Si l'arxiu canvia, encara que sigui una lletra, l'empremta surt diferent. També s'anomena hash.</dd></div>
+          <div><dt>Programari maliciós</dt><dd>Qualsevol programa fet per fer mal: robar dades, espiar o bloquejar equips. En anglès, malware.</dd></div>
+          <div><dt>Phishing</dt><dd>Missatge que es fa passar per algú de confiança perquè obris un arxiu, cliquis un enllaç o donis una contrasenya.</dd></div>
+          <div><dt>Ransomware</dt><dd>Programari maliciós que xifra els teus arxius i demana un rescat per tornar-te'ls.</dd></div>
+          <div><dt>RGPD</dt><dd>Reglament General de Protecció de Dades, la llei europea que regula com es tracten les dades personals.</dd></div>
+          <div><dt>SIEM</dt><dd>Sistema que reuneix els registres de tots els equips en un sol lloc i hi busca senyals d'atac.</dd></div>
+          <div><dt>SOC</dt><dd>Centre d'operacions de seguretat: les persones i eines que vigilen i responen.</dd></div>
+          <div><dt>UTC</dt><dd>Hora universal, sense canvis d'horari d'estiu ni fusos. S'utilitza perquè tots els registres comparteixin el mateix rellotge.</dd></div>
+          <div><dt>Wazuh</dt><dd>El SIEM de codi obert que fa servir KAIRON per vigilar els equips.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== PRECIOS ORIENTATIVOS: tabla comparativa + calculadora (la activa js/detalle.js) ===== -->
+    <section class="det-seccion" id="precios" aria-labelledby="titulo-precios">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-precios">Preus orientatius</h2>
+        <p class="det-entrada">Un preu per equip i mes. Saps què pagaràs abans de començar i no canvia si hi ha un incident.</p>
+        <p class="det-ficticio">Preus d'exemple · empresa fictícia (pràctica de classe)</p>
+
+        <!-- Sin JavaScript la calculadora no aparece y la tabla muestra el ejemplo de 60 equipos -->
+        <div class="det-calc" hidden>
+          <label for="equipos">Quants equips té la teva empresa?</label>
+          <div class="det-calc__fila">
+            <input type="range" id="equipos" min="10" max="250" step="5" value="60">
+            <output for="equipos">60</output>
+          </div>
+        </div>
+
+        <table class="det-planes">
+          <caption>Comparació dels tres plans de KAIRON (preus d'exemple)</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="det-planes__para">Què inclou</span></th>
+              <th scope="col"><span class="det-planes__nombre">Vigia</span><span class="det-planes__precio">9 €</span><span class="det-planes__unidad">per equip i mes</span><span class="det-planes__para">Vigilància en horari d'oficina</span></th>
+              <th scope="col" class="det-planes__sugerido"><span class="det-planes__nombre">Guàrdia</span><span class="det-planes__precio">16 €</span><span class="det-planes__unidad">per equip i mes</span><span class="det-planes__para">Vigilància i resposta a qualsevol hora</span></th>
+              <th scope="col"><span class="det-planes__nombre">Custòdia</span><span class="det-planes__precio">24 €</span><span class="det-planes__unidad">per equip i mes</span><span class="det-planes__para">L'anterior, més prevenció i compliment</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Vigilància</th>
+              <td data-plan="Vigia">Dies laborables, de 8 a 20 h</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">24 hores, tots els dies</td>
+              <td data-plan="Custòdia">24 hores, tots els dies</td>
+            </tr>
+            <tr>
+              <th scope="row">Si hi ha un atac</th>
+              <td data-plan="Vigia">Avís per telèfon i correu</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Contenció en minuts i trucada</td>
+              <td data-plan="Custòdia">Contenció en minuts i trucada</td>
+            </tr>
+            <tr>
+              <th scope="row">Proves amb cadena de custòdia</th>
+              <td data-plan="Vigia" class="det-planes__no">A part, per hores</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Incloses</td>
+              <td data-plan="Custòdia">Incloses</td>
+            </tr>
+            <tr>
+              <th scope="row">Informes</th>
+              <td data-plan="Vigia">Resum mensual</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Informe de cada incident i resum mensual</td>
+              <td data-plan="Custòdia">El mateix, més una reunió cada trimestre</td>
+            </tr>
+            <tr>
+              <th scope="row">Auditoria i hardening</th>
+              <td data-plan="Vigia">Auditoria inicial</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Auditoria inicial</td>
+              <td data-plan="Custòdia">Auditoria cada any i correcció del que aparegui</td>
+            </tr>
+            <tr>
+              <th scope="row">Formació de la plantilla</th>
+              <td data-plan="Vigia" class="det-planes__no">No inclosa</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Una sessió l'any</td>
+              <td data-plan="Custòdia">Dues sessions l'any i simulacres de phishing</td>
+            </tr>
+            <tr>
+              <th scope="row">Suport amb el RGPD</th>
+              <td data-plan="Vigia" class="det-planes__no">No inclòs</td>
+              <td data-plan="Guàrdia" class="det-planes__sugerido">Dades tècniques per a l'avís</td>
+              <td data-plan="Custòdia">Acompanyament en tot el procés</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total al mes amb <span class="det-planes__equipos">60</span> equips</th>
+              <td data-plan="Vigia" data-precio="9">540 €</td>
+              <td data-plan="Guàrdia" data-precio="16" class="det-planes__sugerido">960 €</td>
+              <td data-plan="Custòdia" data-precio="24">1.440 €</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="det-prosa det-planes__nota">Preus sense IVA. Mínim de 10 equips. L'alta, la instal·lació i l'auditoria inicial estan incloses en els tres plans. Sense permanència. La ratlla daurada marca el pla pensat per a una empresa com la de la Marta, amb 60 equips.</p>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">La teva pregunta no és aquí?</h2>
+            <p class="det-prosa">Demana l'auditoria gratuïta i pregunta'ns el que vulguis a la primera reunió. Et responem sense tecnicismes.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a>
+            <a href="servicios.html" class="boton"><span class="boton__texto" data-texto="Veure els serveis">Veure els serveis</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo" id="titulo-rel">Segueix llegint</h2>
+          <ul class="det-rel__lista">
+            <li><a href="metodo.html"><b>El mètode, pas a pas</b><span>Què fem, què et demanem i quant triga cada pas.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="incidente.html"><b>Anatomia d'un incident</b><span>Un atac aturat a temps, minut a minut.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="kairos.html"><b>La idea</b><span>Per què KAIRON es diu així i què significa el seu emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="soc.html"><b>El SOC en directe</b><span>Una demostració amb dades simulades del que veiem cada dia.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="../img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operatiu</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="../antonia-lorena-cracana/ca/">Portfolio d'Antonia Lorena Cracana</a> · <a href="../joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="../js/vendor/gsap.min.js?v=20261112a" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112a" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112a" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112a" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112a" defer></script>
+  <script src="../js/intro.js?v=20261112a" defer></script>
+  <script src="../js/escena.js?v=20261112a" defer></script>
+  <script src="../js/visuales.js?v=20261112a" defer></script>
+  <script src="../js/polvo.js?v=20261112a" defer></script>
+  <script src="../js/main.js?v=20261112a" defer></script>
+  <!-- Comportamiento propio de las páginas de detalle (línea de tiempo, calculadora, huella) -->
+  <script src="../js/detalle.js?v=20261112a" defer></script>
+</body>
+</html>
