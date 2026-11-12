@@ -439,3 +439,15 @@ dialog { color-scheme: light; }
 .telon body::before { content: ""; position: fixed; inset: 0; z-index: 99; background: var(--negro); animation: telon-fuera 0.4s 4s forwards; }
 @keyframes telon-fuera { to { opacity: 0; visibility: hidden; } }
 @media print { .telon body::before { display: none; } }
+
+/* ---------- Fundido de fondo entre escenas ----------
+   Cada escena tiene su color (--fondo), pero no se pinta en la propia sección: una capa fija detrás de todo
+   mezcla el color de la escena que se va con el de la que llega a medida que se baja (portfolio.js,
+   «Fundido»). Así el paso noche → papel → rojo es un fundido de cine y no un corte brusco. */
+.fondo-cine { position: fixed; inset: 0; z-index: -1; background: var(--noche); pointer-events: none; }
+.fundido .escena, .fundido .creditos { background-color: transparent; }
+.fundido .portada__plano { background: radial-gradient(ellipse 60% 70% at 78% 46%, rgba(255, 106, 82, 0.1), transparent 70%); }
+.fundido .pruebas { background: radial-gradient(ellipse 75% 70% at 62% 62%, rgba(59, 44, 24, 0.85) 0, rgba(59, 44, 24, 0) 72%); }
+.fundido.luces .pruebas { background: none; }
+.creditos { --fondo: var(--negro); }
+@media print { .fondo-cine { display: none; } }

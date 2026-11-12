@@ -882,3 +882,64 @@ Promise.race([
   medirPelicula();
   raiz.classList.remove("telon"); // los títulos ya tapan la pantalla, o no tocaban
 });
+
+/* ---------- Fundido de fondo entre escenas ----------
+   Una capa fija pinta el fondo. Cuando el borde superior de una escena entra por abajo (85 % de la
+   pantalla) empieza a mezclarse su color con el de la anterior, y termina cuando ese borde llega al 25 %.
+   Funciona con y sin rodaje (también con «Menos movimiento», porque no es movimiento sino color), y
+   relee los colores al encender o apagar las luces. */
+(() => {
+  const escenas = [...document.querySelectorAll("main .escena, .creditos")];
+  if (escenas.length < 2) return;
+  const capa = document.createElement("div");
+  capa.className = "fondo-cine";
+  capa.setAttribute("aria-hidden", "true");
+  document.body.prepend(capa);
+  raiz.classList.add("fundido");
+
+  const aRgb = (c) => {
+    c = c.trim();
+    if (c[0] === "#") {
+      if (c.length === 4) c = "#" + c[1] + c[1] + c[2] + c[2] + c[3] + c[3];
+      return [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+    }
+    const n = c.match(/[\d.]+/g);
+    return n ? n.slice(0, 3).map(Number) : [11, 10, 9];
+  };
+  let colores = [];
+  const leerColores = () => { colores = escenas.map((e) => aRgb(getComputedStyle(e).getPropertyValue("--fondo"))); };
+  const suave = (t) => t * t * (3 - 2 * t);
+
+  let pendiente = false;
+  function pintar() {
+    pendiente = false;
+    const alto = innerHeight;
+    let [r, g, b] = colores[0];
+    const velo = escenas.map(() => 1);
+    for (let i = 1; i < escenas.length; i++) {
+      const arriba = escenas[i].getBoundingClientRect().top;
+      const p = Math.min(1, Math.max(0, (alto * 0.85 - arriba) / (alto * 0.6)));
+      if (p <= 0) break;
+      const k = suave(p), c = colores[i];
+      r += (c[0] - r) * k; g += (c[1] - g) * k; b += (c[2] - b) * k;
+      // Fundido encadenado: lo que queda arriba de la escena que se va se desvanece con su fondo,
+      // para que su texto claro no quede a medias sobre el papel (o al revés)
+      velo[i - 1] = 1 - 0.9 * k;
+    }
+    escenas.forEach((e, i) => {
+      // filter (no opacity) para no pisar las opacidades que anima GSAP; se quita del todo si no hace falta,
+      // porque un filter convierte la sección en contenedor de los elementos fijados
+      const fijado = e.style.position === "fixed" || e.querySelector('[style*="position: fixed"]');
+      const valor = velo[i] < 0.995 && !fijado ? `opacity(${velo[i].toFixed(3)})` : "";
+      if (e.style.filter !== valor) e.style.filter = valor;
+    });
+    capa.style.backgroundColor = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+  }
+  const pedir = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(pintar); } };
+
+  leerColores();
+  pintar();
+  addEventListener("scroll", pedir, { passive: true });
+  addEventListener("resize", pedir);
+  new MutationObserver(() => { leerColores(); pedir(); }).observe(raiz, { attributes: true, attributeFilter: ["class"] });
+})();
