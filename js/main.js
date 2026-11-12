@@ -868,7 +868,12 @@ function comprobarCabeceraClara() {
   if (!cabeceraEl || !secundariasClaras.length) return;
   const y = 40;
   let clara = false;
-  secundariasClaras.forEach((s) => { const r = s.getBoundingClientRect(); if (r.top <= y && r.bottom >= y) clara = true; });
+  if (document.documentElement.classList.contains("v6-amanecer")) {
+    // Portada: el fondo claro es un fundido (js/v6.js); la cabecera cambia cuando ya es más de día que de noche
+    clara = document.documentElement.classList.contains("v6-de-dia");
+  } else {
+    secundariasClaras.forEach((s) => { const r = s.getBoundingClientRect(); if (r.top <= y && r.bottom >= y) clara = true; });
+  }
   cabeceraEl.classList.toggle("cabecera--clara", clara);
 }
 window.addEventListener("scroll", comprobarCabeceraClara, { passive: true });

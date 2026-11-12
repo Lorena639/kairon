@@ -7290,6 +7290,42 @@ body.simulando .v6-cielo::after {
   }
 }
 
+/* ---------- 14. Amanecer: fundido entre el espacio y las secciones claras (js/v6.js) ----------
+   Las secciones claras de la portada dejan de pintar su marfil: lo pinta una capa fija entre el globo
+   y el contenido, cuya opacidad sube al entrar y baja al salir. Así no hay borde duro ni salto de color. */
+.v6-luz {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 70% 30%, rgba(212, 175, 122, 0.16), transparent 70%),
+    var(--blanco);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.v6-amanecer .claro {
+  background: transparent;
+}
+
+/* El pie entra desde la oscuridad, no como un bloque negro con borde */
+.portada-v6 .pie::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 40vh;
+  background: linear-gradient(to bottom, transparent, var(--negro));
+  pointer-events: none;
+}
+
+@media print {
+  .v6-luz {
+    display: none;
+  }
+}
+
 /* ---------- 34. Páginas interiores v6 (12-11-2026) ----------
    Lleva a las páginas interiores el lenguaje de la portada v6. El movimiento lo dirige js/paginas.js.
    - Todo se ve completo sin JavaScript: los estados de partida los pone GSAP al animar, o van bajo

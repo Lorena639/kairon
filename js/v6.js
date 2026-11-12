@@ -211,13 +211,7 @@
 
   /* --- Entradas de sección con recorte: cada una el suyo --- */
   function recortes() {
-    // Secciones claras: se abren como una hoja que sube y pierde las esquinas redondeadas
-    $$(".v6-cortina").forEach((s) => {
-      gsap.fromTo(s, { clipPath: "inset(10% 7% 0% 7% round 64px)" }, {
-        clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none",
-        scrollTrigger: { trigger: s, start: "top bottom", end: "top 35%", scrub: true },
-      });
-    });
+    // Las secciones claras ya no entran como una hoja recortada: amanecen con un fundido (ver «Amanecer»)
     // Panel del SOC: se descubre de arriba abajo, como un barrido
     const panel = $(".v6-panel");
     if (panel) {
@@ -472,5 +466,59 @@
       if (window.kaironEscena) window.kaironEscena.impacto();
       if (window.kaironPing) window.kaironPing(220, 0.6, 0.05);
     });
+  }
+  /* ---------- Amanecer: fundido entre el espacio oscuro y las secciones claras ----------
+     Antes, el método y los testimonios entraban como una hoja marfil de bordes duros sobre el radar y
+     el cambio de fondo era brusco. Ahora sus secciones son transparentes y una capa marfil fija, entre
+     el globo y el contenido, sube y baja de opacidad con el scroll: amanece al entrar y anochece al
+     salir. Lo que queda en pantalla de la sección vecina se desvanece a la vez (fundido encadenado),
+     para que nunca haya texto claro sobre marfil ni oscuro sobre negro a medias. Es color, no
+     movimiento: funciona también con «menos movimiento». */
+  const claras = $$("main .claro");
+  const mundoCapa = $(".mundo");
+  if (claras.length && mundoCapa) {
+    html.classList.add("v6-amanecer");
+    const luz = document.createElement("div");
+    luz.className = "v6-luz";
+    luz.setAttribute("aria-hidden", "true");
+    mundoCapa.after(luz);
+    const suave = (t) => t * t * (3 - 2 * t);
+    const tramo = (v, alto) => Math.min(1, Math.max(0, (alto * 0.85 - v) / (alto * 0.6)));
+    const velar = (el, o) => {
+      const fijado = el.style.position === "fixed" || el.querySelector('[style*="position: fixed"]');
+      const valor = o < 0.995 && !fijado ? "opacity(" + o.toFixed(3) + ")" : "";
+      if (el.style.filter !== valor) el.style.filter = valor;
+    };
+    let pendiente = false;
+    const pintar = () => {
+      pendiente = false;
+      const alto = window.innerHeight;
+      let total = 0;
+      const velos = new Map();
+      const poner = (el, o) => { if (el) velos.set(el, Math.min(velos.has(el) ? velos.get(el) : 1, o)); };
+      claras.forEach((s) => {
+        const r = s.getBoundingClientRect();
+        const entra = suave(tramo(r.top, alto));
+        const sale = suave(tramo(r.bottom, alto));
+        const nivel = entra * (1 - sale);
+        total = Math.max(total, nivel);
+        // Al amanecer se desvanece lo que queda de la sección anterior; al anochecer, la clara se
+        // apaga y la siguiente aparece con la oscuridad
+        poner(s.previousElementSibling, sale > 0 ? 1 : 1 - 0.9 * entra);
+        poner(s, 0.1 + 0.9 * nivel);
+        poner(s.nextElementSibling, 1 - 0.9 * nivel * (sale > 0 ? 1 : 0));
+      });
+      luz.style.opacity = total.toFixed(3);
+      const dia = total > 0.5;
+      if (dia !== html.classList.contains("v6-de-dia")) {
+        html.classList.toggle("v6-de-dia", dia);
+        window.dispatchEvent(new Event("scroll")); // la cabecera (main.js) se recalcula con el nuevo estado
+      }
+      velos.forEach((o, el) => velar(el, o));
+    };
+    const pedir = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(pintar); } };
+    window.addEventListener("scroll", pedir, { passive: true });
+    window.addEventListener("resize", pedir);
+    pintar();
   }
 })();
