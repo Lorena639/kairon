@@ -95,20 +95,46 @@
     huella.hidden = false;
   }
 
-  /* ---------- 5. Preguntas: calculadora de precio por número de equipos ---------- */
+  /* ---------- 5. Preguntas: calculadora de plan según el número de equipos ----------
+     Planes del capítulo 2 del proyecto (tabla 6). Se recomienda el plan más pequeño en el que caben los equipos.
+     Égida: 590 € con 25 equipos incluidos y 12 € por cada equipo adicional, hasta 100.
+     Los textos (IVA, "por equipo"...) vienen de atributos data-* del HTML, así sirve igual en castellano y en catalán. */
   var calc = document.querySelector(".det-calc");
   if (calc) {
+    var PLANES = [
+      { id: "vigia", hasta: 2, precio: 9.9 },
+      { id: "centinela", hasta: 5, precio: 24.9 },
+      { id: "guardian", hasta: 10, precio: 64.9 },
+      { id: "egida", hasta: 100, precio: 590, incluidos: 25, extra: 12 }
+    ];
     var rango = calc.querySelector("input");
     var cuenta = calc.querySelector("output");
-    var totales = document.querySelectorAll("[data-precio]");
-    var etiqueta = document.querySelector(".det-planes__equipos");
-    // Separador de miles a mano: "es-ES" no agrupa los números de cuatro cifras
-    var euros = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " €"; };
+    var resNombre = calc.querySelector(".det-calc__resultado b");
+    var resTexto = calc.querySelector(".det-calc__resultado span");
+    var celdas = document.querySelectorAll(".det-planes [data-col]");
+    var txt = calc.dataset;
+    // 9.9 -> "9,90 €" · 1010 -> "1.010 €" (separadores a mano: "es-ES" no agrupa los números de cuatro cifras)
+    var dinero = function (n) {
+      var partes = n.toFixed(2).split(".");
+      return partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (partes[1] === "00" ? "" : "," + partes[1]) + " €";
+    };
     var recalcular = function () {
-      var n = parseInt(rango.value, 10) || 0;
-      cuenta.textContent = n;
-      if (etiqueta) etiqueta.textContent = n;
-      totales.forEach(function (t) { t.textContent = euros(n * parseInt(t.dataset.precio, 10)); });
+      var n = parseInt(rango.value, 10) || 1;
+      var plan = PLANES[PLANES.length - 1];
+      for (var i = 0; i < PLANES.length; i++) { if (n <= PLANES[i].hasta) { plan = PLANES[i]; break; } }
+      var cabecera = document.querySelector('.det-planes thead [data-col="' + plan.id + '"] .det-planes__nombre');
+      resNombre.textContent = cabecera ? cabecera.textContent : "";
+      if (n > 100) {
+        cuenta.textContent = txt.mas;
+        resTexto.textContent = txt.hablemos;
+      } else {
+        var total = plan.precio + (plan.extra ? Math.max(0, n - plan.incluidos) * plan.extra : 0);
+        cuenta.textContent = n;
+        resTexto.textContent = dinero(total) + " " + (plan.extra ? txt.masIva : txt.ivaIncl) +
+          (plan.extra && n > plan.incluidos ? " (" + dinero(total / n) + " " + txt.porEquipo + ")" : "");
+      }
+      // La columna del plan recomendado se marca en la tabla
+      celdas.forEach(function (c) { c.classList.toggle("det-planes__sugerido", c.dataset.col === plan.id); });
     };
     rango.addEventListener("input", recalcular);
     recalcular();

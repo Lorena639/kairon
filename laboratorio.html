@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="El laboratorio del proyecto KAIRON por dentro: arquitectura en cinco capas, mapa de red, flujo de la demo, puertos, medidas de seguridad y plan de vuelta atrás.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="KAIRON · El momento justo">
+  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:image" content="img/og-image.jpg">
+  <title>Cómo está montado el laboratorio · KAIRON</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="laboratorio.html">
+  <link rel="alternate" hreflang="ca" href="ca/laboratorio.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "url": "index.html",
+    "logo": "img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguridad y análisis forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desarrollo web y sistemas", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261112a">
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <!-- Capas globales: aurora de fondo, foco del ratón, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
+    </ul>
+    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Atajos para presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un ataque</dd>
+        <dt>↓ / ↑</dt><dd>Siguiente / anterior sección</dd>
+        <dt>Inicio / Fin</dt><dd>Ir arriba / al contacto</dd>
+        <dt>E</dt><dd>Página de equipo</dd>
+        <dt>P</dt><dd>Modo presentación (texto más grande, sin cursor ni efectos)</dd>
+        <dt>?</dt><dd>Mostrar u ocultar esta ayuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Secciones">
+    <a href="#contenido" data-seccion="hero"><span>Inicio</span></a>
+    <a href="#resumen" data-seccion="resumen"><span>En corto</span></a>
+    <a href="#capas" data-seccion="capas"><span>Las capas</span></a>
+    <a href="#red" data-seccion="red"><span>Mapa de red</span></a>
+    <a href="#flujo" data-seccion="flujo"><span>La demo</span></a>
+    <a href="#puertos" data-seccion="puertos"><span>Puertos</span></a>
+    <a href="#seguridad" data-seccion="seguridad"><span>Seguridad</span></a>
+    <a href="#vuelta-atras" data-seccion="vuelta-atras"><span>Vuelta atrás</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferencias de experiencia">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar sonido ambiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reducir movimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="ca/laboratorio.html" lang="ca" hreflang="ca" aria-label="Versión en catalán">CA</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="det">
+
+    <!-- ===== CABECERA DE PÁGINA ===== -->
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
+      <div class="hero__escena pagina__escena" aria-hidden="true"></div>
+      <div class="contenedor">
+        <h1 class="pagina__titulo revelar" id="titulo-pagina">Cómo está montado</h1>
+        <p class="pagina__intro">El laboratorio donde se demuestra KAIRON, por dentro: dos ordenadores, cinco máquinas virtuales y cuatro redes separadas. Para quien tenga curiosidad por lo que hay detrás de la web.</p>
+        <p class="det-aviso">Es el diseño del laboratorio del proyecto de fin de ciclo. Los datos técnicos (Wazuh, pfSense, direcciones y puertos) son los reales del laboratorio; la empresa, los clientes y los precios son ficticios.</p>
+      </div>
+    </section>
+
+    <!-- ===== EN CORTO: viabilidad técnica (sección clara) ===== -->
+    <section class="det-seccion claro" id="resumen" aria-labelledby="titulo-resumen">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-resumen">En corto</h2>
+        <p class="det-entrada">Todo el laboratorio cabe en dos ordenadores de clase y no necesita ninguna licencia de pago. Por eso el plan más barato puede costar 9,90 € al mes.</p>
+        <dl class="det-suma">
+          <div>
+            <dt>0 € en licencias</dt>
+            <dd>Wazuh, pfSense, VirtualBox, Ubuntu, Kali, Python y Git son de código abierto. Windows se usa en versión de evaluación.</dd>
+          </div>
+          <div>
+            <dt>2 ordenadores</dt>
+            <dd>Con 16 GB de memoria y 500 GB de disco cada uno, unidos por un cable de red directo.</dd>
+          </div>
+          <div>
+            <dt>5 máquinas virtuales</dt>
+            <dd>Wazuh, pfSense, Ubuntu Server, Windows y Kali. Un segundo Windows es opcional: con él, el PC-B no puede tener todas encendidas a la vez.</dd>
+          </div>
+          <div>
+            <dt>4 redes separadas</dt>
+            <dd>La salida a internet, la red del cliente simulado, la red del atacante y la red del SOC.</dd>
+          </div>
+        </dl>
+        <p class="det-aviso">Límites asumidos: Wazuh no tiene agente para móviles, no se promete vigilancia humana las 24 horas y la herramienta forense no sustituye a un laboratorio forense completo.</p>
+      </div>
+    </section>
+
+    <!-- ===== ARQUITECTURA POR CAPAS (apartado 2.4.1) ===== -->
+    <section class="det-seccion" id="capas" aria-labelledby="titulo-capas">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-capas">Cinco capas, del equipo al informe</h2>
+        <p class="det-entrada">Cada pieza hace una sola cosa y se entiende con las demás por protocolos estándar.</p>
+        <ol class="det-capas">
+          <li>
+            <h3><span aria-hidden="true">1</span>Equipos</h3>
+            <p class="det-capas__que">Agentes de Wazuh en Ubuntu y Windows, Sysmon y la herramienta forense</p>
+            <p>Generan y envían los registros: quién entra, qué programas se abren, qué archivos cambian. La herramienta forense se ejecuta aquí cuando hay un incidente.</p>
+          </li>
+          <li>
+            <h3><span aria-hidden="true">2</span>Red y perímetro</h3>
+            <p class="det-capas__que">pfSense CE (WAN, LAN, Ataque, SOC), NTP, DNS y WireGuard</p>
+            <p>Separa las redes, filtra el tráfico y pone todos los relojes en hora, que es la base de la hora UTC de las pruebas. También envía su propio registro a Wazuh.</p>
+          </li>
+          <li>
+            <h3><span aria-hidden="true">3</span>Recogida y análisis</h3>
+            <p class="det-capas__que">Wazuh: manager, indexer y dashboard</p>
+            <p>Recibe los eventos, aplica las reglas estándar y las propias, relaciona unos con otros y los guarda. El panel muestra las alertas.</p>
+          </li>
+          <li>
+            <h3><span aria-hidden="true">4</span>Respuesta y forense</h3>
+            <p class="det-capas__que">Respuesta activa de Wazuh y herramienta forense en Python</p>
+            <p>Bloquea el ataque de forma automática y recoge las pruebas con hora UTC, número de caso y SHA-256.</p>
+          </li>
+          <li>
+            <h3><span aria-hidden="true">5</span>Presentación y negocio</h3>
+            <p class="det-capas__que">Informes en JSON y Markdown, esta web y los planes de suscripción</p>
+            <p>Convierte lo técnico en algo que el cliente entiende: un informe, un panel y un servicio que se puede contratar.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== MAPA DE RED (figura 1 del capítulo 2, redibujada). Dos SVG con texto real: uno ancho y otro vertical ===== -->
+    <section class="det-seccion det-seccion--borde" id="red" aria-labelledby="titulo-red">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-red">El mapa de la red</h2>
+        <p class="det-entrada">pfSense, el cortafuegos, está en el centro. Todo lo que va de una red a otra pasa por él, y lo que no está permitido se bloquea y se anota.</p>
+        <figure class="det-red">
+          <!-- Versión ancha (escritorio): los dos PC, pfSense en el centro y las tres redes -->
+          <svg class="det-red__ancha" viewBox="0 0 1000 560" role="img" aria-labelledby="red-a-titulo red-a-desc">
+            <title id="red-a-titulo">Topología de red del laboratorio KAIRON</title>
+            <desc id="red-a-desc">Dos ordenadores unidos por un cable. En el PC-A está Wazuh (192.168.20.10). En el PC-B está el cortafuegos pfSense, que une cuatro redes: la salida a internet por NAT, la red SOC y Gestión 192.168.20.0/24, la LAN corporativa 192.168.10.0/24 con Ubuntu Server (.20), Windows 1 (.31) y Windows 2 opcional (.32), y la red de Ataque 192.168.66.0/24 con Kali Linux (.50).</desc>
+            <rect class="r-pc" x="8" y="84" width="220" height="346"/>
+            <text class="r-pc-nombre" x="20" y="106">PC-A (Lorena) · 16 GB</text>
+            <rect class="r-pc" x="292" y="84" width="700" height="468"/>
+            <text class="r-pc-nombre" x="304" y="106">PC-B (Dani) · 16 GB</text>
+
+            <rect class="r-caja" x="360" y="8" width="180" height="46" rx="6"/>
+            <text class="r-nombre" x="450" y="28" text-anchor="middle">Internet</text>
+            <text class="r-dato" x="450" y="45" text-anchor="middle">solo salida (NAT)</text>
+            <line class="r-nat" x1="450" y1="54" x2="450" y2="190"/>
+            <text class="r-dato" x="460" y="150">WAN</text>
+
+            <line class="r-cable" x1="206" y1="262" x2="350" y2="262"/>
+            <rect class="r-fondo" x="210" y="194" width="136" height="60"/>
+            <text class="r-oro" x="278" y="212" text-anchor="middle">SOC / Gestión</text>
+            <text class="r-dato r-oro" x="278" y="229" text-anchor="middle">192.168.20.0/24</text>
+            <text class="r-dato r-oro" x="278" y="246" text-anchor="middle">cable directo</text>
+
+            <rect class="r-caja" x="22" y="190" width="184" height="124" rx="6"/>
+            <text class="r-nombre" x="114" y="218" text-anchor="middle">Wazuh todo en uno</text>
+            <text class="r-dato" x="114" y="246" text-anchor="middle">192.168.20.10</text>
+            <text class="r-dato" x="114" y="266" text-anchor="middle">panel 443 · API 55000</text>
+            <text class="r-dato" x="114" y="392" text-anchor="middle">admin: 192.168.20.2</text>
+
+            <rect class="r-caja r-caja--oro" x="350" y="190" width="200" height="150" rx="6"/>
+            <text class="r-nombre r-oro" x="450" y="218" text-anchor="middle">pfSense CE</text>
+            <text class="r-dato" x="450" y="248" text-anchor="middle">WAN 10.0.2.15 (NAT)</text>
+            <text class="r-dato" x="450" y="268" text-anchor="middle">SOC 192.168.20.1</text>
+            <text class="r-dato" x="450" y="288" text-anchor="middle">LAN 192.168.10.1</text>
+            <text class="r-dato" x="450" y="308" text-anchor="middle">ATK 192.168.66.1</text>
+
+            <line class="r-lan" x1="550" y1="240" x2="600" y2="240"/>
+            <text class="r-dato r-cian" x="575" y="230" text-anchor="middle">LAN</text>
+            <rect class="r-zona-lan" x="600" y="130" width="384" height="250" rx="6"/>
+            <text class="r-cian" x="612" y="154">LAN corporativa · 192.168.10.0/24</text>
+            <rect class="r-caja" x="610" y="172" width="116" height="112" rx="6"/>
+            <text class="r-nombre" x="668" y="198" text-anchor="middle">Ubuntu Server</text>
+            <text class="r-dato" x="668" y="222" text-anchor="middle">192.168.10.20</text>
+            <text class="r-dato" x="668" y="244" text-anchor="middle">SSH 22</text>
+            <text class="r-dato" x="668" y="262" text-anchor="middle">web 80/443</text>
+            <rect class="r-caja" x="734" y="172" width="116" height="112" rx="6"/>
+            <text class="r-nombre" x="792" y="198" text-anchor="middle">Windows 1</text>
+            <text class="r-dato" x="792" y="222" text-anchor="middle">192.168.10.31</text>
+            <text class="r-dato" x="792" y="244" text-anchor="middle">RDP 3389</text>
+            <text class="r-dato" x="792" y="262" text-anchor="middle">agente + Sysmon</text>
+            <rect class="r-caja" x="858" y="172" width="116" height="112" rx="6"/>
+            <text class="r-nombre" x="916" y="198" text-anchor="middle">Windows 2</text>
+            <text class="r-dato" x="916" y="222" text-anchor="middle">192.168.10.32</text>
+            <text class="r-dato" x="916" y="244" text-anchor="middle">(opcional)</text>
+            <text class="r-dato r-cian" x="792" y="328" text-anchor="middle">Agentes → Wazuh: 1514 / 1515 TCP</text>
+            <text class="r-dato r-cian" x="792" y="348" text-anchor="middle">(a través de pfSense)</text>
+
+            <line class="r-atk" x1="450" y1="340" x2="450" y2="400"/>
+            <text class="r-dato r-rojo" x="462" y="376">ATK</text>
+            <rect class="r-zona-atk" x="330" y="400" width="240" height="132" rx="6"/>
+            <text class="r-rojo" x="342" y="424">Ataque · 192.168.66.0/24</text>
+            <rect class="r-caja r-caja--rojo" x="370" y="440" width="160" height="74" rx="6"/>
+            <text class="r-nombre" x="450" y="468" text-anchor="middle">Kali Linux</text>
+            <text class="r-dato" x="450" y="492" text-anchor="middle">192.168.66.50</text>
+          </svg>
+          <!-- Versión vertical (móvil y tableta): los mismos datos, apilados para que el texto se lea -->
+          <svg class="det-red__movil" viewBox="0 0 360 880" role="img" aria-labelledby="red-m-titulo red-m-desc">
+            <title id="red-m-titulo">Topología de red del laboratorio KAIRON</title>
+            <desc id="red-m-desc">Dos ordenadores unidos por un cable. En el PC-A está Wazuh (192.168.20.10). En el PC-B está el cortafuegos pfSense, que une cuatro redes: la salida a internet por NAT, la red SOC y Gestión 192.168.20.0/24, la LAN corporativa 192.168.10.0/24 con Ubuntu Server (.20), Windows 1 (.31) y Windows 2 opcional (.32), y la red de Ataque 192.168.66.0/24 con Kali Linux (.50).</desc>
+            <rect class="r-caja" x="90" y="6" width="180" height="44" rx="6"/>
+            <text class="r-nombre" x="180" y="25" text-anchor="middle">Internet</text>
+            <text class="r-dato" x="180" y="42" text-anchor="middle">solo salida (NAT)</text>
+            <line class="r-nat" x1="180" y1="50" x2="180" y2="96"/>
+            <text class="r-dato" x="190" y="78">WAN</text>
+
+            <rect class="r-caja r-caja--oro" x="40" y="96" width="280" height="128" rx="6"/>
+            <text class="r-nombre r-oro" x="180" y="122" text-anchor="middle">pfSense CE</text>
+            <text class="r-dato" x="180" y="148" text-anchor="middle">WAN 10.0.2.15 (NAT)</text>
+            <text class="r-dato" x="180" y="167" text-anchor="middle">SOC 192.168.20.1</text>
+            <text class="r-dato" x="180" y="186" text-anchor="middle">LAN 192.168.10.1</text>
+            <text class="r-dato" x="180" y="205" text-anchor="middle">ATK 192.168.66.1</text>
+
+            <line class="r-cable" x1="180" y1="224" x2="180" y2="262"/>
+            <polyline class="r-lan" points="40,150 20,150 20,480 40,480"/>
+            <polyline class="r-atk" points="320,170 340,170 340,800 320,800"/>
+
+            <rect class="r-pc" x="40" y="262" width="280" height="180"/>
+            <text class="r-pc-nombre" x="52" y="284">PC-A (Lorena) · 16 GB</text>
+            <text class="r-dato r-oro" x="52" y="303">SOC / Gestión · 192.168.20.0/24</text>
+            <text class="r-dato r-oro" x="52" y="320">cable directo</text>
+            <rect class="r-caja" x="56" y="332" width="248" height="76" rx="6"/>
+            <text class="r-nombre" x="68" y="355">Wazuh todo en uno</text>
+            <text class="r-dato" x="68" y="376">192.168.20.10</text>
+            <text class="r-dato" x="68" y="394">panel 443 · API 55000</text>
+            <text class="r-dato" x="68" y="430">admin: 192.168.20.2</text>
+
+            <rect class="r-zona-lan" x="40" y="458" width="280" height="264" rx="6"/>
+            <text class="r-cian" x="52" y="482">LAN corporativa</text>
+            <text class="r-dato r-cian" x="308" y="482" text-anchor="end">192.168.10.0/24</text>
+            <rect class="r-caja" x="56" y="496" width="248" height="52" rx="6"/>
+            <text class="r-nombre" x="68" y="518">Ubuntu Server</text>
+            <text class="r-dato" x="292" y="518" text-anchor="end">192.168.10.20</text>
+            <text class="r-dato" x="68" y="537">SSH 22 · web 80/443</text>
+            <rect class="r-caja" x="56" y="556" width="248" height="52" rx="6"/>
+            <text class="r-nombre" x="68" y="578">Windows 1</text>
+            <text class="r-dato" x="292" y="578" text-anchor="end">192.168.10.31</text>
+            <text class="r-dato" x="68" y="597">RDP 3389 · agente + Sysmon</text>
+            <rect class="r-caja" x="56" y="616" width="248" height="52" rx="6"/>
+            <text class="r-nombre" x="68" y="638">Windows 2</text>
+            <text class="r-dato" x="292" y="638" text-anchor="end">192.168.10.32</text>
+            <text class="r-dato" x="68" y="657">(opcional)</text>
+            <text class="r-dato r-cian" x="180" y="690" text-anchor="middle">Agentes → Wazuh: 1514 / 1515 TCP</text>
+            <text class="r-dato r-cian" x="180" y="708" text-anchor="middle">(a través de pfSense)</text>
+
+            <rect class="r-zona-atk" x="40" y="746" width="280" height="122" rx="6"/>
+            <text class="r-rojo" x="52" y="770">Ataque</text>
+            <text class="r-dato r-rojo" x="308" y="770" text-anchor="end">192.168.66.0/24</text>
+            <rect class="r-caja r-caja--rojo" x="56" y="786" width="248" height="62" rx="6"/>
+            <text class="r-nombre" x="68" y="812">Kali Linux</text>
+            <text class="r-dato" x="292" y="812" text-anchor="end">192.168.66.50</text>
+            <text class="r-dato" x="68" y="834">Hydra · scripts de ataque</text>
+          </svg>
+          <figcaption>El PC-B (Dani) aloja pfSense, la red del cliente simulado y la red del atacante. El PC-A (Lorena) aloja Wazuh. Los une un cable directo, que forma la red SOC / Gestión: es el único adaptador en modo puente y está aislado del router del aula. Línea continua: red interna o cable. Línea discontinua: salida a internet por NAT.</figcaption>
+        </figure>
+
+        <div class="det-tabla-caja">
+          <table class="det-tabla det-tabla--red">
+            <caption>Direcciones del laboratorio</caption>
+            <thead><tr><th scope="col">Red</th><th scope="col">Equipo</th><th scope="col">Dirección</th></tr></thead>
+            <tbody>
+              <tr><td>WAN</td><td>pfSense, salida a internet</td><td>10.0.2.15/24 (NAT)</td></tr>
+              <tr><td>LAN corporativa</td><td>pfSense</td><td>192.168.10.1</td></tr>
+              <tr><td></td><td>Ubuntu Server</td><td>192.168.10.20</td></tr>
+              <tr><td></td><td>Windows cliente 1</td><td>192.168.10.31</td></tr>
+              <tr><td></td><td>Windows cliente 2 (opcional)</td><td>192.168.10.32</td></tr>
+              <tr><td></td><td>Equipos nuevos, por DHCP</td><td>192.168.10.100 a .199</td></tr>
+              <tr><td>Ataque</td><td>pfSense</td><td>192.168.66.1</td></tr>
+              <tr><td></td><td>Kali Linux</td><td>192.168.66.50</td></tr>
+              <tr><td>SOC / Gestión</td><td>pfSense</td><td>192.168.20.1</td></tr>
+              <tr><td></td><td>Wazuh, en el PC-A</td><td>192.168.20.10</td></tr>
+              <tr><td></td><td>Administración desde el PC-A</td><td>192.168.20.2</td></tr>
+              <tr><td></td><td>Administración desde el PC-B</td><td>192.168.20.3</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FLUJO DE DATOS DE LA DEMO (apartado 2.4.2) ===== -->
+    <section class="det-seccion det-seccion--borde" id="flujo" aria-labelledby="titulo-flujo">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-flujo">Qué viaja por la red durante la demo</h2>
+        <p class="det-entrada">El primer ataque de la demostración: contraseñas probadas a la fuerza contra el servidor Ubuntu. Los tiempos son los objetivos que se medirán en el ensayo.</p>
+        <ol class="det-cronica">
+          <li><b>T+0 s</b><span>Kali lanza con Hydra intentos de acceso SSH contra 192.168.10.20, puerto 22, atravesando pfSense. <small>Kali → pfSense → Ubuntu · conexiones TCP/22</small></span></li>
+          <li><b>T+1 a 20 s</b><span>El servidor anota cada intento fallido en su registro de accesos. <small>Ubuntu · líneas de registro</small></span></li>
+          <li><b>T+≈20 s</b><span>El agente lee el registro y lo envía cifrado a Wazuh, a través de pfSense y del cable entre los dos PC. <small>Agente → pfSense → Wazuh · evento por 1514/TCP</small></span></li>
+          <li><b>T+≈25 s</b><span>La regla 100100 (5 fallos en 60 segundos desde la misma dirección) dispara una alerta de nivel 10. <small>Wazuh · alerta</small></span></li>
+          <li class="det-cronica__oro"><b>T+≈30 s</b><span>La alerta aparece en el panel. La respuesta activa bloquea la dirección atacante en el cortafuegos del equipo durante 10 minutos. <small>Wazuh → agente · orden de bloqueo</small></span></li>
+          <li><b>T+1 a 5 min</b><span>El analista confirma que es real y lanza la herramienta forense en el equipo afectado. <small>Analista</small></span></li>
+          <li><b>T+≈10 min</b><span>La herramienta recoge procesos, conexiones, usuarios, inicios de sesión y persistencia. <small>Herramienta en Python · evidencias con su hash</small></span></li>
+          <li><b>T+≈40 min</b><span>Se genera el informe en JSON y Markdown y se entrega al cliente. <small>Informe de incidente</small></span></li>
+        </ol>
+        <p class="det-prosa det-idea__pie">El segundo ataque sigue el mismo camino en Windows: un ejecutable simulado crea una tarea programada o una clave Run del registro, Sysmon envía los eventos y la regla de persistencia genera la alerta. <a href="incidente.html#demo">El mismo recorrido, contado paso a paso</a>.</p>
+      </div>
+    </section>
+
+    <!-- ===== PUERTOS Y REGLAS DEL CORTAFUEGOS (apartado 2.4.5) ===== -->
+    <section class="det-seccion det-seccion--borde" id="puertos" aria-labelledby="titulo-puertos">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-puertos">Puertos que importan</h2>
+        <p class="det-entrada">Un puerto es una puerta numerada por la que entra un servicio. En pfSense todas están cerradas salvo las de esta tabla.</p>
+
+        <div class="det-tabla-caja">
+          <table class="det-tabla det-tabla--puertos">
+            <caption>Puertos principales del laboratorio</caption>
+            <thead><tr><th scope="col">Puerto</th><th scope="col">Para qué</th><th scope="col">De dónde a dónde</th></tr></thead>
+            <tbody>
+              <tr><td>1514/TCP</td><td>Eventos de los agentes, cifrados. Por aquí viaja también la respuesta activa.</td><td>Agentes de la LAN → pfSense → Wazuh</td></tr>
+              <tr><td>1515/TCP</td><td>Alta de agentes nuevos, con contraseña.</td><td>Agentes de la LAN → Wazuh</td></tr>
+              <tr><td>55000/TCP</td><td>API de Wazuh.</td><td>Solo desde la red SOC / Gestión</td></tr>
+              <tr><td>443/TCP</td><td>Panel web de Wazuh, con certificado TLS.</td><td>Solo desde la red SOC / Gestión</td></tr>
+              <tr><td>514/UDP</td><td>Registro del cortafuegos (syslog).</td><td>pfSense → Wazuh</td></tr>
+              <tr><td>22/TCP</td><td>SSH del servidor Ubuntu. Es el objetivo del ataque 1.</td><td>Kali → Ubuntu</td></tr>
+              <tr><td>3389/TCP</td><td>Escritorio remoto (RDP) de Windows, expuesto a propósito. Es el objetivo del ataque 2.</td><td>Kali → Windows 1</td></tr>
+              <tr><td>51820/UDP</td><td>VPN WireGuard para analistas en remoto. Es diseño de producción.</td><td>Analista → pfSense</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="det-h3 det-h3--sub">Lo que deja pasar el cortafuegos</h3>
+        <ul class="det-lista det-lista--ancha">
+          <li>De la red de Ataque a la LAN: solo el SSH del servidor (192.168.10.20:22) y el escritorio remoto de Windows 1 (192.168.10.31:3389), que simulan servicios expuestos.</li>
+          <li>De la red de Ataque al SOC y a internet: bloqueado. Kali nunca alcanza a Wazuh.</li>
+          <li>De la LAN a Wazuh: solo los puertos 1514 y 1515 hacia 192.168.20.10.</li>
+          <li>De la LAN y del SOC a internet: solo salida por los puertos 53, 80, 123 y 443, para resolver nombres, poner la hora y actualizar.</li>
+          <li>De la red SOC / Gestión a pfSense: administración.</li>
+          <li>Todo lo demás: denegar y registrar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== MEDIDAS DE SEGURIDAD (apartado 2.4.6, sección clara) ===== -->
+    <section class="det-seccion claro" id="seguridad" aria-labelledby="titulo-seguridad">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-seguridad">Medidas de seguridad</h2>
+        <p class="det-entrada">Un laboratorio donde se lanzan ataques tiene que estar mejor cerrado que una red normal.</p>
+        <dl class="det-glosario">
+          <div><dt>Redes aisladas</dt><dd>Cuatro redes separadas por pfSense. El atacante solo ve los dos servicios expuestos a propósito, nunca el SOC ni internet.</dd></div>
+          <div><dt>Cortafuegos</dt><dd>Se deniega todo por defecto y se abren solo las reglas mínimas. Lo bloqueado se registra y se envía a Wazuh.</dd></div>
+          <div><dt>VPN</dt><dd>WireGuard para el acceso remoto de analistas (diseño de producción): una clave por analista, sin contraseñas, y acceso solo a la red SOC / Gestión.</dd></div>
+          <div><dt>Contraseñas</dt><dd>Mínimo de 14 caracteres o frase de paso, únicas por sistema y guardadas en un gestor. Se cambian las que traen Wazuh y pfSense de fábrica y se activa el doble factor en GitHub y en el correo.</dd></div>
+          <div><dt>Permisos</dt><dd>Mínimo privilegio: cuentas con nombre, sin trabajar a diario como administrador, y una herramienta forense que solo lee.</dd></div>
+          <div><dt>Fail2ban</dt><dd>En Ubuntu bloquea durante 1 hora a quien falla 5 veces en 10 minutos. En la demo se desactiva para ver la detección de Wazuh y luego se activa para comparar los dos bloqueos.</dd></div>
+          <div><dt>SSH</dt><dd>En producción solo se entra con clave pública y nunca como root. En el laboratorio se deja la contraseña en una cuenta señuelo para poder demostrar el ataque.</dd></div>
+          <div><dt>Cifrado</dt><dd>TLS en el panel, la API y el indexer, comunicación cifrada entre agentes y manager, y copias externas cifradas.</dd></div>
+          <div><dt>Cadena de custodia</dt><dd>Hora sincronizada por NTP y expresada en UTC, número de caso y SHA-256 de cada prueba, en una carpeta de solo lectura y con registro de quién la recogió y cuándo.</dd></div>
+          <div><dt>Detección</dt><dd>Vigilancia de la integridad de archivos en /etc y en las claves Run del registro, Sysmon en Windows y el registro de pfSense dentro de Wazuh.</dd></div>
+          <div><dt>Protección de datos</dt><dd>En el laboratorio solo hay datos sintéticos. En producción: contrato de encargado del tratamiento con cada cliente (artículo 28 del RGPD), recoger solo los datos necesarios y guardarlos de 30 a 180 días según el plan.</dd></div>
+          <div><dt>Uso ético</dt><dd>Los ataques se ejecutan solo dentro del laboratorio aislado, con máquinas propias y sin tocar ninguna red ajena.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== PLAN DE VUELTA ATRÁS (apartado 2.4.3) ===== -->
+    <section class="det-seccion" id="vuelta-atras" aria-labelledby="titulo-vuelta">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-vuelta">Si algo se rompe: la vuelta atrás</h2>
+        <p class="det-entrada">Una regla para todo: copia antes de tocar, prueba antes de aplicar y vuelta atrás automática si falla.</p>
+        <ul class="det-lista det-lista--ancha det-idea__pie">
+          <li>Instantáneas de VirtualBox antes de cada hito, para volver a una máquina entera en minutos.</li>
+          <li>Copias de la configuración de Wazuh y de pfSense. pfSense guarda además su propio historial de versiones.</li>
+          <li>Exportación de todas las máquinas al terminar cada hito, guardada en un disco externo.</li>
+          <li>Git con etiquetas de versión para el código y la web: volver atrás es deshacer el último cambio.</li>
+        </ul>
+        <p class="det-prosa det-idea__pie">Los cambios de reglas, que son lo más frecuente, se aplican con un script: guarda una copia, valida la configuración, reinicia Wazuh y, si algo falla, restaura la copia sin que nadie intervenga.</p>
+
+        <div class="det-tabla-caja">
+          <table class="det-tabla det-tabla--texto">
+            <caption>Qué se hace si falla cada cosa</caption>
+            <thead><tr><th scope="col">Si falla</th><th scope="col">Vuelta atrás</th><th scope="col">Tiempo objetivo</th></tr></thead>
+            <tbody>
+              <tr><td>Reglas o configuración de Wazuh</td><td>El script restaura la copia de forma automática</td><td>Menos de 2 min</td></tr>
+              <tr><td>Una actualización rompe una máquina</td><td>Restaurar la instantánea anterior</td><td>Menos de 10 min</td></tr>
+              <tr><td>Una regla de pfSense deja sin red al laboratorio</td><td>Restaurar la versión previa en el historial de pfSense</td><td>Menos de 5 min</td></tr>
+              <tr><td>La respuesta activa bloquea una dirección legítima</td><td>Desbloqueo automático a los 10 minutos y lista blanca del laboratorio</td><td>Menos de 10 min</td></tr>
+              <tr><td>Falla la herramienta forense</td><td>Volver a la etiqueta anterior de Git. La herramienta solo lee, no modifica el equipo</td><td>Menos de 5 min</td></tr>
+              <tr><td>Se corta el cable entre los dos PC</td><td>Comprobar cable y direcciones. Los agentes guardan los eventos y los reenvían al volver la conexión</td><td>Menos de 5 min</td></tr>
+              <tr><td>Una máquina se corrompe o se borra</td><td>Importar la última copia exportada</td><td>Unos 30 min</td></tr>
+              <tr><td>Falla la web publicada</td><td>Deshacer el último cambio y volver a publicar</td><td>Menos de 5 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
+    <section class="det-cierre" aria-labelledby="titulo-cierre">
+      <div class="contenedor">
+        <div class="det-cta">
+          <div>
+            <h2 class="det-h2" id="titulo-cierre">¿Quieres verlo funcionando?</h2>
+            <p class="det-prosa">En el SOC en vivo hay una demostración con datos simulados. Y si prefieres hablar, la auditoría inicial es el primer paso.</p>
+          </div>
+          <div class="det-cta__acciones">
+            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a>
+            <a href="soc.html" class="boton"><span class="boton__texto" data-texto="Ver el SOC en vivo">Ver el SOC en vivo</span></a>
+          </div>
+        </div>
+
+        <nav class="det-rel" aria-labelledby="titulo-rel">
+          <h2 class="det-rel__titulo" id="titulo-rel">Sigue leyendo</h2>
+          <ul class="det-rel__lista">
+            <li><a href="incidente.html"><b>Anatomía de un incidente</b><span>Un ataque parado a tiempo, minuto a minuto, y los dos ataques de la demo.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="metodo.html"><b>El método, paso a paso</b><span>Qué hacemos, qué te pedimos y cuánto tarda cada paso.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="proyectos.html"><b>Proyectos</b><span>La web, el laboratorio, la herramienta forense y la demo.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="productos.html"><b>Productos</b><span>Las suscripciones para particulares y empresas.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="preguntas.html"><b>Preguntas y precios</b><span>Lo que nos preguntan, un glosario sin jerga y los cuatro planes.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>SOC operativo</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latencia 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instalar app">⤓ Instalar app</span></button>
+        <span class="aviso-red mono" hidden>● Sin conexión · mostrando la versión guardada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa ficticia creada para la práctica A1-RA1 · Digitech Barcelona · Sin cookies ni rastreadores · <a href="antonia-lorena-cracana/">Portfolio de Antonia Lorena Cracana</a> · <a href="joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
+  <script src="js/vendor/gsap.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112a" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112a" defer></script>
+  <script src="js/intro.js?v=20261112a" defer></script>
+  <script src="js/escena.js?v=20261112a" defer></script>
+  <script src="js/visuales.js?v=20261112a" defer></script>
+  <script src="js/polvo.js?v=20261112a" defer></script>
+  <script src="js/main.js?v=20261112a" defer></script>
+  <!-- Comportamiento propio de las páginas de detalle (línea de tiempo, calculadora, huella) -->
+  <script src="js/detalle.js?v=20261112a" defer></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Todas las preguntas sobre el servicio de KAIRON agrupadas por tema, un glosario sin jerga y precios de ejemplo por equipo y mes.">
+  <meta name="description" content="Todas las preguntas sobre el servicio de KAIRON agrupadas por tema, un glosario sin jerga y los cuatro planes con precios de ejemplo.">
   <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark">
   <!-- Seguridad de la propia web: solo se cargan recursos de este sitio y de Google Fonts; sin scripts en línea -->
@@ -103,7 +103,7 @@
   <header class="cabecera">
     <div class="contenedor cabecera__contenido">
       <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
-        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+        <img class="logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
       </a>
       <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
       <nav aria-label="Menú principal">
@@ -155,13 +155,13 @@
           <section class="det-grupo" id="servicio" aria-labelledby="titulo-servicio">
             <h2 class="det-h2" id="titulo-servicio">Servicio</h2>
             <details class="faq__item" open>
-              <summary>¿Qué es un SOC y por qué lo necesita una pyme?</summary>
-              <p>Un SOC es un centro de operaciones de seguridad: personas y herramientas que vigilan tus sistemas y responden si pasa algo. La mayoría de los ataques a pymes entran por un correo o una contraseña débil y, si nadie vigila, se descubren semanas después.</p>
-              <p>Montar uno propio exige varias personas y turnos. Un SOC gestionado te da lo mismo como servicio, por una cuota mensual.</p>
+              <summary>¿Qué es un SOC y quién lo necesita?</summary>
+              <p>Un SOC es un centro de operaciones de seguridad: personas y herramientas que vigilan tus equipos y responden si pasa algo. Los particulares, los autónomos y las pymes sufren los mismos ataques que las grandes empresas (ransomware, phishing, contraseñas probadas a la fuerza), pero no pueden pagar ni mantener un equipo de seguridad propio.</p>
+              <p>Un SOC gestionado te da lo mismo como suscripción, por una cuota mensual.</p>
             </details>
             <details class="faq__item">
               <summary>¿Qué hace KAIRON exactamente?</summary>
-              <p>Tres cosas: detectar los ataques pronto, responder para frenar el daño y dejarlo todo demostrado en un informe. Además, auditorías para cerrar puertas y formación para la plantilla. <a href="servicios.html">Mira los servicios uno a uno</a>.</p>
+              <p>Tres cosas: detectar los ataques pronto, responder para frenar el daño y dejarlo todo demostrado en un informe. Además, auditorías para cerrar puertas y formación. <a href="servicios.html">Mira los servicios uno a uno</a>.</p>
             </details>
             <details class="faq__item">
               <summary>¿Sustituís a mi informático o a mi antivirus?</summary>
@@ -169,11 +169,12 @@
             </details>
             <details class="faq__item">
               <summary>¿Vigiláis también de noche y en festivos?</summary>
-              <p>Depende del plan. Guardia y Custodia vigilan las 24 horas todos los días. Vigía cubre los días laborables de 8 a 20 h; fuera de ese horario las alertas se guardan y se revisan a primera hora.</p>
+              <p>La detección es automática y funciona a todas horas: las alertas saltan solas y la respuesta activa bloquea al atacante sin esperar a nadie. Las personas trabajan en horario laboral ampliado, de lunes a viernes de 9 a 19 h, y revisan a primera hora lo ocurrido fuera de ese horario.</p>
+              <p>No prometemos vigilancia humana las 24 horas.</p>
             </details>
             <details class="faq__item">
-              <summary>¿Para qué tamaño de empresa está pensado?</summary>
-              <p>Para pymes de entre 10 y 250 equipos que no tienen un equipo de seguridad propio.</p>
+              <summary>¿Para quién está pensado?</summary>
+              <p>Para particulares, autónomos y pymes, desde un solo ordenador hasta 100 equipos. Hay tres planes para el público general y uno para empresas. <a href="#precios">Mira los planes</a>.</p>
             </details>
           </section>
 
@@ -182,27 +183,27 @@
             <h2 class="det-h2" id="titulo-instalacion">Instalación y privacidad</h2>
             <details class="faq__item">
               <summary>¿Tengo que instalar algo?</summary>
-              <p>Un agente en cada ordenador y servidor, con Windows o Linux. Es un programa pequeño que envía la actividad del equipo al SOC. Lo instalamos nosotros, sin reiniciar y sin interrumpir el trabajo.</p>
+              <p>Un agente en cada ordenador y servidor, con Windows, macOS o Linux. Es un programa pequeño que envía la actividad del equipo al SOC, y lo gestionamos nosotros.</p>
             </details>
             <details class="faq__item">
               <summary>¿El agente lee mis documentos o mis correos?</summary>
-              <p>No. Envía registros de actividad: qué programas se abren, quién inicia sesión, qué conexiones se hacen y si cambia un archivo del sistema. No envía el contenido de tus documentos ni de tus correos.</p>
+              <p>No. Envía registros de actividad: qué programas se abren, quién inicia sesión, qué conexiones se hacen y si cambia un archivo del sistema. No envía el contenido de tus documentos ni de tus correos, y solo se recogen los datos necesarios.</p>
             </details>
             <details class="faq__item">
               <summary>¿Va a ir más lento el ordenador?</summary>
-              <p>En un equipo de oficina normal no se nota. El agente trabaja en segundo plano y usa muy poca memoria.</p>
+              <p>En un equipo normal no se nota. El agente es ligero y trabaja en segundo plano.</p>
             </details>
             <details class="faq__item">
-              <summary>¿Dónde se guardan los registros y durante cuánto tiempo?</summary>
-              <p>En servidores dentro de la Unión Europea, durante 90 días. Antes de empezar se firma un contrato de encargado del tratamiento, que es el documento que exige el RGPD (la ley europea de protección de datos) cuando un proveedor maneja datos por tu cuenta.</p>
+              <summary>¿Cuánto tiempo se guardan los registros?</summary>
+              <p>Entre 30 y 180 días, según el plan: 30 en Vigía, 90 en Centinela y Guardián y 180 en Égida. Antes de empezar se firma un contrato de encargado del tratamiento, que es el documento que exige el artículo 28 del RGPD (la ley europea de protección de datos) cuando un proveedor maneja datos por tu cuenta.</p>
             </details>
             <details class="faq__item">
               <summary>¿Cuánto tarda en estar funcionando?</summary>
-              <p>Unas dos semanas desde la primera reunión: la vigilancia está activa el noveno día laborable. <a href="metodo.html#calendario">Mira el calendario del primer mes</a>.</p>
+              <p>En una empresa, unas dos semanas desde la primera reunión: la detección está activa el noveno día laborable. <a href="metodo.html#calendario">Mira el calendario del primer mes</a>.</p>
             </details>
             <details class="faq__item">
               <summary>¿Y los portátiles de quien teletrabaja? ¿Y los móviles?</summary>
-              <p>Un portátil sigue vigilado esté donde esté, siempre que tenga internet. Los móviles no entran en el servicio por ahora.</p>
+              <p>Un portátil sigue vigilado esté donde esté, siempre que tenga internet. Los móviles quedan fuera: Wazuh, el sistema que usamos, no tiene agente para ellos. Los planes cubren ordenadores y servidores.</p>
             </details>
           </section>
 
@@ -211,11 +212,15 @@
             <h2 class="det-h2" id="titulo-incidentes">Incidentes y pruebas</h2>
             <details class="faq__item">
               <summary>¿Qué pasa cuando detectáis un ataque?</summary>
-              <p>Primero lo contenemos: se aísla el equipo afectado y se bloquea la dirección del atacante. Después recogemos las pruebas y te llamamos. Ese mismo día recibes un informe en lenguaje claro. <a href="incidente.html">Mira un incidente minuto a minuto</a>.</p>
+              <p>La respuesta automática bloquea al atacante en segundos. Después depende del plan: en Vigía y Centinela te guiamos paso a paso; en Guardián y Égida un analista contiene el equipo a distancia, recoge las pruebas y redacta el informe. <a href="incidente.html">Mira un incidente minuto a minuto</a>.</p>
             </details>
             <details class="faq__item">
-              <summary>¿Me vais a llamar por cada alerta?</summary>
-              <p>No. La mayoría de las alertas son ruido, y descartarlo es nuestro trabajo. Te llamamos cuando hay algo real que te afecta o cuando necesitamos que decidas algo.</p>
+              <summary>¿Me vais a avisar por cada alerta?</summary>
+              <p>No. La mayoría de las alertas son ruido, y descartarlo es nuestro trabajo. Te avisamos cuando hay algo real que te afecta o cuando necesitamos que decidas algo.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Cuánto tardáis en responder?</summary>
+              <p>De lunes a viernes, de 9 a 19 h: 1 hora en Égida, 4 horas en Guardián, 24 horas en Centinela (8 si la alerta es crítica) y 2 días laborables en Vigía. El bloqueo automático no espera a nadie: actúa en segundos y a cualquier hora.</p>
             </details>
             <details class="faq__item">
               <summary>¿Podéis garantizar que no me atacarán?</summary>
@@ -226,12 +231,12 @@
               <p>Se recogen pensando en eso. Cada evidencia lleva hora UTC, número de caso y huella SHA-256, de modo que cualquiera puede comprobar que no se ha alterado. Si el caso llega a un juzgado, quien decide su valor es el juez. <a href="incidente.html#custodia">Así es una ficha de evidencia</a>.</p>
             </details>
             <details class="faq__item">
-              <summary>¿Y si el ataque ya ha ocurrido y todavía no soy cliente?</summary>
-              <p>Podemos intervenir de forma puntual para contener, recoger pruebas y hacer el informe. Ese trabajo se presupuesta aparte, por horas.</p>
+              <summary>¿Recuperáis los datos si ya me han atacado?</summary>
+              <p>No. KAIRON no recupera datos después de un ataque ni sustituye a un laboratorio forense completo: la herramienta recoge las pruebas del equipo afectado. Por eso insistimos tanto en las copias de seguridad.</p>
             </details>
             <details class="faq__item">
               <summary>¿Tengo que avisar a la Agencia de Protección de Datos?</summary>
-              <p>Si el incidente afecta a datos personales y supone un riesgo para esas personas, el RGPD da 72 horas para avisar. La decisión y el aviso son de tu empresa. Nosotros te damos los datos técnicos que piden: qué pasó, cuándo y qué información pudo verse afectada.</p>
+              <p>Si el incidente afecta a datos personales y supone un riesgo para esas personas, el RGPD da 72 horas para avisar. La decisión y el aviso son tuyos. En el plan Égida recibes además un informe trimestral de apoyo al RGPD.</p>
             </details>
           </section>
 
@@ -240,7 +245,7 @@
             <h2 class="det-h2" id="titulo-contrato">Precio y contrato</h2>
             <details class="faq__item">
               <summary>¿Cuánto cuesta?</summary>
-              <p>Un precio fijo por equipo y mes, según el plan. Con 60 equipos y el plan intermedio serían 960 € al mes. <a href="#precios">Mira los precios orientativos</a>.</p>
+              <p>Hay cuatro planes con precio fijo al mes: 9,90 €, 24,90 € y 64,90 €, con el IVA incluido, para particulares, autónomos y microempresas, y desde 590 € más IVA para empresas. Con 60 equipos serían 1.010 € más IVA al mes. <a href="#precios">Mira los precios orientativos</a>.</p>
             </details>
             <details class="faq__item">
               <summary>¿Qué cuenta como «equipo»?</summary>
@@ -248,19 +253,19 @@
             </details>
             <details class="faq__item">
               <summary>¿Hay permanencia?</summary>
-              <p>No. Se paga mes a mes y puedes darte de baja avisando con 30 días.</p>
+              <p>En Vigía, Centinela y Guardián, ninguna. En Égida, el plan para empresas, 12 meses.</p>
             </details>
             <details class="faq__item">
-              <summary>¿La auditoría inicial es gratuita de verdad?</summary>
-              <p>Sí, y sin compromiso. Te quedas el informe aunque no contrates.</p>
+              <summary>¿La auditoría inicial es gratuita?</summary>
+              <p>En el plan Égida, sí: es el primer paso del servicio. Guardián incluye una auditoría de hardening al año y Centinela una lista para que te revises tú.</p>
             </details>
             <details class="faq__item">
               <summary>¿Hay costes aparte?</summary>
-              <p>El alta y la instalación están incluidas. Lo único que se presupuesta aparte es el trabajo sobre incidentes anteriores al contrato y, en el plan Vigía, la recogida de pruebas.</p>
+              <p>El precio del plan es fijo y no cambia si hay un incidente. En Égida, cada equipo por encima de los 25 incluidos suma 12 € al mes. Los precios para particulares llevan el IVA incluido; el de empresas se factura más IVA.</p>
             </details>
             <details class="faq__item">
-              <summary>¿Y si contrato a más gente o reduzco plantilla?</summary>
-              <p>La cuota se ajusta al número de equipos del mes siguiente, hacia arriba o hacia abajo.</p>
+              <summary>¿Y si necesito cubrir más equipos?</summary>
+              <p>Pasas al plan siguiente. En Égida se añaden equipos de uno en uno, hasta 100.</p>
             </details>
           </section>
 
@@ -318,86 +323,123 @@
       </div>
     </section>
 
-    <!-- ===== PRECIOS ORIENTATIVOS: tabla comparativa + calculadora (la activa js/detalle.js) ===== -->
+    <!-- ===== PRECIOS ORIENTATIVOS: los cuatro planes del capítulo 2 del proyecto (tabla 6) + calculadora (js/detalle.js) ===== -->
     <section class="det-seccion" id="precios" aria-labelledby="titulo-precios">
       <div class="contenedor">
         <h2 class="det-h2" id="titulo-precios">Precios orientativos</h2>
-        <p class="det-entrada">Un precio por equipo y mes. Sabes lo que vas a pagar antes de empezar y no cambia si hay un incidente.</p>
+        <p class="det-entrada">Cuatro planes con la misma tecnología. Lo que cambia es cuánta atención humana incluye cada uno. Sabes lo que vas a pagar antes de empezar y no sube si hay un incidente.</p>
         <p class="det-ficticio">Precios de ejemplo · empresa ficticia (práctica de clase)</p>
 
-        <!-- Sin JavaScript la calculadora no aparece y la tabla muestra el ejemplo de 60 equipos -->
-        <div class="det-calc" hidden>
-          <label for="equipos">¿Cuántos equipos tiene tu empresa?</label>
+        <!-- Sin JavaScript la calculadora no aparece; la tabla y el ejemplo de 60 equipos se leen igual -->
+        <div class="det-calc" hidden data-iva-incl="al mes, IVA incluido" data-mas-iva="al mes + IVA" data-por-equipo="por equipo" data-mas="+100" data-hablemos="Para más de 100 equipos hace falta un despliegue a medida. Hablemos.">
+          <label for="equipos">¿Cuántos equipos quieres proteger?</label>
           <div class="det-calc__fila">
-            <input type="range" id="equipos" min="10" max="250" step="5" value="60">
+            <input type="range" id="equipos" min="1" max="101" step="1" value="60">
             <output for="equipos">60</output>
           </div>
+          <p class="det-calc__resultado" aria-live="polite"><b>Égida</b> <span>1.010 € al mes + IVA (16,83 € por equipo)</span></p>
         </div>
 
-        <table class="det-planes">
-          <caption>Comparación de los tres planes de KAIRON (precios de ejemplo)</caption>
+        <table class="det-planes det-planes--cuatro">
+          <caption>Comparación de los cuatro planes de KAIRON (precios de ejemplo)</caption>
           <thead>
             <tr>
               <th scope="col"><span class="det-planes__para">Qué incluye</span></th>
-              <th scope="col"><span class="det-planes__nombre">Vigía</span><span class="det-planes__precio">9 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Vigilancia en horario de oficina</span></th>
-              <th scope="col" class="det-planes__sugerido"><span class="det-planes__nombre">Guardia</span><span class="det-planes__precio">16 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Vigilancia y respuesta a cualquier hora</span></th>
-              <th scope="col"><span class="det-planes__nombre">Custodia</span><span class="det-planes__precio">24 €</span><span class="det-planes__unidad">por equipo y mes</span><span class="det-planes__para">Lo anterior, más prevención y cumplimiento</span></th>
+              <th scope="col" data-col="vigia"><span class="det-planes__nombre">Vigía</span><span class="det-planes__precio">9,90 €</span><span class="det-planes__unidad">al mes, IVA incluido</span></th>
+              <th scope="col" data-col="centinela"><span class="det-planes__nombre">Centinela</span><span class="det-planes__precio">24,90 €</span><span class="det-planes__unidad">al mes, IVA incluido</span></th>
+              <th scope="col" data-col="guardian"><span class="det-planes__nombre">Guardián</span><span class="det-planes__precio">64,90 €</span><span class="det-planes__unidad">al mes, IVA incluido</span></th>
+              <th scope="col" data-col="egida" class="det-planes__sugerido"><span class="det-planes__nombre">Égida</span><span class="det-planes__precio">Desde 590 €</span><span class="det-planes__unidad">al mes + IVA · 12 € más por equipo adicional</span><span class="det-planes__para">para empresas</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Vigilancia</th>
-              <td data-plan="Vigía">Días laborables, de 8 a 20 h</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">24 horas, todos los días</td>
-              <td data-plan="Custodia">24 horas, todos los días</td>
+              <th scope="row">Pensado para</th>
+              <td data-plan="Vigía" data-col="vigia">1 o 2 equipos: un particular o un autónomo</td>
+              <td data-plan="Centinela" data-col="centinela">Una familia o un autónomo, hasta 5 equipos</td>
+              <td data-plan="Guardián" data-col="guardian">Teletrabajo o microempresa, hasta 10 equipos</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Pymes de 10 a 100 equipos</td>
             </tr>
             <tr>
-              <th scope="row">Si hay un ataque</th>
-              <td data-plan="Vigía">Aviso por teléfono y correo</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Contención en minutos y llamada</td>
-              <td data-plan="Custodia">Contención en minutos y llamada</td>
+              <th scope="row">Equipos incluidos</th>
+              <td data-plan="Vigía" data-col="vigia">2</td>
+              <td data-plan="Centinela" data-col="centinela">5</td>
+              <td data-plan="Guardián" data-col="guardian">10</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">25, ampliable hasta 100</td>
             </tr>
             <tr>
-              <th scope="row">Pruebas con cadena de custodia</th>
-              <td data-plan="Vigía" class="det-planes__no">Aparte, por horas</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Incluidas</td>
-              <td data-plan="Custodia">Incluidas</td>
+              <th scope="row">Agente gestionado (Windows, macOS y Linux)</th>
+              <td data-plan="Vigía" data-col="vigia">Sí</td>
+              <td data-plan="Centinela" data-col="centinela">Sí</td>
+              <td data-plan="Guardián" data-col="guardian">Sí</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Sí</td>
+            </tr>
+            <tr>
+              <th scope="row">Detección de fuerza bruta, malware y cambios en archivos críticos</th>
+              <td data-plan="Vigía" data-col="vigia">Reglas estándar</td>
+              <td data-plan="Centinela" data-col="centinela">Reglas estándar y ajuste inicial</td>
+              <td data-plan="Guardián" data-col="guardian">Ajuste continuo</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Reglas a medida</td>
+            </tr>
+            <tr>
+              <th scope="row">Revisión humana de las alertas</th>
+              <td data-plan="Vigía" data-col="vigia">Solo las alertas críticas</td>
+              <td data-plan="Centinela" data-col="centinela">Un analista, en horario laboral</td>
+              <td data-plan="Guardián" data-col="guardian">Analista asignado</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Equipo dedicado</td>
+            </tr>
+            <tr>
+              <th scope="row">Respuesta, de lunes a viernes de 9 a 19 h</th>
+              <td data-plan="Vigía" data-col="vigia">2 días laborables</td>
+              <td data-plan="Centinela" data-col="centinela">24 horas (críticas: 8 horas)</td>
+              <td data-plan="Guardián" data-col="guardian">4 horas</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">1 hora</td>
+            </tr>
+            <tr>
+              <th scope="row">Respuesta a incidentes</th>
+              <td data-plan="Vigía" data-col="vigia">Guía paso a paso</td>
+              <td data-plan="Centinela" data-col="centinela">Guía y asistencia remota por chat</td>
+              <td data-plan="Guardián" data-col="guardian">Contención remota y 1 caso forense al año</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Contención y hasta 2 casos forenses al año</td>
             </tr>
             <tr>
               <th scope="row">Informes</th>
-              <td data-plan="Vigía">Resumen mensual</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Informe de cada incidente y resumen mensual</td>
-              <td data-plan="Custodia">Lo mismo, más una reunión cada trimestre</td>
+              <td data-plan="Vigía" data-col="vigia">Resumen mensual de 1 página</td>
+              <td data-plan="Centinela" data-col="centinela">Informe mensual</td>
+              <td data-plan="Guardián" data-col="guardian">Informe mensual e informe de incidente con SHA-256</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Informe mensual para dirección e informe trimestral de apoyo al RGPD</td>
+            </tr>
+            <tr>
+              <th scope="row">Formación</th>
+              <td data-plan="Vigía" data-col="vigia">Guía y minicurso antiphishing</td>
+              <td data-plan="Centinela" data-col="centinela">Lo anterior y una sesión online cada trimestre</td>
+              <td data-plan="Guardián" data-col="guardian">Lo anterior y un simulacro de phishing al año</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">2 sesiones al año para la plantilla</td>
             </tr>
             <tr>
               <th scope="row">Auditoría y hardening</th>
-              <td data-plan="Vigía">Auditoría inicial</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Auditoría inicial</td>
-              <td data-plan="Custodia">Auditoría cada año y corrección de lo que aparezca</td>
+              <td data-plan="Vigía" data-col="vigia" class="det-planes__no">No incluido</td>
+              <td data-plan="Centinela" data-col="centinela">Lista de autocomprobación</td>
+              <td data-plan="Guardián" data-col="guardian">Auditoría de hardening anual</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">Auditoría inicial gratuita y hardening anual</td>
             </tr>
             <tr>
-              <th scope="row">Formación de la plantilla</th>
-              <td data-plan="Vigía" class="det-planes__no">No incluida</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Una sesión al año</td>
-              <td data-plan="Custodia">Dos sesiones al año y simulacros de phishing</td>
+              <th scope="row">Retención de registros</th>
+              <td data-plan="Vigía" data-col="vigia">30 días</td>
+              <td data-plan="Centinela" data-col="centinela">90 días</td>
+              <td data-plan="Guardián" data-col="guardian">90 días</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">180 días</td>
             </tr>
             <tr>
-              <th scope="row">Apoyo con el RGPD</th>
-              <td data-plan="Vigía" class="det-planes__no">No incluido</td>
-              <td data-plan="Guardia" class="det-planes__sugerido">Datos técnicos para el aviso</td>
-              <td data-plan="Custodia">Acompañamiento en todo el proceso</td>
+              <th scope="row">Permanencia</th>
+              <td data-plan="Vigía" data-col="vigia">Ninguna</td>
+              <td data-plan="Centinela" data-col="centinela">Ninguna</td>
+              <td data-plan="Guardián" data-col="guardian">Ninguna</td>
+              <td data-plan="Égida" data-col="egida" class="det-planes__sugerido">12 meses</td>
             </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row">Total al mes con <span class="det-planes__equipos">60</span> equipos</th>
-              <td data-plan="Vigía" data-precio="9">540 €</td>
-              <td data-plan="Guardia" data-precio="16" class="det-planes__sugerido">960 €</td>
-              <td data-plan="Custodia" data-precio="24">1.440 €</td>
-            </tr>
-          </tfoot>
         </table>
-        <p class="det-prosa det-planes__nota">Precios sin IVA. Mínimo de 10 equipos. El alta, la instalación y la auditoría inicial están incluidas en los tres planes. Sin permanencia. La raya dorada marca el plan pensado para una empresa como la de Marta, con 60 equipos.</p>
+        <p class="det-prosa det-planes__nota">Los precios de Vigía, Centinela y Guardián incluyen el IVA (21 %); Égida se factura más IVA. El ejemplo de Marta, con 60 equipos: 590 € + 35 equipos adicionales × 12 € = 1.010 € más IVA al mes, unos 16,83 € por equipo.</p>
+        <p class="det-aviso">El servicio funciona en horario laboral ampliado, con detección y alertas automáticas fuera de horario: no incluye vigilancia humana las 24 horas, ni protección de móviles, ni recuperación de datos después de un ataque. Los precios son una simulación razonada del proyecto, no una oferta real.</p>
       </div>
     </section>
 
@@ -422,6 +464,7 @@
             <li><a href="incidente.html"><b>Anatomía de un incidente</b><span>Un ataque parado a tiempo, minuto a minuto.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="kairos.html"><b>La idea</b><span>Por qué KAIRON se llama así y qué significa su emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="soc.html"><b>El SOC en vivo</b><span>Una demostración con datos simulados de lo que vemos cada día.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>Cómo está montado</b><span>El laboratorio del proyecto por dentro: redes, máquinas y medidas de seguridad.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           </ul>
         </nav>
       </div>
@@ -432,9 +475,9 @@
   <!-- ===== PIE ===== -->
   <footer class="pie">
     <div class="contenedor">
-      <span class="pie__gigante" aria-hidden="true"><img src="img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <span class="pie__gigante" aria-hidden="true"><img src="img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
       <div class="pie__fila">
-        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
         <ul class="pie__redes">
           <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
           <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>

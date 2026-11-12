@@ -90,6 +90,7 @@
     <a href="#linea" data-seccion="linea"><span>Minut a minut</span></a>
     <a href="#custodia" data-seccion="custodia"><span>Cadena de custòdia</span></a>
     <a href="#sin-vigilancia" data-seccion="sin-vigilancia"><span>Sense vigilància</span></a>
+    <a href="#demo" data-seccion="demo"><span>Al laboratori</span></a>
   </nav>
 
   <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
@@ -103,7 +104,7 @@
   <header class="cabecera">
     <div class="contenedor cabecera__contenido">
       <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
-        <img class="logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+        <img class="logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
       </a>
       <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
       <nav aria-label="Menú principal">
@@ -128,7 +129,7 @@
       <div class="contenedor">
         <h1 class="pagina__titulo revelar" id="titulo-pagina">Anatomia d'un incident</h1>
         <p class="pagina__intro">Un correu fals, un clic i quaranta minuts. Així es veu per dins, minut a minut, un atac que s'atura a temps, i el que veus tu des del teu despatx mentre passa.</p>
-        <p class="det-aviso">Cas d'exemple KAIRON-0428. L'empresa, els noms, les hores i les adreces són fictícis: és el mateix cas de l'<a class="det-enlace" href="informe.html">informe d'exemple</a>.</p>
+        <p class="det-aviso">Cas d'exemple KAIRON-0428. L'empresa, els noms, les hores i les adreces són fictícis: és el mateix cas de l'<a class="det-enlace" href="informe.html">informe d'exemple</a>. Passa un dijous al matí, amb analistes de servei: fora d'horari, la detecció i el bloqueig automàtic funcionen igual i la revisió humana arriba a primera hora.</p>
       </div>
     </section>
 
@@ -196,7 +197,7 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>El que passa a dins</h4>
-                    <p>S'aïlla WS-03 de la xarxa: continua encès, però no pot parlar amb cap altre equip. Al <dfn>tallafoc</dfn> (el filtre entre la teva xarxa i internet) es bloqueja l'adreça de l'atacant.</p>
+                    <p>La resposta activa de Wazuh aïlla WS-03 de la xarxa: continua encès, però no pot parlar amb cap altre equip. Al <dfn>tallafoc</dfn> (el filtre entre la teva xarxa i internet) es bloqueja l'adreça de l'atacant.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>El que veus tu</h4>
@@ -208,8 +209,8 @@
 
             <li class="det-linea__momento" id="forense">
               <div class="det-linea__tiempo">
-                <span class="det-linea__hora mono">00:09</span>
-                <time class="det-linea__utc" datetime="2026-10-29T09:49:00Z">09:49 UTC</time>
+                <span class="det-linea__hora mono">00:05</span>
+                <time class="det-linea__utc" datetime="2026-10-29T09:45:00Z">09:45 UTC</time>
               </div>
               <div>
                 <h3 class="det-linea__titulo">Forense</h3>
@@ -217,11 +218,11 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>El que passa a dins</h4>
-                    <p>L'eina pròpia de KAIRON recull sis evidències: programes en marxa, connexions, usuaris, tasques programades, una còpia de l'arxiu i el registre d'esdeveniments. Cadascuna queda segellada amb la seva hora, el seu número de cas i la seva empremta.</p>
+                    <p>Entre les 09:45 i les 09:47, l'eina pròpia de KAIRON recull sis evidències: programes en marxa, connexions, usuaris, tasques programades, una còpia de l'arxiu i el registre d'esdeveniments. Cadascuna queda segellada amb la seva hora, el seu número de cas i la seva empremta.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>El que veus tu</h4>
-                    <p>Al minut 12, una trucada a direcció: què ha passat, que està contingut i l'única cosa que cal fer avui, que aquesta persona canviï les seves contrasenyes des d'un altre equip.</p>
+                    <p>Al minut 12, a les 09:52, una trucada a direcció: què ha passat, que està contingut i l'única cosa que cal fer avui, que aquesta persona canviï les seves contrasenyes des d'un altre equip.</p>
                   </div>
                 </div>
               </div>
@@ -230,7 +231,7 @@
             <li class="det-linea__momento" id="informe">
               <div class="det-linea__tiempo">
                 <span class="det-linea__hora mono">00:40</span>
-                <time class="det-linea__utc" datetime="2026-10-29T10:20:00Z">10:20 UTC</time>
+                <time class="det-linea__utc" datetime="2026-10-29T14:05:00Z">signat a les 14:05 UTC</time>
               </div>
               <div>
                 <h3 class="det-linea__titulo">Informe</h3>
@@ -238,11 +239,11 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>El que passa a dins</h4>
-                    <p>S'ordena la cronologia, s'anota per on va entrar l'atac i fins on va arribar, i s'escriuen les recomanacions perquè no es repeteixi.</p>
+                    <p>Al cap de 40 minuts l'eina ja ha generat l'informe amb la cronologia i les evidències. L'analista el revisa, anota per on va entrar l'atac i fins on va arribar, i escriu les recomanacions.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>El que veus tu</h4>
-                    <p>Un primer informe al teu correu: una pàgina de resum per a direcció i la cronologia. L'informe complet, amb les evidències i signat, arriba aquell mateix dia. <a class="det-enlace" href="informe.html">Mira l'informe d'aquest cas</a>.</p>
+                    <p>L'informe arriba aquell mateix dia, signat a les 14:05 UTC: una pàgina de resum per a direcció, la cronologia i les evidències amb la seva empremta. <a class="det-enlace" href="informe.html">Mira l'informe d'aquest cas</a>.</p>
                   </div>
                 </div>
               </div>
@@ -300,7 +301,7 @@
             <thead><tr><th scope="col">Hora (UTC)</th><th scope="col">Qui</th><th scope="col">Què fa</th></tr></thead>
             <tbody>
               <tr><td>09:46:48</td><td>A. L. Cracana</td><td>Recull l'arxiu i en calcula l'empremta</td></tr>
-              <tr><td>09:49:10</td><td>A. L. Cracana</td><td>Torna a calcular l'empremta: coincideix</td></tr>
+              <tr><td>09:47:40</td><td>A. L. Cracana</td><td>En acabar la recollida, torna a calcular l'empremta: coincideix</td></tr>
               <tr><td>14:05:00</td><td>KAIRON SOC</td><td>L'adjunta a l'informe, en només lectura</td></tr>
             </tbody>
           </table>
@@ -341,6 +342,40 @@
       </div>
     </section>
 
+    <!-- ===== LO QUE SE DEMUESTRA EN EL LABORATORIO: los dos ataques reales del proyecto (capítulo 2, apartado 2.4.2) ===== -->
+    <section class="det-seccion det-seccion--borde" id="demo" aria-labelledby="titulo-demo">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-demo">El que es demostra al laboratori del projecte</h2>
+        <p class="det-entrada">El cas de dalt és un exemple explicat des del costat del client. Al laboratori del projecte, l'equip ataca les seves pròpies màquines i mesura quant triga cada pas.</p>
+        <p class="det-prosa">Són dos atacs, sempre dins d'una xarxa aïllada i amb màquines pròpies. Els temps són els objectius que es mesuraran a l'assaig.</p>
+
+        <div class="det-demo">
+          <article>
+            <h3 class="det-h3">Atac 1: contrasenyes per força bruta contra un servidor</h3>
+            <p class="det-prosa">Un atac de <dfn>força bruta</dfn> prova contrasenyes una rere l'altra fins que l'encerta. Aquí va contra <dfn>SSH</dfn>, la porta d'accés remot d'un servidor Linux.</p>
+            <ol class="det-cronica">
+              <li><b>T+0 s</b><span>Des de Kali, la màquina atacant, el programa Hydra llança intents d'accés contra el servidor Ubuntu. Passen per pfSense, el tallafoc del laboratori.</span></li>
+              <li><b>T+1 a 20 s</b><span>El servidor anota cada intent fallit al seu registre.</span></li>
+              <li><b>T+≈20 s</b><span>L'agent de Wazuh llegeix aquest registre i l'envia xifrat al SOC.</span></li>
+              <li><b>T+≈25 s</b><span>La regla pròpia 100100 (5 errors en 60 segons des de la mateixa adreça) dispara una alerta de nivell 10.</span></li>
+              <li class="det-cronica__oro"><b>T+≈30 s</b><span>L'alerta apareix al tauler i s'avisa l'analista. La resposta activa bloqueja l'adreça atacant durant 10 minuts, sense intervenció humana.</span></li>
+              <li><b>T+1 a 5 min</b><span>L'analista confirma que l'incident és real i llança l'eina forense a l'equip afectat.</span></li>
+              <li><b>T+≈10 min</b><span>L'eina recull processos, connexions, usuaris, inicis de sessió i persistència. Cada prova porta hora UTC, número de cas i SHA-256.</span></li>
+              <li><b>T+≈40 min</b><span>Es genera l'informe, en JSON i en Markdown, amb la cronologia, les evidències i les recomanacions.</span></li>
+            </ol>
+          </article>
+
+          <article>
+            <h3 class="det-h3">Atac 2: un programa que es queda a viure a Windows</h3>
+            <p class="det-prosa">És el mateix recorregut, en un equip Windows. Un executable simulat crea la seva <dfn>persistència</dfn>, la manera de tornar a arrencar sol: una tasca programada o una clau Run del registre de Windows.</p>
+            <p class="det-prosa"><dfn>Sysmon</dfn>, una eina de Microsoft que registra amb detall els programes i les connexions, i la vigilància del registre envien els esdeveniments a Wazuh. La regla de persistència genera l'alerta.</p>
+            <p class="det-prosa">El correu de la factura falsa d'aquesta pàgina és aquest segon atac, explicat com li passaria a un client.</p>
+            <p class="det-prosa"><a href="laboratorio.html">Com està muntat el laboratori</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
     <section class="det-cierre" aria-labelledby="titulo-cierre">
       <div class="contenedor">
@@ -362,6 +397,7 @@
             <li><a href="soc.html"><b>El SOC en directe</b><span>Una demostració amb dades simulades del que veiem cada dia.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="preguntas.html"><b>Preguntes i preus</b><span>El que ens pregunten, un glossari sense argot i preus orientatius.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="kairos.html"><b>La idea</b><span>Per què KAIRON es diu així i què significa el seu emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>Com està muntat</b><span>El laboratori del projecte per dins: xarxes, màquines i mesures de seguretat.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           </ul>
         </nav>
       </div>
@@ -372,9 +408,9 @@
   <!-- ===== PIE ===== -->
   <footer class="pie">
     <div class="contenedor">
-      <span class="pie__gigante" aria-hidden="true"><img src="../img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <span class="pie__gigante" aria-hidden="true"><img src="../img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
       <div class="pie__fila">
-        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
         <ul class="pie__redes">
           <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
           <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>

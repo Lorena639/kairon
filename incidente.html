@@ -90,6 +90,7 @@
     <a href="#linea" data-seccion="linea"><span>Minuto a minuto</span></a>
     <a href="#custodia" data-seccion="custodia"><span>Cadena de custodia</span></a>
     <a href="#sin-vigilancia" data-seccion="sin-vigilancia"><span>Sin vigilancia</span></a>
+    <a href="#demo" data-seccion="demo"><span>En el laboratorio</span></a>
   </nav>
 
   <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
@@ -103,7 +104,7 @@
   <header class="cabecera">
     <div class="contenedor cabecera__contenido">
       <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
-        <img class="logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON">
+        <img class="logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
       </a>
       <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
       <nav aria-label="Menú principal">
@@ -129,7 +130,7 @@
       <div class="contenedor">
         <h1 class="pagina__titulo revelar" id="titulo-pagina">Anatomía de un incidente</h1>
         <p class="pagina__intro">Un correo falso, un clic y cuarenta minutos. Así se ve por dentro, minuto a minuto, un ataque que se para a tiempo, y lo que ves tú desde tu despacho mientras ocurre.</p>
-        <p class="det-aviso">Caso de ejemplo KAIRON-0428. La empresa, los nombres, las horas y las direcciones son ficticios: es el mismo caso del <a class="det-enlace" href="informe.html">informe de ejemplo</a>.</p>
+        <p class="det-aviso">Caso de ejemplo KAIRON-0428. La empresa, los nombres, las horas y las direcciones son ficticios: es el mismo caso del <a class="det-enlace" href="informe.html">informe de ejemplo</a>. Ocurre un jueves por la mañana, con analistas de servicio: fuera de horario, la detección y el bloqueo automático funcionan igual y la revisión humana llega a primera hora.</p>
       </div>
     </section>
 
@@ -197,7 +198,7 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>Lo que pasa dentro</h4>
-                    <p>Se aísla WS-03 de la red: sigue encendido, pero no puede hablar con ningún otro equipo. En el <dfn>cortafuegos</dfn> (el filtro entre tu red e internet) se bloquea la dirección del atacante.</p>
+                    <p>La respuesta activa de Wazuh aísla WS-03 de la red: sigue encendido, pero no puede hablar con ningún otro equipo. En el <dfn>cortafuegos</dfn> (el filtro entre tu red e internet) se bloquea la dirección del atacante.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>Lo que ves tú</h4>
@@ -209,8 +210,8 @@
 
             <li class="det-linea__momento" id="forense">
               <div class="det-linea__tiempo">
-                <span class="det-linea__hora mono">00:09</span>
-                <time class="det-linea__utc" datetime="2026-10-29T09:49:00Z">09:49 UTC</time>
+                <span class="det-linea__hora mono">00:05</span>
+                <time class="det-linea__utc" datetime="2026-10-29T09:45:00Z">09:45 UTC</time>
               </div>
               <div>
                 <h3 class="det-linea__titulo">Forense</h3>
@@ -218,11 +219,11 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>Lo que pasa dentro</h4>
-                    <p>La herramienta propia de KAIRON recoge seis evidencias: programas en marcha, conexiones, usuarios, tareas programadas, una copia del archivo y el registro de eventos. Cada una queda sellada con su hora, su número de caso y su huella.</p>
+                    <p>Entre las 09:45 y las 09:47, la herramienta propia de KAIRON recoge seis evidencias: programas en marcha, conexiones, usuarios, tareas programadas, una copia del archivo y el registro de eventos. Cada una queda sellada con su hora, su número de caso y su huella.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>Lo que ves tú</h4>
-                    <p>En el minuto 12, una llamada a dirección: qué ha pasado, que está contenido y lo único que hay que hacer hoy, que esa persona cambie sus contraseñas desde otro equipo.</p>
+                    <p>En el minuto 12, a las 09:52, una llamada a dirección: qué ha pasado, que está contenido y lo único que hay que hacer hoy, que esa persona cambie sus contraseñas desde otro equipo.</p>
                   </div>
                 </div>
               </div>
@@ -231,7 +232,7 @@
             <li class="det-linea__momento" id="informe">
               <div class="det-linea__tiempo">
                 <span class="det-linea__hora mono">00:40</span>
-                <time class="det-linea__utc" datetime="2026-10-29T10:20:00Z">10:20 UTC</time>
+                <time class="det-linea__utc" datetime="2026-10-29T14:05:00Z">firmado a las 14:05 UTC</time>
               </div>
               <div>
                 <h3 class="det-linea__titulo">Informe</h3>
@@ -239,11 +240,11 @@
                 <div class="det-linea__vistas">
                   <div>
                     <h4>Lo que pasa dentro</h4>
-                    <p>Se ordena la cronología, se anota por dónde entró el ataque y hasta dónde llegó, y se escriben las recomendaciones para que no se repita.</p>
+                    <p>A los 40 minutos la herramienta ya ha generado el informe con la cronología y las evidencias. La analista lo revisa, anota por dónde entró el ataque y hasta dónde llegó, y escribe las recomendaciones.</p>
                   </div>
                   <div class="det-linea__cliente">
                     <h4>Lo que ves tú</h4>
-                    <p>Un primer informe en tu correo: una página de resumen para dirección y la cronología. El informe completo, con las evidencias y firmado, llega ese mismo día. <a class="det-enlace" href="informe.html">Mira el informe de este caso</a>.</p>
+                    <p>El informe llega ese mismo día, firmado a las 14:05 UTC: una página de resumen para dirección, la cronología y las evidencias con su huella. <a class="det-enlace" href="informe.html">Mira el informe de este caso</a>.</p>
                   </div>
                 </div>
               </div>
@@ -301,7 +302,7 @@
             <thead><tr><th scope="col">Hora (UTC)</th><th scope="col">Quién</th><th scope="col">Qué hace</th></tr></thead>
             <tbody>
               <tr><td>09:46:48</td><td>A. L. Cracana</td><td>Recoge el archivo y calcula su huella</td></tr>
-              <tr><td>09:49:10</td><td>A. L. Cracana</td><td>Vuelve a calcular la huella: coincide</td></tr>
+              <tr><td>09:47:40</td><td>A. L. Cracana</td><td>Al acabar la recogida, vuelve a calcular la huella: coincide</td></tr>
               <tr><td>14:05:00</td><td>KAIRON SOC</td><td>La adjunta al informe, en solo lectura</td></tr>
             </tbody>
           </table>
@@ -342,6 +343,40 @@
       </div>
     </section>
 
+    <!-- ===== LO QUE SE DEMUESTRA EN EL LABORATORIO: los dos ataques reales del proyecto (capítulo 2, apartado 2.4.2) ===== -->
+    <section class="det-seccion det-seccion--borde" id="demo" aria-labelledby="titulo-demo">
+      <div class="contenedor">
+        <h2 class="det-h2" id="titulo-demo">Lo que se demuestra en el laboratorio del proyecto</h2>
+        <p class="det-entrada">El caso de arriba es un ejemplo contado desde el lado del cliente. En el laboratorio del proyecto, el equipo ataca sus propias máquinas y mide cuánto tarda cada paso.</p>
+        <p class="det-prosa">Son dos ataques, siempre dentro de una red aislada y con máquinas propias. Los tiempos son los objetivos que se medirán en el ensayo.</p>
+
+        <div class="det-demo">
+          <article>
+            <h3 class="det-h3">Ataque 1: contraseñas a la fuerza contra un servidor</h3>
+            <p class="det-prosa">Un ataque de <dfn>fuerza bruta</dfn> prueba contraseñas una tras otra hasta acertar. Aquí va contra <dfn>SSH</dfn>, la puerta de acceso remoto de un servidor Linux.</p>
+            <ol class="det-cronica">
+              <li><b>T+0 s</b><span>Desde Kali, la máquina atacante, el programa Hydra lanza intentos de acceso contra el servidor Ubuntu. Pasan por pfSense, el cortafuegos del laboratorio.</span></li>
+              <li><b>T+1 a 20 s</b><span>El servidor anota cada intento fallido en su registro.</span></li>
+              <li><b>T+≈20 s</b><span>El agente de Wazuh lee ese registro y lo envía cifrado al SOC.</span></li>
+              <li><b>T+≈25 s</b><span>La regla propia 100100 (5 fallos en 60 segundos desde la misma dirección) dispara una alerta de nivel 10.</span></li>
+              <li class="det-cronica__oro"><b>T+≈30 s</b><span>La alerta aparece en el panel y se avisa al analista. La respuesta activa bloquea la dirección atacante durante 10 minutos, sin intervención humana.</span></li>
+              <li><b>T+1 a 5 min</b><span>El analista confirma que el incidente es real y lanza la herramienta forense en el equipo afectado.</span></li>
+              <li><b>T+≈10 min</b><span>La herramienta recoge procesos, conexiones, usuarios, inicios de sesión y persistencia. Cada prueba lleva hora UTC, número de caso y SHA-256.</span></li>
+              <li><b>T+≈40 min</b><span>Se genera el informe, en JSON y en Markdown, con la cronología, las evidencias y las recomendaciones.</span></li>
+            </ol>
+          </article>
+
+          <article>
+            <h3 class="det-h3">Ataque 2: un programa que se queda a vivir en Windows</h3>
+            <p class="det-prosa">Es el mismo recorrido, en un equipo Windows. Un ejecutable simulado crea su <dfn>persistencia</dfn>, la forma de volver a arrancar solo: una tarea programada o una clave Run del registro de Windows.</p>
+            <p class="det-prosa"><dfn>Sysmon</dfn>, una herramienta de Microsoft que registra con detalle los programas y las conexiones, y la vigilancia del registro envían los eventos a Wazuh. La regla de persistencia genera la alerta.</p>
+            <p class="det-prosa">El correo de la factura falsa de esta página es este segundo ataque, contado como le ocurriría a un cliente.</p>
+            <p class="det-prosa"><a href="laboratorio.html">Cómo está montado el laboratorio</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== CIERRE: contacto y páginas relacionadas ===== -->
     <section class="det-cierre" aria-labelledby="titulo-cierre">
       <div class="contenedor">
@@ -363,6 +398,7 @@
             <li><a href="soc.html"><b>El SOC en vivo</b><span>Una demostración con datos simulados de lo que vemos cada día.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="preguntas.html"><b>Preguntas y precios</b><span>Lo que nos preguntan, un glosario sin jerga y precios orientativos.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
             <li><a href="kairos.html"><b>La idea</b><span>Por qué KAIRON se llama así y qué significa su emblema.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+            <li><a href="laboratorio.html"><b>Cómo está montado</b><span>El laboratorio del proyecto por dentro: redes, máquinas y medidas de seguridad.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           </ul>
         </nav>
       </div>
@@ -373,9 +409,9 @@
   <!-- ===== PIE ===== -->
   <footer class="pie">
     <div class="contenedor">
-      <span class="pie__gigante" aria-hidden="true"><img src="img/kairon-wordmark-dorado.png" alt="" width="560" height="118" loading="lazy" decoding="async"></span>
+      <span class="pie__gigante" aria-hidden="true"><img src="img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
       <div class="pie__fila">
-        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/kairon-logo-horizontal-dorado-440.png" width="180" height="60" alt="KAIRON"></span>
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
         <ul class="pie__redes">
           <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
           <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>

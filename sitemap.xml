@@ -70,6 +70,11 @@
     <xhtml:link rel="alternate" hreflang="ca" href="ca/preguntas.html"/>
   </url>
   <url>
+    <loc>laboratorio.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="laboratorio.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="ca/laboratorio.html"/>
+  </url>
+  <url>
     <loc>productos.html</loc>
     <xhtml:link rel="alternate" hreflang="es" href="productos.html"/>
     <xhtml:link rel="alternate" hreflang="ca" href="ca/productos.html"/>
