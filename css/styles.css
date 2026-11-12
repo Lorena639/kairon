@@ -4092,3 +4092,72 @@ main, .pie { overflow-x: clip; }
   .servicio__datos li, .formulario__campo label, .filtro, .boton__texto, .paso__hora, .panel__sim, .pie__latencia, .pie__reloj,
   .panel__cabecera span, .filtro b, .pie__estado span { font-size: 12px; }
 }
+
+/* ---------- 30. Transiciones entre páginas (View Transitions API) ----------
+   Al pulsar un enlace a otra página de KAIRON, el navegador hace una captura de la página que se va
+   y de la que llega y las anima con CSS. Sin JavaScript y sin bloquear la navegación.
+   - La página que se va retrocede y se desenfoca.
+   - La que llega se abre desde el centro como el diafragma de un objetivo: el "instante justo".
+   - El logo de la cabecera es el mismo elemento en las dos páginas: se queda quieto (no se redibuja).
+   Navegadores sin soporte: navegación normal, con la cortina de main.js como respaldo. */
+@view-transition {
+  navigation: auto;
+}
+
+.cabecera .logo {
+  view-transition-name: kairon-logo;
+}
+
+::view-transition-old(root) {
+  animation: vt-salida 0.5s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-apertura 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+::view-transition-group(kairon-logo) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes vt-salida {
+  to {
+    opacity: 0.25;
+    transform: scale(0.94);
+    filter: blur(8px) brightness(0.6);
+  }
+}
+
+@keyframes vt-apertura {
+  from {
+    clip-path: circle(0% at 50% 50%);
+    filter: brightness(1.6) saturate(1.2);
+  }
+  to {
+    clip-path: circle(75% at 50% 50%);
+    filter: none;
+  }
+}
+
+/* Con "reducir movimiento" solo hay un fundido corto, sin desplazamientos */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: vt-fundido 0.2s ease both;
+  }
+  ::view-transition-old(root) {
+    animation-direction: reverse;
+  }
+}
+
+@keyframes vt-fundido {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Líneas del titular partidas por SplitText: la máscara no debe recortar acentos ni descendentes */
+.titular-linea {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
