@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -21,21 +21,34 @@
     <div class="hero__escena" aria-hidden="true"></div>
     <div class="contenedor error404__contenido">
       <span class="oro-metal oro-metal--emblema"><img src="img/relieve/kairon-relieve-mini.png" width="96" height="96" alt="" class="carga__emblema"></span>
-      <span class="mono">Error 404 · señal perdida</span>
-      <h1 class="hero__titulo"><span class="linea"><span>Nada por</span></span><span class="linea"><em class="oro-brillo">aquí</em></span></h1>
+      <h1 data-partido="1">Nada por <em>aquí</em></h1>
       <p class="hero__sub">La página que buscas no existe o ha cambiado de sitio. El radar no la encuentra.</p>
+      <ul class="pi-datos" aria-label="Qué ha pasado"><li>Error 404</li><li>Señal perdida</li><li>Ningún dato se ha enviado</li></ul>
       <div class="hero__acciones">
-        <a href="index.html" class="boton boton--lleno">Volver al inicio</a>
-        <a href="contacto.html#contacto" class="boton">Contactar</a>
+        <a href="index.html" class="boton boton--lleno"><span class="boton__texto" data-texto="Volver al inicio">Volver al inicio</span></a>
+        <a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a>
       </div>
+      <!-- Salidas: las páginas principales, para no quedarse en un callejón -->
+      <nav aria-label="Otras páginas">
+        <ul class="pi-salidas">
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="soc.html">SOC en vivo</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="futuro.html">Futuro</a></li>
+          <li><a href="sobre-mi.html">Equipo</a></li>
+        </ul>
+      </nav>
     </div>
   </main>
 
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

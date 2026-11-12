@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -43,10 +43,10 @@
       <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
       <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
-      <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
+      <li><a href="sobre-mi.html" aria-current="page"><span class="mono">06</span>Equipo</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -89,7 +89,7 @@
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="futuro.html">Futuro</a></li>
           <li><a href="sobre-mi.html" aria-current="page">Equipo</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
         </ul>
       </nav>
     </div>
@@ -101,14 +101,14 @@
     <section class="pagina" aria-labelledby="titulo-equipo">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Sobre nosotros</span>
-        <h1 class="pagina__titulo revelar" id="titulo-equipo">Quién <span class="oro-brillo">vigila</span></h1>
+        <h1 class="pagina__titulo" id="titulo-equipo" data-partido="1">Quién <em>vigila</em></h1>
         <p class="pagina__intro">Dos perfiles complementarios, seguridad y desarrollo. Estudiantes de 2º de CFGM Sistemes Microinformàtics i Xarxes (SMX) en Digitech, Barcelona.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li>2º de SMX · Digitech Barcelona</li><li>TFG 2026–2027</li><li>Seguridad y desarrollo</li></ul>
 
         <div class="equipo__lista">
 
           <!-- Lorena: ciberseguridad y análisis forense -->
-          <article class="persona revelar" aria-labelledby="nombre-lorena">
+          <article class="persona" aria-labelledby="nombre-lorena">
             <img class="persona__avatar" src="img/avatar-lorena.svg" width="88" height="88" alt="Avatar de Lorena" loading="lazy" decoding="async">
             <h3 id="nombre-lorena"><a href="antonia-lorena-cracana/">Antonia Lorena Cracana</a></h3>
             <p class="persona__rol mono">Ciberseguridad y análisis forense</p>
@@ -123,7 +123,7 @@
           </article>
 
           <!-- Dani: desarrollo web y sistemas -->
-          <article class="persona revelar" aria-labelledby="nombre-dani">
+          <article class="persona" aria-labelledby="nombre-dani">
             <img class="persona__avatar" src="img/avatar-dani.svg" width="88" height="88" alt="Avatar de João Daniel" loading="lazy" decoding="async">
             <h3 id="nombre-dani">João Daniel de Paiva Oliveira</h3>
             <p class="persona__rol mono">Desarrollo web y sistemas</p>
@@ -149,13 +149,13 @@
     <!-- ===== HOJA DE RUTA DEL PROYECTO ===== -->
     <section class="ruta" aria-labelledby="titulo-ruta">
       <div class="contenedor">
-        <span class="mono">Hoja de ruta · TFG 2026-2027</span>
-        <h2 class="equipo__titulo revelar" id="titulo-ruta">Cómo lo estamos construyendo</h2>
+        <h2 class="equipo__titulo" id="titulo-ruta" data-partido="1">Cómo lo estamos construyendo</h2>
+        <p class="pi-sello mono">Hoja de ruta · TFG 2026-2027</p>
         <ol class="ruta__lista">
-          <li class="ruta__hito revelar"><span class="mono">Nov 2026</span><h3>Web y laboratorio</h3><p>Web corporativa KAIRON y red virtual con Wazuh, servidor Linux, equipos Windows y máquina atacante.</p></li>
-          <li class="ruta__hito revelar"><span class="mono">Nov–Dic 2026</span><h3>Detección y herramienta forense</h3><p>Ataques simulados detectados por Wazuh y herramienta en Python que recoge pruebas con cadena de custodia.</p></li>
-          <li class="ruta__hito revelar"><span class="mono">Ene 2027</span><h3>Caso completo</h3><p>Demo de principio a fin: ataque, alerta, contención, recogida de pruebas e informe.</p></li>
-          <li class="ruta__hito revelar"><span class="mono">Feb–Mar 2027</span><h3>Presentación</h3><p>Memoria, ensayo y defensa. Líneas futuras: KAIRON Data Chip, identidad y trazabilidad por dato.</p></li>
+          <li class="ruta__hito"><span class="mono">Nov 2026</span><h3>Web y laboratorio</h3><p>Web corporativa KAIRON y red virtual con Wazuh, servidor Linux, equipos Windows y máquina atacante.</p></li>
+          <li class="ruta__hito"><span class="mono">Nov–Dic 2026</span><h3>Detección y herramienta forense</h3><p>Ataques simulados detectados por Wazuh y herramienta en Python que recoge pruebas con cadena de custodia.</p></li>
+          <li class="ruta__hito"><span class="mono">Ene 2027</span><h3>Caso completo</h3><p>Demo de principio a fin: ataque, alerta, contención, recogida de pruebas e informe.</p></li>
+          <li class="ruta__hito"><span class="mono">Feb–Mar 2027</span><h3>Presentación</h3><p>Memoria, ensayo y defensa. Líneas futuras: KAIRON Data Chip, identidad y trazabilidad por dato.</p></li>
         </ol>
       </div>
     </section>
@@ -163,28 +163,25 @@
     <!-- ===== VALORES Y VISIÓN ===== -->
     <section class="valores" aria-labelledby="titulo-valores">
       <div class="contenedor">
-        <span class="mono">Valores y visión</span>
-        <h2 class="equipo__titulo revelar" id="titulo-valores">Cómo entendemos la seguridad</h2>
+        <h2 class="equipo__titulo" id="titulo-valores" data-partido="1">Valores y visión</h2>
+        <p class="pi-entradilla">Cómo entendemos la seguridad.</p>
 
         <div class="valores__lista">
-          <article class="valor revelar">
-            <span class="mono">01</span>
+          <article class="valor">
             <h3>En el momento justo</h3>
             <p>Kairos, el instante oportuno. Detectar pronto y actuar a tiempo vale más que cualquier herramienta cara.</p>
           </article>
-          <article class="valor revelar">
-            <span class="mono">02</span>
+          <article class="valor">
             <h3>Pruebas, no suposiciones</h3>
             <p>Cada afirmación de un informe se apoya en una evidencia con hora, número de caso y huella SHA-256.</p>
           </article>
-          <article class="valor revelar">
-            <span class="mono">03</span>
+          <article class="valor">
             <h3>Claridad</h3>
             <p>Si la dirección no entiende el informe, no sirve. Hablamos claro y explicamos el porqué de cada medida.</p>
           </article>
         </div>
 
-        <p class="vision revelar">Nuestra visión: que cualquier pyme, sin departamento de seguridad, tenga la misma vigilancia y la misma capacidad de respuesta que una gran empresa.</p>
+        <p class="vision">Nuestra visión: que cualquier persona o empresa pequeña, sin departamento de seguridad, tenga la misma vigilancia y la misma capacidad de respuesta que una gran empresa.</p>
       </div>
     </section>
 
@@ -215,13 +212,15 @@
     </div>
   </footer>
 
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/polvo.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

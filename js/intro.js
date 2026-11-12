@@ -4,8 +4,9 @@
    2. Del punto sale un vórtice de partículas que forja el logo en relieve
       (las posiciones salen de leer los píxeles del PNG oficial en un canvas; el logo no se redibuja).
    3. Las partículas se funden con el logo real y un barrido de luz cruza sus biseles.
-   4. Zambullida: el velo se disuelve y la cámara de la escena 3D (js/mundo.js) arranca justo donde
-      estaba el emblema, de modo que el emblema pasa a ser el centro del globo del radar. Sin corte.
+   4. Zambullida: el emblema 3D de la escena (js/mundo.js) aparece calcado sobre el del logo (misma caja,
+      mismos píxeles), el logo 2D se desvanece y la cámara se retira: el emblema ya es el centro del
+      globo del radar. Sin corte y sin salto.
       (Si no hay escena 3D, el logo vuela a la cabecera como antes.)
    Se puede saltar con clic, tecla, rueda o toque; solo se ve una vez por sesión y un temporizador
    de seguridad garantiza que nunca se queda colgada.
@@ -148,21 +149,24 @@
     ctx.globalCompositeOperation = "source-over";
   }
 
-  // Zambullida: el logo se disuelve creciendo un poco y la escena 3D arranca desde su emblema
+  // Zambullida: la escena 3D arranca con su emblema exactamente encima del emblema de este logo (misma
+  // posición, misma escala y los mismos píxeles: los dos salen del mismo PNG). El logo 2D se queda quieto y
+  // se desvanece; cuando ya solo se ve el emblema 3D, la cámara se retira y el globo crece a su alrededor.
   function zambullir() {
     const mundo = window.kaironMundo;
     if (!document.querySelector(".mundo") || !mundo || mundo.ligero) return false;
-    carga.classList.add("intro-zambullida");
-    // Caja del emblema dentro del PNG del logo (el resto es el nombre)
-    mundo.entrada({ left: objetivo.x + objetivo.w * 0.09, top: objetivo.y + objetivo.h * 0.005, width: objetivo.w * 0.82, height: objetivo.h * 0.695 });
-    // Se parte de la escala que lleve en ese momento (la animación CSS de acercamiento manda sobre el estilo)
+    // Se congela la escala que lleve el logo en ese momento (la animación CSS de acercamiento manda sobre el estilo)
     const escalaActual = getComputedStyle(logoFinal).transform;
     logoFinal.style.animation = "none";
-    logoFinal.style.transformOrigin = "50% 36%";
     logoFinal.style.transform = escalaActual === "none" ? "scale(1)" : escalaActual;
+    const img = logoFinal.querySelector("img") || logoFinal;
+    const r = img.getBoundingClientRect(); // ya incluye la escala congelada
+    const c = mundo.recorte || { w: 546, h: 482, x: 45, y: 0, rw: 431, rh: 360 };
+    carga.classList.add("intro-zambullida");
+    mundo.entrada({ left: r.left + r.width * (c.x / c.w), top: r.top + r.height * (c.y / c.h), width: r.width * (c.rw / c.w), height: r.height * (c.rh / c.h) });
     void logoFinal.offsetWidth; // fuerza el estilo de partida antes de la transición
-    logoFinal.style.transition = "transform 0.7s cubic-bezier(0.3, 0, 0.6, 1), opacity 0.45s ease 0.05s";
-    logoFinal.style.transform = "scale(1.22)";
+    // El velo se aclara en 0,28 s (CSS); el logo 2D empieza a irse cuando ya se ve el emblema 3D debajo
+    logoFinal.style.transition = "opacity 0.32s cubic-bezier(0.4, 0, 0.6, 1) 0.22s";
     logoFinal.style.opacity = "0";
     return true;
   }

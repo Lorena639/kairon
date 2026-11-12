@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El moment just">
-  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
   <meta property="og:image" content="../img/og-image.jpg">
   <title>Contacte · KAIRON</title>
   <link rel="icon" href="../img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
     "url": "ca/index.html",
     "logo": "../img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -58,14 +58,13 @@
     <ul>
       <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
       <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
-      <li><a href="productos.html">Productes</a></li>
       <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
       <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
-      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+      <li><a href="contacto.html#contacto" aria-current="page"><span class="mono">07</span>Contacte</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -115,7 +114,7 @@
           <li><a href="proyectos.html">Projectes</a></li>
           <li><a href="futuro.html">Futur</a></li>
           <li><a href="sobre-mi.html">Equip</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
         </ul>
       </nav>
     </div>
@@ -126,17 +125,17 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Contacte</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">Parlem de <span class="oro-brillo">la teva xarxa</span></h1>
-        <p class="pagina__intro">Preguntes freqüents i sol·licitud d'auditoria.</p>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Parlem de <em>la teva xarxa</em></h1>
+        <p class="pagina__intro">Explica'ns quins equips tens i què et preocupa. Et responem sense tecnicismes, de dilluns a divendres.</p>
+        <ul class="pi-datos" aria-label="En resum"><li>Resposta: dilluns a divendres, 9–19 h</li><li>Sense galetes ni rastrejadors</li><li class="pi-datos__aviso">Formulari de demostració</li></ul>
       </div>
     </section>
 
     <section class="plan-vision">
       <div class="contenedor">
         <div class="vision__bloque">
-          <h2 class="revelar">Després d'escriure'ns</h2>
-          <ol class="viaje"><li><b>T'escoltem</b><br>Quina empresa tens i què et preocupa.</li><li><b>Auditoria inicial</b><br>Revisem el bàsic i t'expliquem els riscos.</li><li><b>Proposta</b><br>Per on començar, sense tecnicismes.</li></ol>
+          <h2>Després d'escriure'ns</h2>
+          <ol class="viaje pi-hilo"><li><b>T'escoltem</b><br>Quins equips tens i què et preocupa.</li><li><b>Primera revisió</b><br>Revisem el bàsic i t'expliquem els riscos. Al pla Ègida és una auditoria inicial gratuïta.</li><li><b>Proposta</b><br>Per on començar, sense tecnicismes.</li></ol>
         </div>
       </div>
     </section>
@@ -145,34 +144,38 @@
     <section class="faq" id="faq" aria-labelledby="titulo-faq">
       <div class="contenedor faq__grid">
         <div>
-          <span class="mono">Preguntes freqüents</span>
-          <h2 class="equipo__titulo revelar" id="titulo-faq">El que ens pregunten</h2>
+          <h2 class="equipo__titulo" id="titulo-faq" data-partido="1">El que ens pregunten</h2>
         </div>
-        <div class="faq__lista revelar">
+        <div class="faq__lista">
           <details class="faq__item" open>
-            <summary>Què és un SOC i per què el necessita una pime?</summary>
-            <p>Un centre d'operacions de seguretat: persones i eines que vigilen els teus sistemes i responen si passa res. La majoria d'atacs a pimes entren per correu o contrasenyes febles, i sense vigilància es descobreixen setmanes després.</p>
+            <summary>Què és un SOC i per què el necessito?</summary>
+            <p>Un centre d'operacions de seguretat: persones i eines que vigilen els teus equips i responen si passa alguna cosa. La majoria d'atacs entren per correu o contrasenyes febles, i sense vigilància es descobreixen setmanes després.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Vigileu les 24 hores?</summary>
+            <p>Les alertes i el bloqueig automàtic funcionen a qualsevol hora. Els analistes treballen de dilluns a divendres, de 9 a 19 h: no prometem vigilància humana 24/7.</p>
           </details>
           <details class="faq__item">
             <summary>He d'instal·lar res?</summary>
-            <p>Un agent lleuger a cada equip (Windows o Linux) que envia l'activitat al SOC. No frena l'ordinador i no llegeix els teus documents.</p>
+            <p>Un agent lleuger a cada equip (Windows, macOS o Linux) que envia l'activitat al SOC. No alenteix l'ordinador i no llegeix els teus documents.</p>
           </details>
           <details class="faq__item">
             <summary>Què passa quan detecteu un atac?</summary>
-            <p>Primer contenim (aïllar l'equip, bloquejar la IP), recollim les proves amb cadena de custòdia i et truquem. Després reps un informe en llenguatge clar.</p>
+            <p>La resposta automàtica bloqueja l'atacant en segons. Després depèn del pla: et guiem pas a pas o un analista conté l'equip a distància, recull les proves amb cadena de custòdia i redacta l'informe en llenguatge clar.</p>
           </details>
           <details class="faq__item">
             <summary>Les proves serveixen davant d'una auditoria o una denúncia?</summary>
             <p>Cada evidència porta hora UTC, número de cas i empremta SHA-256, de manera que es pot comprovar que no ha estat alterada. <a href="informe.html">Mira un informe d'exemple</a>.</p>
           </details>
           <details class="faq__item">
-            <summary>I aquest web, està protegit?</summary>
-            <p>Sí, prediquem amb l'exemple: política de seguretat de contingut (CSP) que només permet recursos d'aquest lloc, sense scripts en línia, política de referrer estricta, enllaços externs amb <code>rel="noopener"</code>, formulari amb camp trampa anti-spam i ni una galeta ni rastrejador.</p>
+            <summary>I aquesta web, està protegida?</summary>
+            <p>Sí, prediquem amb l'exemple: política de seguretat de contingut (CSP) que només permet recursos d'aquest lloc, sense scripts en línia, política de referrer estricta, enllaços externs amb <code>rel="noopener"</code>, formulari amb camp trampa anti-spam i ni una galeta ni cap rastrejador.</p>
           </details>
           <details class="faq__item">
             <summary>Quant costa?</summary>
-            <p>Depèn del nombre d'equips. Comencem sempre amb una auditoria gratuïta per saber què tens i quin risc corres.</p>
+            <p>Des de 9,90 € al mes amb IVA inclòs (pla Vigia, 1 o 2 equips) fins al pla Ègida per a empreses, des de 590 € al mes més IVA. <a href="preguntas.html#precios">Mira la comparativa dels quatre plans</a>.</p>
           </details>
+          <p class="enlace-detalle"><a class="servicio__mas mono" href="preguntas.html">Totes les preguntes i els plans →</a></p>
         </div>
       </div>
     </section>
@@ -181,12 +184,11 @@
     <section class="contacto" id="contacto" aria-labelledby="titulo-contacto" data-fondo="HOLA">
       <div class="contenedor contacto__grid">
         <div>
-          <span class="mono">Contacte</span>
-          <h2 class="contacto__titulo revelar" id="titulo-contacto">Saps què passa <em class="oro-brillo">ara</em> a la teva xarxa?</h2>
-          <p class="hero__sub revelar" style="margin-top:24px">Et fem una auditoria inicial gratuïta i t'expliquem, sense tecnicismes, per on començar.</p>
+          <h2 class="contacto__titulo" id="titulo-contacto" data-partido="1">Saps què passa <em>ara</em> a la teva xarxa?</h2>
+          <p class="hero__sub contacto__sub">Explica'ns quins equips tens i et diem, sense tecnicismes, per on començar. L'auditoria inicial és gratuïta al pla Ègida per a empreses.</p>
         </div>
 
-        <form class="formulario revelar" action="#" method="post" novalidate>
+        <form class="formulario" action="#" method="post" novalidate>
           <div class="formulario__campo">
             <label for="nombre">Nom</label>
             <input type="text" id="nombre" name="nombre" autocomplete="name" required>
@@ -196,7 +198,7 @@
             <input type="email" id="email" name="email" autocomplete="email" required>
           </div>
           <div class="formulario__campo">
-            <label for="empresa">Empresa</label>
+            <label for="empresa">Empresa (opcional)</label>
             <input type="text" id="empresa" name="empresa" autocomplete="organization">
           </div>
           <div class="formulario__campo formulario__trampa" aria-hidden="true">
@@ -208,7 +210,7 @@
             <textarea id="mensaje" name="mensaje" required></textarea>
           </div>
           <p class="formulario__aviso" role="status" hidden></p>
-          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Demanar auditoria gratuïta">Demanar auditoria gratuïta</span></button>
+          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Demanar una auditoria">Demanar una auditoria</span></button>
         </form>
       </div>
     </section>
@@ -241,15 +243,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="../js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="../js/intro.js?v=20261112b" defer></script>
-  <script src="../js/escena.js?v=20261112b" defer></script>
-  <script src="../js/visuales.js?v=20261112b" defer></script>
-  <script src="../js/polvo.js?v=20261112b" defer></script>
-  <script src="../js/main.js?v=20261112b" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/intro.js?v=20261112c" defer></script>
+  <script src="../js/escena.js?v=20261112c" defer></script>
+  <script src="../js/visuales.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

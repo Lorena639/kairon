@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El momento justo">
-  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
   <meta property="og:image" content="img/og-image.jpg">
   <title>Lo que hacemos y cómo lo hacemos · KAIRON</title>
   <link rel="icon" href="img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
     "url": "index.html",
     "logo": "img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -56,7 +56,7 @@
   <!-- Menú móvil a pantalla completa -->
   <div class="menu-movil" id="menu-movil" aria-hidden="true">
     <ul>
-      <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
+      <li><a href="servicios.html" aria-current="page"><span class="mono">01</span>Servicios</a></li>
       <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
       <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
@@ -64,7 +64,7 @@
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -114,7 +114,7 @@
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="futuro.html">Futuro</a></li>
           <li><a href="sobre-mi.html">Equipo</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
         </ul>
       </nav>
     </div>
@@ -125,33 +125,51 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Servicios y método</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">Detectar, responder, <span class="oro-brillo">demostrar</span></h1>
-        <p class="pagina__intro">Tres capacidades y un método de cuatro pasos para pymes sin equipo de seguridad propio.</p>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Detectar, responder, <em>demostrar</em></h1>
+        <p class="pagina__intro">Cinco servicios y un método de cuatro pasos para particulares, autónomos y empresas sin equipo de seguridad propio.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li>5 servicios</li><li>Método de 4 pasos</li><li>Alertas automáticas a cualquier hora</li><li>Analistas: lunes a viernes, 9–19 h</li></ul>
       </div>
     </section>
 
-    <section class="detalle" id="servicios">
+    <section class="detalle pi-serv" id="servicios" aria-label="Servicios">
       <div class="contenedor">
-        <p class="plan-aviso mono">KAIRON es un proyecto académico: esto describe cómo se prestaría cada servicio. Los datos de las demostraciones son simulados.</p>
+        <p class="plan-aviso mono">KAIRON es un proyecto académico: esto describe cómo se prestaría cada servicio. Las alertas y el bloqueo automático funcionan a cualquier hora; los analistas trabajan de lunes a viernes, de 9 a 19 h. Los datos de las demostraciones son simulados.</p>
+        <div class="pi-serv__rejilla">
+          <!-- Índice fijo: marca el servicio que se está leyendo; el visor cambia de dibujo (js/paginas.js y js/visuales.js) -->
+          <nav class="pi-serv__rail" aria-label="Los cinco servicios">
+            <div class="pi-serv__visor" aria-hidden="true">
+              <canvas data-visual="radar"></canvas>
+              <canvas data-visual="escudo"></canvas>
+              <canvas data-visual="informe"></canvas>
+              <canvas data-visual="auditoria"></canvas>
+              <canvas data-visual="formacion"></canvas>
+            </div>
+            <ol class="pi-serv__indice">
+              <li><a href="#detectar">Detectar</a></li>
+              <li><a href="#responder">Responder</a></li>
+              <li><a href="#demostrar">Demostrar</a></li>
+              <li><a href="#auditar">Auditar</a></li>
+              <li><a href="#formar">Formar</a></li>
+              <li class="pi-serv__avance" aria-hidden="true"></li>
+            </ol>
+          </nav>
+          <div class="pi-serv__lista">
         <article class="detalle__serv" id="detectar">
-          <span class="detalle__num mono">01</span>
           <div>
-            <span class="mono">Vigilancia y detección</span>
-            <h2 class="revelar">Detectar</h2>
+            <h2>Detectar</h2>
+            <p class="pi-sello mono">Vigilancia y detección</p>
             <p class="vision__texto">Un agente ligero en cada equipo envía la actividad a un SIEM (el sistema que reúne y analiza los registros). Las reglas separan el ruido de lo que importa, para que un ataque se vea en minutos y no semanas después.</p>
             <div class="detalle__col">
-              <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Agentes de Wazuh en Windows y Linux</li><li>Reglas propias para fuerza bruta, malware y persistencia</li><li>Supervisión de accesos e integridad de archivos</li><li>Revisión de alertas y descarte de falsos positivos</li><li>Paneles con el estado de los equipos</li></ul></div>
+              <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Agentes de Wazuh en Windows, macOS y Linux</li><li>Reglas propias para fuerza bruta, malware y persistencia</li><li>Supervisión de accesos e integridad de archivos</li><li>Revisión de alertas y descarte de falsos positivos</li><li>Paneles con el estado de los equipos</li></ul></div>
               <div><h3>Cómo funciona</h3><ol class="detalle__pasos"><li>Conocemos qué equipos y datos tienes.</li><li>Instalamos los agentes sin parar tu negocio.</li><li>Ajustamos las reglas a tu actividad normal.</li><li>Vigilamos y te avisamos solo de lo importante.</li></ol></div>
             </div>
             <p class="detalle__rec"><b class="mono">Qué recibes</b>Alertas explicadas en lenguaje claro y un resumen del estado de tu seguridad.</p>
           </div>
         </article>
         <article class="detalle__serv" id="responder">
-          <span class="detalle__num mono">02</span>
           <div>
-            <span class="mono">Respuesta y análisis forense</span>
-            <h2 class="revelar">Responder</h2>
+            <h2>Responder</h2>
+            <p class="pi-sello mono">Respuesta y análisis forense</p>
             <p class="vision__texto">Cuando hay un ataque real, primero se contiene y después se investiga. Las pruebas se recogen antes de limpiar nada, porque pueden hacer falta para entender qué pasó o para una reclamación.</p>
             <div class="detalle__col">
               <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Aislamiento del equipo afectado y bloqueo de la IP atacante</li><li>Recogida de procesos, conexiones, usuarios y persistencia</li><li>Hora UTC, número de caso y hash SHA-256 de cada prueba</li><li>Cadena de custodia documentada</li><li>Reconstrucción de lo ocurrido</li></ul></div>
@@ -161,10 +179,9 @@
           </div>
         </article>
         <article class="detalle__serv" id="demostrar">
-          <span class="detalle__num mono">03</span>
           <div>
-            <span class="mono">Informes y cumplimiento</span>
-            <h2 class="revelar">Demostrar</h2>
+            <h2>Demostrar</h2>
+            <p class="pi-sello mono">Informes y cumplimiento</p>
             <p class="vision__texto">Un informe sirve si dirección lo entiende y una auditoría puede comprobarlo. Por eso cuenta qué pasó, qué se hizo y cómo evitar que se repita, sin jerga innecesaria.</p>
             <div class="detalle__col">
               <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Resumen para dirección</li><li>Cronología detallada del incidente</li><li>Lista de evidencias con su huella</li><li>Recomendaciones priorizadas</li><li>Apoyo para obligaciones del RGPD</li></ul></div>
@@ -174,11 +191,10 @@
           </div>
         </article>
         <article class="detalle__serv" id="auditar">
-          <span class="detalle__num mono">04</span>
           <div>
-            <span class="mono">Auditoría y hardening</span>
-            <h2 class="revelar">Auditar</h2>
-            <p class="vision__texto">Hardening significa endurecer un sistema: quitar lo que sobra y configurar bien lo demás para que sea más difícil de atacar. Empieza con una auditoría inicial para saber dónde estás.</p>
+            <h2>Auditar</h2>
+            <p class="pi-sello mono">Auditoría y hardening</p>
+            <p class="vision__texto">Hardening significa endurecer un sistema: quitar lo que sobra y configurar bien lo demás para que sea más difícil de atacar. Empieza con una auditoría inicial para saber dónde estás (gratuita en el plan Égida).</p>
             <div class="detalle__col">
               <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Inventario de equipos y servicios expuestos</li><li>Análisis de vulnerabilidades</li><li>Revisión de cortafuegos, usuarios y permisos</li><li>Contraseñas y copias de seguridad</li><li>Corrección de los problemas encontrados</li></ul></div>
               <div><h3>Cómo funciona</h3><ol class="detalle__pasos"><li>Revisamos tu red y tus equipos.</li><li>Ordenamos los riesgos por importancia.</li><li>Corregimos los problemas contigo.</li><li>Comprobamos que ha quedado bien.</li></ol></div>
@@ -187,10 +203,9 @@
           </div>
         </article>
         <article class="detalle__serv" id="formar">
-          <span class="detalle__num mono">05</span>
           <div>
-            <span class="mono">Concienciación y formación</span>
-            <h2 class="revelar">Formar</h2>
+            <h2>Formar</h2>
+            <p class="pi-sello mono">Concienciación y formación</p>
             <p class="vision__texto">La mayoría de los ataques entra por un correo o una contraseña débil. Formar a la plantilla es de las medidas que más riesgo reduce, y no hace falta que nadie sea técnico.</p>
             <div class="detalle__col">
               <div><h3>Qué incluye</h3><ul class="detalle__lista"><li>Reconocer correos de phishing</li><li>Contraseñas seguras y doble factor</li><li>Qué hacer si algo parece raro</li><li>Sesiones adaptadas a cada equipo</li><li>Ejercicios prácticos</li></ul></div>
@@ -199,6 +214,8 @@
             <p class="detalle__rec"><b class="mono">Qué recibes</b>Una plantilla que sabe detectar un engaño y a quién avisar.</p>
           </div>
         </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -207,7 +224,6 @@
       <div class="topografia" aria-hidden="true"></div>
       <div class="contenedor metodo__grid">
         <div class="metodo__fijo">
-          <span class="mono">El método KAIRON</span>
           <h2 class="metodo__titulo" id="titulo-metodo">Vigilar. <br>Actuar. <br><span class="metodo__destacado">Demostrar.</span></h2>
           <div class="metodo__emblema">
             <img src="img/kairon-emblema-oro_oscuro.png" width="260" height="243" alt="" loading="lazy" decoding="async">
@@ -217,22 +233,23 @@
         </div>
         <ol class="metodo__pasos">
           <li class="metodo__paso" data-n="01">
-            <h3>Conocer tu empresa</h3>
-            <p>Auditoría inicial gratuita: qué equipos tienes, qué datos importan y por dónde te podrían atacar. Sin tecnicismos.</p>
+            <h3>Conocer tus equipos</h3>
+            <p>Una primera revisión: qué equipos tienes, qué datos importan y por dónde te podrían atacar. Sin tecnicismos. En el plan Égida es una auditoría inicial gratuita.</p>
           </li>
           <li class="metodo__paso" data-n="02">
             <h3>Instalar la vigilancia</h3>
-            <p>Un agente ligero en cada equipo envía la actividad al SOC. Reglas ajustadas a tu negocio para que las alertas importen.</p>
+            <p>Un agente ligero en cada equipo envía la actividad al SOC. Reglas ajustadas a tu caso para que las alertas importen.</p>
           </li>
           <li class="metodo__paso" data-n="03">
-            <h3>Responder en minutos</h3>
-            <p>Contención inmediata, llamada a dirección y recogida de pruebas con cadena de custodia mientras el ataque aún está caliente.</p>
+            <h3>Responder a tiempo</h3>
+            <p>El bloqueo automático actúa en segundos y a cualquier hora. El analista confirma el incidente, te avisa y recoge las pruebas con cadena de custodia.</p>
           </li>
           <li class="metodo__paso" data-n="04">
             <h3>Demostrarlo con un informe</h3>
             <p>Cronología, evidencias con SHA-256 y recomendaciones claras. Lo que necesita una auditoría y lo que entiende una gerencia.</p>
           </li>
         </ol>
+        <p class="enlace-detalle"><a class="servicio__mas mono" href="metodo.html">El método paso a paso →</a> <a class="servicio__mas mono" href="preguntas.html#precios">Planes y precios →</a></p>
       </div>
     </section>
 
@@ -272,15 +289,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/intro.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/visuales.js?v=20261112b" defer></script>
-  <script src="js/polvo.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

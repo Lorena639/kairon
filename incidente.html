@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El momento justo">
-  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
   <meta property="og:image" content="img/og-image.jpg">
   <title>Anatomía de un incidente, minuto a minuto · KAIRON</title>
   <link rel="icon" href="img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
     "url": "index.html",
     "logo": "img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -64,7 +64,7 @@
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -116,7 +116,7 @@
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="futuro.html">Futuro</a></li>
           <li><a href="sobre-mi.html">Equipo</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
         </ul>
       </nav>
     </div>
@@ -128,7 +128,7 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">Anatomía de un incidente</h1>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Anatomía de un incidente</h1>
         <p class="pagina__intro">Un correo falso, un clic y cuarenta minutos. Así se ve por dentro, minuto a minuto, un ataque que se para a tiempo, y lo que ves tú desde tu despacho mientras ocurre.</p>
         <p class="det-aviso">Caso de ejemplo KAIRON-0428. La empresa, los nombres, las horas y las direcciones son ficticios: es el mismo caso del <a class="det-enlace" href="informe.html">informe de ejemplo</a>. Ocurre un jueves por la mañana, con analistas de servicio: fuera de horario, la detección y el bloqueo automático funcionan igual y la revisión humana llega a primera hora.</p>
       </div>
@@ -383,10 +383,10 @@
         <div class="det-cta">
           <div>
             <h2 class="det-h2" id="titulo-cierre">¿Cuánto tardarías hoy en enterarte?</h2>
-            <p class="det-prosa">La auditoría inicial es gratuita: vemos qué equipos tienes, por dónde podrían entrar y qué pasaría si mañana alguien hace ese clic.</p>
+            <p class="det-prosa">Cuéntanos qué equipos tienes: vemos por dónde podrían entrar y qué pasaría si mañana alguien hace ese clic. En el plan Égida, la auditoría inicial es gratuita.</p>
           </div>
           <div class="det-cta__acciones">
-            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a>
+            <a href="contacto.html#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a>
             <a href="informe.html" class="boton"><span class="boton__texto" data-texto="Ver el informe del caso">Ver el informe del caso</span></a>
           </div>
         </div>
@@ -432,17 +432,19 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/intro.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/visuales.js?v=20261112b" defer></script>
-  <script src="js/polvo.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
   <!-- Comportamiento propio de las páginas de detalle (línea de tiempo, calculadora, huella) -->
-  <script src="js/detalle.js?v=20261112b" defer></script>
+  <script src="js/detalle.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

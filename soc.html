@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El momento justo">
-  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
   <meta property="og:image" content="img/og-image.jpg">
   <title>SOC en vivo · KAIRON</title>
   <link rel="icon" href="img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
     "url": "index.html",
     "logo": "img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -57,14 +57,14 @@
   <div class="menu-movil" id="menu-movil" aria-hidden="true">
     <ul>
       <li><a href="servicios.html"><span class="mono">01</span>Servicios</a></li>
-      <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
+      <li><a href="soc.html" aria-current="page"><span class="mono">02</span>SOC en vivo</a></li>
       <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
       <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -115,7 +115,7 @@
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="futuro.html">Futuro</a></li>
           <li><a href="sobre-mi.html">Equipo</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
         </ul>
       </nav>
     </div>
@@ -126,19 +126,18 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">SOC en vivo · demostración</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">El SOC, <span class="oro-brillo">por dentro</span></h1>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">El SOC, <em>por dentro</em></h1>
         <p class="pagina__intro">Una demostración con datos simulados: consola de alertas, simulador de ataque y cifras de ejemplo.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li class="pi-datos__aviso">Datos simulados</li><li>Consola de alertas</li><li>Simulador de ataque</li><li>Cifras de ejemplo</li></ul>
       </div>
     </section>
 
     <section class="plan-vision">
       <div class="contenedor">
         <div class="vision__bloque">
-          <span class="mono">Qué es un SOC</span>
-          <h2 class="revelar">Un equipo que vigila por ti</h2>
-          <p class="vision__texto">Un SOC (centro de operaciones de seguridad) es el equipo y las herramientas que vigilan los sistemas de una organización y reaccionan si pasa algo. Para una pyme, montar uno propio es caro. KAIRON propone ofrecerlo como servicio.</p>
-          <ol class="viaje"><li><b>Recoger</b><br>Los agentes envían los registros de cada equipo al SIEM.</li><li><b>Correlacionar</b><br>Las reglas relacionan eventos y crean alertas.</li><li><b>Analizar</b><br>Un analista descarta falsos positivos y decide la prioridad.</li><li><b>Responder</b><br>Se contiene el ataque, se recogen pruebas y se documenta.</li></ol>
+          <h2>Un equipo que vigila por ti</h2>
+          <p class="vision__texto">Un SOC (centro de operaciones de seguridad) es el equipo y las herramientas que vigilan los sistemas de una organización y reaccionan si pasa algo. Para un particular, un autónomo o una pyme, montar uno propio es caro. KAIRON propone ofrecerlo como servicio.</p>
+          <ol class="viaje pi-hilo"><li><b>Recoger</b><br>Los agentes envían los registros de cada equipo al SIEM.</li><li><b>Correlacionar</b><br>Las reglas relacionan eventos y crean alertas.</li><li><b>Analizar</b><br>Un analista descarta falsos positivos y decide la prioridad.</li><li><b>Responder</b><br>Se contiene el ataque, se recogen pruebas y se documenta.</li></ol>
         </div>
       </div>
     </section>
@@ -146,10 +145,10 @@
     <!-- ===== SOC EN VIVO (simulado) ===== -->
     <section class="soc" id="soc" aria-labelledby="titulo-soc" data-fondo="SOC">
       <div class="contenedor">
-        <span class="mono">SOC en vivo · datos simulados</span>
-        <h2 class="soc__titulo revelar" id="titulo-soc">Así se ve nuestra vigilancia</h2>
+        <h2 class="soc__titulo" id="titulo-soc" data-partido="1">Así se ve nuestra vigilancia</h2>
+        <p class="pi-sello mono">SOC en vivo · datos simulados</p>
 
-        <div class="panel revelar">
+        <div class="panel">
           <div class="panel__bloque panel__bloque--ancho">
             <div class="panel__cabecera"><span class="mono">Eventos por minuto</span><span class="panel__punto"></span></div>
             <canvas class="panel__grafica" aria-label="Gráfica de eventos por minuto (simulada)"></canvas>
@@ -211,37 +210,36 @@
       <div class="contenedor">
         <div class="incidente__cabecera">
           <div>
-            <span class="mono">Anatomía de un incidente</span>
-            <h2 class="equipo__titulo revelar" id="titulo-incidente">Del ataque al informe</h2>
+            <h2 class="equipo__titulo" id="titulo-incidente" data-partido="1">Del ataque al informe</h2>
           </div>
-          <div class="hero__acciones" style="margin-top:0">
+          <div class="hero__acciones incidente__acciones">
             <button class="boton boton--lleno simular" type="button"><span class="boton__texto" data-texto="▶ Simular un ataque">▶ Simular un ataque</span></button>
             <a href="informe.html" class="boton"><span class="boton__texto" data-texto="Ver el informe del caso">Ver el informe del caso</span></a>
           </div>
         </div>
 
         <ol class="pasos">
-          <li class="paso revelar">
+          <li class="paso">
             <span class="paso__hora mono">00:00</span>
             <h3>Entrada</h3>
             <p>Un correo de phishing. Alguien hace clic y se ejecuta un archivo sin firma en un portátil.</p>
           </li>
-          <li class="paso revelar">
+          <li class="paso">
             <span class="paso__hora mono">00:01</span>
             <h3>Detección</h3>
             <p>El agente del equipo envía el evento a Wazuh. Una regla propia lo marca como ejecución sospechosa con persistencia.</p>
           </li>
-          <li class="paso revelar">
+          <li class="paso">
             <span class="paso__hora mono">00:03</span>
             <h3>Contención</h3>
             <p>Se aísla el portátil de la red y se bloquea la IP de mando y control en el firewall.</p>
           </li>
-          <li class="paso revelar">
+          <li class="paso">
             <span class="paso__hora mono">00:09</span>
             <h3>Forense</h3>
             <p>Nuestra herramienta recoge procesos, conexiones, usuarios y persistencia. Cada prueba con hora UTC, número de caso y SHA-256.</p>
           </li>
-          <li class="paso revelar">
+          <li class="paso">
             <span class="paso__hora mono">00:40</span>
             <h3>Informe</h3>
             <p>Cronología clara de lo ocurrido, qué se hizo y cómo evitar que se repita. Listo para dirección y auditorías.</p>
@@ -251,25 +249,25 @@
     </section>
 
     <!-- ===== CIFRAS (ficticias) ===== -->
-    <section class="cifras" id="cifras" aria-labelledby="titulo-cifras" data-fondo="24/7">
+    <section class="cifras" id="cifras" aria-labelledby="titulo-cifras">
       <div class="contenedor">
         <svg width="0" height="0" aria-hidden="true"><defs><linearGradient id="oro" x1="0" x2="1"><stop offset="0" stop-color="#8a6a2e"/><stop offset="1" stop-color="#fff0c4"/></linearGradient></defs></svg>
-        <span class="mono">Cifras · datos de ejemplo</span>
-        <h2 class="equipo__titulo revelar" id="titulo-cifras">Lo que vigilamos</h2>
+        <h2 class="equipo__titulo" id="titulo-cifras" data-partido="1">Lo que vigilamos</h2>
+        <p class="pi-sello mono">Cifras · datos de ejemplo</p>
         <ul class="cifras__lista">
-          <li class="cifra revelar" data-pct="88">
+          <li class="cifra" data-pct="88">
             <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
             <div><span class="cifra__valor" data-valor="1240000">0<small>ev/día</small></span><p class="cifra__texto">Eventos analizados cada día</p></div>
           </li>
-          <li class="cifra revelar" data-pct="30">
+          <li class="cifra" data-pct="30">
             <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
-            <div><span class="cifra__valor" data-valor="12">0<small>min</small></span><p class="cifra__texto">Tiempo medio de primera respuesta</p></div>
+            <div><span class="cifra__valor" data-valor="11">0<small>min</small></span><p class="cifra__texto">Hasta la contención en el caso de ejemplo</p></div>
           </li>
-          <li class="cifra revelar" data-pct="99.9">
+          <li class="cifra" data-pct="99.9">
             <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
-            <div><span class="cifra__valor" data-valor="99.9">0<small>%</small></span><p class="cifra__texto">Disponibilidad del SOC</p></div>
+            <div><span class="cifra__valor" data-valor="99.9">0<small>%</small></span><p class="cifra__texto">Disponibilidad de la detección automática</p></div>
           </li>
-          <li class="cifra revelar" data-pct="100">
+          <li class="cifra" data-pct="100">
             <svg class="cifra__anillo" viewBox="0 0 96 96" aria-hidden="true"><circle class="fondo" cx="48" cy="48" r="44"/><circle class="valor" cx="48" cy="48" r="44"/></svg>
             <div><span class="cifra__valor" data-valor="100">0<small>%</small></span><p class="cifra__texto">Pruebas con hash SHA-256 y cadena de custodia</p></div>
           </li>
@@ -305,15 +303,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/intro.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/visuales.js?v=20261112b" defer></script>
-  <script src="js/polvo.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

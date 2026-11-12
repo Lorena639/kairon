@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El moment just">
-  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
   <meta property="og:image" content="../img/og-image.jpg">
   <title>Què fem i com ho fem · KAIRON</title>
   <link rel="icon" href="../img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
     "url": "ca/index.html",
     "logo": "../img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -56,16 +56,15 @@
   <!-- Menú móvil a pantalla completa -->
   <div class="menu-movil" id="menu-movil" aria-hidden="true">
     <ul>
-      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="servicios.html" aria-current="page"><span class="mono">01</span>Serveis</a></li>
       <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
-      <li><a href="productos.html">Productes</a></li>
       <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
       <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -115,7 +114,7 @@
           <li><a href="proyectos.html">Projectes</a></li>
           <li><a href="futuro.html">Futur</a></li>
           <li><a href="sobre-mi.html">Equip</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
         </ul>
       </nav>
     </div>
@@ -126,33 +125,51 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Serveis i mètode</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">Detectar, respondre, <span class="oro-brillo">demostrar</span></h1>
-        <p class="pagina__intro">Tres capacitats i un mètode de quatre passos per a pimes sense equip de seguretat propi.</p>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Detectar, respondre, <em>demostrar</em></h1>
+        <p class="pagina__intro">Cinc serveis i un mètode de quatre passos per a particulars, autònoms i empreses sense equip de seguretat propi.</p>
+        <ul class="pi-datos" aria-label="En resum"><li>5 serveis</li><li>Mètode de 4 passos</li><li>Alertes automàtiques a qualsevol hora</li><li>Analistes: dilluns a divendres, 9–19 h</li></ul>
       </div>
     </section>
 
-    <section class="detalle" id="servicios">
+    <section class="detalle pi-serv" id="servicios" aria-label="Serveis">
       <div class="contenedor">
-        <p class="plan-aviso mono">KAIRON és un projecte acadèmic: això descriu com es prestaria cada servei. Les dades de les demostracions són simulades.</p>
+        <p class="plan-aviso mono">KAIRON és un projecte acadèmic: això descriu com es prestaria cada servei. Les alertes i el bloqueig automàtic funcionen a qualsevol hora; els analistes treballen de dilluns a divendres, de 9 a 19 h. Les dades de les demostracions són simulades.</p>
+        <div class="pi-serv__rejilla">
+          <!-- Índice fijo: marca el servicio que se está leyendo; el visor cambia de dibujo (js/paginas.js y js/visuales.js) -->
+          <nav class="pi-serv__rail" aria-label="Els cinc serveis">
+            <div class="pi-serv__visor" aria-hidden="true">
+              <canvas data-visual="radar"></canvas>
+              <canvas data-visual="escudo"></canvas>
+              <canvas data-visual="informe"></canvas>
+              <canvas data-visual="auditoria"></canvas>
+              <canvas data-visual="formacion"></canvas>
+            </div>
+            <ol class="pi-serv__indice">
+              <li><a href="#detectar">Detectar</a></li>
+              <li><a href="#responder">Respondre</a></li>
+              <li><a href="#demostrar">Demostrar</a></li>
+              <li><a href="#auditar">Auditar</a></li>
+              <li><a href="#formar">Formar</a></li>
+              <li class="pi-serv__avance" aria-hidden="true"></li>
+            </ol>
+          </nav>
+          <div class="pi-serv__lista">
         <article class="detalle__serv" id="detectar">
-          <span class="detalle__num mono">01</span>
           <div>
-            <span class="mono">Vigilància i detecció</span>
-            <h2 class="revelar">Detectar</h2>
+            <h2>Detectar</h2>
+            <p class="pi-sello mono">Vigilància i detecció</p>
             <p class="vision__texto">Un agent lleuger a cada equip envia l'activitat a un SIEM (el sistema que reuneix i analitza els registres). Les regles separen el soroll del que importa, perquè un atac es vegi en minuts i no setmanes després.</p>
             <div class="detalle__col">
-              <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Agents de Wazuh a Windows i Linux</li><li>Regles pròpies per a força bruta, programari maliciós i persistència</li><li>Supervisió d'accessos i integritat de fitxers</li><li>Revisió d'alertes i descart de falsos positius</li><li>Panells amb l'estat dels equips</li></ul></div>
+              <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Agents de Wazuh a Windows, macOS i Linux</li><li>Regles pròpies per a força bruta, programari maliciós i persistència</li><li>Supervisió d'accessos i integritat de fitxers</li><li>Revisió d'alertes i descart de falsos positius</li><li>Panells amb l'estat dels equips</li></ul></div>
               <div><h3>Com funciona</h3><ol class="detalle__pasos"><li>Coneixem quins equips i dades tens.</li><li>Instal·lem els agents sense aturar el teu negoci.</li><li>Ajustem les regles a la teva activitat normal.</li><li>Vigilem i t'avisem només del que és important.</li></ol></div>
             </div>
             <p class="detalle__rec"><b class="mono">Què reps</b>Alertes explicades en llenguatge clar i un resum de l'estat de la teva seguretat.</p>
           </div>
         </article>
         <article class="detalle__serv" id="responder">
-          <span class="detalle__num mono">02</span>
           <div>
-            <span class="mono">Resposta i anàlisi forense</span>
-            <h2 class="revelar">Respondre</h2>
+            <h2>Respondre</h2>
+            <p class="pi-sello mono">Resposta i anàlisi forense</p>
             <p class="vision__texto">Quan hi ha un atac real, primer es conté i després s'investiga. Les proves es recullen abans de netejar res, perquè poden caldre per entendre què ha passat o per a una reclamació.</p>
             <div class="detalle__col">
               <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Aïllament de l'equip afectat i bloqueig de la IP atacant</li><li>Recollida de processos, connexions, usuaris i persistència</li><li>Hora UTC, número de cas i hash SHA-256 de cada prova</li><li>Cadena de custòdia documentada</li><li>Reconstrucció del que ha passat</li></ul></div>
@@ -162,10 +179,9 @@
           </div>
         </article>
         <article class="detalle__serv" id="demostrar">
-          <span class="detalle__num mono">03</span>
           <div>
-            <span class="mono">Informes i compliment</span>
-            <h2 class="revelar">Demostrar</h2>
+            <h2>Demostrar</h2>
+            <p class="pi-sello mono">Informes i compliment</p>
             <p class="vision__texto">Un informe serveix si direcció l'entén i una auditoria el pot comprovar. Per això explica què ha passat, què s'ha fet i com evitar que es repeteixi, sense argot innecessari.</p>
             <div class="detalle__col">
               <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Resum per a direcció</li><li>Cronologia detallada de l'incident</li><li>Llista d'evidències amb la seva empremta</li><li>Recomanacions prioritzades</li><li>Suport per a obligacions del RGPD</li></ul></div>
@@ -175,11 +191,10 @@
           </div>
         </article>
         <article class="detalle__serv" id="auditar">
-          <span class="detalle__num mono">04</span>
           <div>
-            <span class="mono">Auditoria i hardening</span>
-            <h2 class="revelar">Auditar</h2>
-            <p class="vision__texto">Hardening vol dir enfortir un sistema: treure el que sobra i configurar bé la resta perquè sigui més difícil d'atacar. Comença amb una auditoria inicial per saber on ets.</p>
+            <h2>Auditar</h2>
+            <p class="pi-sello mono">Auditoria i hardening</p>
+            <p class="vision__texto">Hardening vol dir enfortir un sistema: treure el que sobra i configurar bé la resta perquè sigui més difícil d'atacar. Comença amb una auditoria inicial per saber on ets (gratuïta al pla Ègida).</p>
             <div class="detalle__col">
               <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Inventari d'equips i serveis exposats</li><li>Anàlisi de vulnerabilitats</li><li>Revisió de tallafocs, usuaris i permisos</li><li>Contrasenyes i còpies de seguretat</li><li>Correcció dels problemes trobats</li></ul></div>
               <div><h3>Com funciona</h3><ol class="detalle__pasos"><li>Revisem la teva xarxa i els teus equips.</li><li>Ordenem els riscos per importància.</li><li>Corregim els problemes amb tu.</li><li>Comprovem que ha quedat bé.</li></ol></div>
@@ -188,10 +203,9 @@
           </div>
         </article>
         <article class="detalle__serv" id="formar">
-          <span class="detalle__num mono">05</span>
           <div>
-            <span class="mono">Conscienciació i formació</span>
-            <h2 class="revelar">Formar</h2>
+            <h2>Formar</h2>
+            <p class="pi-sello mono">Conscienciació i formació</p>
             <p class="vision__texto">La majoria dels atacs entra per un correu o una contrasenya feble. Formar la plantilla és de les mesures que més risc redueix, i no cal que ningú sigui tècnic.</p>
             <div class="detalle__col">
               <div><h3>Què inclou</h3><ul class="detalle__lista"><li>Reconèixer correus de phishing</li><li>Contrasenyes segures i doble factor</li><li>Què fer si alguna cosa sembla estranya</li><li>Sessions adaptades a cada equip</li><li>Exercicis pràctics</li></ul></div>
@@ -200,6 +214,8 @@
             <p class="detalle__rec"><b class="mono">Què reps</b>Una plantilla que sap detectar un engany i a qui avisar.</p>
           </div>
         </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -208,7 +224,6 @@
       <div class="topografia" aria-hidden="true"></div>
       <div class="contenedor metodo__grid">
         <div class="metodo__fijo">
-          <span class="mono">El mètode KAIRON</span>
           <h2 class="metodo__titulo" id="titulo-metodo">Vigilar. <br>Actuar. <br><span class="metodo__destacado">Demostrar.</span></h2>
           <div class="metodo__emblema">
             <img src="../img/kairon-emblema-oro_oscuro.png" width="260" height="243" alt="" loading="lazy" decoding="async">
@@ -218,22 +233,23 @@
         </div>
         <ol class="metodo__pasos">
           <li class="metodo__paso" data-n="01">
-            <h3>Conèixer la teva empresa</h3>
-            <p>Auditoria inicial gratuïta: quins equips tens, quines dades importen i per on et podrien atacar. Sense tecnicismes.</p>
+            <h3>Conèixer els teus equips</h3>
+            <p>Una primera revisió: quins equips tens, quines dades importen i per on et podrien atacar. Sense tecnicismes. Al pla Ègida és una auditoria inicial gratuïta.</p>
           </li>
           <li class="metodo__paso" data-n="02">
             <h3>Instal·lar la vigilància</h3>
-            <p>Un agent lleuger a cada equip envia l'activitat al SOC. Regles ajustades al teu negoci perquè les alertes importin.</p>
+            <p>Un agent lleuger a cada equip envia l'activitat al SOC. Regles ajustades al teu cas perquè les alertes importin.</p>
           </li>
           <li class="metodo__paso" data-n="03">
-            <h3>Respondre en minuts</h3>
-            <p>Contenció immediata, trucada a direcció i recollida de proves amb cadena de custòdia mentre l'atac encara és calent.</p>
+            <h3>Respondre a temps</h3>
+            <p>El bloqueig automàtic actua en segons i a qualsevol hora. L'analista confirma l'incident, t'avisa i recull les proves amb cadena de custòdia.</p>
           </li>
           <li class="metodo__paso" data-n="04">
             <h3>Demostrar-ho amb un informe</h3>
             <p>Cronologia, evidències amb SHA-256 i recomanacions clares. El que necessita una auditoria i el que entén una gerència.</p>
           </li>
         </ol>
+        <p class="enlace-detalle"><a class="servicio__mas mono" href="metodo.html">El mètode pas a pas →</a> <a class="servicio__mas mono" href="preguntas.html#precios">Plans i preus →</a></p>
       </div>
     </section>
 
@@ -273,15 +289,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="../js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="../js/intro.js?v=20261112b" defer></script>
-  <script src="../js/escena.js?v=20261112b" defer></script>
-  <script src="../js/visuales.js?v=20261112b" defer></script>
-  <script src="../js/polvo.js?v=20261112b" defer></script>
-  <script src="../js/main.js?v=20261112b" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/intro.js?v=20261112c" defer></script>
+  <script src="../js/escena.js?v=20261112c" defer></script>
+  <script src="../js/visuales.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

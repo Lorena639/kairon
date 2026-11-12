@@ -6383,7 +6383,9 @@ html.menos-movimiento .det-emblema__pieza {
 /* ---------- 2. Intro: velo, zambullida y logo de la cabecera ---------- */
 .carga--v6 {
   background: var(--negro);
-  transition: background-color 0.55s ease, opacity 0.4s ease 0.5s;
+  /* El velo se aclara deprisa y el logo 2D se desvanece después (js/intro.js): así, durante el relevo,
+     siempre se ve un emblema a plena luz (el 2D o el 3D que hay justo debajo) y no hay bajón de brillo */
+  transition: background-color 0.28s ease-out, opacity 0.4s ease 0.56s;
 }
 
 /* Zambullida: el velo se vuelve transparente y deja ver la escena, que arranca desde el emblema */
@@ -7093,4 +7095,1246 @@ body.menu-abierto .cabecera {
   border: 1px solid var(--linea);
   border-radius: 10px;
   background: rgba(11, 15, 20, 0.78);
+}
+
+/* ---------- 13. Segunda revisión (v7): cielo de fondo, empalme de la intro y detalles ---------- */
+/* El cielo sustituye en la portada a la aurora común: un degradado azul-negro en profundidad con dos
+   velos de color muy tenues (oro arriba a la derecha, donde está el globo; cian abajo a la izquierda).
+   Encima, js/v6.js dibuja la nebulosa y las estrellas. Va detrás de todo, como la aurora. */
+.portada-v6 .aurora {
+  display: none;
+}
+
+.v6-cielo {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(110% 85% at 74% 40%, rgba(212, 175, 122, 0.06) 0%, rgba(212, 175, 122, 0) 58%),
+    radial-gradient(90% 80% at 6% 96%, rgba(53, 198, 214, 0.045) 0%, rgba(53, 198, 214, 0) 60%),
+    radial-gradient(150% 120% at 50% -10%, #111a27 0%, #0b0f14 46%, #05080c 100%);
+}
+
+.v6-cielo canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.con-cielo .v6-cielo canvas {
+  opacity: 1;
+}
+
+/* La nebulosa se dibuja en baja resolución y se amplía (queda suave); deriva muy despacio */
+.v6-cielo .v6-cielo__nebulosa {
+  left: -12%;
+  top: -12%;
+  width: 124%;
+  height: 124%;
+  animation: v6-deriva 140s ease-in-out infinite alternate;
+}
+
+.v6-cielo__estrellas {
+  width: 100%;
+  will-change: transform;
+}
+
+.v6-cielo__estrellas--lejos {
+  height: 120%;
+}
+
+.v6-cielo__estrellas--cerca {
+  height: 145%;
+  animation: v6-titila 7s ease-in-out infinite alternate;
+}
+
+@keyframes v6-deriva {
+  from { transform: translate3d(-2.5%, 1.5%, 0) scale(1); }
+  to { transform: translate3d(2.5%, -2%, 0) scale(1.08); }
+}
+
+@keyframes v6-titila {
+  from { opacity: 1; }
+  to { opacity: 0.62; }
+}
+
+html.menos-movimiento .v6-cielo canvas {
+  animation: none;
+}
+
+/* Simulador de ataque: el cielo se tiñe de rojo por la esquina del globo (antes lo hacía la aurora común) */
+.v6-cielo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(95% 85% at 78% 30%, rgba(255, 77, 77, 0.17) 0%, rgba(255, 77, 77, 0) 62%);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+body.simulando .v6-cielo::after {
+  opacity: 1;
+}
+
+/* Hero: el velo ya no tiene que tapar un disco claro; basta con sostener la columna del texto */
+@media (min-width: 1100px) {
+  .v6-hero .hero__velo {
+    background:
+      linear-gradient(90deg, rgba(8, 11, 16, 0.78) 0%, rgba(8, 11, 16, 0.5) 32%, rgba(8, 11, 16, 0) 56%),
+      linear-gradient(180deg, rgba(8, 11, 16, 0.5) 0%, rgba(8, 11, 16, 0) 20%, rgba(8, 11, 16, 0) 78%, rgba(8, 11, 16, 0.7) 100%);
+  }
+}
+
+/* Cabecera de la portada: el degradado se alarga y se desvanece en curva, sin la franja que cortaba el globo */
+.portada-v6 .cabecera {
+  padding-bottom: 34px;
+}
+
+.portada-v6 .cabecera:not(.cabecera--clara) {
+  background: linear-gradient(180deg, rgba(8, 11, 16, 0.9) 0%, rgba(8, 11, 16, 0.72) 38%, rgba(8, 11, 16, 0.4) 66%, rgba(8, 11, 16, 0.14) 86%, rgba(8, 11, 16, 0) 100%);
+}
+
+/* Empalme de la intro: mientras el emblema 3D toma el relevo, el logo 2D no lleva sombra ni brillo propios */
+.carga--v6.intro-zambullida .intro__logo {
+  filter: none;
+}
+
+/* El velo del hero espera a que termine el empalme: si no, en pantallas estrechas (donde cubre el centro)
+   oscurecía el emblema 3D justo cuando sustituye al logo de la intro */
+.v6-hero .hero__velo {
+  transition: opacity 1.5s ease;
+}
+
+.intro-en-curso .v6-hero .hero__velo {
+  opacity: 0;
+  transition: none;
+}
+
+.carga--v6.intro-zambullida .intro__logo::before,
+.carga--v6.intro-zambullida .intro__logo::after {
+  opacity: 0;
+  animation: none;
+}
+
+/* Planes: al pasar el cursor, un filo de oro recorre el borde inferior de la fila */
+.v6-plan {
+  position: relative;
+}
+
+.v6-plan::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--oro-brillo), var(--oro) 60%, rgba(212, 175, 122, 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--facil);
+}
+
+.v6-plan:hover::after {
+  transform: scaleX(1);
+}
+
+.v6-plan h3 {
+  transition: color 0.4s ease, letter-spacing 0.6s var(--facil);
+}
+
+.v6-plan:hover h3 {
+  color: var(--oro-brillo);
+  letter-spacing: 0.02em;
+}
+
+/* Etiquetas de los servicios: se encienden una a una al pasar por ellas */
+.v6-servicio__datos li {
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+}
+
+.v6-servicio__datos li:hover {
+  color: var(--oro-brillo);
+  border-color: var(--oro);
+  box-shadow: 0 6px 18px -10px rgba(212, 175, 122, 0.7);
+}
+
+/* Medidas: la cifra toma luz al pasar por su columna */
+.v6-medida__valor {
+  transition: color 0.4s ease, text-shadow 0.5s ease;
+}
+
+.v6-medida:hover .v6-medida__valor {
+  color: var(--oro-brillo);
+  text-shadow: 0 8px 28px rgba(212, 175, 122, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v6-cielo canvas {
+    animation: none;
+    transition: none;
+  }
+
+  .v6-plan::after,
+  .v6-plan h3 {
+    transition: none;
+  }
+}
+
+@media print {
+  .v6-cielo {
+    display: none;
+  }
+}
+
+/* ---------- 34. Páginas interiores v6 (12-11-2026) ----------
+   Lleva a las páginas interiores el lenguaje de la portada v6. El movimiento lo dirige js/paginas.js.
+   - Todo se ve completo sin JavaScript: los estados de partida los pone GSAP al animar, o van bajo
+     la clase "pi-mov", que paginas.js añade a <html> solo cuando hay movimiento.
+   - Las clases nuevas empiezan por "pi-". Las reglas generales van con html:not(.portada-v6)
+     para no tocar la portada.
+   - Color con función: oro = el instante, rojo = la amenaza, cian = dato en movimiento.
+   Índice: 34.1 cabecera de página · 34.2 piezas comunes · 34.3 entradas y detalles de ratón ·
+   34.4 servicios · 34.5 proyectos · 34.6 futuro · 34.7 informe · 34.8 resto de páginas ·
+   34.9 transiciones entre páginas · 34.10 sin movimiento, presentación e impresión */
+
+/* --- 34.1 Cabecera de página --- */
+html:not(.portada-v6) ::selection {
+  background: var(--oro);
+  color: var(--negro);
+}
+
+html:not(.portada-v6) {
+  scrollbar-color: var(--oro-oscuro) var(--negro);
+}
+
+html:not(.portada-v6) input,
+html:not(.portada-v6) textarea {
+  caret-color: var(--oro);
+}
+
+html:not(.portada-v6) .pagina--cabeza {
+  min-height: min(76svh, 760px);
+  padding-bottom: clamp(48px, 7vw, 96px);
+  isolation: isolate;
+}
+
+/* Atmósfera: una nebulosa tenue detrás del globo y una línea de horizonte que se dibuja al entrar */
+html:not(.portada-v6) .pagina--cabeza::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 70% at 78% 38%, rgba(212, 175, 122, 0.13), transparent 70%),
+    radial-gradient(45% 60% at 12% 96%, rgba(53, 198, 214, 0.09), transparent 72%);
+  pointer-events: none;
+}
+
+html:not(.portada-v6) .pagina--cabeza::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--oro) 18%, var(--linea) 60%, transparent);
+  transform-origin: left center;
+}
+
+.pi-mov .pagina--cabeza::after {
+  animation: pi-horizonte 1.8s var(--facil) 0.5s both;
+}
+
+@keyframes pi-horizonte {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+html:not(.portada-v6) .pagina__titulo {
+  max-width: 15em;
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 6.2vw, 6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  overflow-wrap: normal;
+}
+
+/* Títulos de sección: un escalón claro por debajo del titular de página */
+html:not(.portada-v6) main .equipo__titulo,
+html:not(.portada-v6) main .soc__titulo,
+html:not(.portada-v6) main .informe__titulo {
+  max-width: 20em;
+  font-size: clamp(1.8rem, 4.2vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* Máscara de cada línea del titular (SplitText): con aire arriba y abajo para no cortar tildes ni descendentes */
+html:not(.portada-v6) .titular-linea-mask {
+  padding: 0.16em 0.04em 0.1em;
+  margin: -0.16em -0.04em -0.1em;
+}
+
+/* La palabra de oro del titular: color liso, sin degradado (se puede partir en líneas) */
+.pagina__titulo em,
+html:not(.portada-v6) .contacto__titulo em,
+.error404 h1 em {
+  font-style: normal;
+  color: var(--oro);
+}
+
+html:not(.portada-v6) .pagina--cabeza .pagina__intro {
+  max-width: 36em;
+  margin-bottom: 0;
+  font-size: clamp(1.08rem, 1.5vw, 1.3rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* Datos de la página: una línea de medidas reales bajo la entradilla (se descifran al entrar) */
+.pi-datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+  max-width: 64rem;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: 18px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--linea);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--oro-claro);
+}
+
+.pi-datos li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 1.6em;
+}
+
+.pi-datos li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--oro);
+  transform: rotate(45deg);
+}
+
+.pi-datos .pi-datos__aviso {
+  color: var(--lavanda);
+}
+
+.pi-datos .pi-datos__aviso::before {
+  border-color: var(--lavanda);
+}
+
+/* --- 34.2 Piezas comunes --- */
+/* Sello de honestidad (datos simulados, de ejemplo, ficticios): va debajo del título, no encima */
+.pi-sello {
+  display: inline-block;
+  width: fit-content;
+  margin: 0 0 28px;
+  padding: 6px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oro-claro);
+}
+
+.claro .pi-sello {
+  color: #6b4f28;
+  border-color: rgba(140, 107, 63, 0.45);
+}
+
+h2 + .pi-sello {
+  margin-top: -8px;
+}
+
+/* Avisos y notas: sin franja lateral; un marco fino y el fondo de la casa */
+html:not(.portada-v6) .plan-aviso {
+  max-width: 78ch;
+  margin: 0 0 clamp(20px, 3vw, 36px);
+  padding: 14px 18px;
+  border: 1px solid rgba(185, 167, 240, 0.4);
+  border-radius: 12px;
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+html:not(.portada-v6) .detalle__rec {
+  padding: 20px 22px;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: linear-gradient(160deg, var(--negro-3), var(--negro-2));
+}
+
+html:not(.portada-v6) .fichas__limite {
+  border: 1px solid rgba(255, 77, 77, 0.45);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 77, 77, 0.07), var(--negro-2) 55%);
+}
+
+html:not(.portada-v6) .vision__bloque h2,
+html:not(.portada-v6) .fichas__limite h2 {
+  text-wrap: balance;
+}
+
+html:not(.portada-v6) .vision__bloque > h2:first-child {
+  margin-top: 0;
+}
+
+.contacto__sub {
+  margin-top: 24px;
+}
+
+/* Enlaces de detalle bajo el método: en fila, y saltan de línea en pantallas estrechas */
+html:not(.portada-v6) .metodo .enlace-detalle {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  margin: 0;
+}
+
+html:not(.portada-v6) .claro .servicio__mas {
+  color: #6b4f28;
+}
+
+html:not(.portada-v6) .claro .servicio__mas:hover {
+  color: var(--negro);
+}
+
+.incidente__acciones {
+  margin-top: 0;
+}
+
+/* --- 34.3 Entradas y detalles de ratón --- */
+/* La línea de cada bloque no está: se dibuja de izquierda a derecha cuando el bloque entra */
+.pi-mov .pi-trazo {
+  position: relative;
+  border-top-color: transparent;
+}
+
+.pi-mov .pi-trazo::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--oro), var(--linea) 45%, var(--linea));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.5s var(--facil);
+  pointer-events: none;
+}
+
+.pi-mov .pi-trazo.pi-vista::before {
+  transform: scaleX(1);
+}
+
+/* Foco de luz que sigue al ratón dentro de una pieza (la posición la da paginas.js) */
+.pi-foco {
+  position: relative;
+}
+
+.pi-foco::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(280px circle at var(--pi-x, 50%) var(--pi-y, 50%), rgba(212, 175, 122, 0.11), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.pi-foco:hover::after {
+  opacity: 1;
+}
+
+/* Módulos: al pasar, la línea superior se recorre de oro */
+html:not(.portada-v6) .modulos li {
+  position: relative;
+  padding: 16px 14px 14px 0;
+  transition: padding 0.5s var(--facil);
+}
+
+html:not(.portada-v6) .modulos li::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--oro-claro);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--facil);
+}
+
+html:not(.portada-v6) .modulos li:hover::before {
+  transform: scaleX(1);
+}
+
+html:not(.portada-v6) .modulos li:hover {
+  padding-left: 12px;
+}
+
+/* Recorrido en pasos (.viaje): tarjetas con borde vivo y, donde hay orden real, un hilo que avanza */
+html:not(.portada-v6) .viaje li {
+  border-radius: 14px;
+  background: linear-gradient(160deg, var(--negro-3), var(--negro-2));
+  transition: border-color 0.4s, transform 0.5s var(--facil);
+}
+
+html:not(.portada-v6) .viaje li:hover {
+  border-color: rgba(233, 207, 160, 0.6);
+  transform: translateY(-4px);
+}
+
+.pi-hilo {
+  position: relative;
+  padding-top: 26px;
+}
+
+.pi-hilo::before,
+.pi-hilo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--linea);
+}
+
+.pi-hilo::after {
+  background: linear-gradient(90deg, var(--oro-oscuro), var(--oro-brillo));
+  transform: scaleX(var(--pi-avance, 1));
+  transform-origin: left center;
+}
+
+/* Etiquetas en fila (principios, datos de ficha): borde que se enciende al pasar */
+html:not(.portada-v6) .principios li {
+  border-color: rgba(185, 167, 240, 0.55);
+  border-radius: 999px;
+  padding: 9px 16px;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+
+html:not(.portada-v6) .principios li:hover {
+  border-color: var(--oro-claro);
+  background: rgba(212, 175, 122, 0.08);
+}
+
+/* Enlaces con flecha: la flecha se adelanta */
+html:not(.portada-v6) .servicio__mas {
+  display: inline-block;
+  transition: color 0.3s, letter-spacing 0.5s var(--facil);
+}
+
+html:not(.portada-v6) .servicio__mas:hover {
+  letter-spacing: 0.12em;
+}
+
+/* Preguntas: la fila se desplaza un punto y el signo gira (ya giraba); se añade el recorrido de oro */
+html:not(.portada-v6) .faq__item summary {
+  transition: color 0.3s, padding-left 0.5s var(--facil);
+}
+
+html:not(.portada-v6) .faq__item summary:hover,
+html:not(.portada-v6) .faq__item[open] summary {
+  padding-left: 10px;
+}
+
+/* Formulario: la línea del campo se recorre de oro al enfocarlo */
+html:not(.portada-v6) .formulario__campo {
+  position: relative;
+}
+
+html:not(.portada-v6) .formulario__campo:not(.formulario__trampa)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro-brillo));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--facil);
+  pointer-events: none;
+}
+
+html:not(.portada-v6) .formulario__campo:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* --- 34.4 Servicios: índice fijo con visor mientras los cinco servicios pasan --- */
+.pi-serv .detalle__serv {
+  display: block;
+  padding: clamp(56px, 8vw, 110px) 0;
+}
+
+.pi-serv .detalle__serv:first-child {
+  border-top: 0;
+  padding-top: clamp(24px, 4vw, 48px);
+}
+
+.pi-serv .detalle__serv h2 {
+  margin: 0 0 12px;
+  font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+}
+
+.pi-serv .detalle__serv .pi-sello {
+  margin-bottom: 26px;
+}
+
+.pi-serv .vision__texto {
+  max-width: 36em;
+  font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+  text-wrap: pretty;
+}
+
+.pi-serv__rail {
+  margin-bottom: 8px;
+}
+
+.pi-serv__visor {
+  display: none;
+}
+
+.pi-serv__indice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pi-serv__indice a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  font-family: var(--fuente-titulo);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--suave);
+  text-decoration: none;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+
+.pi-serv__indice a:hover,
+.pi-serv__indice a[aria-current="true"] {
+  color: var(--oro-brillo);
+  border-color: var(--oro);
+  background: rgba(212, 175, 122, 0.08);
+}
+
+.pi-serv__avance {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .pi-serv__rejilla {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.3fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .pi-serv__rail {
+    position: sticky;
+    top: 118px;
+    display: grid;
+    gap: 28px;
+    margin: clamp(24px, 4vw, 48px) 0 0;
+  }
+
+  /* Visor: un dibujo por servicio; el activo se descubre de arriba abajo */
+  .pi-serv__visor {
+    position: relative;
+    display: block;
+    width: min(100%, 250px);
+    aspect-ratio: 1;
+    border: 1px solid var(--linea);
+    border-radius: 26px;
+    background: radial-gradient(circle at 50% 45%, rgba(212, 175, 122, 0.08), rgba(11, 15, 20, 0.2) 70%);
+    overflow: hidden;
+  }
+
+  .pi-serv__visor canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.9s var(--facil);
+  }
+
+  .pi-serv__visor canvas.es-activo {
+    clip-path: inset(0 0 0% 0);
+  }
+
+  .pi-serv__indice {
+    position: relative;
+    display: grid;
+    gap: 0;
+    padding-left: 22px;
+  }
+
+  /* El hilo del índice: la parte recorrida se llena de oro con el scroll */
+  .pi-serv__indice::before,
+  .pi-serv__avance {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--linea);
+  }
+
+  .pi-serv__avance {
+    display: block;
+    background: linear-gradient(180deg, var(--oro-oscuro), var(--oro-brillo));
+    transform: scaleY(var(--pi-avance, 0));
+    transform-origin: center top;
+  }
+
+  .pi-serv__indice a {
+    min-height: 0;
+    padding: 9px 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+    color: rgba(248, 245, 238, 0.62);
+    transition: color 0.4s, transform 0.6s var(--facil);
+  }
+
+  .pi-serv__indice a:hover,
+  .pi-serv__indice a[aria-current="true"] {
+    background: none;
+    color: var(--oro-brillo);
+    transform: translateX(8px);
+  }
+}
+
+/* Las filas de "qué incluye" y "cómo funciona": al pasar, la fila se marca */
+.pi-serv .detalle__lista li,
+.pi-serv .detalle__pasos li {
+  transition: color 0.3s, padding-left 0.5s var(--facil);
+}
+
+.pi-serv .detalle__lista li:hover,
+.pi-serv .detalle__pasos li:hover {
+  padding-left: 8px;
+  color: var(--blanco);
+}
+
+/* --- 34.5 Proyectos: fichas que se apilan; la que llega tapa a la anterior --- */
+.pi-pila .ficha {
+  grid-template-columns: minmax(150px, 0.26fr) minmax(0, 1fr);
+  margin: 0 0 20px;
+  padding: clamp(26px, 4vw, 48px);
+  border: 1px solid var(--linea);
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--negro-3), var(--negro-2) 60%);
+  box-shadow: 0 -22px 50px rgba(5, 8, 12, 0.55);
+  transform-origin: center top;
+}
+
+.pi-pila .ficha h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+  text-wrap: balance;
+}
+
+.pi-pila .ficha__estado,
+.plan-vision .ficha > .ficha__estado {
+  align-self: start;
+}
+
+.pi-pila .ficha__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+
+.pi-pila .ficha__estado::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Estado real de cada pieza: oro = publicada, cian = dentro del TFG, lavanda = línea futura */
+.pi-pila [data-estado="hecho"] .ficha__estado { color: var(--oro-claro); }
+.pi-pila [data-estado="tfg"] .ficha__estado { color: var(--cian); }
+.pi-pila [data-estado="futuro"] .ficha__estado { color: var(--lavanda); }
+
+.pi-pila [data-estado="hecho"] .ficha__estado::before {
+  box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.22);
+}
+
+.pi-pila__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  margin: 0 0 clamp(24px, 4vw, 44px);
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+
+.pi-pila__leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pi-pila__leyenda i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--oro-claro);
+}
+
+.pi-pila__leyenda li:nth-child(2) i { background: var(--cian); }
+.pi-pila__leyenda li:nth-child(3) i { background: var(--lavanda); }
+
+@media (min-width: 900px) and (min-height: 680px) {
+  .pi-pila .ficha {
+    position: sticky;
+    top: calc(104px + var(--pi-i, 0) * 14px);
+  }
+
+  .pi-pila .ficha:nth-child(2) { --pi-i: 1; }
+  .pi-pila .ficha:nth-child(3) { --pi-i: 2; }
+  .pi-pila .ficha:nth-child(4) { --pi-i: 3; }
+  .pi-pila .ficha:nth-child(5) { --pi-i: 4; }
+  .pi-pila .ficha:nth-child(6) { --pi-i: 5; }
+
+  .pi-pila .fichas__lista {
+    padding-bottom: 12svh;
+  }
+}
+
+@media (max-width: 600px) {
+  .pi-pila .ficha {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- 34.6 Futuro: las seis fases como una línea de tiempo --- */
+/* Por defecto (móvil, sin movimiento, sin JS): lista vertical con su hilo a la izquierda */
+.pi-ruta__pista {
+  position: relative;
+  display: grid;
+  gap: clamp(26px, 4vw, 40px);
+  margin: clamp(28px, 4vw, 48px) 0 0;
+  padding: 0 0 0 30px;
+  list-style: none;
+}
+
+.pi-ruta__linea {
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--linea);
+}
+
+.pi-ruta__linea i {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--oro-oscuro), var(--oro-brillo));
+  transform: scaleY(var(--pi-avance, 1));
+  transform-origin: center top;
+}
+
+.pi-ruta__fase {
+  position: relative;
+  max-width: 46rem;
+}
+
+.pi-ruta__fase::before {
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 6px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--oro);
+  border-radius: 50%;
+  background: var(--negro);
+  transition: background 0.4s, box-shadow 0.4s;
+}
+
+.pi-ruta__fase.es-pasada::before,
+html:not(.pi-mov) .pi-ruta__fase::before {
+  background: var(--oro-claro);
+  box-shadow: 0 0 0 5px rgba(212, 175, 122, 0.16);
+}
+
+.pi-ruta__n {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.pi-ruta__fase h3 {
+  margin: 0 0 8px;
+  font-size: clamp(1.4rem, 2.6vw, 2.3rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.pi-ruta__fase p {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--suave);
+}
+
+.pi-ruta__cuenta {
+  display: none;
+}
+
+/* Con movimiento y pantalla ancha: la pista se pone en horizontal y avanza con el scroll */
+.pi-ruta--horizontal {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-top: 96px;
+  padding-bottom: 32px;
+  border-top: 0;
+}
+
+.pi-ruta--horizontal .pi-ruta__visor {
+  position: relative;
+  margin: clamp(28px, 5svh, 56px) calc(50% - 50vw) 0 0;
+  overflow: hidden;
+}
+
+.pi-ruta--horizontal .pi-ruta__pista {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  margin: 0;
+  padding: 44px 0 8px;
+  will-change: transform;
+}
+
+.pi-ruta--horizontal .pi-ruta__linea {
+  left: 0;
+  right: auto;
+  top: 12px;
+  bottom: auto;
+  width: 100%;
+  height: 2px;
+}
+
+.pi-ruta--horizontal .pi-ruta__linea i {
+  background: linear-gradient(90deg, var(--oro-oscuro), var(--oro-brillo));
+  transform: scaleX(var(--pi-avance, 0));
+  transform-origin: left center;
+}
+
+.pi-ruta--horizontal .pi-ruta__fase {
+  flex: none;
+  width: clamp(320px, 31vw, 460px);
+  padding-right: clamp(32px, 4vw, 64px);
+  opacity: 0.45;
+  transition: opacity 0.6s var(--facil);
+}
+
+.pi-ruta--horizontal .pi-ruta__fase.es-pasada {
+  opacity: 1;
+}
+
+.pi-ruta--horizontal .pi-ruta__fase::before {
+  left: 0;
+  top: -37px;
+}
+
+.pi-ruta--horizontal .pi-ruta__cuenta {
+  display: block;
+  margin: 28px 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.pi-ruta--horizontal .pi-ruta__cuenta b {
+  font-weight: 500;
+  color: var(--oro-brillo);
+}
+
+/* --- 34.7 Informe: la cronología se recorre con el scroll y las huellas se descifran --- */
+html:not(.portada-v6) .informe__cabecera {
+  min-height: 0;
+}
+
+.pi-mov .pi-crono tbody tr {
+  transition: opacity 0.5s ease, background 0.5s ease;
+}
+
+.pi-mov .pi-crono tbody tr:not(.es-pasada) {
+  opacity: 0.4;
+}
+
+.pi-crono tbody tr.es-actual td {
+  background: rgba(212, 175, 122, 0.08);
+}
+
+.pi-crono tbody tr.es-actual td:first-child {
+  color: var(--oro-brillo);
+}
+
+.informe .tabla code,
+.informe__datos time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Comprobación de huella: el visitante calcula el SHA-256 de un texto y ve que un cambio lo altera */
+.pi-huella {
+  display: grid;
+  gap: 14px;
+  max-width: 820px;
+  margin: 28px 0 0;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--linea);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(22, 28, 37, 0.9), rgba(16, 21, 28, 0.9));
+}
+
+.pi-huella label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.pi-huella input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+.pi-huella input:focus-visible {
+  outline: 2px solid var(--oro-claro);
+  outline-offset: 2px;
+}
+
+.pi-huella output {
+  display: block;
+  min-height: 2.8em;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--cian-claro);
+  overflow-wrap: anywhere;
+}
+
+.pi-huella p {
+  margin: 0;
+  color: var(--suave);
+  font-size: 0.95rem;
+}
+
+.pi-huella__estado {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+}
+
+.pi-huella__estado[data-estado="igual"] { color: var(--cian); }
+.pi-huella__estado[data-estado="distinta"] { color: var(--rojo); }
+
+/* --- 34.8 Resto de páginas --- */
+/* Equipo e informe: la cabecera no es "pagina--cabeza" (lleva las fichas dentro) */
+html:not(.portada-v6) .pagina__intro:has(+ .pi-datos) {
+  margin-bottom: 0;
+}
+
+.pi-datos + .equipo__lista {
+  margin-top: clamp(48px, 7vw, 80px);
+}
+
+.pagina__titulo + .pi-sello {
+  margin: -6px 0 8px;
+}
+/* Equipo: la hoja de ruta lleva su hilo; los valores, sin número */
+html:not(.portada-v6) .valores__lista .valor {
+  align-content: start;
+}
+
+.pi-entradilla {
+  max-width: 34em;
+  margin: 0 0 clamp(28px, 4vw, 48px);
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--suave);
+  text-wrap: pretty;
+}
+
+/* 404: el número como dato, y salidas reales */
+.error404 h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.pi-salidas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 26px;
+  margin: 8px 0 0;
+  padding: 18px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--linea);
+}
+
+.pi-salidas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro-claro);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.pi-salidas a:hover {
+  color: var(--blanco);
+}
+
+/* La idea (kairos): el globo queda muy al fondo para no competir con el emblema */
+.det-idea .pagina__escena {
+  opacity: 0.28;
+}
+
+/* --- 34.9 Transiciones entre páginas: el titular es el mismo elemento en las dos --- */
+html:not(.portada-v6) .pagina__titulo,
+.error404 h1 {
+  view-transition-name: kairon-titulo;
+}
+
+::view-transition-group(kairon-titulo) {
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Los dos titulares tienen textos distintos: no se estiran, se cruzan enfocando */
+::view-transition-old(kairon-titulo),
+::view-transition-new(kairon-titulo) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+  overflow: clip;
+}
+
+::view-transition-old(kairon-titulo) {
+  animation: pi-titulo-sale 0.28s ease-in both;
+}
+
+::view-transition-new(kairon-titulo) {
+  animation: pi-titulo-entra 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+@keyframes pi-titulo-sale {
+  to { opacity: 0; filter: blur(10px); }
+}
+
+@keyframes pi-titulo-entra {
+  from { opacity: 0; filter: blur(12px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* --- 34.10 Sin movimiento, presentación e impresión --- */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.portada-v6) .pagina__titulo,
+  .error404 h1 {
+    view-transition-name: none;
+  }
+}
+
+html.menos-movimiento .pagina__titulo,
+html.menos-movimiento .error404 h1 {
+  view-transition-name: none;
+}
+
+html.presentacion .pi-datos,
+html.presentacion .pi-sello {
+  font-size: 0.9rem;
+}
+
+html.presentacion .pi-ruta__fase p,
+html.presentacion .pi-entradilla {
+  font-size: 1.25rem;
+}
+
+@media print {
+  .pi-huella,
+  .pi-datos {
+    display: none;
+  }
+
+  /* Al imprimir (informe en PDF) nada queda a medio animar: ni recortes, ni desenfoques, ni filas atenuadas */
+  html:not(.portada-v6) main * {
+    opacity: 1 !important;
+    clip-path: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

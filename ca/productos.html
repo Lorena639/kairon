@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El moment just">
-  <meta property="og:description" content="SOC gestionat per a pimes. Detectar, respondre, demostrar.">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
   <meta property="og:image" content="../img/og-image.jpg">
   <title>Productes · KAIRON</title>
   <link rel="icon" href="../img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionat per a pimes (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
     "url": "ca/index.html",
     "logo": "../img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="../css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -58,14 +58,13 @@
     <ul>
       <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
       <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
-      <li><a href="productos.html" aria-current="page">Productes</a></li>
-      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
+      <li><a href="productos.html" aria-current="page"><span class="mono">03</span>Productes</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
       <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -109,10 +108,11 @@
           <li class="menu__idioma"><a href="../productos.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
           <li><a href="servicios.html">Serveis</a></li>
           <li><a href="soc.html">SOC en directe</a></li>
+          <li><a href="productos.html" aria-current="page">Productes</a></li>
           <li><a href="proyectos.html">Projectes</a></li>
           <li><a href="futuro.html">Futur</a></li>
           <li><a href="sobre-mi.html">Equip</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
         </ul>
       </nav>
     </div>
@@ -123,9 +123,9 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Productes i serveis previstos</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">Tecnologia <span class="oro-brillo">pròpia</span></h1>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">Tecnologia <em>pròpia</em></h1>
         <p class="pagina__intro">Dos productes propis, cinc línies de negoci i serveis professionals. Tot és en fase de pla.</p>
+        <ul class="pi-datos" aria-label="En resum"><li>2 productes propis</li><li>5 línies de negoci</li><li class="pi-datos__aviso">Tot en fase de pla</li></ul>
       </div>
     </section>
 
@@ -133,26 +133,22 @@
       <div class="contenedor">
         <div class="vision__bloque">
           <p class="plan-aviso mono">Tot el que apareix aquí és una proposta de planificació. Res d'això és una funcionalitat ja implementada.</p>
-          <ol class="fichas__lista"><li class="ficha revelar"><span class="ficha__num mono">01</span><div class="ficha__cuerpo"><span class="ficha__estado mono">Primer producte triat</span><h2>KAIRON Agents</h2><p>Plataforma d'agents d'IA especialitzats que treballen sols o coordinats. Cada agent té una funció concreta, permisos definits i historial auditable, i cada client decideix què pot fer i què requereix autorització.</p><ul class="ficha__datos mono"><li>Supervisió de sistemes</li><li>Amenaces i comportaments anòmals</li><li>Anàlisi de vulnerabilitats</li><li>Threat Hunting</li><li>Investigació d'incidents</li><li>Generació d'informes</li><li>Coordinació entre agents</li><li>Supervisió humana en accions sensibles</li><li>Entorns aïllats</li></ul></div></li><li class="ficha revelar"><span class="ficha__num mono">02</span><div class="ficha__cuerpo"><span class="ficha__estado mono">Concepte · estudi de viabilitat fet</span><h2>KAIRON Data Chip</h2><p>Una identitat digital per a cada dada, combinada amb seguretat per maquinari quan estigui disponible: origen, permisos, integritat i operacions registrades.</p><ul class="ficha__datos mono"><li>Identificadors únics</li><li>Xifratge i permisos</li><li>Historial verificable</li><li>Detecció de modificacions</li><li>Ajuda a detectar filtracions</li><li>Maquinari de seguretat</li></ul></div></li></ol>
+          <ol class="fichas__lista"><li class="ficha"><p class="ficha__estado mono">Primer producte triat</p><div class="ficha__cuerpo"><h2>KAIRON Agents</h2><p>Plataforma d'agents d'IA especialitzats que treballen sols o coordinats. Cada agent té una funció concreta, permisos definits i historial auditable, i cada client decideix què pot fer i què requereix autorització.</p><ul class="ficha__datos mono"><li>Supervisió de sistemes</li><li>Amenaces i comportaments anòmals</li><li>Anàlisi de vulnerabilitats</li><li>Threat Hunting</li><li>Investigació d'incidents</li><li>Generació d'informes</li><li>Coordinació entre agents</li><li>Supervisió humana en accions sensibles</li><li>Entorns aïllats</li></ul></div></li><li class="ficha"><p class="ficha__estado mono">Concepte · estudi de viabilitat fet</p><div class="ficha__cuerpo"><h2>KAIRON Data Chip</h2><p>Una identitat digital per a cada dada, combinada amb seguretat per maquinari quan estigui disponible: origen, permisos, integritat i operacions registrades.</p><ul class="ficha__datos mono"><li>Identificadors únics</li><li>Xifratge i permisos</li><li>Historial verificable</li><li>Detecció de modificacions</li><li>Ajuda a detectar filtracions</li><li>Maquinari de seguretat</li></ul></div></li></ol>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Línies de negoci</span>
-          <h2 class="revelar">Línies de negoci</h2>
-          <ul class="modulos"><li class="revelar"><h3>Protecció d'identitat digital</h3><p>Suplantacions, ús no autoritzat de fotografies, informació personal exposada i credencials.</p></li><li class="revelar"><h3>Filtracions i Deep Web</h3><p>Credencials i dades filtrades en fonts d'amenaces, només amb fonts i activitats autoritzades i dins de la llei.</p></li><li class="revelar"><h3>Seguiment del flux de dades</h3><p>Quines aplicacions accedeixen a les dades, transferències observables, mapes de circulació i alertes de fuita.</p></li><li class="revelar"><h3>Protecció infantil i mòbil</h3><p>Aplicacions perilloses, filtratge configurable, trucades sospitoses i supervisió parental, respectant la privacitat dels menors.</p></li><li class="revelar"><h3>KAIRON Anti-Cheat</h3><p>Recerca per detectar trampes, processos sospitosos i modificacions en videojocs.</p></li></ul>
+          <h2>Línies de negoci</h2>
+          <ul class="modulos"><li><h3>Protecció d'identitat digital</h3><p>Suplantacions, ús no autoritzat de fotografies, informació personal exposada i credencials.</p></li><li><h3>Filtracions i Deep Web</h3><p>Credencials i dades filtrades en fonts d'amenaces, només amb fonts i activitats autoritzades i dins de la llei.</p></li><li><h3>Seguiment del flux de dades</h3><p>Quines aplicacions accedeixen a les dades, transferències observables, mapes de circulació i alertes de fuita.</p></li><li><h3>Protecció infantil i mòbil</h3><p>Aplicacions perilloses, filtratge configurable, trucades sospitoses i supervisió parental, respectant la privacitat dels menors.</p></li><li><h3>KAIRON Anti-Cheat</h3><p>Recerca per detectar trampes, processos sospitosos i modificacions en videojocs.</p></li></ul>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Serveis professionals</span>
-          <h2 class="revelar">Serveis professionals</h2>
-          <ul class="modulos"><li class="revelar"><h3>Ciberseguretat empresarial</h3><p>Avaluacions, auditories, vulnerabilitats i configuracions.</p></li><li class="revelar"><h3>SOC i monitoratge</h3><p>Esdeveniments, alertes, incidents, SIEM i Threat Hunting.</p></li><li class="revelar"><h3>Anàlisi forense digital</h3><p>Evidències, registres, reconstrucció i informes tècnics.</p></li><li class="revelar"><h3>Intel·ligència d'amenaces</h3><p>Indicadors de compromís, campanyes i filtracions.</p></li><li class="revelar"><h3>Consultoria i protecció de dades</h3><p>Riscos, accessos, privacitat i arquitectures segures.</p></li></ul>
+          <h2>Serveis professionals</h2>
+          <ul class="modulos"><li><h3>Ciberseguretat empresarial</h3><p>Avaluacions, auditories, vulnerabilitats i configuracions.</p></li><li><h3>SOC i monitoratge</h3><p>Esdeveniments, alertes, incidents, SIEM i Threat Hunting.</p></li><li><h3>Anàlisi forense digital</h3><p>Evidències, registres, reconstrucció i informes tècnics.</p></li><li><h3>Intel·ligència d'amenaces</h3><p>Indicadors de compromís, campanyes i filtracions.</p></li><li><h3>Consultoria i protecció de dades</h3><p>Riscos, accessos, privacitat i arquitectures segures.</p></li></ul>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Model de negoci</span>
-          <h2 class="revelar">Model de negoci</h2>
-          <ul class="modulos"><li class="revelar"><h3>Plataforma d'autoservei</h3><p>Subscripcions per a particulars i empreses, llicències i plans segons funcionalitats. Ingressos recurrents.</p></li><li class="revelar"><h3>Serveis professionals</h3><p>Auditories, consultoria, forense, SOC, implantació i desenvolupament a mida. Contractes específics.</p></li></ul>
+          <h2>Model de negoci</h2>
+          <ul class="modulos"><li><h3>Plataforma d'autoservei</h3><p>Subscripcions per a particulars i empreses, llicències i plans segons funcionalitats. Ingressos recurrents.</p></li><li><h3>Serveis professionals</h3><p>Auditories, consultoria, forense, SOC, implantació i desenvolupament a mida. Contractes específics.</p></li></ul>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Per a qui</span>
-          <h2 class="revelar">Per a qui</h2>
+          <h2>Per a qui</h2>
           <ul class="principios mono"><li>Particulars</li><li>Famílies</li><li>Empreses</li><li>Desenvolupadors de programari</li><li>Empreses de videojocs</li><li>Organitzacions tecnològiques</li></ul>
         </div>
       </div>
@@ -186,15 +182,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="../js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="../js/intro.js?v=20261112b" defer></script>
-  <script src="../js/escena.js?v=20261112b" defer></script>
-  <script src="../js/visuales.js?v=20261112b" defer></script>
-  <script src="../js/polvo.js?v=20261112b" defer></script>
-  <script src="../js/main.js?v=20261112b" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/intro.js?v=20261112c" defer></script>
+  <script src="../js/escena.js?v=20261112c" defer></script>
+  <script src="../js/visuales.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

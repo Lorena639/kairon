@@ -11,7 +11,11 @@
      (radar, escudo, informe sellado) → vista cenital (el barrido es el visor del SOC) → el rojo que
      se extiende y la onda dorada que lo contiene (incidente) → retirada y calma (contacto).
    - Respuesta: la velocidad del scroll abre la aberración cromática y el brillo; el cursor deja una
-     estela de fluido en el hero; cada alerta de la consola late sobre el globo.
+     estela de fluido en el hero, enciende los nodos que tiene cerca y mueve la luz sobre el relieve
+     del emblema; cada alerta de la consola late sobre el globo; los botones principales se dejan
+     atraer por el cursor.
+   - Fondo: un cielo en capas (nebulosa de ruido en oro y cian muy tenue y dos planos de estrellas con
+     paralaje) que da profundidad sin competir con el texto.
    - Tipografía: líneas que suben tras una máscara y enfocan (desenfoque → nítido); el manifiesto
      se enciende palabra a palabra; los datos se descifran. Cada sección entra con un recorte
      distinto (clip-path), no con el mismo fundido.
@@ -343,6 +347,122 @@
     const enSoc = r && r.top < window.innerHeight * 0.7 && r.bottom > window.innerHeight * 0.2;
     if (enSoc || document.body.classList.contains("simulando")) m.alerta(e.detail.tipo);
   });
+
+  /* ---------- 6. El cielo: nebulosa y estrellas ----------
+     Todo se dibuja una sola vez en canvas 2D; después solo se mueven las capas con transform (compositor).
+     El degradado de base está en la hoja de estilos: sin JavaScript el fondo ya no es negro plano. */
+  function cielo() {
+    const caja = $(".v6-cielo");
+    if (!caja) return;
+    const nebulosa = $(".v6-cielo__nebulosa", caja);
+    const capas = $$(".v6-cielo__estrellas", caja);
+    // Generador con semilla: el cielo es siempre el mismo (no cambia al recargar ni al redimensionar)
+    const azar = (semilla) => () => { semilla = (semilla * 1664525 + 1013904223) >>> 0; return semilla / 4294967296; };
+
+    // Nebulosa: ruido de valor en 4 octavas, en baja resolución (el navegador la suaviza al ampliarla)
+    if (nebulosa) {
+      const vertical = window.innerHeight > window.innerWidth;
+      const w = vertical ? 180 : 288, h = vertical ? 288 : 180, r = azar(7), T = 64;
+      const red = new Float32Array(T * T);
+      for (let i = 0; i < red.length; i++) red[i] = r();
+      const ruido = (x, y) => {
+        const xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi;
+        const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+        const v = (a, b) => red[((b % T + T) % T) * T + ((a % T + T) % T)];
+        const arriba = v(xi, yi) + (v(xi + 1, yi) - v(xi, yi)) * sx, abajo = v(xi, yi + 1) + (v(xi + 1, yi + 1) - v(xi, yi + 1)) * sx;
+        return arriba + (abajo - arriba) * sy;
+      };
+      const fbm = (x, y) => ruido(x, y) * 0.5 + ruido(x * 2.1 + 9, y * 2.1 + 4) * 0.27 + ruido(x * 4.3 + 3, y * 4.3 + 17) * 0.15 + ruido(x * 8.7 + 21, y * 8.7 + 8) * 0.08;
+      nebulosa.width = w; nebulosa.height = h;
+      const ctx = nebulosa.getContext("2d");
+      const img = ctx.createImageData(w, h);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const u = x / w * (vertical ? 1.3 : 3.2), v = y / h * (vertical ? 2.8 : 2); // nubes sin estirar en pantallas verticales
+          const oro = Math.max(0, fbm(u, v) - 0.44) * 2.6;                 // nubes de oro
+          // El cian solo donde no hay oro: mezclados daban un verde que no es de la marca
+          const cian = Math.max(0, fbm(u * 0.8 + 31, v * 0.8 + 12) - 0.5) * 2.4 * Math.max(0, 1 - oro * 3);
+          const po = oro * 0.11, pc = cian * 0.085, k = (y * w + x) * 4, suma = po + pc || 1; // 3–6 % en las zonas densas
+          img.data[k] = (212 * po + 53 * pc) / suma;
+          img.data[k + 1] = (175 * po + 198 * pc) / suma;
+          img.data[k + 2] = (122 * po + 214 * pc) / suma;
+          img.data[k + 3] = Math.min(1, po + pc) * 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+
+    // Estrellas: dos planos. El lejano, muchas y mínimas; el cercano, pocas, algo mayores y alguna con destello
+    function estrellas() {
+      const W = window.innerWidth, H = window.innerHeight;
+      const dpr = W < 720 ? Math.min(window.devicePixelRatio || 1, 2) : 1; // en escritorio basta 1: son puntos suaves
+      capas.forEach((c, i) => {
+        const cerca = i === 1, alto = Math.round(H * (cerca ? 1.45 : 1.2));
+        c.width = Math.round(W * dpr); c.height = Math.round(alto * dpr);
+        const ctx = c.getContext("2d"), r = azar(cerca ? 91 : 23);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = Math.round((W * alto) / (cerca ? 26000 : 5200));
+        for (let k = 0; k < n; k++) {
+          const x = r() * W, y = r() * alto, t = r();
+          const tono = t < 0.16 ? "233,207,160" : t < 0.26 ? "158,234,243" : "236,240,247";
+          const radio = cerca ? 0.7 + r() * 0.9 : 0.35 + r() * 0.6, alfa = cerca ? 0.35 + r() * 0.45 : 0.12 + r() * 0.4;
+          ctx.fillStyle = "rgba(" + tono + "," + alfa.toFixed(2) + ")";
+          ctx.beginPath(); ctx.arc(x, y, radio, 0, Math.PI * 2); ctx.fill();
+          if (cerca && r() < 0.22) { // destello en cruz, fino
+            ctx.fillStyle = "rgba(" + tono + "," + (alfa * 0.5).toFixed(2) + ")";
+            const l = 3 + r() * 5;
+            ctx.fillRect(x - l, y - 0.25, l * 2, 0.5); ctx.fillRect(x - 0.25, y - l, 0.5, l * 2);
+          }
+        }
+      });
+    }
+    estrellas();
+    let tm = 0, anchoPrevio = window.innerWidth;
+    window.addEventListener("resize", () => {
+      if (Math.abs(window.innerWidth - anchoPrevio) < 2) return; // en móvil la barra del navegador cambia el alto: no se repinta
+      anchoPrevio = window.innerWidth;
+      clearTimeout(tm); tm = setTimeout(estrellas, 200);
+    });
+    html.classList.add("con-cielo");
+
+    // Paralaje: cada plano se desplaza con el scroll y con el cursor según su profundidad
+    if (!hayGSAP) return;
+    const raton = { x: 0, y: 0, sx: 0, sy: 0 };
+    window.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      raton.x = e.clientX / window.innerWidth - 0.5; raton.y = e.clientY / window.innerHeight - 0.5;
+    }, { passive: true });
+    let previo = "";
+    gsap.ticker.add(() => {
+      if (sinMovimiento()) { if (previo !== "quieto") { capas.forEach((c) => { c.style.transform = ""; }); previo = "quieto"; } return; }
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const p = Math.min(1, Math.max(0, window.scrollY / max)), H = window.innerHeight;
+      raton.sx += (raton.x - raton.sx) * 0.04; raton.sy += (raton.y - raton.sy) * 0.04;
+      const clave = p.toFixed(4) + raton.sx.toFixed(3) + raton.sy.toFixed(3);
+      if (clave === previo) return;
+      previo = clave;
+      capas.forEach((c, i) => {
+        const cerca = i === 1, recorrido = H * (cerca ? 0.45 : 0.2), m = cerca ? 22 : 8;
+        c.style.transform = "translate3d(" + (-raton.sx * m).toFixed(2) + "px," + (-p * recorrido - raton.sy * m * 0.6).toFixed(2) + "px,0)";
+      });
+    });
+  }
+  cielo();
+
+  /* ---------- 7. Botones con imán ----------
+     Los botones principales del hero y de la cabecera se dejan atraer unos píxeles por el cursor y vuelven
+     con un muelle. Solo con ratón y con movimiento permitido. */
+  if (hayGSAP && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    $$(".v6-hero .hero__acciones .boton, .cabecera .menu .boton").forEach((b) => {
+      const ax = gsap.quickTo(b, "x", { duration: 0.5, ease: "power3.out" }), ay = gsap.quickTo(b, "y", { duration: 0.5, ease: "power3.out" });
+      b.addEventListener("pointermove", (e) => {
+        if (sinMovimiento()) return;
+        const r = b.getBoundingClientRect();
+        ax((e.clientX - (r.left + r.width / 2)) * 0.22); ay((e.clientY - (r.top + r.height / 2)) * 0.3);
+      });
+      b.addEventListener("pointerleave", () => { gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1, 0.45)", overwrite: true }); });
+    });
+  }
 
   // Clic en el fondo del hero: aparece una amenaza sobre el globo y el radar la apaga al pasar
   const hero = $(".v6-hero");

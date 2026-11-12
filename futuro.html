@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:title" content="KAIRON · El momento justo">
-  <meta property="og:description" content="SOC gestionado para pymes. Detectar, responder, demostrar.">
+  <meta property="og:description" content="SOC gestionado para particulares y empresas. Detectar, responder, demostrar.">
   <meta property="og:image" content="img/og-image.jpg">
   <title>Futuro · KAIRON</title>
   <link rel="icon" href="img/favicon.ico">
@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KAIRON",
-    "description": "SOC gestionado para pymes (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
+    "description": "SOC gestionado para particulares y empresas (empresa ficticia creada para la práctica A1-RA1 y el TFG de SMX en Digitech Barcelona).",
     "url": "index.html",
     "logo": "img/kairon-logo-dorado.png",
     "founder": [
@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
 </head>
 <body>
   <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
@@ -60,11 +60,11 @@
       <li><a href="soc.html"><span class="mono">02</span>SOC en vivo</a></li>
       <li><a href="productos.html"><span class="mono">03</span>Productos</a></li>
       <li><a href="proyectos.html"><span class="mono">04</span>Proyectos</a></li>
-      <li><a href="futuro.html"><span class="mono">05</span>Futuro</a></li>
+      <li><a href="futuro.html" aria-current="page"><span class="mono">05</span>Futuro</a></li>
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equipo</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacto</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionado para pymes</p>
+    <p class="mono">SOC gestionado para particulares y empresas</p>
   </div>
 
   <a class="arriba" href="#contenido" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
@@ -112,7 +112,7 @@
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="futuro.html" aria-current="page">Futuro</a></li>
           <li><a href="sobre-mi.html">Equipo</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoría gratuita">Auditoría gratuita</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Habla con nosotros">Habla con nosotros</span></a></li>
         </ul>
       </nav>
     </div>
@@ -123,57 +123,60 @@
     <section class="pagina pagina--cabeza" aria-labelledby="titulo-pagina">
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
-        <span class="mono">Visión de empresa</span>
-        <h1 class="pagina__titulo revelar" id="titulo-pagina">El siguiente <span class="oro-brillo">instante</span></h1>
+        <h1 class="pagina__titulo" id="titulo-pagina" data-partido="1">El siguiente <em>instante</em></h1>
         <p class="pagina__intro">Queremos construir una empresa tecnológica de ciberseguridad con productos propios. Todo lo de esta página es un plan, no algo que ya funcione.</p>
+        <ul class="pi-datos" aria-label="En resumen"><li class="pi-datos__aviso">Plan, no producto</li><li>6 fases</li><li>Primer producto: KAIRON Agents</li><li>Despliegue híbrido: local y nube</li></ul>
       </div>
     </section>
 
     <section class="plan-vision">
       <div class="contenedor">
         <div class="vision__bloque">
-          <span class="mono">La visión</span>
-          <h2 class="revelar">No solo una consultora</h2>
+          <h2>No solo una consultora</h2>
           <p class="vision__texto">KAIRON quiere desarrollar tecnología propia y productos escalables, no solo revender herramientas de terceros: un ecosistema que proteja la información de personas y organizaciones durante todo su ciclo de vida.</p>
         </div>
         <div class="vision__bloque">
-          <span class="mono">La idea de partida</span>
-          <h2 class="revelar">Más control sobre tu información</h2>
+          <h2>Más control sobre tu información</h2>
           <p class="vision__texto">Los datos se generan, se comparten y se transfieren constantemente, y saber dónde terminan o quién accede a ellos es complicado. KAIRON no quiere limitarse a reaccionar: quiere ayudar a prevenir, detectar, investigar y reducir las consecuencias de los incidentes.</p>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Principios</span>
-          <h2 class="revelar">Principios</h2>
+          <h2>Principios</h2>
           <ul class="principios mono"><li>Security by Design</li><li>Privacy by Design</li><li>Identidad digital protegida</li><li>Trazabilidad de la información</li><li>Control del usuario sobre sus datos</li><li>IA especializada</li><li>Automatización supervisada</li><li>Transparencia y auditabilidad</li><li>Desarrollo propio</li></ul>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Objetivos</span>
-          <h2 class="revelar">Objetivos</h2>
-          <ol class="viaje"><li class="revelar">Crear un ecosistema de agentes de IA especializados en ciberseguridad.</li><li class="revelar">Dar identidad digital a los datos.</li><li class="revelar">Proteger información con cifrado y controles de acceso.</li><li class="revelar">Detectar filtraciones y credenciales comprometidas.</li><li class="revelar">Supervisar el flujo y el uso de los datos.</li><li class="revelar">Detectar amenazas y accesos no autorizados.</li><li class="revelar">Investigar incidentes y facilitar el análisis forense.</li><li class="revelar">Proteger a particulares, empresas y desarrolladores.</li><li class="revelar">Crear tecnología comercializable con suscripciones, licencias e integraciones.</li><li class="revelar">Dar a los usuarios más control sobre su identidad e información.</li></ol>
+          <h2>Objetivos</h2>
+          <ol class="viaje"><li>Crear un ecosistema de agentes de IA especializados en ciberseguridad.</li><li>Dar identidad digital a los datos.</li><li>Proteger información con cifrado y controles de acceso.</li><li>Detectar filtraciones y credenciales comprometidas.</li><li>Supervisar el flujo y el uso de los datos.</li><li>Detectar amenazas y accesos no autorizados.</li><li>Investigar incidentes y facilitar el análisis forense.</li><li>Proteger a particulares, empresas y desarrolladores.</li><li>Crear tecnología comercializable con suscripciones, licencias e integraciones.</li><li>Dar a los usuarios más control sobre su identidad e información.</li></ol>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Ecosistema</span>
-          <h2 class="revelar">Una plataforma común</h2>
-          <ul class="modulos"><li class="revelar"><h3>Platform</h3><p>Infraestructura central de gestión.</p></li><li class="revelar"><h3>Agents</h3><p>Inteligencia artificial y automatización.</p></li><li class="revelar"><h3>Data Chip</h3><p>Identidad, protección y trazabilidad de datos.</p></li><li class="revelar"><h3>Cybersecurity</h3><p>Detección, supervisión y respuesta.</p></li><li class="revelar"><h3>Digital Identity</h3><p>Protección de identidad y privacidad.</p></li><li class="revelar"><h3>Threat Intelligence</h3><p>Información y análisis sobre amenazas.</p></li></ul>
+          <h2>Una plataforma común</h2>
+          <ul class="modulos"><li><h3>Platform</h3><p>Infraestructura central de gestión.</p></li><li><h3>Agents</h3><p>Inteligencia artificial y automatización.</p></li><li><h3>Data Chip</h3><p>Identidad, protección y trazabilidad de datos.</p></li><li><h3>Cybersecurity</h3><p>Detección, supervisión y respuesta.</p></li><li><h3>Digital Identity</h3><p>Protección de identidad y privacidad.</p></li><li><h3>Threat Intelligence</h3><p>Información y análisis sobre amenazas.</p></li></ul>
           <p class="vision__nota">Los módulos intercambian información con interfaces seguras y permisos controlados, para no ser herramientas aisladas.</p>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Decisiones tomadas</span>
-          <h2 class="revelar">Decisiones tomadas</h2>
+          <h2>Decisiones tomadas</h2>
           <ul class="principios mono"><li>Primer producto: KAIRON Agents</li><li>Despliegue híbrido: local y nube</li><li>Autonomía configurable</li><li>Permisos, auditoría y supervisión humana</li><li>Desarrollo modular y documentado</li></ul>
         </div>
-        <div class="vision__bloque">
-          <span class="mono">Plan de desarrollo</span>
-          <h2 class="revelar">De un ordenador a un ecosistema</h2>
+        <div class="vision__bloque pi-ruta" id="plan">
+          <h2>De un ordenador a un ecosistema</h2>
           <p class="vision__nota">Partimos de poco presupuesto, un ordenador propio y herramientas gratuitas o de bajo coste, así que el desarrollo es progresivo.</p>
-          <ol class="fichas__lista"><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 1</span><div class="ficha__cuerpo"><h2>Fundación</h2><p>Arquitectura, requisitos, estándares de seguridad y diseño del primer agente.</p></div></li><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 2</span><div class="ficha__cuerpo"><h2>Primer prototipo de Agents</h2><p>Un agente funcional con permisos, registros, supervisión y pruebas.</p></div></li><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 3</span><div class="ficha__cuerpo"><h2>Plataforma central</h2><p>Panel de administración, comunicación segura, usuarios, permisos y auditoría.</p></div></li><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 4</span><div class="ficha__cuerpo"><h2>Primeros servicios de seguridad</h2><p>Detección de amenazas, monitorización, análisis de registros, alertas e informes.</p></div></li><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 5</span><div class="ficha__cuerpo"><h2>Investigación de Data Chip</h2><p>Modelo de identidad, identificadores, cifrado, trazabilidad y prueba de concepto.</p></div></li><li class="ficha ficha--ruta revelar"><span class="ficha__num mono">Fase 6</span><div class="ficha__cuerpo"><h2>Expansión</h2><p>Identidad digital, filtraciones, flujo de datos, protección móvil, anti-cheat y servicios a empresas.</p></div></li></ol>
+          <div class="pi-ruta__visor">
+            <ol class="pi-ruta__pista">
+              <li class="pi-ruta__linea" aria-hidden="true"><i></i></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 1</span><h3>Fundación</h3><p>Arquitectura, requisitos, estándares de seguridad y diseño del primer agente.</p></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 2</span><h3>Primer prototipo de Agents</h3><p>Un agente funcional con permisos, registros, supervisión y pruebas.</p></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 3</span><h3>Plataforma central</h3><p>Panel de administración, comunicación segura, usuarios, permisos y auditoría.</p></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 4</span><h3>Primeros servicios de seguridad</h3><p>Detección de amenazas, monitorización, análisis de registros, alertas e informes.</p></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 5</span><h3>Investigación de Data Chip</h3><p>Modelo de identidad, identificadores, cifrado, trazabilidad y prueba de concepto.</p></li>
+              <li class="pi-ruta__fase"><span class="pi-ruta__n mono">Fase 6</span><h3>Expansión</h3><p>Identidad digital, filtraciones, flujo de datos, protección móvil, anti-cheat y servicios a empresas.</p></li>
+            </ol>
+            <p class="pi-ruta__cuenta mono" aria-hidden="true"><b>01</b> / 06</p>
+          </div>
         </div>
         <div class="vision__bloque">
-          <span class="mono">Mientras tanto: el TFG</span>
-          <h2 class="revelar">Mientras tanto: el TFG</h2>
-          <ul class="modulos"><li class="revelar"><h3>nov.–dic. 2026</h3><p>Laboratorio Wazuh y herramienta forense.</p></li><li class="revelar"><h3>ene. 2027</h3><p>Ensayo de la demo y corte de alcance.</p></li><li class="revelar"><h3>feb.–mar. 2027</h3><p>Presentación del TFG.</p></li></ul>
+          <h2>Mientras tanto: el TFG</h2>
+          <ul class="modulos"><li><h3>nov.–dic. 2026</h3><p>Laboratorio Wazuh y herramienta forense.</p></li><li><h3>ene. 2027</h3><p>Ensayo de la demo y corte de alcance.</p></li><li><h3>feb.–mar. 2027</h3><p>Presentación del TFG.</p></li></ul>
         </div>
-        <aside class="fichas__limite revelar"><h2>Lo que no vamos a prometer</h2><p>Un identificador no basta para rastrear copias externas: dentro de entornos controlados hay trazabilidad, fuera hacen falta mecanismos adicionales y no se puede garantizar. Distinguimos siempre entre lo propuesto, los prototipos, lo implementado y lo verificado.</p></aside>
+        <aside class="fichas__limite"><h2>Lo que no vamos a prometer</h2><p>Un identificador no basta para rastrear copias externas: dentro de entornos controlados hay trazabilidad, fuera hacen falta mecanismos adicionales y no se puede garantizar. Distinguimos siempre entre lo propuesto, los prototipos, lo implementado y lo verificado.</p></aside>
       </div>
     </section>
 
@@ -205,15 +208,17 @@
   </footer>
 
   <!-- Librerías guardadas en local (copias de Three.js 0.160, GSAP 3.15.1 con SplitText y ScrambleText y Lenis 1.1.18) para no depender de internet -->
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/intro.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/visuales.js?v=20261112b" defer></script>
-  <script src="js/polvo.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/polvo.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
    - "escudo": anillos que laten y nodos infectados que se aíslan (contención).
    - "informe": un informe que se escribe solo y una columna de hashes SHA-256.
    - "mapa": ataques entrantes como arcos de luz hacia el centro, que se neutralizan.
+   - "radar", "auditoria" y "formacion": los tres dibujos del visor de servicios.html (detectar, auditar, formar).
    Solo se animan mientras están en pantalla. */
 
 (function () {
@@ -167,7 +168,96 @@
     };
   }
 
-  const fabricas = { escudo, informe, mapa };
+  /* ---------- Radar (detectar): un barrido que gira y enciende lo que encuentra ---------- */
+  function radar(c) {
+    const ecos = Array.from({ length: 14 }, () => ({ a: Math.random() * Math.PI * 2, r: 0.2 + Math.random() * 0.75, luz: 0, malo: Math.random() < 0.22 }));
+    let t = 0;
+    return (dt) => {
+      const { ctx, w, h } = preparar(c);
+      t += dt;
+      const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.44, ang = t * 1.1;
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 1; i <= 3; i++) { ctx.beginPath(); ctx.arc(cx, cy, (R * i) / 3, 0, Math.PI * 2); ctx.strokeStyle = `rgba(${ORO},${0.14 + i * 0.05})`; ctx.lineWidth = 1; ctx.stroke(); }
+      ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R); ctx.strokeStyle = `rgba(${ORO},0.12)`; ctx.stroke();
+      // Estela del barrido
+      for (let k = 0; k < 26; k++) {
+        const a = ang - k * 0.035;
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+        ctx.strokeStyle = `rgba(${ORO_CLARO},${0.5 * (1 - k / 26)})`; ctx.lineWidth = 1.4; ctx.stroke();
+      }
+      ecos.forEach((e) => {
+        const d = ((ang - e.a) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        if (d < 0.08) e.luz = 1;
+        e.luz = Math.max(0, e.luz - dt * 0.45);
+        const x = cx + Math.cos(e.a) * R * e.r, y = cy + Math.sin(e.a) * R * e.r;
+        const color = e.malo ? ROJO : CIAN;
+        ctx.beginPath(); ctx.arc(x, y, 2.2 + e.luz * 2.4, 0, Math.PI * 2); ctx.fillStyle = `rgba(${color},${0.18 + e.luz * 0.82})`; ctx.fill();
+        if (e.malo && e.luz > 0.1) { ctx.beginPath(); ctx.arc(x, y, 6 + (1 - e.luz) * 12, 0, Math.PI * 2); ctx.strokeStyle = `rgba(${ROJO},${e.luz * 0.7})`; ctx.lineWidth = 1; ctx.stroke(); }
+      });
+      ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fillStyle = `rgba(${ORO_CLARO},1)`; ctx.fill();
+    };
+  }
+
+  /* ---------- Auditoría: una rejilla de equipos que se revisa uno a uno; los fallos se corrigen ---------- */
+  function auditoria(c) {
+    const N = 6, celdas = Array.from({ length: N * N }, () => ({ estado: 0, fallo: Math.random() < 0.26, arreglo: 0 }));
+    let t = 0, cursor = 0, reloj = 0;
+    return (dt) => {
+      const { ctx, w, h } = preparar(c);
+      t += dt; reloj += dt;
+      if (reloj > 0.09 && dt > 0) {
+        reloj = 0;
+        celdas[cursor].estado = 1;
+        cursor++;
+        if (cursor >= celdas.length) { cursor = 0; celdas.forEach((x) => { x.estado = 0; x.arreglo = 0; x.fallo = Math.random() < 0.26; }); }
+      }
+      const lado = Math.min(w, h) * 0.62, paso = lado / N, x0 = (w - lado) / 2, y0 = (h - lado) / 2;
+      ctx.clearRect(0, 0, w, h);
+      celdas.forEach((cel, i) => {
+        const x = x0 + (i % N) * paso, y = y0 + Math.floor(i / N) * paso, m = paso * 0.16;
+        if (cel.estado && cel.fallo) cel.arreglo = Math.min(1, cel.arreglo + dt * 0.5);
+        const esCursor = i === cursor;
+        let color = ORO, alfa = 0.16;
+        if (cel.estado) { color = cel.fallo && cel.arreglo < 1 ? ROJO : (cel.fallo ? CIAN : ORO); alfa = cel.fallo ? 0.75 : 0.5; }
+        ctx.fillStyle = `rgba(${color},${alfa * 0.22})`; ctx.fillRect(x + m, y + m, paso - 2 * m, paso - 2 * m);
+        ctx.strokeStyle = `rgba(${esCursor ? ORO_CLARO : color},${esCursor ? 1 : alfa})`; ctx.lineWidth = esCursor ? 1.6 : 1;
+        ctx.strokeRect(x + m, y + m, paso - 2 * m, paso - 2 * m);
+      });
+      // Línea de revisión
+      const fy = y0 + (Math.floor(cursor / N) + 0.5) * paso;
+      ctx.beginPath(); ctx.moveTo(x0 - 8, fy); ctx.lineTo(x0 + lado + 8, fy); ctx.strokeStyle = `rgba(${ORO_CLARO},0.35)`; ctx.lineWidth = 1; ctx.stroke();
+    };
+  }
+
+  /* ---------- Formación: correos que llegan; el engaño se señala antes de abrirlo ---------- */
+  function formacion(c) {
+    const cartas = Array.from({ length: 5 }, (_, i) => ({ y: i / 5, malo: i === 2 }));
+    let t = 0;
+    return (dt) => {
+      const { ctx, w, h } = preparar(c);
+      t += dt;
+      ctx.clearRect(0, 0, w, h);
+      const an = Math.min(w, h) * 0.34, al = an * 0.66, cx = w / 2;
+      cartas.forEach((k) => {
+        k.y += dt * 0.09;
+        if (k.y > 1.1) { k.y -= 1.2; k.malo = Math.random() < 0.4; }
+        const y = h * (1.05 - k.y * 1.1), x = cx - an / 2 + Math.sin(k.y * 6 + t * 0.4) * w * 0.07;
+        const centro = 1 - Math.min(1, Math.abs(k.y - 0.5) * 2.4);
+        const color = k.malo ? ROJO : ORO, alfa = 0.25 + centro * 0.7;
+        ctx.strokeStyle = `rgba(${color},${alfa})`; ctx.lineWidth = 1.3;
+        ctx.strokeRect(x, y, an, al);
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + an / 2, y + al * 0.55); ctx.lineTo(x + an, y); ctx.stroke();
+        if (k.malo && centro > 0.25) {
+          // Marca de aviso: un rombo cian que rodea el correo sospechoso
+          const r = an * (0.78 + 0.06 * Math.sin(t * 5));
+          ctx.beginPath(); ctx.moveTo(x + an / 2, y + al / 2 - r); ctx.lineTo(x + an / 2 + r, y + al / 2); ctx.lineTo(x + an / 2, y + al / 2 + r); ctx.lineTo(x + an / 2 - r, y + al / 2); ctx.closePath();
+          ctx.strokeStyle = `rgba(${CIAN},${centro})`; ctx.lineWidth = 1.5; ctx.stroke();
+        }
+      });
+    };
+  }
+
+  const fabricas = { escudo, informe, mapa, radar, auditoria, formacion };
   document.querySelectorAll("canvas[data-visual]").forEach((c) => {
     const fn = fabricas[c.dataset.visual];
     if (!fn) return;
@@ -178,7 +268,8 @@
     (function bucle(ahora) {
       const dt = Math.min((ahora - ultimo) / 1000, 0.05);
       ultimo = ahora;
-      if (visible && !reducido) dibujar(dt);
+      // data-pausa: el lienzo está tapado por otro (visor de servicios); no se dibuja hasta que le toca
+      if (visible && !reducido && !c.hasAttribute("data-pausa") && !document.documentElement.classList.contains("menos-movimiento")) dibujar(dt);
       requestAnimationFrame(bucle);
     })(performance.now());
   });

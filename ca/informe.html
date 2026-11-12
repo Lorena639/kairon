@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="../css/styles.css?v=20261112c">
 </head>
 <body class="informe-pagina">
 
@@ -54,7 +54,7 @@
           <li><a href="proyectos.html">Projectes</a></li>
           <li><a href="futuro.html">Futur</a></li>
           <li><a href="sobre-mi.html">Equip</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Auditoria gratuïta">Auditoria gratuïta</span></a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
         </ul>
       </nav>
     </div>
@@ -70,7 +70,7 @@
       <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
       <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
     </ul>
-    <p class="mono">KAIRON · SOC gestionat per a pimes</p>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
   </div>
 
   <main id="contenido" class="informe">
@@ -78,9 +78,9 @@
     <!-- ===== PORTADA DEL INFORME ===== -->
     <section class="pagina informe__cabecera" aria-labelledby="titulo-informe">
       <div class="contenedor">
-        <span class="mono">Informe d'incident · exemple per a la pràctica</span>
-        <h1 class="pagina__titulo revelar" id="titulo-informe">Cas <span class="oro-brillo">KAIRON-0428</span></h1>
-        <dl class="informe__datos revelar">
+        <h1 class="pagina__titulo" id="titulo-informe" data-partido="1">Cas <em>KAIRON-0428</em></h1>
+        <p class="pi-sello mono">Informe d'incident · exemple per a la pràctica</p>
+        <dl class="informe__datos">
           <div><dt>Client</dt><dd>Logística Marta S.L. (fictici)</dd></div>
           <div><dt>Classificació</dt><dd><span class="etiqueta etiqueta--alerta">Alta</span> Malware amb persistència</dd></div>
           <div><dt>Detectat</dt><dd><time datetime="2026-10-29T09:41:12Z">29/10/2026 · 09:41:12 UTC</time></dd></div>
@@ -94,9 +94,9 @@
     <!-- ===== RESUMEN PARA DIRECCIÓN ===== -->
     <section class="informe__bloque" aria-labelledby="titulo-resumen">
       <div class="contenedor">
-        <span class="mono">1 · Resum per a direcció</span>
-        <h2 class="informe__titulo revelar" id="titulo-resumen">Què ha passat, en una pàgina</h2>
-        <div class="informe__texto revelar">
+        <h2 class="informe__titulo" id="titulo-resumen" data-partido="1">Què ha passat, en una pàgina</h2>
+        <p class="pi-sello mono">1 · Resum per a direcció</p>
+        <div class="informe__texto">
           <p>Un empleat va obrir un adjunt d'un correu que imitava un proveïdor. L'adjunt va executar un programa sense signatura al portàtil WS-03, que va crear una tasca programada per tornar a arrencar a cada inici i va intentar connectar-se a un servidor extern de comandament i control.</p>
           <p>KAIRON va detectar l'execució al cap d'un minut, va aïllar el portàtil de la xarxa al cap de tres minuts i va bloquejar la IP externa al tallafoc. No hi ha indicis que l'atacant accedís a altres equips ni que sortís informació de l'empresa. El portàtil es va reinstal·lar des de zero i l'usuari va canviar les contrasenyes.</p>
           <p><strong>Impacte:</strong> cap en producció. <strong>Dades afectades:</strong> no se n'han identificat. <strong>Risc residual:</strong> baix, sempre que s'apliquin les recomanacions de l'apartat 5.</p>
@@ -107,9 +107,9 @@
     <!-- ===== CRONOLOGÍA ===== -->
     <section class="informe__bloque" aria-labelledby="titulo-cronologia">
       <div class="contenedor">
-        <span class="mono">2 · Cronologia (UTC)</span>
-        <h2 class="informe__titulo revelar" id="titulo-cronologia">Minut a minut</h2>
-        <div class="tabla revelar">
+        <h2 class="informe__titulo" id="titulo-cronologia" data-partido="1">Minut a minut</h2>
+        <p class="pi-sello mono">2 · Cronologia (UTC)</p>
+        <div class="tabla pi-crono">
           <table>
             <thead><tr><th>Hora</th><th>Esdeveniment</th><th>Font</th><th>Acció</th></tr></thead>
             <tbody>
@@ -131,10 +131,10 @@
     <!-- ===== EVIDENCIAS ===== -->
     <section class="informe__bloque" aria-labelledby="titulo-evidencias">
       <div class="contenedor">
-        <span class="mono">3 · Evidències i cadena de custòdia</span>
-        <h2 class="informe__titulo revelar" id="titulo-evidencias">Cada prova, amb la seva empremta</h2>
-        <p class="informe__nota revelar">Totes les evidències es van recollir a WS-03 amb l'eina forense de KAIRON, es van segellar amb hora UTC i se'n va calcular el hash SHA-256 en el moment de la recollida. Qualsevol canvi posterior en un fitxer en canviaria el hash.</p>
-        <div class="tabla revelar">
+        <h2 class="informe__titulo" id="titulo-evidencias" data-partido="1">Cada prova, amb la seva empremta</h2>
+        <p class="pi-sello mono">3 · Evidències i cadena de custòdia</p>
+        <p class="informe__nota">Totes les evidències es van recollir a WS-03 amb l'eina forense de KAIRON, es van segellar amb hora UTC i se'n va calcular el hash SHA-256 en el moment de la recollida. Qualsevol canvi posterior en un fitxer en canviaria el hash.</p>
+        <div class="tabla">
           <table>
             <thead><tr><th>ID</th><th>Evidència</th><th>Recollida (UTC)</th><th>SHA-256</th></tr></thead>
             <tbody>
@@ -147,20 +147,28 @@
             </tbody>
           </table>
         </div>
-        <p class="informe__nota revelar">Els hashes es mostren abreujats en aquest exemple. En un informe real apareixen complets (64 caràcters hexadecimals) juntament amb el nom de qui va recollir cada evidència i on es custodia.</p>
+        <p class="informe__nota">Els hashes es mostren abreujats en aquest exemple. En un informe real apareixen complets (64 caràcters hexadecimals) juntament amb el nom de qui va recollir cada evidència i on es custodia.</p>
+        <!-- Comprobación en vivo: el SHA-256 se calcula en el navegador (js/paginas.js); un solo carácter cambia toda la huella -->
+        <div class="pi-huella" hidden data-igual="Mateixa empremta: el text no ha canviat." data-distinta="Empremta diferent: el text ja no és l'original.">
+          <label for="huella-texto">Comprova-ho: canvia una lletra</label>
+          <input type="text" id="huella-texto" value="Factura_0931.pdf.exe · E5 · 29/10/2026 09:46:48 UTC" autocomplete="off" spellcheck="false">
+          <output for="huella-texto"></output>
+          <p class="pi-huella__estado" role="status"></p>
+          <p>El navegador calcula aquí el SHA-256 d'aquest text, sense enviar-lo enlloc. És una demostració: no és l'empremta del fitxer del cas.</p>
+        </div>
       </div>
     </section>
 
     <!-- ===== ANÁLISIS ===== -->
     <section class="informe__bloque" aria-labelledby="titulo-analisis">
       <div class="contenedor">
-        <span class="mono">4 · Anàlisi tècnica</span>
-        <h2 class="informe__titulo revelar" id="titulo-analisis">Com va entrar i què va intentar fer</h2>
+        <h2 class="informe__titulo" id="titulo-analisis" data-partido="1">Com va entrar i què va intentar fer</h2>
+        <p class="pi-sello mono">4 · Anàlisi tècnica</p>
         <div class="informe__grid">
-          <article class="valor revelar"><span class="mono">Vector d'entrada</span><h3>Phishing amb adjunt</h3><p>Correu que suplanta un proveïdor habitual. L'adjunt té doble extensió (<code>.pdf.exe</code>) per semblar un PDF.</p></article>
-          <article class="valor revelar"><span class="mono">Persistència</span><h3>Tasca programada</h3><p>L'executable crea una tasca que el llança a cada inici de sessió. És el que va disparar la regla 100021 de Wazuh.</p></article>
-          <article class="valor revelar"><span class="mono">Comunicació</span><h3>Comandament i control</h3><p>Intent de connexió xifrada al port 443 d'una IP sense reputació. Bloquejada abans que completés l'intercanvi.</p></article>
-          <article class="valor revelar"><span class="mono">Abast</span><h3>Un sol equip</h3><p>Sense moviment lateral: no hi ha inicis de sessió de l'usuari en altres equips ni trànsit intern anòmal a la finestra de l'incident.</p></article>
+          <article class="valor"><h3>Phishing amb adjunt</h3><p class="pi-sello mono">Vector d'entrada</p><p>Correu que suplanta un proveïdor habitual. L'adjunt té doble extensió (<code>.pdf.exe</code>) per semblar un PDF.</p></article>
+          <article class="valor"><h3>Tasca programada</h3><p class="pi-sello mono">Persistència</p><p>L'executable crea una tasca que el llança a cada inici de sessió. És el que va disparar la regla 100021 de Wazuh.</p></article>
+          <article class="valor"><h3>Comandament i control</h3><p class="pi-sello mono">Comunicació</p><p>Intent de connexió xifrada al port 443 d'una IP sense reputació. Bloquejada abans que completés l'intercanvi.</p></article>
+          <article class="valor"><h3>Un sol equip</h3><p class="pi-sello mono">Abast</p><p>Sense moviment lateral: no hi ha inicis de sessió de l'usuari en altres equips ni trànsit intern anòmal a la finestra de l'incident.</p></article>
         </div>
       </div>
     </section>
@@ -168,13 +176,13 @@
     <!-- ===== RECOMENDACIONES ===== -->
     <section class="informe__bloque" aria-labelledby="titulo-recomendaciones">
       <div class="contenedor">
-        <span class="mono">5 · Recomanacions</span>
-        <h2 class="informe__titulo revelar" id="titulo-recomendaciones">Perquè no es repeteixi</h2>
+        <h2 class="informe__titulo" id="titulo-recomendaciones" data-partido="1">Perquè no es repeteixi</h2>
+        <p class="pi-sello mono">5 · Recomanacions</p>
         <ol class="pasos">
-          <li class="paso revelar"><span class="paso__hora mono">Prioritat alta</span><h3>Bloquejar executables des del correu</h3><p>Rebutjar adjunts executables i dobles extensions al servidor de correu.</p></li>
-          <li class="paso revelar"><span class="paso__hora mono">Prioritat alta</span><h3>Formació anti-phishing</h3><p>Sessió de 45 minuts per a la plantilla amb exemples reals com aquest.</p></li>
-          <li class="paso revelar"><span class="paso__hora mono">Prioritat mitjana</span><h3>Usuaris sense permisos d'administrador</h3><p>L'executable va poder crear la tasca perquè l'usuari era administrador local.</p></li>
-          <li class="paso revelar"><span class="paso__hora mono">Prioritat mitjana</span><h3>Doble factor al correu</h3><p>Redueix el dany si una contrasenya acaba en mans alienes.</p></li>
+          <li class="paso"><span class="paso__hora mono">Prioritat alta</span><h3>Bloquejar executables des del correu</h3><p>Rebutjar adjunts executables i dobles extensions al servidor de correu.</p></li>
+          <li class="paso"><span class="paso__hora mono">Prioritat alta</span><h3>Formació anti-phishing</h3><p>Sessió de 45 minuts per a la plantilla amb exemples reals com aquest.</p></li>
+          <li class="paso"><span class="paso__hora mono">Prioritat mitjana</span><h3>Usuaris sense permisos d'administrador</h3><p>L'executable va poder crear la tasca perquè l'usuari era administrador local.</p></li>
+          <li class="paso"><span class="paso__hora mono">Prioritat mitjana</span><h3>Doble factor al correu</h3><p>Redueix el dany si una contrasenya acaba en mans alienes.</p></li>
         </ol>
       </div>
     </section>
@@ -182,7 +190,7 @@
     <!-- ===== FIRMA ===== -->
     <section class="informe__bloque informe__firma" aria-label="Signatura de l'informe">
       <div class="contenedor">
-        <div class="informe__sello revelar">
+        <div class="informe__sello">
           <span class="oro-metal oro-metal--emblema"><img src="../img/relieve/kairon-relieve-mini.png" width="64" height="64" alt="" loading="lazy" decoding="async"></span>
           <div>
             <p class="mono">Emès per KAIRON SOC · 29/10/2026 · 14:05 UTC</p>
@@ -216,12 +224,14 @@
     </div>
   </footer>
 
-  <script src="../js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="../js/polvo.js?v=20261112b" defer></script>
-  <script src="../js/main.js?v=20261112b" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="../js/polvo.js?v=20261112c" defer></script>
+  <script src="../js/main.js?v=20261112c" defer></script>
+  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
+  <script src="../js/paginas.js?v=20261112c" defer></script>
 </body>
 </html>

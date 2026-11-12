@@ -37,7 +37,7 @@
     "knowsAbout": ["SOC", "Wazuh", "análisis forense", "respuesta a incidentes"]
   }
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20261112b">
+  <link rel="stylesheet" href="css/styles.css?v=20261112c">
   <!-- Portada v6: estilos propios de la portada inmersiva (se cargan después de la hoja común) -->
 </head>
 <body>
@@ -52,6 +52,13 @@
 
   <!-- El mundo del radar: un único lienzo WebGL fijo para toda la portada (js/mundo.js).
        Si no hay WebGL, aquí mismo se dibuja el radar 2D de reserva. -->
+  <!-- El cielo de fondo: nebulosa tenue y dos planos de estrellas con paralaje (los dibuja js/v6.js; la base es CSS) -->
+  <div class="v6-cielo" aria-hidden="true">
+    <canvas class="v6-cielo__nebulosa"></canvas>
+    <canvas class="v6-cielo__estrellas v6-cielo__estrellas--lejos"></canvas>
+    <canvas class="v6-cielo__estrellas v6-cielo__estrellas--cerca"></canvas>
+  </div>
+
   <div class="hero__escena mundo" aria-hidden="true"></div>
 
   <!-- Intro: un punto de oro, el vórtice que forja el logo y la zambullida en la escena (js/intro.js) -->
@@ -625,19 +632,19 @@
   <!-- Librerías guardadas en local, para no depender de internet: GSAP 3.15.1 (con ScrollTrigger, SplitText y
        ScrambleText), Lenis, Three.js 0.160 y postprocessing. fluido.js es una adaptación de
        WebGL-Fluid-Simulation (MIT) para la estela del cursor. -->
-  <script src="js/vendor/gsap.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/three.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/postprocessing.min.js?v=20261112b" defer></script>
-  <script src="js/vendor/fluido.js?v=20261112b" defer></script>
-  <script src="js/intro.js?v=20261112b" defer></script>
-  <script src="js/escena.js?v=20261112b" defer></script>
-  <script src="js/mundo.js?v=20261112b" defer></script>
-  <script src="js/visuales.js?v=20261112b" defer></script>
-  <script src="js/main.js?v=20261112b" defer></script>
-  <script src="js/v6.js?v=20261112b" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/three.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/postprocessing.min.js?v=20261112c" defer></script>
+  <script src="js/vendor/fluido.js?v=20261112c" defer></script>
+  <script src="js/intro.js?v=20261112c" defer></script>
+  <script src="js/escena.js?v=20261112c" defer></script>
+  <script src="js/mundo.js?v=20261112c" defer></script>
+  <script src="js/visuales.js?v=20261112c" defer></script>
+  <script src="js/main.js?v=20261112c" defer></script>
+  <script src="js/v6.js?v=20261112c" defer></script>
 </body>
 </html>
