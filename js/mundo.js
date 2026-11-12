@@ -825,7 +825,7 @@
     if (sim.activo) { destino.amenaza = Math.max(destino.amenaza, sim.amenaza); destino.cont = Math.max(destino.cont, sim.cont); }
 
     // --- Amortiguación: una sola etapa de suavizado para todo ---
-    const k = parado ? 1 : 1 - Math.exp(-dtReal * 4.2);
+    const k = parado ? 1 : 1 - Math.exp(-dtReal * 3.2);
     let cambio = 0;
     CAMPOS.forEach((c) => { const d = destino[c] - actual[c]; actual[c] += d * k; cambio += Math.abs(d); });
     raton.sx += (raton.x - raton.sx) * (parado ? 0 : 0.05);

@@ -51,9 +51,13 @@
     entradas.forEach(({ st, poses }) => {
       const a = st.start, b = Math.max(st.end, a + 1), n = poses.length;
       poses.forEach((p, i) => {
-        // Cada pose tiene una meseta (para leer) y entre mesetas la cámara vuela
-        const t0 = n === 1 ? 0 : (i + (i === 0 ? 0 : 0.28)) / n;
-        const t1 = n === 1 ? 1 : (i + (i === n - 1 ? 1 : 0.72)) / n;
+        // Cada pose tiene una meseta (para leer) y entre mesetas la cámara vuela. Los bordes de cada
+        // sección también dejan margen (EXT): antes la meseta de una sección acababa justo donde empezaba
+        // la de la siguiente y el globo cambiaba de pose de golpe; ahora el vuelo entre secciones ocupa
+        // casi media pantalla de scroll, como un fundido.
+        const EXT = 0.22;
+        const t0 = n === 1 ? EXT : (i + (i === 0 ? EXT : 0.28)) / n;
+        const t1 = n === 1 ? 1 - EXT : (i + (i === n - 1 ? 1 - EXT : 0.72)) / n;
         lista.push({ y: a + (b - a) * t0, pose: p }, { y: a + (b - a) * t1, pose: p });
       });
     });
