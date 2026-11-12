@@ -3,12 +3,12 @@
    la app instalada abre al instante y funciona aunque no haya conexión.
    Estrategia: primero red (para ver cambios), y si falla, caché. */
 
-const VERSION = "kairon-v19";
+const VERSION = "kairon-v20";
 const ARCHIVOS = [
   "./", "./index.html", "./sobre-mi.html", "./informe.html",
   "./servicios.html", "./soc.html", "./contacto.html", "./productos.html", "./proyectos.html", "./futuro.html", "./ca/index.html", "./ca/servicios.html", "./ca/soc.html", "./ca/contacto.html", "./ca/productos.html", "./ca/proyectos.html", "./ca/futuro.html", "./ca/sobre-mi.html", "./ca/informe.html",
   "./css/styles.css", "./js/main.js", "./js/escena.js", "./js/intro.js", "./js/polvo.js", "./js/visuales.js",
-  "./js/vendor/three.min.js", "./js/vendor/gsap.min.js", "./js/vendor/ScrollTrigger.min.js", "./js/vendor/lenis.min.js",
+  "./js/vendor/three.min.js", "./js/vendor/postprocessing.min.js", "./js/k3d-forma.js", "./js/vendor/gsap.min.js", "./js/vendor/ScrollTrigger.min.js", "./js/vendor/lenis.min.js",
   "./manifest.webmanifest", "./img/favicon.ico", "./img/apple-touch-icon.png",
   "./img/app-icon-192.png", "./img/app-icon-512.png", "./img/kairon-emblema-192.png",
   "./img/kairon-emblema-dorado.png", "./img/kairon-logo-horizontal-dorado-440.png", "./img/kairon-logo-dorado.png",

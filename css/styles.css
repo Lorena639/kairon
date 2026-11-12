@@ -3533,6 +3533,9 @@ body.cursor--arrastra .cursor {
 }
 
 /* Logo 3D: capas apiladas del emblema con translateZ para simular grosor de oro */
+/* Cuando la K se dibuja en WebGL (js/escena.js), la versión CSS se oculta pero conserva su hueco */
+.k3d-activa .logo3d { visibility: hidden; }
+
 .logo3d {
   position: relative;
   width: min(44vw, 300px);
