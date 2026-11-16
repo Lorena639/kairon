@@ -67,7 +67,7 @@ python -m http.server 8765
 ## Publicar en GitHub Pages
 
 1. En el repositorio, *Settings → Pages → Source: Deploy from a branch*, rama `main`, carpeta `/ (root)`.
-2. La web queda en `https://<usuario>.github.io/<repositorio>/`. El archivo `.nojekyll` evita que GitHub procese la carpeta y `404.html` se usa como página de error.
+2. La web queda en **https://lorena639.github.io/kairon/** (dirección de este repositorio; funciona en cuanto se active Pages). El archivo `.nojekyll` evita que GitHub procese la carpeta y `404.html` se usa como página de error.
 3. Como todas las rutas son relativas, funciona en cualquier subcarpeta.
 
 ## Seguridad de la propia web
