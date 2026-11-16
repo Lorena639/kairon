@@ -1,7 +1,8 @@
-/* Sonido del portfolio, sintetizado con Web Audio (sin archivos):
-   - tecla: el clic del teclado mientras el editor escribe;
-   - linea: el zumbido corto de la impresora térmica al imprimir cada línea;
-   - ok, error y moneda: respuestas del laboratorio.
+/* Sonido del portfolio, sintetizado con Web Audio (sin archivos), en estilo chiptune:
+   - blip: cada pocas letras de un cuadro de diálogo;
+   - paso: pisadas suaves en la cueva;
+   - abrir: se abre un diálogo o un menú;
+   - tecla, ok, error y moneda: respuestas del laboratorio.
    Volumen general bajo y apagado por defecto: solo suena si se activa con el botón. */
 
 const VOLUMEN = 0.16;
@@ -78,6 +79,16 @@ export function linea() {
   chasquido(900 + Math.random() * 300, 0.35, 0.07, "lowpass");
 }
 
+let ultimoBlip = 0;
+export function blip() {
+  if (!listo()) return;
+  const ahora = performance.now();
+  if (ahora - ultimoBlip < 60) return;
+  ultimoBlip = ahora;
+  tono([520 + Math.random() * 60], 0.05, "square", 0.08);
+}
+export function paso() { if (listo()) chasquido(300 + Math.random() * 120, 0.18, 0.05, "lowpass"); }
+export function abrir() { if (listo()) tono([523, 659, 784], 0.08, "square", 0.08); }
 export function ok() { if (listo()) tono([660, 990], 0.14); }
 export function error() { if (listo()) tono([180], 0.22, "square", 0.12); }
 export function moneda() { if (listo()) tono([988, 1319], 0.12, "triangle", 0.3); }

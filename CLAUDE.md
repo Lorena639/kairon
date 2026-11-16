@@ -104,17 +104,21 @@ Lo que Dani ha contado y decidido en sus sesiones con Claude. Rama de trabajo: `
 - Web personal: jdanioliv.github.io (CV interactivo, terminal y analizador de logs con PyScript). Busca prácticas de FP y primer empleo.
 - Escribe a Claude en español o en inglés; hay que contestarle en el idioma en que escriba.
 
-### Su portfolio: `joao-daniel-oliveira/` (rediseñado el 16-11-2026)
-- **Tema "editor de código vivo", estética fax térmico** (elegido por Dani; sustituye al tema JJK, que sigue en el historial de git):
-  - Editor oscuro a la izquierda que teclea el código de la sección que se lee; papel térmico blanco a la derecha donde se imprime línea a línea.
-  - Cada sección es un archivo en un lenguaje distinto: `hola.js`, `about.py`, `skills.sql`, `projects.sh`, `lab.js`, `Education.java`, `contact.html`.
-  - Paleta: papel `#FFFFFF`, tinta `#17121F`, amarillo subrayador `#F5D90A` (solo como fondo, nunca como color de letra), editor `#16131D`, código en amarillo y lila, error `#C4262E`.
-  - Fuentes alojadas en `fonts/` (OFL): Doto 900 para títulos (puntos matriciales), Martian Mono para código y datos, Geist para leer.
-  - Detalles que eligió: puntos matriciales y cursor parpadeante (descartó cabezal de impresora y agujeros laterales).
-- **Laboratorio:** analizador de logs (fuerza bruta a partir de 5 respuestas 401/403), "Encuentra el bug" (Python, JavaScript y Luau), playground de regex sobre un log y "Del Luau al juego" (script de Roblox de ejemplo y un mini juego que ilumina las líneas que se ejecutan).
-- **Idiomas:** español, inglés y portugués (`i18n.js`; el español sale del HTML). Los textos en inglés y portugués los tradujo Claude: Dani debe revisarlos.
-- **Técnica:** GSAP, ScrollTrigger, SplitText y Lenis de `../js/vendor/`; `app.js` (editor e impresión), `lab.js`, `sintaxis.js` (resaltado), `sonido.js` (Web Audio, apagado por defecto y a volumen bajo). Botón "Menos movimiento" que respeta `prefers-reduced-motion`.
-- **Vista previa privada:** https://claude.ai/artifact/C5ZNjp6BP6fNEv2K5KTyHc (se regenera desde una copia con las rutas de `js/vendor` dentro).
+### Su portfolio: `joao-daniel-oliveira/` (rediseñado el 16-11-2026: "Cueva brillante")
+- **Lo que le gusta a Dani:** videojuegos y programación. Referencias: indies (Hollow Knight, Celeste, Undertale), Roblox/Minecraft y Nintendo. Pidió pixel art de 16 bits tipo RPG, mitad jugable y mitad para leer.
+- **Descartados por Dani:** el tema JJK (Santuario Malévolo) y el "editor vivo con fax térmico" (demasiado blanco, parecía un documento y no transmitía videojuegos; tampoco le gustaron las fuentes de puntos). Ambos siguen en el historial de git.
+- **Portada jugable** (`cueva.js`, `sprites.js`):
+  - Cueva oscura de 24×14 casillas en pixel art original, iluminada por el farol del personaje y por cristales y setas.
+  - Personaje de Dani: pelo oscuro, gafas y camiseta.
+  - Seis objetos que brillan llevan a cada sección: espejo → ficha, cofre → inventario, tablón → misiones, caldero → taller, árbol de cristal → progreso, hoguera → contacto.
+  - Se mueve con flechas/WASD o tocando (con búsqueda de camino) y tiene cuadros de diálogo tipo RPG. Hay un enlace para saltarse el juego.
+- **Para leer, en menús de RPG:** ficha del personaje, inventario (habilidades y dónde las usó), diario de misiones (proyectos, lista + detalle), taller (los cuatro programas del laboratorio), árbol de progreso (formación) y "guardar partida" (contacto).
+- **Paleta:** noche `#0B0A14`, panel `#15122A`, borde/texto `#ECE8FF`, cristal `#5EF2D0`, lila `#B48CFF`, ámbar `#FFBF5A`, magenta `#FF6FB1`.
+- **Fuentes** alojadas en `fonts/` (OFL): Jersey 15 (pixel; se eligió porque en Pixelify Sans la C parecía una O), Atkinson Hyperlegible para leer y Martian Mono para código.
+- **Laboratorio** (`lab.js`): analizador de logs (fuerza bruta a partir de 5 respuestas 401/403), "Encuentra el bug", playground de regex y "Del Luau al juego".
+- **Idiomas:** español, inglés y portugués (`i18n.js`). Los textos en inglés y portugués los tradujo Claude: Dani debe revisarlos.
+- **Técnica:** GSAP con ScrollTrigger y Lenis de `../js/vendor/`; sonido chiptune con Web Audio, apagado por defecto y a volumen bajo; botón "Menos movimiento".
+- **Vista previa privada:** https://claude.ai/artifact/C5ZNjp6BP6fNEv2K5KTyHc
 - Pendiente: un fragmento real de su código de Roblox para "Del Luau al juego" y confirmar "SMX" o "SMR".
 
 ### Ideas para la web de KAIRON (en curso)

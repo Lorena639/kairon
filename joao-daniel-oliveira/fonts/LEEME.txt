@@ -1,5 +1,5 @@
 Fuentes alojadas en el propio portfolio (la CSP no permite cargar fuentes de otros dominios).
 Todas con licencia SIL Open Font License 1.1 (ver OFL.txt), descargadas de Fontsource (npm, versión 5.3.0):
-- Doto (títulos, tipo de impresora matricial): pesos 700 y 900, subconjunto latino.
+- Jersey 15 (títulos, botones y cuadros de diálogo, estilo pixel): peso 400, subconjunto latino.
+- Atkinson Hyperlegible (texto largo, pensada para leerse con facilidad): pesos 400 y 700, subconjunto latino.
 - Martian Mono (código y datos): pesos 400 y 500, subconjunto latino.
-- Geist (texto): pesos 400 y 600, subconjunto latino.
