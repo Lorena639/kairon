@@ -104,24 +104,18 @@ Lo que Dani ha contado y decidido en sus sesiones con Claude. Rama de trabajo: `
 - Web personal: jdanioliv.github.io (CV interactivo, terminal y analizador de logs con PyScript). Busca prácticas de FP y primer empleo.
 - Escribe a Claude en español o en inglés; hay que contestarle en el idioma en que escriba.
 
-### Su portfolio: `joao-daniel-oliveira/`
-- **Estética "Santuario Malévolo" de Sukuna (JJK)**, según la especificación que dio Dani:
-  - Paleta: obsidiana `#070709` y `#111115`, carmesí `#d90429` y `#8a0014`, destello `#ff002b`, fuego `#ff4d00`, hueso `#f4f3ef` y ceniza `#8e8d94`.
-  - Fuentes: Zen Antique para títulos, Manrope para texto e IBM Plex Mono para detalles.
-  - El pie aclara que es un homenaje de fan, sin relación oficial con la obra.
-- **Efectos:**
-  - Intro "Cleave & Dismantle": la pantalla se parte en diagonal, con temblor y aberración carmesí.
-  - Tajos SVG al pasar el ratón; botones que se parten al pulsarlos; brasas en canvas en los botones rojos.
-  - Aparición con tajo al hacer scroll, barra de progreso, menú que marca la sección y kanji 解 con paralaje.
-  - Botón "Suprimir energía maldita", que quita el movimiento y respeta `prefers-reduced-motion`.
-- **Laboratorio**, que sustituye al antiguo "cifrado de encantamientos". Dani lo quitó porque no encajaba:
-  1. **Analizador de logs** (`analizador.js`): versión en JS de su analizador en Python. Avisa de posible fuerza bruta a partir de 5 respuestas 401/403 de una misma IP.
-  2. **Minijuego "Desmantelar"** (`juego.js`): cortar bugs que caen; récord en localStorage; tecla Espacio para jugar con teclado.
-  3. **Expansión de dominio** (`dominio.js`): toda la página se convierte en el Santuario durante unos 7 s. También se activa escribiendo `ryoiki tenkai`.
-- **Sonido** (`sonido.js`): tajos, cortes, golpes y fuego sintetizados con Web Audio, sin archivos. Dani lo quiere a **volumen bajo**. Hay un botón "Sonido: sí/no" en la cabecera.
-- **Ideas que Dani descartó por ahora:** terminal de comandos y visualizador de algoritmos de CS50.
-- **Vista previa privada:** https://claude.ai/artifact/C5ZNjp6BP6fNEv2K5KTyHc. Se regenera desde una copia sin la CSP propia de la página y sin `?v=` en las rutas. Dani quiere poder ver los cambios ahí.
-- En la página pone "SMX"; en su especificación Dani escribió "SMR" (el nombre del ciclo en castellano). Está por confirmar.
+### Su portfolio: `joao-daniel-oliveira/` (rediseñado el 16-11-2026)
+- **Tema "editor de código vivo", estética fax térmico** (elegido por Dani; sustituye al tema JJK, que sigue en el historial de git):
+  - Editor oscuro a la izquierda que teclea el código de la sección que se lee; papel térmico blanco a la derecha donde se imprime línea a línea.
+  - Cada sección es un archivo en un lenguaje distinto: `hola.js`, `about.py`, `skills.sql`, `projects.sh`, `lab.js`, `Education.java`, `contact.html`.
+  - Paleta: papel `#FFFFFF`, tinta `#17121F`, amarillo subrayador `#F5D90A` (solo como fondo, nunca como color de letra), editor `#16131D`, código en amarillo y lila, error `#C4262E`.
+  - Fuentes alojadas en `fonts/` (OFL): Doto 900 para títulos (puntos matriciales), Martian Mono para código y datos, Geist para leer.
+  - Detalles que eligió: puntos matriciales y cursor parpadeante (descartó cabezal de impresora y agujeros laterales).
+- **Laboratorio:** analizador de logs (fuerza bruta a partir de 5 respuestas 401/403), "Encuentra el bug" (Python, JavaScript y Luau), playground de regex sobre un log y "Del Luau al juego" (script de Roblox de ejemplo y un mini juego que ilumina las líneas que se ejecutan).
+- **Idiomas:** español, inglés y portugués (`i18n.js`; el español sale del HTML). Los textos en inglés y portugués los tradujo Claude: Dani debe revisarlos.
+- **Técnica:** GSAP, ScrollTrigger, SplitText y Lenis de `../js/vendor/`; `app.js` (editor e impresión), `lab.js`, `sintaxis.js` (resaltado), `sonido.js` (Web Audio, apagado por defecto y a volumen bajo). Botón "Menos movimiento" que respeta `prefers-reduced-motion`.
+- **Vista previa privada:** https://claude.ai/artifact/C5ZNjp6BP6fNEv2K5KTyHc (se regenera desde una copia con las rutas de `js/vendor` dentro).
+- Pendiente: un fragmento real de su código de Roblox para "Del Luau al juego" y confirmar "SMX" o "SMR".
 
 ### Ideas para la web de KAIRON (en curso)
 - **Repos elegidos para la web:**

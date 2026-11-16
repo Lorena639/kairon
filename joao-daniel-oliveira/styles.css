@@ -130,7 +130,7 @@ button, input, textarea { font: inherit; color: inherit; }
 /* Títulos de puntos y rotulador */
 .portada__nombre { display: grid; font: 900 clamp(3rem, 8.4vw, 6rem)/0.98 var(--f-puntos); letter-spacing: -0.02em; text-wrap: balance; }
 .portada__apellidos { font-size: 0.62em; letter-spacing: 0; }
-.hoja__titulo { font: 700 clamp(2.1rem, 4.6vw, 3.6rem)/1.08 var(--f-puntos); letter-spacing: -0.01em; text-wrap: balance; margin-top: 4px; }
+.hoja__titulo { font: 900 clamp(2.1rem, 4.6vw, 3.6rem)/1.1 var(--f-puntos); letter-spacing: -0.02em; text-wrap: balance; margin-top: 4px; }
 .marca { background: linear-gradient(var(--amarillo), var(--amarillo)) no-repeat 0 82% / var(--subrayado, 100%) 0.42em; -webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 0 0.08em; }
 .js .marca { --subrayado: 0%; transition: --subrayado 0.6s var(--sale); }
 .js .marca--puesta { --subrayado: 100%; }
@@ -159,7 +159,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .ruta { display: grid; gap: 16px; align-content: start; font: 400 0.92rem/1.5 var(--f-texto); }
 .ruta li { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; }
 .ruta__flecha { grid-row: span 2; font: 500 0.9rem/1.7 var(--f-codigo); color: var(--tinta-2); }
-.ruta strong { font: 700 1.5rem/1.1 var(--f-puntos); }
+.ruta strong { font: 900 1.5rem/1.1 var(--f-puntos); }
 .ruta li > span:last-child { color: var(--tinta-2); }
 
 /* Habilidades: resultado de la consulta SQL */
@@ -175,7 +175,7 @@ button, input, textarea { font: inherit; color: inherit; }
 /* Proyectos */
 .proyectos { display: grid; gap: 0; max-width: none; border-top: 1.5px solid var(--tinta); }
 .proyecto { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr); column-gap: clamp(20px, 4vw, 56px); row-gap: 8px; padding: 26px 0; border-bottom: 1px dashed var(--linea-fuerte); }
-.proyecto__nombre { grid-row: span 3; font: 700 1.55rem/1.1 var(--f-puntos); }
+.proyecto__nombre { grid-row: span 3; font: 900 1.6rem/1.1 var(--f-puntos); }
 .proyecto__pila { font: 400 0.78rem var(--f-codigo); color: var(--tinta-2); }
 .proyecto > p:not(.proyecto__pila) { max-width: 60ch; }
 .proyecto .enlace { justify-self: start; }
@@ -198,7 +198,7 @@ button, input, textarea { font: inherit; color: inherit; }
 /* ---------- Laboratorio ---------- */
 .programa { display: grid; gap: 14px; max-width: none; padding: 28px 0 34px; border-top: 1.5px solid var(--tinta); }
 .programa > p { max-width: 64ch; }
-.programa__titulo { font: 700 1.6rem/1.1 var(--f-puntos); }
+.programa__titulo { font: 900 1.7rem/1.1 var(--f-puntos); }
 .campo__etiqueta { font: 400 0.78rem var(--f-codigo); color: var(--tinta-2); }
 .campo { width: 100%; min-height: 46px; padding: 10px 12px; border: 1.5px solid var(--tinta); border-radius: 0; background: var(--papel); color: var(--tinta); font: 400 0.84rem/1.6 var(--f-codigo); }
 .campo:focus { outline: none; box-shadow: 0 0 0 4px var(--amarillo); }
@@ -210,7 +210,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .informe { display: grid; gap: 14px; font: 400 0.84rem/1.6 var(--f-codigo); }
 .informe:empty { display: none; }
 .informe__veredicto { padding: 14px 16px; border: 1.5px solid var(--tinta); font-family: var(--f-texto); }
-.informe__veredicto strong { display: block; font: 700 1.35rem/1.2 var(--f-puntos); }
+.informe__veredicto strong { display: block; font: 900 1.4rem/1.2 var(--f-puntos); }
 .informe__veredicto--alerta { border-color: var(--error); background: var(--error-fondo); }
 .informe__veredicto--alerta strong { color: var(--error); }
 .informe__cifras { display: flex; flex-wrap: wrap; gap: 8px 26px; }
@@ -238,7 +238,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .bug__linea--culpable { background: rgba(245, 217, 10, 0.22); box-shadow: inset 3px 0 0 var(--amarillo); }
 .bug__respuesta { display: block; min-height: 1.6em; }
 .bug__respuesta:empty { display: none; }
-.bug__respuesta strong { display: block; font: 700 1.3rem/1.2 var(--f-puntos); margin-bottom: 4px; }
+.bug__respuesta strong { display: block; font: 900 1.35rem/1.2 var(--f-puntos); margin-bottom: 4px; }
 .bug__respuesta code { font: 400 0.86em var(--f-codigo); background: rgba(245, 217, 10, 0.4); padding: 0 0.25em; }
 
 /* Playground de regex */
@@ -259,8 +259,9 @@ button, input, textarea { font: inherit; color: inherit; }
 .regex__lineas mark { background: var(--amarillo); color: var(--tinta); }
 
 /* Del Luau al juego */
-.luau { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
-.luau__codigo { margin: 0; padding: 14px 0; background: var(--maquina); color: var(--maquina-texto); font: 400 0.8rem/1.75 var(--f-codigo); overflow-x: auto; counter-reset: linea; }
+.luau { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 1280px) { .luau { grid-template-columns: minmax(0, 1fr); } .luau__juego { max-width: 480px; } }
+.luau__codigo { margin: 0; padding: 14px 0; background: var(--maquina); color: var(--maquina-texto); font: 400 0.74rem/1.75 var(--f-codigo); overflow-x: auto; counter-reset: linea; }
 .luau__codigo .l { display: block; position: relative; padding: 0 14px 0 3.8em; white-space: pre; transition: background 0.35s; }
 .luau__codigo .l::before { counter-increment: linea; content: counter(linea); position: absolute; left: 0; width: 2.6em; text-align: right; color: var(--maquina-tenue); }
 .luau__codigo .l--ejecuta { background: rgba(245, 217, 10, 0.25); transition: none; }
@@ -268,11 +269,12 @@ button, input, textarea { font: inherit; color: inherit; }
 .luau__lienzo { width: 100%; height: auto; aspect-ratio: 3 / 2; border: 1.5px solid var(--tinta); background: var(--papel); touch-action: none; cursor: grab; }
 .luau__lienzo:focus-visible { outline: 2px solid var(--tinta); }
 .luau__marcador { font: 400 0.84rem var(--f-codigo); }
-.luau__marcador strong { font: 700 1.3rem var(--f-puntos); margin-left: 6px; }
+.luau__marcador strong { font: 500 1.05rem var(--f-codigo); margin-left: 6px; font-variant-numeric: tabular-nums; }
 .luau__aviso { font-size: 0.86rem; color: var(--tinta-2); }
 
 /* ---------- Impresión línea a línea (solo si el JS está activo y hay movimiento) ---------- */
-.js .imprimiendo .linea-papel { clip-path: inset(0 100% 0 0); }
+/* Una hoja que aún no ha entrado espera en blanco; sin JS o con "menos movimiento" se ve entera */
+.js:not(.calma) .por-imprimir > :not(.fuente):not(.fuente-movil) { visibility: hidden; }
 .linea-papel { display: block; }
 
 /* ---------- Código plegable en móvil (en escritorio lo enseña el editor) ---------- */
@@ -283,9 +285,10 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ---------- Pantallas estrechas ---------- */
 @media (max-width: 720px) {
-  .barra { gap: 8px; }
-  .barra__nav { display: none; }
+  :root { --alto-barra: 104px; }
+  .barra { flex-wrap: wrap; gap: 0 8px; height: auto; min-height: var(--alto-barra); padding-top: 6px; }
   .barra__ajustes { margin-left: auto; }
+  .barra__nav { order: 3; flex: 1 0 100%; margin: 0 calc(var(--margen) * -1); padding: 0 calc(var(--margen) - 10px); }
   .proyecto { grid-template-columns: 1fr; }
   .proyecto__nombre { grid-row: auto; }
   .curso { grid-template-columns: 1fr; gap: 2px; }
