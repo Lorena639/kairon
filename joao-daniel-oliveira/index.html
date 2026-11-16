@@ -4,215 +4,321 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>João Daniel de Paiva Oliveira · Maru</title>
-  <meta name="description" content="Portfolio de João Daniel de Paiva Oliveira (Maru): estudiante de SMX en Barcelona, en camino hacia el desarrollo de software, los datos y la IA.">
-  <meta name="theme-color" content="#070709">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="description" content="Portfolio de João Daniel de Paiva Oliveira (Maru): estudiante de SMX en Barcelona que escribe Python, JavaScript y Luau. El código de cada sección se escribe y se imprime mientras lees.">
+  <meta name="theme-color" content="#171a17">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; media-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" href="../img/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Manrope:wght@400;600&family=IBM+Plex+Mono&display=swap">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="preload" href="fonts/doto-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/geist-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
-  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <!-- Iconos dibujados una vez y reutilizados con <use> -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-bajar" viewBox="0 0 24 24"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-sonido" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></symbol>
+    <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10zM17 10l4 4m0-4-4 4"/></symbol>
+    <symbol id="i-pausa" viewBox="0 0 24 24"><path d="M8 6v12M16 6v12"/></symbol>
+    <symbol id="i-codigo" viewBox="0 0 24 24"><path d="m9 8-4 4 4 4m6-8 4 4-4 4"/></symbol>
+  </svg>
 
-  <header class="cabecera">
-    <a class="cabecera__marca" href="#contenido">JD<span>.</span></a>
-    <nav class="cabecera__nav" aria-label="Secciones">
-      <a class="tajo" href="#sobre">Sobre mí</a>
-      <a class="tajo" href="#habilidades">Habilidades</a>
-      <a class="tajo" href="#proyectos">Proyectos</a>
-      <a class="tajo" href="#formacion">Formación</a>
-      <a class="tajo" href="#laboratorio">Laboratorio</a>
-      <a class="tajo" href="#contacto">Contacto</a>
+  <a class="saltar" href="#contenido" data-i18n="ui.saltar">Saltar al contenido</a>
+
+  <header class="barra">
+    <a class="barra__marca" href="#inicio" aria-label="João Daniel, inicio">JD<span class="barra__cursor" aria-hidden="true"></span></a>
+    <nav class="barra__nav" aria-label="Secciones">
+      <a href="#sobre" data-i18n="nav.sobre">Sobre mí</a>
+      <a href="#habilidades" data-i18n="nav.habilidades">Habilidades</a>
+      <a href="#proyectos" data-i18n="nav.proyectos">Proyectos</a>
+      <a href="#laboratorio" data-i18n="nav.lab">Laboratorio</a>
+      <a href="#formacion" data-i18n="nav.formacion">Formación</a>
+      <a href="#contacto" data-i18n="nav.contacto">Contacto</a>
     </nav>
-    <button type="button" class="cabecera__calma" id="calma" aria-pressed="false">Suprimir energía maldita</button>
-    <button type="button" class="cabecera__calma cabecera__sonido" id="sonido" aria-pressed="true">Sonido: sí</button>
-    <span class="progreso" id="progreso" aria-hidden="true"></span>
+    <div class="barra__ajustes">
+      <div class="idiomas" role="group" aria-label="Idioma" data-i18n-aria="ui.idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <button type="button" class="ajuste" id="sonido" aria-pressed="false" aria-label="Sonido" data-i18n-aria="ui.sonido">
+        <svg class="icono" aria-hidden="true"><use href="#i-mudo"/></svg>
+      </button>
+      <button type="button" class="ajuste" id="calma" aria-pressed="false" aria-label="Menos movimiento" data-i18n-aria="ui.calma">
+        <svg class="icono" aria-hidden="true"><use href="#i-pausa"/></svg>
+      </button>
+    </div>
   </header>
 
-  <main id="contenido">
-    <section class="portada">
-      <span class="portada__kanji" aria-hidden="true">解</span>
-      <p class="etiqueta">aka Maru · Barcelona</p>
-      <h1 class="portada__titulo">João Daniel<br><em>de Paiva</em><br>Oliveira</h1>
-      <p class="portada__texto">Estudiante de sistemas informáticos en Barcelona, en camino hacia el desarrollo de software. Escribo Python, construyo pequeñas herramientas web y quiero acabar trabajando con datos e IA.</p>
-      <div class="portada__acciones">
-        <a class="boton boton--corte" href="https://jdanioliv.github.io/assets/cv/CV_Joao_Daniel_de_Paiva_Oliveira_ES.pdf" target="_blank" rel="noopener">Descargar CV</a>
-        <a class="boton boton--llama" href="https://github.com/jdanioliv" target="_blank" rel="noopener">GitHub ↗</a>
+  <div class="mesa">
+    <!-- Editor: en escritorio escribe el código de la sección que se está leyendo -->
+    <aside class="editor" aria-label="Editor: código de la sección actual" data-i18n-aria="editor.etiqueta">
+      <div class="editor__pestanas">
+        <span class="editor__pestana" id="editor-archivo">hola.js</span>
+        <span class="editor__lenguaje" id="editor-lenguaje">JavaScript</span>
       </div>
-    </section>
+      <pre class="editor__codigo" id="editor-codigo" aria-live="off"><code></code></pre>
+      <div class="editor__estado">
+        <span class="editor__luz" id="editor-luz" aria-hidden="true"></span>
+        <span id="editor-estado" role="status" data-i18n="editor.listo">Listo</span>
+        <span class="editor__pos" id="editor-pos">Ln 1, Col 1</span>
+      </div>
+    </aside>
 
-    <section id="sobre" class="seccion" aria-labelledby="t-sobre">
-      <p class="etiqueta">壱 · Sobre mí</p>
-      <h2 id="t-sobre" class="seccion__titulo">Una base sólida, <em>un siguiente paso</em></h2>
-      <div class="sobre">
-        <div class="sobre__texto">
-          <p>Estoy en segundo de SMX en Digitech FP, en Barcelona: hardware, sistemas operativos, redes y seguridad. Eso me ha dado una base sólida, y mi siguiente paso es el desarrollo de software.</p>
-          <p>Terminé el CS50x de Harvard y sigo con el resto de cursos CS50. Fuera de clase juego mucho, hago mis propios juegos en Roblox con Luau y me gustan el anime y el manga. En internet me conocen como Maru.</p>
-          <p>Hablo inglés y portugués como lenguas nativas y vivo en España.</p>
+    <!-- Papel continuo: cada sección es una hoja impresa -->
+    <main class="papel" id="contenido">
+      <section class="hoja hoja--portada" id="inicio" aria-labelledby="t-inicio" data-archivo="hola.js" data-lenguaje="JavaScript">
+        <pre class="fuente"><code>// hola.js
+import { Developer } from "./barcelona.js";
+
+const dani = new Developer({
+  name: "João Daniel de Paiva Oliveira",
+  alias: "Maru",
+  studies: "SMX @ Digitech FP",
+  writes: ["Python", "JavaScript", "Luau"],
+});
+
+printer.print(dani.intro());</code></pre>
+        <p class="orden">$ node hola.js</p>
+        <h1 class="portada__nombre" id="t-inicio"><span class="linea-imp">João Daniel</span> <span class="linea-imp portada__apellidos"><span class="marca">de Paiva Oliveira</span></span></h1>
+        <p class="portada__intro" data-i18n="hero.intro">Estudiante de sistemas informáticos en Barcelona, en camino hacia el desarrollo de software. Escribo Python, construyo pequeñas herramientas web y quiero acabar trabajando con datos e IA.</p>
+        <p class="portada__alias" data-i18n="hero.alias">En internet me conocen como Maru.</p>
+        <div class="acciones">
+          <a class="boton boton--tinta" href="https://jdanioliv.github.io/assets/cv/CV_Joao_Daniel_de_Paiva_Oliveira_ES.pdf" target="_blank" rel="noopener"><svg class="icono" aria-hidden="true"><use href="#i-bajar"/></svg><span data-i18n="hero.cv">Descargar CV</span></a>
+          <a class="boton" href="https://github.com/jdanioliv" target="_blank" rel="noopener"><span>GitHub</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          <a class="boton" href="#contacto"><span data-i18n="hero.escribeme">Escríbeme</span></a>
         </div>
-        <ol class="ruta">
-          <li class="ruta__paso"><span class="etiqueta">Ahora</span><strong>SMX</strong><span>Sistemas, redes y scripting (2025–2027)</span></li>
-          <li class="ruta__paso"><span class="etiqueta">Después</span><strong>DAM</strong><span>Aplicaciones multiplataforma y bases de datos</span></li>
-          <li class="ruta__paso"><span class="etiqueta">Más adelante</span><strong>Datos e IA</strong><span>Python, Big Data y aprendizaje automático</span></li>
-        </ol>
-      </div>
-    </section>
+        <p class="pie-hoja">hola.js · <span data-i18n="ui.pag">pág.</span> 1</p>
+      </section>
 
-    <section id="habilidades" class="seccion seccion--elevada" aria-labelledby="t-hab">
-      <p class="etiqueta">弐 · Habilidades</p>
-      <h2 id="t-hab" class="seccion__titulo">Qué uso y <em>dónde lo he usado</em></h2>
-      <div class="rejilla">
-        <article class="tarjeta tajo">
-          <h3 class="tarjeta__titulo">Programación</h3>
-          <dl class="lista">
-            <div><dt>Python</dt><dd>Ejercicios de CS50 y el analizador de logs</dd></div>
-            <div><dt>JavaScript</dt><dd>Mini apps y terminal de mi web</dd></div>
-            <div><dt>HTML y CSS</dt><dd>Mi web y los ejercicios de clase</dd></div>
-            <div><dt>Java</dt><dd>Bases de orientación a objetos, preparando DAM</dd></div>
-            <div><dt>Lua / Luau</dt><dd>Juegos en Roblox Studio</dd></div>
-            <div><dt>SQL</dt><dd>Bases de datos relacionales en CS50</dd></div>
-          </dl>
-        </article>
-        <article class="tarjeta tajo">
-          <h3 class="tarjeta__titulo">Sistemas y redes</h3>
-          <dl class="lista">
-            <div><dt>Windows y Windows Server</dt><dd>Usuarios, grupos, permisos y PowerShell</dd></div>
-            <div><dt>Linux</dt><dd>Ubuntu y Debian desde terminal, Bash</dd></div>
-            <div><dt>Redes</dt><dd>LAN y WLAN, direccionamiento IPv4, DNS</dd></div>
-            <div><dt>Hardware</dt><dd>Montar, reparar y diagnosticar PC</dd></div>
-          </dl>
-        </article>
-        <article class="tarjeta tajo">
-          <h3 class="tarjeta__titulo">Herramientas</h3>
-          <dl class="lista">
-            <div><dt>Git y GitHub</dt><dd>Control de versiones de mis proyectos</dd></div>
-            <div><dt>VS Code</dt><dd>Mi editor de cada día</dd></div>
-            <div><dt>VirtualBox</dt><dd>Máquinas virtuales para prácticas</dd></div>
-            <div><dt>Office y Google Workspace</dt><dd>Excel, Sheets, Word y Docs</dd></div>
-          </dl>
-        </article>
-      </div>
-    </section>
+      <section class="hoja" id="sobre" aria-labelledby="t-sobre" data-archivo="about.py" data-lenguaje="Python">
+        <pre class="fuente"><code># about.py
+path = ["SMX", "DAM", "Data & AI"]
 
-    <section id="proyectos" class="seccion" aria-labelledby="t-pro">
-      <p class="etiqueta">参 · Proyectos</p>
-      <h2 id="t-pro" class="seccion__titulo">Hechos <em>mientras aprendo</em></h2>
-      <div class="rejilla rejilla--numerada">
-        <article class="tarjeta tajo">
-          <p class="etiqueta">Python · regex · PyScript</p>
-          <h3 class="tarjeta__titulo">Analizador de logs</h3>
-          <p>Lee logs de un servidor HTTP, cuenta peticiones por IP y por código de estado, lista los errores y marca una IP con 401/403 repetidos como posible fuerza bruta. Funciona en el navegador con PyScript.</p>
-          <a class="enlace" href="https://jdanioliv.github.io/#lab" target="_blank" rel="noopener">Probarlo ↗</a>
-        </article>
-        <article class="tarjeta tajo">
-          <p class="etiqueta">HTML · CSS · JavaScript</p>
-          <h3 class="tarjeta__titulo">CV interactivo</h3>
-          <p>Mi CV como página web, con una pequeña terminal donde escribir comandos y el PDF para descargar en inglés o español.</p>
-          <a class="enlace" href="https://jdanioliv.github.io/cv.html" target="_blank" rel="noopener">Abrirlo ↗</a>
-        </article>
-        <article class="tarjeta tajo">
-          <p class="etiqueta">HTML · CSS · JavaScript</p>
-          <h3 class="tarjeta__titulo">Mi web personal</h3>
-          <p>Sin frameworks: diseño adaptable, terminal, tres mini apps y siete idiomas, publicada en GitHub Pages.</p>
-          <a class="enlace" href="https://github.com/jdanioliv/jdanioliv.github.io" target="_blank" rel="noopener">Repositorio ↗</a>
-        </article>
-        <article class="tarjeta tajo">
-          <p class="etiqueta">TFG · con Lorena</p>
-          <h3 class="tarjeta__titulo">KAIRON</h3>
-          <p>Empresa ficticia de SOC gestionado para pymes. Lidero la parte de desarrollo web y experiencia de usuario.</p>
-          <a class="enlace" href="../index.html">Ver KAIRON →</a>
-        </article>
-      </div>
-    </section>
+def about(me):
+    print(me.story)
+    for step in path:
+        print("->", step)
 
-    <section id="formacion" class="seccion seccion--elevada" aria-labelledby="t-for">
-      <p class="etiqueta">肆 · Formación</p>
-      <h2 id="t-for" class="seccion__titulo">Terminados y <em>en camino</em></h2>
-      <ul class="cursos">
-        <li class="cursos__fila cursos__fila--hecho"><span>CS50x: Introducción a las Ciencias de la Computación · Harvard</span><span class="etiqueta">Completado</span></li>
-        <li class="cursos__fila"><span>CS50P: Programación con Python · Harvard</span><span class="etiqueta">En curso</span></li>
-        <li class="cursos__fila"><span>CS50W: Programación web con Python y JavaScript · Harvard</span><span class="etiqueta">En curso</span></li>
-        <li class="cursos__fila"><span>CS50AI: Inteligencia artificial con Python · Harvard</span><span class="etiqueta">El siguiente</span></li>
-        <li class="cursos__fila"><span>CS50G: Introducción al desarrollo de videojuegos · Harvard</span><span class="etiqueta">El siguiente</span></li>
-        <li class="cursos__fila"><span>Tiny Machine Learning (TinyML) · HarvardX</span><span class="etiqueta">Más adelante</span></li>
-      </ul>
-    </section>
-
-    <section id="laboratorio" class="seccion lab" aria-labelledby="t-lab">
-      <p class="etiqueta">伍 · Laboratorio</p>
-      <h2 id="t-lab" class="seccion__titulo">Técnicas <em>en vivo</em></h2>
-      <p class="seccion__nota">Tres cosas que he programado para esta página. Todo se ejecuta en tu navegador: nada de lo que pegues o juegues se envía a ningún sitio.</p>
-
-      <!-- 1. Analizador de logs: versión en JavaScript de mi analizador en Python -->
-      <article class="lab__bloque" id="analizador" aria-labelledby="t-ana">
-        <header class="lab__cabeza">
-          <p class="etiqueta">Técnica 01 · JavaScript · expresiones regulares</p>
-          <h3 id="t-ana" class="tarjeta__titulo">Analizador de logs</h3>
-          <p>Pega líneas de un log de acceso HTTP (formato Apache/Nginx). Cuenta peticiones por IP y por código, lista los errores y marca como posible fuerza bruta la IP que acumula muchos 401/403.</p>
-        </header>
-        <label class="etiqueta" for="log">maru@santuario:~$ cat access.log</label>
-        <textarea class="lab__log" id="log" rows="8" spellcheck="false" autocomplete="off" placeholder='203.0.113.7 - - [05/Nov/2026:10:15:32 +0100] "POST /login HTTP/1.1" 401 512'></textarea>
-        <div class="lab__acciones">
-          <button type="button" class="boton boton--llama" id="analizar">Analizar</button>
-          <button type="button" class="boton boton--corte" id="ejemplo">Cargar ejemplo</button>
-          <label class="boton boton--hueco">Abrir archivo<input type="file" id="archivo" accept=".log,.txt,text/plain" hidden></label>
-        </div>
-        <div class="informe" id="informe" aria-live="polite"></div>
-      </article>
-
-      <!-- 2. Minijuego: cortar bugs arrastrando el ratón o el dedo -->
-      <article class="lab__bloque" id="juego" aria-labelledby="t-jue">
-        <header class="lab__cabeza">
-          <p class="etiqueta">Técnica 02 · Canvas · física sencilla</p>
-          <h3 id="t-jue" class="tarjeta__titulo">Desmantelar</h3>
-          <p>Caen bugs. Arrastra el ratón o el dedo para cortarlos antes de que lleguen al suelo. Cada corte suma; si se te escapan tres, se acaba. Con teclado: <kbd>Espacio</kbd> lanza un tajo horizontal a la altura del bug más bajo, y se puede usar cada segundo.</p>
-        </header>
-        <div class="juego">
-          <canvas class="juego__lienzo" id="lienzo-juego" tabindex="-1" aria-label="Zona de juego: bugs que caen y se cortan arrastrando" role="img"></canvas>
-          <div class="juego__marcador" aria-live="polite"><span>Cortes <strong id="puntos">0</strong></span><span>Récord <strong id="record">0</strong></span><span>Vidas <strong id="vidas">3</strong></span></div>
-          <div class="juego__portada" id="portada-juego">
-            <p class="juego__aviso" id="aviso-juego">¿Listo para desmantelar?</p>
-            <button type="button" class="boton boton--llama" id="empezar">Empezar</button>
+about(dani)</code></pre>
+        <p class="orden">$ python about.py</p>
+        <h2 class="hoja__titulo" id="t-sobre"><span class="marca" data-i18n="sobre.titulo">Sobre mí</span></h2>
+        <div class="sobre">
+          <div class="sobre__texto">
+            <p data-i18n="sobre.p1">Estoy en segundo de SMX en Digitech FP, en Barcelona: hardware, sistemas operativos, redes y seguridad. Eso me ha dado una base sólida, y mi siguiente paso es el desarrollo de software.</p>
+            <p data-i18n="sobre.p2">Terminé el CS50x de Harvard y sigo con el resto de cursos CS50. Fuera de clase juego mucho, hago mis propios juegos en Roblox con Luau y me gustan el anime y el manga.</p>
+            <p data-i18n="sobre.p3">Hablo inglés y portugués como lenguas nativas y vivo en España.</p>
           </div>
+          <ol class="ruta">
+            <li><span class="ruta__flecha" aria-hidden="true">-&gt;</span><strong>SMX</strong><span data-i18n="sobre.r1">Sistemas, redes y scripting (2025–2027). Ahora.</span></li>
+            <li><span class="ruta__flecha" aria-hidden="true">-&gt;</span><strong>DAM</strong><span data-i18n="sobre.r2">Aplicaciones multiplataforma y bases de datos. Después.</span></li>
+            <li><span class="ruta__flecha" aria-hidden="true">-&gt;</span><strong data-i18n="sobre.r3t">Datos e IA</strong><span data-i18n="sobre.r3">Python, Big Data y aprendizaje automático. Más adelante.</span></li>
+          </ol>
         </div>
-      </article>
+        <p class="pie-hoja">about.py · <span data-i18n="ui.pag">pág.</span> 2</p>
+      </section>
 
-      <!-- 3. Expansión de dominio -->
-      <article class="lab__bloque lab__bloque--dominio" aria-labelledby="t-dom">
-        <header class="lab__cabeza">
-          <p class="etiqueta">Técnica 03 · CSS · animación</p>
-          <h3 id="t-dom" class="tarjeta__titulo">Expansión de dominio</h3>
-          <p>Toda la página se convierte durante unos segundos en el Santuario Malévolo. También se activa si escribes <kbd>ryoiki tenkai</kbd> en cualquier parte de la página. <kbd>Esc</kbd> la cierra.</p>
-        </header>
-        <button type="button" class="boton boton--llama boton--dominio" id="expandir">領域展開 · Expandir dominio</button>
-      </article>
-    </section>
+      <section class="hoja" id="habilidades" aria-labelledby="t-hab" data-archivo="skills.sql" data-lenguaje="SQL">
+        <pre class="fuente"><code>-- skills.sql
+SELECT skill, used_in, area
+FROM   skills
+WHERE  learned_by = 'doing'
+ORDER  BY area;</code></pre>
+        <p class="orden">mysql&gt; SOURCE skills.sql</p>
+        <h2 class="hoja__titulo" id="t-hab"><span class="marca" data-i18n="hab.titulo">Qué uso y dónde lo he usado</span></h2>
+        <div class="tabla-marco">
+          <table class="tabla">
+            <thead>
+              <tr><th scope="col" data-i18n="hab.c1">Habilidad</th><th scope="col" data-i18n="hab.c2">Dónde la he usado</th><th scope="col" data-i18n="hab.c3">Área</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Python</td><td data-i18n="hab.python">Ejercicios de CS50 y el analizador de logs</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>JavaScript</td><td data-i18n="hab.js">Mini apps, la terminal de mi web y este portfolio</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>HTML y CSS</td><td data-i18n="hab.html">Mi web, KAIRON y los ejercicios de clase</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>Java</td><td data-i18n="hab.java">Bases de orientación a objetos, preparando DAM</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>Lua / Luau</td><td data-i18n="hab.luau">Juegos en Roblox Studio</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>SQL</td><td data-i18n="hab.sql">Bases de datos relacionales en CS50</td><td data-i18n="hab.a1">Programación</td></tr>
+              <tr><td>Windows Server</td><td data-i18n="hab.win">Usuarios, grupos, permisos y PowerShell</td><td data-i18n="hab.a2">Sistemas y redes</td></tr>
+              <tr><td>Linux</td><td data-i18n="hab.linux">Ubuntu y Debian desde terminal, Bash</td><td data-i18n="hab.a2">Sistemas y redes</td></tr>
+              <tr><td data-i18n="hab.redes.n">Redes</td><td data-i18n="hab.redes">LAN y WLAN, direccionamiento IPv4, DNS</td><td data-i18n="hab.a2">Sistemas y redes</td></tr>
+              <tr><td>Hardware</td><td data-i18n="hab.hw">Montar, reparar y diagnosticar PC</td><td data-i18n="hab.a2">Sistemas y redes</td></tr>
+              <tr><td>Git y GitHub</td><td data-i18n="hab.git">Control de versiones de mis proyectos</td><td data-i18n="hab.a3">Herramientas</td></tr>
+              <tr><td>VS Code</td><td data-i18n="hab.vscode">Mi editor de cada día</td><td data-i18n="hab.a3">Herramientas</td></tr>
+              <tr><td>VirtualBox</td><td data-i18n="hab.vbox">Máquinas virtuales para prácticas</td><td data-i18n="hab.a3">Herramientas</td></tr>
+              <tr><td>Office / Workspace</td><td data-i18n="hab.office">Excel, Sheets, Word y Docs</td><td data-i18n="hab.a3">Herramientas</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="resultado" data-i18n="hab.filas">14 filas en el resultado</p>
+        <p class="pie-hoja">skills.sql · <span data-i18n="ui.pag">pág.</span> 3</p>
+      </section>
 
-    <section id="contacto" class="seccion contacto" aria-labelledby="t-con">
-      <p class="etiqueta">陸 · Contacto</p>
-      <h2 id="t-con" class="seccion__titulo">Abierto a prácticas <em>y primeros empleos</em></h2>
-      <p class="seccion__nota">Busco prácticas remuneradas de FP y puestos junior en Barcelona, en soporte informático, administración de sistemas o desarrollo de software.</p>
-      <a class="contacto__correo tajo" href="mailto:joaodaniel.jd@icloud.com">joaodaniel.jd@icloud.com</a>
-      <div class="portada__acciones">
-        <a class="boton boton--llama" href="mailto:joaodaniel.jd@icloud.com">Escríbeme</a>
-        <a class="boton boton--corte" href="https://jdanioliv.github.io/" target="_blank" rel="noopener">Mi web personal</a>
-      </div>
-    </section>
-  </main>
+      <section class="hoja" id="proyectos" aria-labelledby="t-pro" data-archivo="projects.sh" data-lenguaje="Bash">
+        <pre class="fuente"><code>#!/usr/bin/env bash
+# projects.sh
+cd ~/projects
+ls -l --sort=time
+open ./kairon</code></pre>
+        <p class="orden">$ ./projects.sh</p>
+        <h2 class="hoja__titulo" id="t-pro"><span class="marca" data-i18n="pro.titulo">Hechos mientras aprendo</span></h2>
+        <ul class="proyectos">
+          <li class="proyecto">
+            <h3 class="proyecto__nombre" data-i18n="pro.1.n">Analizador de logs</h3>
+            <p class="proyecto__pila">Python · regex · PyScript</p>
+            <p data-i18n="pro.1.d">Lee logs de un servidor HTTP, cuenta peticiones por IP y por código de estado, lista los errores y marca como posible fuerza bruta una IP con 401/403 repetidos. Funciona en el navegador con PyScript, y más abajo tienes una versión que puedes probar aquí.</p>
+            <a class="enlace" href="https://jdanioliv.github.io/#lab" target="_blank" rel="noopener"><span data-i18n="pro.probar">Probarlo en mi web</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </li>
+          <li class="proyecto">
+            <h3 class="proyecto__nombre" data-i18n="pro.2.n">CV interactivo</h3>
+            <p class="proyecto__pila">HTML · CSS · JavaScript</p>
+            <p data-i18n="pro.2.d">Mi CV como página web, con una pequeña terminal donde escribir comandos y el PDF para descargar en inglés o español.</p>
+            <a class="enlace" href="https://jdanioliv.github.io/cv.html" target="_blank" rel="noopener"><span data-i18n="pro.abrir">Abrirlo</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </li>
+          <li class="proyecto">
+            <h3 class="proyecto__nombre" data-i18n="pro.3.n">Mi web personal</h3>
+            <p class="proyecto__pila">HTML · CSS · JavaScript</p>
+            <p data-i18n="pro.3.d">Sin frameworks: diseño adaptable, terminal, tres mini apps y siete idiomas, publicada en GitHub Pages.</p>
+            <a class="enlace" href="https://github.com/jdanioliv/jdanioliv.github.io" target="_blank" rel="noopener"><span data-i18n="pro.repo">Ver el repositorio</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </li>
+          <li class="proyecto">
+            <h3 class="proyecto__nombre">KAIRON</h3>
+            <p class="proyecto__pila" data-i18n="pro.4.p">TFG · con Lorena</p>
+            <p data-i18n="pro.4.d">Empresa ficticia de SOC gestionado para pymes, nuestro trabajo de final de curso. Llevo la parte de desarrollo web y experiencia de usuario.</p>
+            <a class="enlace" href="../index.html"><span data-i18n="pro.kairon">Ver KAIRON</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </li>
+        </ul>
+        <p class="pie-hoja">projects.sh · <span data-i18n="ui.pag">pág.</span> 4</p>
+      </section>
 
-  <footer class="pie">
-    <p>© 2026 João Daniel de Paiva Oliveira · Maru</p>
-    <p>Homenaje de fan a <cite>Jujutsu Kaisen</cite>, sin relación oficial con la obra. <a href="../index.html">Volver a KAIRON</a></p>
-    <button type="button" class="pie__repetir" id="repetir">Repetir la intro</button>
-  </footer>
+      <section class="hoja hoja--lab" id="laboratorio" aria-labelledby="t-lab" data-archivo="lab.js" data-lenguaje="JavaScript">
+        <pre class="fuente"><code>// lab.js
+const programs = [
+  analyzeLogs,
+  findTheBug,
+  regexPlayground,
+  luauToGame,
+];
 
-  <canvas class="brasas" id="brasas" aria-hidden="true"></canvas>
-  <script type="module" src="vfx-engine.js?v=6"></script>
-  <script type="module" src="analizador.js?v=2"></script>
-  <script type="module" src="juego.js?v=2"></script>
-  <script type="module" src="dominio.js?v=2"></script>
+// all of them run in your browser
+programs.forEach(run);</code></pre>
+        <p class="orden">$ node lab.js</p>
+        <h2 class="hoja__titulo" id="t-lab"><span class="marca" data-i18n="lab.titulo">Laboratorio</span></h2>
+        <p class="hoja__nota" data-i18n="lab.nota">Cuatro programas pequeños que he escrito para esta página. Se ejecutan en tu navegador: nada de lo que escribas sale de aquí.</p>
+
+        <!-- 1. Analizador de logs -->
+        <article class="programa" id="analizador" aria-labelledby="t-ana">
+          <h3 class="programa__titulo" id="t-ana" data-i18n="ana.titulo">Analizador de logs</h3>
+          <p data-i18n="ana.nota">Pega líneas de un log de acceso HTTP (formato Apache o Nginx). Cuenta peticiones por IP y por código, y avisa de una posible fuerza bruta cuando una IP acumula 5 o más respuestas 401/403.</p>
+          <label class="campo__etiqueta" for="log">access.log</label>
+          <textarea class="campo campo--log" id="log" rows="7" spellcheck="false" autocomplete="off" placeholder='203.0.113.7 - - [05/Nov/2026:10:15:32 +0100] "POST /login HTTP/1.1" 401 512'></textarea>
+          <div class="acciones">
+            <button type="button" class="boton boton--tinta" id="analizar"><svg class="icono" aria-hidden="true"><use href="#i-play"/></svg><span data-i18n="ana.analizar">Analizar</span></button>
+            <button type="button" class="boton" id="ejemplo" data-i18n="ana.ejemplo">Cargar un log de ejemplo</button>
+            <label class="boton boton--archivo"><span data-i18n="ana.archivo">Abrir un archivo</span><input type="file" id="archivo" accept=".log,.txt,text/plain"></label>
+          </div>
+          <output class="informe" id="informe" for="log" aria-live="polite"></output>
+        </article>
+
+        <!-- 2. Encuentra el bug -->
+        <article class="programa" id="bug" aria-labelledby="t-bug">
+          <h3 class="programa__titulo" id="t-bug" data-i18n="bug.titulo">Encuentra el bug</h3>
+          <p data-i18n="bug.nota">Este código tiene un error. Pulsa la línea que crees que falla y te explico qué pasa.</p>
+          <div class="bug__codigo" id="bug-codigo" role="group" aria-label="Líneas del programa" data-i18n-aria="bug.lineas"></div>
+          <output class="bug__respuesta" id="bug-respuesta" aria-live="polite"></output>
+          <div class="acciones">
+            <button type="button" class="boton" id="bug-siguiente" data-i18n="bug.siguiente">Otro bug</button>
+          </div>
+        </article>
+
+        <!-- 3. Playground de expresiones regulares -->
+        <article class="programa" id="regex" aria-labelledby="t-regex">
+          <h3 class="programa__titulo" id="t-regex" data-i18n="rx.titulo">Playground de expresiones regulares</h3>
+          <p data-i18n="rx.nota">La misma técnica que usa el analizador. Escribe una expresión regular y mira qué líneas del log coinciden.</p>
+          <div class="regex__fila">
+            <label class="campo__etiqueta" for="rx-patron" data-i18n="rx.patron">Patrón</label>
+            <div class="regex__entrada"><span aria-hidden="true">/</span><input class="campo" id="rx-patron" spellcheck="false" autocomplete="off" value="\b(401|403)\b"><span aria-hidden="true">/g</span></div>
+          </div>
+          <div class="acciones acciones--chips" role="group" aria-label="Ejemplos" data-i18n-aria="rx.ejemplos">
+            <button type="button" class="chip" data-patron="\b(401|403)\b" data-i18n="rx.p1">Accesos denegados</button>
+            <button type="button" class="chip" data-patron="^\d{1,3}(\.\d{1,3}){3}" data-i18n="rx.p2">Direcciones IP</button>
+            <button type="button" class="chip" data-patron="&quot;POST /login" data-i18n="rx.p3">Intentos de login</button>
+            <button type="button" class="chip" data-patron="\b5\d\d\b" data-i18n="rx.p4">Errores del servidor</button>
+          </div>
+          <p class="regex__cuenta" id="rx-cuenta" aria-live="polite"></p>
+          <ol class="regex__lineas" id="rx-lineas"></ol>
+        </article>
+
+        <!-- 4. Del Luau al juego -->
+        <article class="programa" id="luau" aria-labelledby="t-luau">
+          <h3 class="programa__titulo" id="t-luau" data-i18n="lu.titulo">Del Luau al juego</h3>
+          <p data-i18n="lu.nota">En Roblox, cada objeto puede llevar un script. Este coge monedas: mueve al jugador con las flechas, WASD o arrastrando, y mira qué líneas se ejecutan en cada momento.</p>
+          <div class="luau">
+            <pre class="luau__codigo" id="lu-codigo" aria-label="Script de Luau" data-i18n-aria="lu.script"></pre>
+            <div class="luau__juego">
+              <canvas class="luau__lienzo" id="lu-lienzo" width="360" height="240" tabindex="0" aria-label="Mini juego: el jugador recoge monedas" data-i18n-aria="lu.lienzo"></canvas>
+              <p class="luau__marcador"><span data-i18n="lu.monedas">Monedas</span> <strong id="lu-monedas">0</strong></p>
+            </div>
+          </div>
+          <p class="luau__aviso" data-i18n="lu.aviso">Fragmento de ejemplo escrito para esta página, en el estilo de mis scripts de Roblox.</p>
+        </article>
+        <p class="pie-hoja">lab.js · <span data-i18n="ui.pag">pág.</span> 5</p>
+      </section>
+
+      <section class="hoja" id="formacion" aria-labelledby="t-for" data-archivo="Education.java" data-lenguaje="Java">
+        <pre class="fuente"><code>// Education.java
+class Education {
+  public static void main(String[] args) {
+    Course cs50x = new Course("CS50x", "Harvard");
+    cs50x.complete();
+    List.of("CS50P", "CS50W").forEach(Course::study);
+  }
+}</code></pre>
+        <p class="orden">$ java Education.java</p>
+        <h2 class="hoja__titulo" id="t-for"><span class="marca" data-i18n="for.titulo">Terminados y en camino</span></h2>
+        <ul class="cursos">
+          <li class="curso curso--hecho"><span class="curso__estado" data-i18n="for.hecho">[hecho]</span><span>CS50x · <span data-i18n="for.cs50x">Introducción a las Ciencias de la Computación</span> · Harvard</span></li>
+          <li class="curso"><span class="curso__estado" data-i18n="for.curso">[en curso]</span><span>CS50P · <span data-i18n="for.cs50p">Programación con Python</span> · Harvard</span></li>
+          <li class="curso"><span class="curso__estado" data-i18n="for.curso">[en curso]</span><span>CS50W · <span data-i18n="for.cs50w">Programación web con Python y JavaScript</span> · Harvard</span></li>
+          <li class="curso"><span class="curso__estado" data-i18n="for.curso">[en curso]</span><span>SMX · <span data-i18n="for.smx">Sistemas Microinformáticos y Redes</span> · Digitech FP</span></li>
+          <li class="curso curso--futuro"><span class="curso__estado" data-i18n="for.sig">[siguiente]</span><span>CS50AI · <span data-i18n="for.cs50ai">Inteligencia artificial con Python</span> · Harvard</span></li>
+          <li class="curso curso--futuro"><span class="curso__estado" data-i18n="for.sig">[siguiente]</span><span>CS50G · <span data-i18n="for.cs50g">Desarrollo de videojuegos</span> · Harvard</span></li>
+          <li class="curso curso--futuro"><span class="curso__estado" data-i18n="for.luego">[más adelante]</span><span>TinyML · <span data-i18n="for.tinyml">Aprendizaje automático en microcontroladores</span> · HarvardX</span></li>
+        </ul>
+        <p class="pie-hoja">Education.java · <span data-i18n="ui.pag">pág.</span> 6</p>
+      </section>
+
+      <section class="hoja hoja--contacto" id="contacto" aria-labelledby="t-con" data-archivo="contact.html" data-lenguaje="HTML">
+        <pre class="fuente"><code>&lt;!-- contact.html --&gt;
+&lt;a href="mailto:joaodaniel.jd@icloud.com"&gt;
+  Hire me for an internship
+&lt;/a&gt;</code></pre>
+        <p class="orden">$ open contact.html</p>
+        <h2 class="hoja__titulo" id="t-con"><span class="marca" data-i18n="con.titulo">Abierto a prácticas y primeros empleos</span></h2>
+        <p data-i18n="con.texto">Busco prácticas remuneradas de FP y puestos junior en Barcelona, en soporte informático, administración de sistemas o desarrollo de software.</p>
+        <a class="correo" href="mailto:joaodaniel.jd@icloud.com">joaodaniel.jd@icloud.com</a>
+        <div class="acciones">
+          <a class="boton boton--tinta" href="mailto:joaodaniel.jd@icloud.com"><span data-i18n="con.escribir">Escríbeme</span></a>
+          <a class="boton" href="https://github.com/jdanioliv" target="_blank" rel="noopener"><span>GitHub</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          <a class="boton" href="https://jdanioliv.github.io/" target="_blank" rel="noopener"><span data-i18n="con.web">Mi web personal</span><svg class="icono" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+        </div>
+        <p class="pie-hoja">contact.html · <span data-i18n="ui.pag">pág.</span> 7</p>
+      </section>
+
+      <footer class="final">
+        <p>© 2026 João Daniel de Paiva Oliveira · Maru</p>
+        <p><a href="../index.html" data-i18n="pie.kairon">Volver a KAIRON</a></p>
+        <button type="button" class="enlace" id="reimprimir"><span data-i18n="pie.reimprimir">Imprimir de nuevo</span></button>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../js/vendor/gsap.min.js" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="../js/vendor/SplitText.min.js" defer></script>
+  <script src="../js/vendor/lenis.min.js" defer></script>
+  <script type="module" src="app.js?v=10"></script>
 </body>
 </html>
