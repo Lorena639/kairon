@@ -113,6 +113,8 @@ def filtrar(css, sangria=""):
             quitadas += len(selectores) - len(quedan)
             if quedan:
                 reglas = " ".join(cuerpo.split())
+                # Formas del sistema nuevo: placas rectas. Los radios grandes y las píldoras pasan a 2 px; los círculos (50 %) se quedan
+                reglas = re.sub(r"(border-radius:\s*)([^;}]+)", lambda m: m.group(1) + re.sub(r"\b(\d+(?:\.\d+)?)px", lambda n: n.group(0) if float(n.group(1)) <= 2 else "2px", m.group(2)), reglas)
                 salida.append(f"{sangria}{', '.join(quedan)} {{ {reglas} }}")
     return "\n".join(salida), quitadas
 

@@ -16,6 +16,8 @@
   --suave: color-mix(in srgb, var(--marfil) 80%, transparent);
   --linea: color-mix(in srgb, var(--oro) 26%, transparent);
   --facil: var(--salida);
+  --lavanda: var(--oro-vivo); /* el lila del diseño anterior no es de la marca */
+  --grafito: var(--noche-2);
 }
 
 body { font-size: var(--t-cuerpo); line-height: 1.5; }
@@ -28,14 +30,52 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.005em; }
 /* Las etiquetas pequeñas pasan a versalitas de Garamond; la mono queda para horas, direcciones y huellas */
 .pi-datos { font-family: var(--f-texto); font-size: 1.02rem; text-transform: none; letter-spacing: 0.08em; font-variant-caps: all-small-caps; }
 
-/* ---------- 2. Cabecera de página: el mismo territorio de la portada, a la hora del anochecer ---------- */
+/* ---------- 2. Cabecera de página: el territorio de la portada a la hora de esta página ---------- */
+/* El cielo lo colorea js/pagina.js con los tonos de la portada (--cielo-*); estos valores son los de la noche */
 .pagina--cabeza {
   position: relative;
-  min-height: 82svh;
+  min-height: 88svh;
+  display: grid;
+  align-content: end;
   padding-top: clamp(120px, 18vh, 190px);
   padding-bottom: clamp(40px, 8vh, 90px);
   overflow: hidden;
-  background: linear-gradient(180deg, #06090f 0%, #0b1220 36%, #1a2740 66%, var(--noche) 100%);
+  background: linear-gradient(180deg, var(--cielo-alto, #04060a) 0%, var(--cielo-medio, #080c14) 34%, var(--cielo-bajo, #111b2c) 62%, var(--noche) 100%);
+}
+
+/* El resplandor del alba, en las horas que lo tienen */
+.pagina--cabeza::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 160vmax;
+  height: 160vmax;
+  margin: -80vmax 0 0 -80vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(241, 207, 150, 0.9) 0%, rgba(241, 207, 150, 0.4) 14%, rgba(241, 207, 150, 0) 42%);
+  opacity: var(--sol, 0);
+  pointer-events: none;
+}
+
+.cielo-estrellas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* La hora de la página, en grande: sale tras las crestas (va detrás del lienzo) */
+.cielo-hora {
+  position: absolute;
+  right: clamp(-10px, 1vw, 40px);
+  top: clamp(110px, 21vh, 220px);
+  margin: 0;
+  font-family: var(--f-titulo);
+  font-weight: 500;
+  font-size: clamp(5rem, 17vw, 19rem);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--marfil);
+  opacity: 0.92;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .pagina--cabeza .pagina__escena {
@@ -46,11 +86,36 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.005em; }
   cursor: auto;
   pointer-events: none;
   /* el borde de abajo se funde con la noche de la sección siguiente */
-  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
 }
 
 .pagina--cabeza > .contenedor { position: relative; z-index: 1; }
+
+/* El título, a la escala de la portada */
+.pagina--cabeza .pagina__titulo { font-size: clamp(2.6rem, 7.4vw, 7.6rem); max-width: 13ch; margin: 0 0 clamp(18px, 3vh, 30px); text-shadow: 0 0 30px var(--noche), 0 0 10px var(--noche); }
+.pagina--cabeza .pagina__intro, .pagina--cabeza .pi-datos { text-shadow: 0 0 18px var(--noche), 0 0 6px var(--noche); }
+
+/* Alba: el cielo es claro arriba, así que la hora y el título (en escritorio, sobre el cielo) van en tinta */
+.pagina--alba .cielo-hora { color: var(--tinta); opacity: 0.86; }
+@media (min-width: 861px) {
+  .pagina--alba .pagina__titulo { color: var(--tinta); text-shadow: none; }
+  .pagina--alba .pagina__titulo em { color: var(--oro-tinta); }
+}
+
+/* Día: la cabecera es el mapa claro del informe; todo en tinta y la hora por encima del mapa */
+.pagina--dia { background: var(--marfil); }
+.pagina--dia .pagina__escena { mask-image: none; -webkit-mask-image: none; }
+.pagina--dia .cielo-hora { z-index: 1; color: var(--tinta); opacity: 0.9; }
+.pagina--dia .pagina__titulo, .pagina--dia .pagina__intro, .pagina--dia .pi-datos, .pagina--dia .plan-aviso, .pagina--dia p { color: var(--tinta); text-shadow: none; }
+.pagina--dia .pagina__titulo em { color: var(--oro-tinta); }
+.pagina--dia .pi-datos { border-top-color: rgba(18, 22, 29, 0.24); }
+.pagina--dia .pi-datos li::before { border-color: var(--oro-tinta); }
+.pagina--dia a { color: var(--oro-tinta); }
+.pagina--dia .pi-datos .pi-datos__aviso { color: var(--oro-tinta); }
+.pagina--dia .pi-datos .pi-datos__aviso::before { border-color: var(--oro-tinta); }
+/* el mapa se acaba en un filete, como el borde de una hoja, y debajo vuelve la noche */
+.pagina--dia::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--oro-oscuro); }
 
 /* Sin WebGL (o sin JavaScript) queda el cielo pintado con CSS y una línea de horizonte */
 html:not(.con-tierra) .pagina--cabeza::after {
@@ -58,12 +123,16 @@ html:not(.con-tierra) .pagina--cabeza::after {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 22%;
+  bottom: 24%;
   height: 1px;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--oro) 60%, transparent), transparent);
 }
+html:not(.con-tierra) .cielo-hora { opacity: 0.18; }
 
 /* ---------- 3. Pie de las páginas interiores ---------- */
+/* Las fichas del equipo, justo debajo de la cabecera */
+.pagina--equipo { padding-top: clamp(40px, 7vh, 80px); }
+
 .pie--interior { padding-top: clamp(80px, 14vh, 160px); }
 .pie__despedida { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 26px 40px; }
 .pie__despedida .voz { max-width: 20ch; }
@@ -73,6 +142,25 @@ html:not(.con-tierra) .pagina--cabeza::after {
 /* La cabecera nueva es fija: los anclajes no deben quedar debajo */
 html { scroll-padding-top: 100px; }
 
+/* ---------- 5. Escala: los títulos de sección hablan como en la portada ---------- */
+.det-h2, main section > .contenedor > h2:not([class]) { font-size: var(--t-capitular); font-weight: 500; line-height: 1.02; letter-spacing: -0.005em; max-width: 16ch; }
+.det-h2--sub { font-size: clamp(1.7rem, 3vw, 2.9rem); }
+.equipo__titulo, .soc__titulo, .metodo__titulo, .informe__titulo, .contacto__titulo { font-size: var(--t-capitular); font-weight: 500; letter-spacing: -0.005em; }
+
+/* ---------- 6. La mono, solo para lo que sale de un reloj o de una máquina ---------- */
+/* Etiquetas, sellos, roles y enlaces pasan a versalitas de Garamond; las horas y los datos siguen en mono */
+.pi-sello.mono, .ficha__estado.mono, .ficha__datos.mono, .persona__rol.mono, .servicio__mas.mono, .principios.mono,
+.detalle__rec b.mono, .pi-ruta__cuenta.mono, .panel__sim.mono, .atajos__caja > .mono {
+  font-family: var(--f-texto);
+  font-size: 1.04rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+.plan-aviso.mono { font-family: var(--f-texto); font-style: italic; font-size: var(--t-nota); letter-spacing: 0; text-transform: none; color: color-mix(in srgb, var(--marfil) 78%, transparent); }
+
 @media (max-width: 860px) {
-  .pagina--cabeza { min-height: 70svh; }
+  .pagina--cabeza { min-height: 76svh; padding-top: clamp(170px, 26vh, 230px); }
+  /* En el móvil la hora va arriba a la derecha, por encima del título */
+  .cielo-hora { top: 86px; right: max(16px, var(--margen)); font-size: clamp(3.6rem, 21vw, 7rem); }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="sin-js">
+<html data-hora="22:59" data-tono="0" lang="es" class="sin-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +17,8 @@
   <link rel="alternate" hreflang="es" href="sobre-mi.html">
   <link rel="alternate" hreflang="ca" href="ca/sobre-mi.html">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="css/kairon.css?v=20261126a">
-  <link rel="stylesheet" href="css/interior.css?v=20261126a">
+  <link rel="stylesheet" href="css/kairon.css?v=20261126b">
+  <link rel="stylesheet" href="css/interior.css?v=20261126b">
 </head>
 <body>
   <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -63,6 +63,7 @@
   <header class="cabecera">
     <a class="cabecera__logo" href="index.html" aria-label="KAIRON, inicio">
       <img class="logo logo--noche" src="img/relieve/kairon-relieve-horizontal.png" width="389" height="104" alt="KAIRON">
+      <img class="logo logo--dia" src="img/kairon-logo-horizontal-oro_oscuro-440.png" width="440" height="131" alt="" aria-hidden="true">
     </a>
     <nav class="cabecera__nav" aria-label="Menú principal">
       <ul class="menu">
@@ -87,13 +88,19 @@
   <main id="contenido">
 
     <!-- ===== EQUIPO ===== -->
-    <section class="pagina" aria-labelledby="titulo-equipo">
+    <section class="pagina pagina--cabeza" aria-labelledby="titulo-equipo">
+      <p class="cielo-hora" aria-hidden="true">22:59</p>
       <div class="hero__escena pagina__escena" aria-hidden="true"></div>
       <div class="contenedor">
         <h1 class="pagina__titulo" id="titulo-equipo" data-partido="1">Quién <em>vigila</em></h1>
         <p class="pagina__intro">Dos perfiles complementarios, seguridad y desarrollo. Estudiantes de 2º de CFGM Sistemes Microinformàtics i Xarxes (SMX) en Digitech, Barcelona.</p>
         <ul class="pi-datos" aria-label="En resumen"><li>2º de SMX · Digitech Barcelona</li><li>TFG 2026–2027</li><li>Seguridad y desarrollo</li></ul>
+      </div>
+    </section>
 
+    <!-- Las dos fichas, ya fuera de la cabecera de paisaje -->
+    <section class="pagina pagina--equipo" aria-label="El equipo">
+      <div class="contenedor">
         <div class="equipo__lista">
 
           <!-- Lorena: ciberseguridad y análisis forense -->
@@ -198,15 +205,15 @@
     </div>
   </footer>
 
-  <script src="js/vendor/gsap.min.js?v=20261126a" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=20261126a" defer></script>
-  <script src="js/vendor/SplitText.min.js?v=20261126a" defer></script>
-  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261126a" defer></script>
-  <script src="js/vendor/lenis.min.js?v=20261126a" defer></script>
-  <script src="js/vendor/three.min.js?v=20261126a" defer></script>
-  <script src="js/noche-tierra.js?v=20261126a" defer></script>
-  <script src="js/pagina.js?v=20261126a" defer></script>
-  <script src="js/main.js?v=20261126a" defer></script>
-  <script src="js/paginas.js?v=20261126a" defer></script>
+  <script src="js/vendor/gsap.min.js?v=20261126b" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=20261126b" defer></script>
+  <script src="js/vendor/SplitText.min.js?v=20261126b" defer></script>
+  <script src="js/vendor/ScrambleTextPlugin.min.js?v=20261126b" defer></script>
+  <script src="js/vendor/lenis.min.js?v=20261126b" defer></script>
+  <script src="js/vendor/three.min.js?v=20261126b" defer></script>
+  <script src="js/noche-tierra.js?v=20261126b" defer></script>
+  <script src="js/pagina.js?v=20261126b" defer></script>
+  <script src="js/main.js?v=20261126b" defer></script>
+  <script src="js/paginas.js?v=20261126b" defer></script>
 </body>
 </html>

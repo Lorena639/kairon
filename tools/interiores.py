@@ -10,13 +10,14 @@ Para cada página (castellano y catalán):
 El contenido de cada página no se toca.
 
 Uso:  python3 tools/interiores.py [página.html …]      (sin argumentos: todas)
+      python3 tools/interiores.py --horas               (segundo paso: la hora de cada página)
 """
 import re
 import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-VERSION = "20261126a"
+VERSION = "20261126b"
 PAGINAS = ["servicios", "soc", "productos", "proyectos", "futuro", "sobre-mi", "contacto", "informe", "incidente",
            "metodo", "preguntas", "laboratorio", "kairos", "legal", "plan", "data-chip"]
 MENU = ["servicios.html", "soc.html", "productos.html", "proyectos.html", "futuro.html", "sobre-mi.html"]
@@ -125,5 +126,41 @@ def main():
             print(f"{n:24} no existe")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--horas" not in sys.argv:
     main()
+
+
+# ---------- Segundo paso: cada página es una hora de la noche ----------
+# Hora que se ve en grande tras las montañas y tono del cielo (los mismos tonos que la portada: 0 anochecer,
+# 1 noche cerrada, 2 antes del alba, 2.5 alba, 3 hora dorada). «ahora»: la hora real de Barcelona.
+HORAS = {
+    "servicios": ("00:30", 1), "laboratorio": ("01:40", 1), "soc": ("03:07", 1), "incidente": ("03:07", 1),
+    "kairos": ("03:07", 1.2), "data-chip": ("05:10", 2), "futuro": ("06:20", 2.5), "metodo": ("06:45", 2.7),
+    "informe": ("09:00", 4), "preguntas": ("10:30", 4), "plan": ("12:00", 4), "productos": ("13:15", 4),
+    "legal": ("16:40", 4), "proyectos": ("19:30", 0.5), "sobre-mi": ("22:59", 0), "contacto": ("ahora", None),
+}
+
+
+def con_hora(ruta):
+    s = ruta.read_text(encoding="utf-8")
+    nombre = ruta.stem
+    if nombre not in HORAS or 'class="cielo-hora"' in s:
+        return "sin cambios"
+    hora, tono = HORAS[nombre]
+    s = s.replace("<html ", '<html data-hora="%s"%s ' % (hora, "" if tono is None else ' data-tono="%s"' % tono), 1)
+    # la hora en grande, detrás del territorio (va antes del lienzo en el DOM)
+    texto = "--:--" if hora == "ahora" else hora
+    s, n = re.subn(r'(\n(\s*)<div class="hero__escena pagina__escena")',
+                   lambda m: '\n%s<p class="cielo-hora" aria-hidden="true">%s</p>%s' % (m.group(2), texto, m.group(1)), s, count=1)
+    # el logo de día, para las horas de luz (lo muestra kairon.css con data-luz="dia")
+    pre = "../" if ruta.parent.name == "ca" else ""
+    if 'logo--dia' not in s:
+        s = s.replace('width="389" height="104" alt="KAIRON">\n    </a>',
+                      'width="389" height="104" alt="KAIRON">\n      <img class="logo logo--dia" src="%simg/kairon-logo-horizontal-oro_oscuro-440.png" width="440" height="131" alt="" aria-hidden="true">\n    </a>' % pre, 1)
+    ruta.write_text(s, encoding="utf-8")
+    return "hora %s%s" % (hora, "" if n else " (sin cabecera de paisaje)")
+
+
+if __name__ == "__main__" and "--horas" in sys.argv:
+    for n in [p + ".html" for p in PAGINAS] + ["ca/" + p + ".html" for p in PAGINAS]:
+        print(f"{n:24} {con_hora(RAIZ / n)}")
