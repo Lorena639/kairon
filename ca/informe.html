@@ -15,60 +15,53 @@
   <link rel="alternate" hreflang="es" href="../informe.html">
   <link rel="alternate" hreflang="ca" href="informe.html">
   <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="stylesheet" href="../css/fuentes.css?v=20261125a">
-  <link rel="stylesheet" href="../css/styles.css?v=20261125a">
+  <link rel="stylesheet" href="../css/kairon.css?v=20261126a">
+  <link rel="stylesheet" href="../css/interior.css?v=20261126a">
 </head>
 <body class="informe-pagina">
 
-  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-  <div class="foco" aria-hidden="true"></div>
-  <div class="grano" aria-hidden="true"></div>
-  <div class="progreso" aria-hidden="true"></div>
-  <div class="cortina" aria-hidden="true"></div>
 
-  <div class="cursor" aria-hidden="true"></div>
-  <div class="cursor__anillo" aria-hidden="true"></div>
 
-  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
-  <div class="controles" role="group" aria-label="Preferències d'experiència">
-    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
-    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
-  </div>
 
 
   <!-- ===== CABECERA ===== -->
   <header class="cabecera">
-    <div class="contenedor cabecera__contenido">
-      <a href="index.html" aria-label="KAIRON, inicio" class="oro-metal oro-metal--horizontal">
-        <img class="logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
-      </a>
-      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
-      <nav aria-label="Menú principal">
-        <ul class="menu">
-          <li class="menu__idioma"><a href="../informe.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
-          <li><a href="servicios.html">Serveis</a></li>
-          <li><a href="soc.html">SOC en directe</a></li>
-          <li><a href="productos.html">Productes</a></li>
-          <li><a href="proyectos.html">Projectes</a></li>
-          <li><a href="futuro.html">Futur</a></li>
-          <li><a href="sobre-mi.html">Equip</a></li>
-          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
-        </ul>
-      </nav>
+    <a class="cabecera__logo" href="index.html" aria-label="KAIRON, inici">
+      <img class="logo logo--noche" src="../img/relieve/kairon-relieve-horizontal.png" width="389" height="104" alt="KAIRON">
+    </a>
+    <nav class="cabecera__nav" aria-label="Menú principal">
+      <ul class="menu">
+        <li><a href="servicios.html">Serveis</a></li>
+        <li><a href="soc.html">SOC en directe</a></li>
+        <li><a href="productos.html">Productes</a></li>
+        <li><a href="proyectos.html">Projectes</a></li>
+        <li><a href="futuro.html">Futur</a></li>
+        <li><a href="sobre-mi.html">Equip</a></li>
+        <li class="menu__idioma"><a href="../informe.html" lang="es" hreflang="es" aria-label="Castellano (ES)">ES</a></li>
+      </ul>
+    </nav>
+    <!-- Preferencias: sonido (apagado por defecto) y menos movimiento -->
+    <div class="controles" role="group" aria-label="Preferències d'experiència">
+      <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+      <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reduir el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
     </div>
+    <a class="boton boton--linea cabecera__cta" href="contacto.html">Demana una auditoria</a>
+    <button class="menu-boton" type="button" aria-label="Obrir el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
   </header>
 
   <div class="menu-movil" id="menu-movil" aria-hidden="true">
     <ul>
-      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
-      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
-      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
-      <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
-      <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
-      <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
-      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+      <li><a href="index.html">Inici</a></li>
+      <li><a href="servicios.html">Serveis</a></li>
+      <li><a href="soc.html">SOC en directe</a></li>
+      <li><a href="productos.html">Productes</a></li>
+      <li><a href="proyectos.html">Projectes</a></li>
+      <li><a href="futuro.html">Futur</a></li>
+      <li><a href="sobre-mi.html">Equip</a></li>
+      <li><a href="contacto.html">Contacte</a></li>
+      <li><a href="../informe.html" lang="es" hreflang="es">Castellano</a></li>
     </ul>
-    <p class="mono">SOC gestionat per a particulars i empreses</p>
+    <p>SOC gestionat per a particulars i empreses</p>
   </div>
 
   <main id="contenido" class="informe">
@@ -206,30 +199,36 @@
   </main>
 
   <!-- ===== PIE ===== -->
-  <footer class="pie">
-    <div class="contenedor">
-      <div class="pie__fila">
-        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
-        <ul class="pie__redes">
-          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
-        </ul>
-      </div>
+  <footer class="pie pie--interior">
+    <div class="marco pie__despedida">
+      <p class="voz voz--grande">Parlem de la teva xarxa?</p>
+      <a class="boton boton--oro" href="contacto.html">Demana una auditoria</a>
+    </div>
+
+    <div class="marco pie__base">
+      <img class="pie__emblema" src="../img/relieve/kairon-relieve-emblema.png" width="444" height="335" alt="" loading="lazy" decoding="async">
+      <ul class="pie__redes">
+        <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+        <li class="pie__persona"><a href="../antonia-lorena-cracana/ca/">Portfolio de la Lorena</a></li>
+        <li class="pie__persona"><a href="../joao-daniel-oliveira/">Portfolio del Dani</a></li>
+      </ul>
       <div class="avisos" aria-live="polite">
-        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
-        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+        <button type="button" class="boton boton--linea instalar" hidden>Instal·lar com a aplicació</button>
+        <span class="aviso-red" hidden>Sense connexió: es mostra la versió desada</span>
       </div>
-      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="../antonia-lorena-cracana/ca/">Portfolio d'Antonia Lorena Cracana</a> · <a href="../joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="legal.html">Legalitat i privacitat</a></p>
     </div>
   </footer>
 
-  <script src="../js/vendor/gsap.min.js?v=20261125a" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261125a" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261125a" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261125a" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261125a" defer></script>
-  <script src="../js/polvo.js?v=20261125a" defer></script>
-  <script src="../js/main.js?v=20261125a" defer></script>
-  <!-- Páginas interiores v6: titulares, entradas con recorte, piezas fijadas y transiciones -->
-  <script src="../js/paginas.js?v=20261125a" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261126a" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261126a" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261126a" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261126a" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261126a" defer></script>
+  <script src="../js/vendor/three.min.js?v=20261126a" defer></script>
+  <script src="../js/noche-tierra.js?v=20261126a" defer></script>
+  <script src="../js/pagina.js?v=20261126a" defer></script>
+  <script src="../js/main.js?v=20261126a" defer></script>
+  <script src="../js/paginas.js?v=20261126a" defer></script>
 </body>
 </html>

@@ -1,0 +1,78 @@
+/* KAIRON · páginas interiores
+   Va después de css/kairon.css. Trae las piezas de contenido del diseño anterior (css/legado.css, generado por
+   tools/legado.py) dentro de la capa «antiguo», de modo que el sistema nuevo siempre gana, y las adapta: la letra,
+   los colores y la cabecera de página pasan a ser los de «Una noche de guardia» (DESIGN.md). */
+@import url("legado.css") layer(antiguo);
+
+/* ---------- 1. Los nombres antiguos apuntan a los tokens nuevos ---------- */
+:root {
+  --fuente: var(--f-texto);
+  --fuente-titulo: var(--f-titulo);
+  --mono: var(--f-dato);
+  --negro: var(--noche);
+  --negro-2: var(--noche-2);
+  --blanco: var(--marfil);
+  --oro-claro: var(--oro-vivo);
+  --suave: color-mix(in srgb, var(--marfil) 80%, transparent);
+  --linea: color-mix(in srgb, var(--oro) 26%, transparent);
+  --facil: var(--salida);
+}
+
+body { font-size: var(--t-cuerpo); line-height: 1.5; }
+
+/* Títulos: la inscripción de Cinzel, sin el peso extra ni las mayúsculas forzadas del diseño anterior */
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.005em; }
+.pagina__titulo { font-weight: 500; text-transform: none; line-height: 1; letter-spacing: -0.012em; max-width: 16ch; text-wrap: balance; }
+.pagina__intro { font-size: var(--t-voz); line-height: 1.32; max-width: 34ch; color: color-mix(in srgb, var(--marfil) 88%, transparent); text-wrap: pretty; }
+
+/* Las etiquetas pequeñas pasan a versalitas de Garamond; la mono queda para horas, direcciones y huellas */
+.pi-datos { font-family: var(--f-texto); font-size: 1.02rem; text-transform: none; letter-spacing: 0.08em; font-variant-caps: all-small-caps; }
+
+/* ---------- 2. Cabecera de página: el mismo territorio de la portada, a la hora del anochecer ---------- */
+.pagina--cabeza {
+  position: relative;
+  min-height: 82svh;
+  padding-top: clamp(120px, 18vh, 190px);
+  padding-bottom: clamp(40px, 8vh, 90px);
+  overflow: hidden;
+  background: linear-gradient(180deg, #06090f 0%, #0b1220 36%, #1a2740 66%, var(--noche) 100%);
+}
+
+.pagina--cabeza .pagina__escena {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 1;
+  cursor: auto;
+  pointer-events: none;
+  /* el borde de abajo se funde con la noche de la sección siguiente */
+  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+}
+
+.pagina--cabeza > .contenedor { position: relative; z-index: 1; }
+
+/* Sin WebGL (o sin JavaScript) queda el cielo pintado con CSS y una línea de horizonte */
+html:not(.con-tierra) .pagina--cabeza::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--oro) 60%, transparent), transparent);
+}
+
+/* ---------- 3. Pie de las páginas interiores ---------- */
+.pie--interior { padding-top: clamp(80px, 14vh, 160px); }
+.pie__despedida { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 26px 40px; }
+.pie__despedida .voz { max-width: 20ch; }
+.pie--interior .pie__base { margin-top: clamp(80px, 14vh, 150px); }
+
+/* ---------- 4. Ajustes de convivencia ---------- */
+/* La cabecera nueva es fija: los anclajes no deben quedar debajo */
+html { scroll-padding-top: 100px; }
+
+@media (max-width: 860px) {
+  .pagina--cabeza { min-height: 70svh; }
+}
