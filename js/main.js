@@ -900,7 +900,14 @@ window.addEventListener("scroll", () => {
 
 const arriba = document.querySelector(".arriba");
 if (arriba) {
-  window.addEventListener("scroll", () => arriba.classList.toggle("visible", window.scrollY > innerHeight), { passive: true });
+  // Solo aparece al subir (o al llegar al final): mientras se baja leyendo tapaba la última línea del texto.
+  // Sigue a la cabecera, que ya decide con margen si se está bajando o subiendo.
+  const verArriba = () => {
+    const alFinal = window.scrollY + innerHeight >= document.documentElement.scrollHeight - 40;
+    const bajando = cabeceraEl && cabeceraEl.classList.contains("cabecera--oculta");
+    arriba.classList.toggle("visible", window.scrollY > innerHeight && (!bajando || alFinal));
+  };
+  window.addEventListener("scroll", verArriba, { passive: true });
 }
 
 /* ---------- 7c. Reloj de Barcelona y latencia (pie) ---------- */
@@ -957,8 +964,10 @@ function irA(el) {
   else el.scrollIntoView({ behavior: "smooth" });
 }
 window.addEventListener("keydown", (e) => {
-  const enCampo = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName);
-  if (enCampo) return;
+  const enCampo = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
+  // Con Ctrl, Cmd o Alt el atajo es del navegador o del sistema: antes Ctrl+A lanzaba el ataque en vez de
+  // seleccionar todo, Ctrl+P activaba el modo presentación al imprimir y Ctrl+E salía de la página
+  if (enCampo || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
   if (e.key === "?") {
     e.preventDefault();
     if (atajos) { const v = atajos.classList.toggle("visible"); atajos.setAttribute("aria-hidden", String(!v)); }

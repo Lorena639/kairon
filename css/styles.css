@@ -1358,14 +1358,17 @@ body.cursor--enlace .cursor__anillo {
   font-size: 1.1rem;
   padding: 14px 0;
   border: 0;
-  border-bottom: 1px solid var(--linea);
+  /* Borde visible (≈3,8:1 sobre el fondo oscuro; con --linea era 1,58:1 y el campo casi no se veía) */
+  border-bottom: 1px solid rgba(248, 245, 238, 0.42);
   background: transparent;
   color: var(--blanco);
 }
 
+/* Sin el anillo general, pero con una señal clara: la línea dorada de abajo (::after) y un borde más grueso */
 .formulario input:focus-visible,
 .formulario textarea:focus-visible {
   outline: none;
+  box-shadow: 0 2px 0 var(--oro);
 }
 
 /* Línea dorada que crece desde la izquierda al escribir */
@@ -1465,6 +1468,7 @@ body.cursor--enlace .cursor__anillo {
 
 .pie__derechos {
   margin-top: 32px;
+  padding-right: 64px; /* hueco para el botón "volver arriba", que tapaba el final de la línea */
   font-family: var(--mono);
   font-size: 0.68rem;
   letter-spacing: 0.12em;
@@ -2598,6 +2602,14 @@ body.simulando .aurora span:nth-child(1) {
   gap: 8px;
 }
 
+/* En las páginas interiores, abajo a la izquierda está el aviso académico o el primer titular y los
+   botones lo tapaban; a la derecha no coinciden con "volver arriba" (aparece tras una pantalla y los
+   controles se ocultan a media pantalla) */
+html:not(.portada-v6) .controles {
+  left: auto;
+  right: 24px;
+}
+
 .control {
   width: 44px;
   height: 44px;
@@ -2904,8 +2916,15 @@ body.cursor--arrastra .cursor {
   overflow: clip; /* recorta la topografía sin romper position: sticky */
 }
 
+/* #8C6B3F sobre marfil da 4,496:1 y no llega al 4,5 que pide WCAG AA para esta letra pequeña;
+   #6B4F28 (el mismo tono, más oscuro) da 6,95:1 */
 .claro .mono {
-  color: var(--oro-oscuro);
+  color: #6b4f28;
+}
+
+/* El anillo de foco cian casi no se ve sobre marfil (1,89:1): en las secciones claras va en azul oscuro */
+.claro :focus-visible {
+  outline-color: var(--negro);
 }
 
 .claro .equipo__titulo,
@@ -3247,6 +3266,16 @@ body.cursor--arrastra .cursor {
 
 .cabecera--clara .menu__idioma a {
   border-color: rgba(140, 107, 63, 0.4);
+}
+
+/* Botón del menú en móvil sobre marfil: antes era un círculo gris oscuro con rayas doradas */
+.cabecera--clara .menu-boton {
+  background: rgba(248, 245, 238, 0.92);
+  border-color: rgba(140, 107, 63, 0.55);
+}
+
+.cabecera--clara .menu-boton span {
+  background: #6b4f28;
 }
 
 .cabecera--clara .oro-metal::before {
@@ -5841,8 +5870,10 @@ main, .pie { overflow-x: clip; }
     width: auto;
     margin-inline: -20px;
     justify-self: stretch;
-    padding: 84px 0 18px;
-    background: linear-gradient(180deg, var(--negro) 0, var(--negro) 88%, transparent 100%);
+    /* El fundido empieza cuando ya ha acabado la imagen: antes empezaba al 88 % y el pie de la K
+       quedaba encima del texto que asomaba por la parte transparente */
+    padding: 84px 0 44px;
+    background: linear-gradient(180deg, var(--negro) 0, var(--negro) calc(100% - 30px), transparent 100%);
   }
 
   .det-emblema__pieza img {
@@ -5852,7 +5883,7 @@ main, .pie { overflow-x: clip; }
 
   .det-emblema__pieza::before,
   .det-emblema__pieza::after {
-    inset: 84px auto 18px 50%;
+    inset: 84px auto 44px 50%;
     width: min(58vw, 260px);
     transform: translateX(-50%);
   }
