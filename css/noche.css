@@ -91,7 +91,7 @@
   --f-titulo: "Cinzel", "Trajan Pro", "Times New Roman", serif;
   --f-texto: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --f-dato: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --t-titular: clamp(3.1rem, 9.7vw, 11rem);
+  --t-titular: clamp(2.4rem, 12.6vw, 15rem);
   --t-capitular: clamp(2.2rem, 5.2vw, 5.2rem);
   --t-voz-grande: clamp(2rem, 4.5vw, 4.9rem);
   --t-voz: clamp(1.3rem, 1.85vw, 1.95rem);
@@ -101,7 +101,7 @@
 
   /* Espacio y movimiento */
   --margen: clamp(20px, 4.6vw, 80px);
-  --aire: clamp(88px, 16vh, 200px);
+  --aire: clamp(72px, 12.5vh, 156px);
   --salida: cubic-bezier(0.16, 1, 0.3, 1);
   --entrada: cubic-bezier(0.7, 0, 0.84, 0);
   --regla: 44px; /* alto de la regla de horas */
@@ -257,11 +257,12 @@ code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-v
   position: absolute;
   left: 0;
   top: 0;
-  padding-left: 22px;
+  padding: 4px 10px 5px 12px;
+  background: rgba(6, 9, 15, 0.84);
   font-family: var(--f-dato);
-  font-size: 0.72rem;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
   color: var(--marfil);
   white-space: nowrap;
   opacity: 0;
@@ -272,25 +273,55 @@ code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-v
 .rotulo::before {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 0.62em;
-  width: 13px;
+  right: 100%;
+  top: 13px;
+  width: 8px;
   height: 1px;
   background: currentColor;
-  opacity: 0.6;
+  opacity: 0.7;
 }
+
+.rotulo--izq::before { right: auto; left: 100%; }
 
 .rotulo i {
   display: block;
   font-family: var(--f-texto);
   font-style: italic;
-  font-size: 1.24em;
+  font-size: 1.12em;
   letter-spacing: 0;
-  opacity: 0.78;
+  opacity: 0.86;
 }
 
-.rotulo--kairon { color: var(--oro-vivo); font-family: var(--f-titulo); font-size: 0.78rem; letter-spacing: 0.16em; }
-.rotulo--intruso { color: var(--rojo); }
+.rotulo--kairon { background: none; padding-left: 14px; color: var(--oro-vivo); font-family: var(--f-titulo); font-size: 0.82rem; letter-spacing: 0.16em; }
+.rotulo--kairon::before { right: auto; left: 0; top: 0.62em; }
+.rotulo--kairon.rotulo--izq::before { left: auto; right: 0; }
+.rotulo--kairon.rotulo--izq { padding-left: 0; padding-right: 14px; }
+.rotulo--intruso { color: #ff8a7f; }
+
+/* De día las etiquetas son anotaciones de tinta sobre el mapa, con su punto */
+[data-luz="dia"] .rotulo { background: rgba(248, 245, 238, 0.9); color: var(--tinta); }
+[data-luz="dia"] .rotulo--intruso { color: #a3261c; }
+[data-luz="dia"] .rotulo--kairon { background: none; color: var(--oro-tinta); }
+[data-luz="dia"] .rotulo--servidor::after, [data-luz="dia"] .rotulo--intruso::after {
+  content: "";
+  position: absolute;
+  right: calc(100% + 5px);
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background: var(--marfil);
+}
+[data-luz="dia"] .rotulo--servidor::before, [data-luz="dia"] .rotulo--intruso::before { display: none; }
+[data-luz="dia"] .rotulo--izq::after { right: auto; left: calc(100% + 5px); }
+
+/* La ruta del ataque dibujada sobre el mapa del informe */
+.ruta { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; }
+.ruta path { fill: none; stroke: #a3261c; stroke-width: 1.5; stroke-linecap: round; }
+.ruta__tramo { stroke-dasharray: 2 7; }
+.ruta__tramo--cortado { opacity: 0.38; }
+.ruta__corte { stroke-width: 2; }
 
 /* El farol: la luz que sigue al cursor (solo con ratón) */
 .farol {
@@ -312,7 +343,7 @@ code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-v
 main { position: relative; }
 
 /* Sin JavaScript no hay reloj que poner en hora: la frase se retira */
-.sin-js .ahora, .sin-js .pie__guardia { display: none; }
+.sin-js .ahora, .sin-js .pie__cierre { display: none; }
 
 /* ---------- 5. Piezas ---------- */
 .marco {
@@ -354,6 +385,10 @@ main { position: relative; }
 }
 
 .capitular--menor { font-size: clamp(1.7rem, 3vw, 2.9rem); }
+.capitular--ancho { max-width: 22ch; }
+
+/* Un trozo de frase que no debe partirse por dentro si cabe entero: la línea se corta en la pausa */
+.trozo { display: inline-block; }
 
 /* Líneas que SplitText envuelve para que salgan desde detrás de una línea de horizonte */
 .linea-mascara { overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
@@ -364,14 +399,17 @@ main { position: relative; }
   padding: 5px 12px 4px;
   border: 1px solid currentColor;
   font-family: var(--f-texto);
-  font-size: 0.98rem;
+  font-size: 1.1rem;
   font-variant-caps: all-small-caps;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   line-height: 1.2;
   color: var(--oro);
 }
 
 .sello--tinta { color: var(--oro-tinta); }
+
+/* Sobre el terreno, el sello lleva su propio fondo para que las líneas no lo tachen */
+.instante .sello, .libro .sello { background: rgba(6, 9, 15, 0.86); }
 
 /* Botones: placas rectas, no píldoras */
 .boton {
@@ -424,7 +462,7 @@ main { position: relative; }
 
 .boton[disabled] { opacity: 0.55; cursor: default; }
 
-/* Enlace de texto con flecha */
+/* Enlace de texto. La flecha (.enlace--sigue) solo donde el relato continúa en otra parte */
 .enlace {
   display: inline-block;
   font-style: italic;
@@ -436,7 +474,7 @@ main { position: relative; }
   transition: text-decoration-color 0.3s, color 0.3s;
 }
 
-.enlace::after {
+.enlace--sigue::after {
   content: "\2192";
   display: inline-block;
   margin-left: 0.4em;
@@ -446,7 +484,7 @@ main { position: relative; }
 
 .enlace:hover, .enlace:focus-visible { text-decoration-color: currentColor; color: var(--oro-vivo); }
 .dia .enlace:hover, .dia .enlace:focus-visible { color: var(--oro-tinta); }
-.enlace:hover::after, .enlace:focus-visible::after { transform: translateX(0.35em); }
+.enlace--sigue:hover::after, .enlace--sigue:focus-visible::after { transform: translateX(0.35em); }
 
 .acciones {
   display: flex;
@@ -607,7 +645,9 @@ main { position: relative; }
   height: var(--regla);
   padding: 0 var(--margen);
   color: var(--marfil);
-  background: var(--cielo-alto);
+  /* Casi opaco a propósito: con un fondo opaco del todo, el compositor de Chromium (al menos sin GPU) dejaba de
+     pintar una franja igual de alta en la parte de arriba del lienzo WebGL que hay debajo */
+  background: color-mix(in srgb, var(--cielo-alto) 99%, transparent);
   pointer-events: none;
   display: none;
   transition: color 0.4s, opacity 0.4s;
@@ -706,7 +746,12 @@ main { position: relative; }
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.5s var(--salida);
 }
+
+/* Arriba del todo la hora la da la frase de portada; la marca aparece al echar a andar */
+.en-marcha .horas__hora { opacity: 1; }
 
 /* La marca que baja del reloj a la regla */
 .horas__hora::after {
@@ -786,7 +831,7 @@ main { position: relative; }
   grid-template-rows: auto 1fr auto;
   column-gap: var(--margen);
   min-height: 100svh;
-  padding: clamp(112px, 20.5vh, 210px) var(--margen) calc(var(--regla) + clamp(26px, 5vh, 56px));
+  padding: clamp(104px, 16vh, 176px) var(--margen) calc(var(--regla) + clamp(26px, 5vh, 56px));
   background: linear-gradient(180deg, var(--cielo-alto), var(--cielo-bajo) 62%, var(--noche) 62.2%);
 }
 
@@ -810,7 +855,7 @@ main { position: relative; }
   color: var(--marfil);
 }
 
-.titular__linea { display: block; }
+.titular__linea { display: block; white-space: nowrap; }
 
 .titular__tierra {
   text-shadow: 0 0 26px var(--noche), 0 0 8px var(--noche);
@@ -869,7 +914,16 @@ main { position: relative; }
 .guardia__frase--oro { color: var(--oro); }
 
 /* --- Los tres oficios --- */
-.oficios__voz { margin-top: clamp(20px, 3vh, 34px); max-width: 30ch; }
+.oficios .marco {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  column-gap: clamp(24px, 4vw, 70px);
+  align-items: end;
+}
+
+.oficios .capitular { max-width: 13ch; }
+.oficios__voz { max-width: 30ch; padding-bottom: 0.3em; }
+.oficios__lista, .oficios__mas { grid-column: 1 / -1; }
 
 .oficios__lista {
   display: grid;
@@ -1068,6 +1122,7 @@ main { position: relative; }
   justify-items: center;
   text-align: center;
   color: var(--color-escena, var(--marfil));
+  transition: color 0.6s;
 }
 
 .amanecer__titulo {
@@ -1327,6 +1382,9 @@ main { position: relative; }
 .testimonio cite::after { content: " · "; }
 
 /* --- Preguntas --- */
+/* Tras la última pregunta el día se acaba enseguida: sin hueco antes del anochecer */
+.faq { padding-bottom: clamp(40px, 7vh, 84px); }
+
 .faq__marco {
   display: grid;
   grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
@@ -1386,6 +1444,7 @@ main { position: relative; }
   padding: var(--aire) var(--margen);
   text-align: center;
   color: var(--color-escena, var(--marfil));
+  transition: color 0.6s;
 }
 
 .anochece__frase { max-width: 14ch; }
@@ -1429,8 +1488,17 @@ main { position: relative; }
 }
 
 .pie__llamada { display: grid; gap: clamp(20px, 3.4vh, 34px); }
-.pie__guardia { font-style: italic; font-size: var(--t-voz); }
-.pie__guardia time { font-style: normal; color: var(--oro-vivo); }
+/* La última línea de la página: la hora de verdad, sobre la tierra a oscuras */
+.pie__cierre {
+  position: relative;
+  z-index: 3;
+  max-width: none;
+  margin: clamp(110px, 24vh, 240px) auto 0;
+  padding-inline: var(--margen);
+  text-align: center;
+}
+
+.pie__cierre time { font-size: 0.86em; color: var(--oro-vivo); }
 
 .formulario { display: grid; gap: 26px; }
 .formulario__nota, .formulario__privacidad { font-size: var(--t-nota); line-height: 1.45; color: color-mix(in srgb, var(--marfil) 78%, transparent); }
@@ -1472,7 +1540,7 @@ main { position: relative; }
   grid-template-columns: auto 1fr auto;
   gap: 20px clamp(24px, 4vw, 60px);
   align-items: center;
-  margin-top: clamp(200px, 44vh, 440px);
+  margin-top: clamp(150px, 34vh, 340px);
   padding-top: 26px;
   border-top: 1px solid color-mix(in srgb, var(--marfil) 18%, transparent);
 }
@@ -1482,14 +1550,15 @@ main { position: relative; }
   position: absolute;
   inset: 0 -50vw calc(-1 * var(--regla) - 40px);
   z-index: -1;
-  background: var(--cielo-alto);
+  background: color-mix(in srgb, var(--cielo-alto) 99%, transparent);
 }
 
 .pie__emblema { width: clamp(84px, 8vw, 124px); height: auto; }
 .pie__derechos { font-size: var(--t-nota); line-height: 1.5; color: color-mix(in srgb, var(--marfil) 74%, transparent); text-wrap: pretty; }
 .pie__derechos a { color: inherit; }
 .pie__derechos a:hover { color: var(--oro-vivo); }
-.pie__redes { display: flex; gap: 10px; }
+.pie__redes { display: flex; align-items: center; gap: 10px 22px; white-space: nowrap; }
+.pie__redes .pie__persona a { display: inline; width: auto; height: auto; padding: 12px 0; border: 0; border-radius: 0; font-size: 1.08rem; font-variant-caps: all-small-caps; letter-spacing: 0.08em; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
 
 .pie__redes a, .pie__redes span {
   display: grid;
@@ -1567,7 +1636,7 @@ main { position: relative; }
 /* Escenas que se quedan en pantalla mientras avanza la hora (sticky: no hay saltos ni envoltorios) */
 .peli .guardia { height: 340vh; padding-block: 0; }
 .peli .instante { height: 520vh; padding-block: 0; }
-.peli .amanecer { height: 360vh; padding-block: 0; }
+.peli .amanecer { height: 300vh; padding-block: 0; }
 
 .peli .guardia__escena, .peli .instante__escena, .peli .amanecer__escena {
   position: sticky;
@@ -1589,7 +1658,7 @@ main { position: relative; }
 .peli .amanecer__frase { grid-area: 2 / 1; }
 .peli .amanecer__titulo { grid-area: 1 / 1; }
 
-.peli .anochece__paso { min-height: 160svh; }
+.peli .anochece__paso { min-height: 128svh; }
 .peli .anochece__frase { position: sticky; top: 42svh; }
 
 /* El velo del titular solo hace falta sin película (con ella el texto va sobre el cielo) */
@@ -1630,8 +1699,10 @@ main { position: relative; }
   .ahora { grid-column: 1; grid-row: 5; justify-self: start; margin-top: 22px; text-align: left; max-width: none; }
   .ahora__estado { display: inline; }
   .oficios__lista, .testimonios__lista, .equipo__lista { grid-template-columns: minmax(0, 1fr); }
+  .oficios .marco { grid-template-columns: minmax(0, 1fr); row-gap: clamp(20px, 3vh, 34px); }
   .oficio { padding-bottom: clamp(34px, 6vh, 56px); }
   .pie__base { grid-template-columns: auto 1fr; }
+  .pie__redes { flex-wrap: wrap; justify-content: flex-end; }
   .pie__derechos { grid-column: 1 / -1; grid-row: 2; }
 
   /* La tabla de planes pasa a fichas: cada fila, un bloque */
@@ -1645,7 +1716,17 @@ main { position: relative; }
   .tarifas td:last-child::before { content: "Analista: "; font-variant-caps: all-small-caps; letter-spacing: 0.08em; }
   :lang(ca) .tarifas td:last-child::before { content: "Analista: "; }
 
-  .hoja__tabla th:last-child, .hoja__tabla td:last-child { display: none; }
+  /* El parte en estrecho: la huella baja debajo de su anotación en vez de desaparecer */
+  .hoja__tabla th:last-child { display: none; }
+  .hoja__tabla, .hoja__tabla thead, .hoja__tabla tbody { display: block; }
+  .hoja__tabla tr { display: grid; grid-template-columns: 5.6em minmax(0, 1fr); }
+  .hoja__tabla tbody tr { border-top: 1px solid rgba(18, 22, 29, 0.14); }
+  .hoja__tabla td { border-top: 0; }
+  .hoja__tabla td:last-child { grid-column: 2; padding-top: 0; white-space: normal; }
+  .hoja__tabla td:last-child::before { content: "SHA-256 "; font-family: var(--f-texto); font-size: 0.92rem; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--oro-tinta); }
+  /* La hora en curso va dentro de la barra: encima tapaba el texto que se está leyendo */
+  .horas__hora { bottom: auto; top: 5px; }
+  .horas__hora::after { display: none; }
   .libro__entradas li { grid-template-columns: 5.6em 1fr; }
   .libro__entradas li span { grid-column: 1 / -1; }
   .horas a::after { display: none; }

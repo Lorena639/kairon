@@ -90,6 +90,8 @@
       cadena: 0,           // 0..1 avance de la cadena de balizas
       cadenaF: 1,          // intensidad de la cadena
       alfa: 1,             // opacidad general del terreno
+      tinta: 0,            // 0 = luces que brillan (noche) · 1 = puntos de tinta sobre el mapa (día)
+      cuenta: 1,           // con tinta: qué parte de los equipos se dibuja (0 a 1)
       relieve: 0.62,       // altura de las sierras
       veloX: 0.2, veloY: 0.78, veloRX: 0.36, veloRY: 0.3, velo: 0, // sombra bajo el texto (fracciones de pantalla)
     };
@@ -119,7 +121,7 @@
       uniforms: uniformes, transparent: true,
       vertexShader: `
         uniform float uViaje; uniform vec3 uFarol;
-        varying vec3 vMundo; varying float vDist; varying float vFarol;
+        varying vec3 vMundo; varying float vDist; varying float vFarol; varying float vBorde;
         ${RUIDO}
         void main(){
           vec2 m = vec2(position.x, position.z + uViaje);
@@ -130,13 +132,14 @@
           vMundo = vec3(m.x, h, m.y);
           vec4 mv = modelViewMatrix * vec4(position.x, h, position.z, 1.0);
           vDist = -mv.z;
+          vBorde = position.z;
           gl_Position = projectionMatrix * mv;
         }`,
       fragmentShader: `
         uniform float uMapa; uniform float uGrosor; uniform float uBrillo; uniform float uAlfa; uniform float uLejos; uniform float uTiempo;
         uniform vec3 uTierra; uniform vec3 uBruma; uniform vec3 uLinea; uniform vec3 uRojo; uniform vec3 uOro;
         uniform vec4 uAmenaza; uniform vec2 uAnillo; uniform vec4 uVelo; uniform float uVeloF; uniform vec2 uRes;
-        varying vec3 vMundo; varying float vDist; varying float vFarol;
+        varying vec3 vMundo; varying float vDist; varying float vFarol; varying float vBorde;
         // Línea de grosor constante en píxeles sobre una coordenada continua; se apaga antes de hacer muaré
         float trazo(float c, float grosor){
           float fw = fwidth(c);
@@ -153,7 +156,7 @@
 
           float bruma = smoothstep(4.0, uLejos * 0.86, vDist);
           float cima = smoothstep(0.1, 3.6, vMundo.y);
-          float fuerza = (0.3 + 0.7 * cima) * mix(1.0, 0.22, bruma) * uBrillo;
+          float fuerza = mix(0.3 + 0.7 * cima, 0.62 + 0.38 * cima, uMapa) * mix(1.0, 0.22, bruma * (1.0 - uMapa)) * uBrillo;
           // Donde hay texto encima, la tierra se queda en penumbra
           vec2 pp = (gl_FragCoord.xy / uRes - vec2(uVelo.x, 1.0 - uVelo.y)) / uVelo.zw;
           fuerza *= 1.0 - uVeloF * (1.0 - smoothstep(0.35, 1.0, length(pp)));
@@ -176,7 +179,8 @@
           vec3 c = mix(cuerpo, cLinea, clamp(linea * fuerza, 0.0, 1.0));
           c = mix(c, uOro, clamp(aro + halo + velo + vFarol * 0.05, 0.0, 1.0));
 
-          float a = uAlfa * (1.0 - smoothstep(uLejos * 0.8, uLejos, vDist));
+          // Se desvanece con la distancia y también al llegar al borde lejano de la malla (se ve desde arriba, en el mapa)
+          float a = uAlfa * (1.0 - smoothstep(uLejos * 0.8, uLejos, vDist)) * (1.0 - smoothstep(uLejos * 0.84, uLejos * 0.99, vBorde));
           gl_FragColor = vec4(c, a);
           #include <colorspace_fragment>
         }`,
@@ -208,9 +212,11 @@
       uniforms: {
         uViaje: { value: 0 }, uLargo: { value: LARGO }, uTiempo: uniformes.uTiempo, uEscala: { value: 1 },
         uColor: { value: col.luz }, uFuerza: { value: 1 }, uRojo: { value: col.rojo }, uAmenaza: uniformes.uAmenaza, uRelieve: uniformes.uRelieve,
+        uTinta: { value: 0 }, uCuenta: { value: 1 }, uColorTinta: { value: new THREE.Color("#5d4521") },
       },
       vertexShader: `
         attribute vec2 dato; uniform float uViaje; uniform float uLargo; uniform float uTiempo; uniform float uEscala; uniform vec4 uAmenaza;
+        uniform float uTinta; uniform float uCuenta;
         varying float vBrillo; varying float vRojo;
         ${RUIDO}
         void main(){
@@ -222,14 +228,16 @@
           float d = -mv.z;
           float parpadeo = 0.72 + 0.28 * sin(uTiempo * (0.6 + dato.x * 1.3) + dato.x * 40.0);
           float borde = smoothstep(0.0, 4.0, z + 1.5) * (1.0 - smoothstep(uLargo * 0.62, uLargo * 0.9, z));
-          vBrillo = parpadeo * borde;
+          // De día cada equipo es un punto de tinta fijo; se dibujan solo los que caben en la cuenta
+          float contado = 1.0 - smoothstep(uCuenta - 0.012, uCuenta + 0.012, fract(dato.x * 7.31 + dato.y * 3.17));
+          vBrillo = mix(parpadeo * borde, borde * contado, uTinta);
           float da = distance(vec2(x, zm), uAmenaza.xy);
           vRojo = uAmenaza.w * (1.0 - smoothstep(uAmenaza.z * 0.6, uAmenaza.z, da));
-          gl_PointSize = uEscala * dato.y * (9.0 + 150.0 / max(d, 7.0));
+          gl_PointSize = mix(uEscala * dato.y * (9.0 + 150.0 / max(d, 7.0)), uEscala * 7.5, uTinta);
           gl_Position = projectionMatrix * mv;
         }`,
       fragmentShader: `
-        uniform vec3 uColor; uniform vec3 uRojo; uniform float uFuerza; varying float vBrillo; varying float vRojo;
+        uniform vec3 uColor; uniform vec3 uRojo; uniform float uFuerza; uniform float uTinta; uniform vec3 uColorTinta; varying float vBrillo; varying float vRojo;
         void main(){
           float d = length(gl_PointCoord - 0.5);
           float nucleo = smoothstep(0.16, 0.0, d);
@@ -237,6 +245,7 @@
           vec3 c = mix(uColor, uRojo, vRojo);
           float a = (nucleo * 1.1 + halo * halo * 0.4) * vBrillo * uFuerza;
           gl_FragColor = vec4(c * a, a);
+          if (uTinta > 0.5) gl_FragColor = vec4(uColorTinta, (1.0 - smoothstep(0.3, 0.48, d)) * vBrillo * uFuerza);
           #include <colorspace_fragment>
         }`,
     });
@@ -316,11 +325,11 @@
     // Posiciones en el mundo (x, z absolutos) de los actores; la página puede cambiarlas
     const actor = [
       { x: -5.6, z: 9.5, color: col.oroVivo, tam: 1.0, f: 1 },   // baliza de KAIRON
-      { x: 9, z: 40, color: col.rojo, tam: 1.15, f: 0 },          // el intruso, lejos
+      { x: 9, z: 40, color: col.rojo, tam: 2.3, f: 0 },          // el intruso, lejos
     ];
     for (let i = 2; i < 8; i++) actor.push({ x: 0, z: 0, color: col.oroVivo, tam: 0.7, f: 0 });
-    actor.push({ x: 0, z: 0, color: col.rojo, tam: 0.42, f: 0, elev: 0.3 });      // 8 intento en vuelo
-    actor.push({ x: 2, z: 13, color: col.luz, tam: 0.62, f: 0 });                  // 9 el servidor
+    actor.push({ x: 0, z: 0, color: col.rojo, tam: 0.7, f: 0, elev: 0.3 });      // 8 intento en vuelo
+    actor.push({ x: 2, z: 13, color: col.luz, tam: 0.95, f: 0 });                  // 9 el servidor
 
     function colocarActores(t) {
       for (let i = 0; i < N_ACT; i++) {
@@ -371,7 +380,10 @@
       uniformes.uAmenaza.value.set(amenazaPos.x, amenazaPos.y, Math.max(0.001, e.amenazaRadio), e.amenaza);
       uniformes.uAnillo.value.set(e.anilloRadio, e.anillo);
       uniformes.uVelo.value.set(e.veloX, e.veloY, e.veloRX, e.veloRY); uniformes.uVeloF.value = e.velo;
-      matLuces.uniforms.uFuerza.value = e.luces * e.alfa;
+      const conTinta = e.tinta > 0.5;
+      matLuces.uniforms.uFuerza.value = conTinta ? e.luces : e.luces * e.alfa;
+      matLuces.uniforms.uTinta.value = conTinta ? 1 : 0; matLuces.uniforms.uCuenta.value = e.cuenta;
+      matLuces.blending = conTinta ? THREE.NormalBlending : THREE.AdditiveBlending;
       colocarActores(tiempo);
 
       camara.fov = e.fov;

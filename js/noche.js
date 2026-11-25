@@ -32,7 +32,7 @@
 
   const TXT = CA ? {
     calma: "Tot en calma.", desvelo: "Seguim desperts.", manana: "Ja hem repassat la nit.",
-    eventos: [["ok", "Agent WS-07 en línia"], ["ok", "Integritat de fitxers verificada"], ["aviso", "5 intents d'accés fallits · srv-01"], ["ok", "Regles actualitzades (v2026.11)"], ["aviso", "USB desconegut a WS-12"], ["ok", "Còpia de seguretat completada"], ["aviso", "Port 3389 exposat · fw-edge"], ["ok", "Empremta SHA-256 registrada · cas 0427"], ["ok", "Agent WS-03 en línia"], ["ok", "Certificat renovat · correu"]],
+    eventos: [["ok", "Agent WS-03 en línia"], ["aviso", "Port 3389 exposat · fw-edge"], ["ok", "Empremta SHA-256 registrada · cas 0427"], ["ok", "Certificat renovat · correu"], ["ok", "Agent WS-11 actualitzat"], ["aviso", "Inici de sessió fora d'horari · WS-04"], ["ok", "Registres arxivats · srv-01"]],
     etiquetas: { ok: "OK", aviso: "Avís", alerta: "Alerta", bloqueo: "Bloqueig" },
     planes: { vigia: "Vigia", centinela: "Sentinella", guardian: "Guardià", egida: "Ègida" },
     conIva: "al mes, IVA inclòs.", masIva: (e) => `al mes + IVA, uns ${e} per equip.`,
@@ -43,7 +43,7 @@
     agarrado: "L'has agafat pel floc. Això és kairos: l'instant oportú.", pasado: "Ha passat. Per darrere ja no hi ha d'on agafar-lo.",
   } : {
     calma: "Todo en calma.", desvelo: "Seguimos despiertos.", manana: "Ya hemos repasado la noche.",
-    eventos: [["ok", "Agente WS-07 en línea"], ["ok", "Integridad de archivos verificada"], ["aviso", "5 intentos de acceso fallidos · srv-01"], ["ok", "Reglas actualizadas (v2026.11)"], ["aviso", "USB desconocido en WS-12"], ["ok", "Copia de seguridad completada"], ["aviso", "Puerto 3389 expuesto · fw-edge"], ["ok", "Huella SHA-256 registrada · caso 0427"], ["ok", "Agente WS-03 en línea"], ["ok", "Certificado renovado · correo"]],
+    eventos: [["ok", "Agente WS-03 en línea"], ["aviso", "Puerto 3389 expuesto · fw-edge"], ["ok", "Huella SHA-256 registrada · caso 0427"], ["ok", "Certificado renovado · correo"], ["ok", "Agente WS-11 actualizado"], ["aviso", "Inicio de sesión fuera de horario · WS-04"], ["ok", "Registros archivados · srv-01"]],
     etiquetas: { ok: "OK", aviso: "Aviso", alerta: "Alerta", bloqueo: "Bloqueo" },
     planes: { vigia: "Vigía", centinela: "Centinela", guardian: "Guardián", egida: "Égida" },
     conIva: "al mes, IVA incluido.", masIva: (e) => `al mes + IVA, unos ${e} por equipo.`,
@@ -85,7 +85,7 @@
     { t: 2.5, alto: "#4d4b66", medio: "#a8826c", bajo: "#f0c98e", tierra: "#120f10", linea: "#ecd3a4", luz: "#fff1d6" },
     { t: 3, alto: "#c59a62", medio: "#dcb985", bajo: "#f4e3bd", tierra: "#17120d", linea: "#f6e6c2", luz: "#ffffff" },
     { t: 3.45, alto: "#e9d2a4", medio: "#f0dfbb", bajo: "#f7ecd3", tierra: "#d9bd8b", linea: "#fbf1da", luz: "#ffffff" }, // la tierra, bañada de oro
-    { t: 4, alto: "#f8f5ee", medio: "#f8f5ee", bajo: "#f8f5ee", tierra: "#f8f5ee", linea: "#b79b6e", luz: "#f8f5ee" },
+    { t: 4, alto: "#f8f5ee", medio: "#f8f5ee", bajo: "#f8f5ee", tierra: "#f8f5ee", linea: "#a08352", luz: "#f8f5ee" },
   ].map((p) => ({ t: p.t, alto: hex(p.alto), medio: hex(p.medio), bajo: hex(p.bajo), tierra: hex(p.tierra), linea: hex(p.linea), luz: hex(p.luz) }));
   const CAMPOS_COLOR = ["alto", "medio", "bajo", "tierra", "linea", "luz"];
   const color = { alto: [0, 0, 0], medio: [0, 0, 0], bajo: [0, 0, 0], tierra: [0, 0, 0], linea: [0, 0, 0], luz: [0, 0, 0] };
@@ -179,11 +179,11 @@
     k(ap(0.34), { tono: 2.5, hora: H(30, 45), viaje: 56, cabeceo: 0.08 });
     k(ap(0.5), { tono: 3, hora: H(31, 5), viaje: 57, camY: 3, cabeceo: 0.09, luces: 0.3, baliza: 0.3 });
     k(ap(0.66), { tono: 3.25, hora: H(31, 40), camY: 5, cabeceo: -0.08, luces: 0, baliza: 0 });
-    k(ap(1), { tono: 4, hora: H(33, 0), viaje: 58, camY: 30, camZ: 22, cabeceo: -1.5, mapa: 1, alfa: 0.85 });
+    k(ap(1), { tono: 4, hora: H(33, 0), viaje: 58, camY: 38, camZ: 16, cabeceo: -1.5, fov: 46, mapa: 1, alfa: 0.9 });
     // 09:00 A plena luz: el mapa queda de fondo, cada vez más tenue
-    k(s.informe.top + vh * 0.2, { alfa: 0.62, hora: H(33, 14) });
-    k(s.planes.top - vh * 0.2, { alfa: 0.5, hora: H(34, 0) });
-    k(s.planes.top + vh * 0.3, { alfa: 0.15, hora: H(34, 30) });
+    k(s.informe.top + vh * 0.2, { alfa: 0.8, hora: H(33, 14) });
+    k(s.planes.top - vh * 0.2, { alfa: 0.6, hora: H(34, 0) });
+    k(s.planes.top + vh * 0.3, { alfa: 0.34, hora: H(34, 30) });
     k(s.metodo.top, { hora: H(36, 0) });
     k(s.testimonios.top, { hora: H(39, 0) });
     k(s.faq.top, { hora: H(41, 30) });
@@ -192,7 +192,7 @@
     rango.anochece = [e0 - vh * 0.4, e0 + eh];
     k(ep(-0.4), { hora: H(43, 30) });
     k(ep(0.1), { tono: 3.2, hora: H(44, 30), alfa: 0.85, camY: 14, camZ: 12, cabeceo: -0.8, mapa: 0.6 });
-    k(ep(0.42), { tono: 2.4, hora: H(45, 30), alfa: 1, camY: 3.4, camZ: 0, cabeceo: 0.02, mapa: 0, viaje: 62, luces: 0.5 });
+    k(ep(0.42), { tono: 2.4, hora: H(45, 30), alfa: 1, camY: 3.4, camZ: 0, cabeceo: 0.02, fov: 40, mapa: 0, viaje: 62, luces: 0.5 });
     k(ep(0.8), { tono: 0.5, hora: H(46, 30), viaje: 64, camY: 2.6, cabeceo: 0.24, luces: 1, baliza: 1 });
     k(s.contacto.top, { tono: 0.7, hora: H(46, 59), viaje: 68, cabeceo: 0.27 });
     k(maxScroll, { tono: 1, hora: H(47, 0), viaje: 74, cabeceo: 0.17 });
@@ -234,6 +234,7 @@
   const fraseNoche = $(".anochece__frase");
   const astro = $(".cielo__hora");
   const rotulos = $$(".rotulo").map((el) => ({ el, i: +el.dataset.actor, o: 0, obj: 0 }));
+  const ruta = $(".ruta"), rutaTramos = $$(".ruta__tramo"), rutaCorte = $(".ruta__corte");
   const pos = { x: 0, y: 0, visible: false };
   const pieInstante = $(".instante__pie");
 
@@ -285,11 +286,12 @@
 
   function escenaGuardia(y, e) {
     const p = tramo(y, rango.guardia[0], rango.guardia[1]);
+    // En portada solo luce la baliza; las luces de los equipos se encienden con la primera frase
+    if (!quieto() && y < rango.guardia[1] + vh) X.luces = paso(p, 0.02, 0.16) * (1 + 0.7 * (1 - paso(p, 0.62, 0.74)));
     if (y < rango.guardia[0] - vh || y > rango.guardia[1] + vh) return;
     frase(frasesGuardia[0], p, 0.03, 0.34);
     frase(frasesGuardia[1], p, 0.37, 0.67);
     frase(frasesGuardia[2], p, 0.71, 1, true);
-    X.luces = 1 + 0.7 * paso(p, 0.02, 0.14) * (1 - paso(p, 0.62, 0.74));
     X.baliza = 1 + 1.5 * paso(p, 0.7, 0.8); // «Nosotros sí»: la baliza de KAIRON se aviva
     rotulos[0].obj = Math.max(rotulos[0].obj, paso(p, 0.72, 0.8));
   }
@@ -366,9 +368,9 @@
     const [a0, a1] = rango.amanecer;
     if (y < a0 - vh || y > a1 + vh) return;
     const p = tramo(y, a0, a1);
-    frase(tituloAmanecer, p, 0.2, 0.62);
-    frase(frasesAmanecer[0], p, 0.28, 0.6);
-    frase(frasesAmanecer[1], p, 0.68, 1, true);
+    frase(tituloAmanecer, p, 0.14, 0.56);
+    frase(frasesAmanecer[0], p, 0.26, 0.56);
+    frase(frasesAmanecer[1], p, 0.6, 1, true);
   }
 
   // La hora en grande que sale tras las crestas al empezar cada acto
@@ -393,7 +395,7 @@
   }
 
   /* ---------- 5. El fotograma: un solo bucle para todo ---------- */
-  let lenis = null, sucio = true, yPintada = -1, tiempoAnterior = 0, luzAnterior = "";
+  let lenis = null, sucio = true, yPintada = -1, tiempoAnterior = 0, luzAnterior = "", tintaAnterior = null, cuentaEquipos = 0.6, rutaObj = 0, rutaO = 0;
   const raton = { x: 0, y: 0, sx: 0, sy: 0, px: -9, py: -9, activo: false, fuerza: 0 };
   const farolEl = $(".farol");
   const raiz = html.style;
@@ -455,7 +457,10 @@
     raiz.setProperty("--sol", sol.toFixed(3));
     raiz.setProperty("--sol-escala", mezcla(0.16, 1.15, paso(S.tono, 1.7, 3.3)).toFixed(3));
     const luz = S.tono > 2.62 ? "dia" : "noche";
-    if (luz !== luzAnterior) { luzAnterior = luz; html.dataset.luz = luz; raiz.setProperty("--color-escena", luz === "dia" ? "var(--tinta)" : "var(--marfil)"); }
+    if (luz !== luzAnterior) { luzAnterior = luz; html.dataset.luz = luz; }
+    // El texto de las escenas pasa a tinta antes que la cabecera: en cuanto el resplandor aclara el centro del cielo
+    const tinta = S.tono > 2.12;
+    if (tinta !== tintaAnterior) { tintaAnterior = tinta; raiz.setProperty("--color-escena", tinta ? "var(--tinta)" : "var(--marfil)"); }
     const C = (c, v) => c.setRGB(v[0] / 255, v[1] / 255, v[2] / 255, THREE.SRGBColorSpace);
     C(T.col.tierra, color.tierra); C(T.col.bruma, color.bajo); C(T.col.linea, color.linea); C(T.col.luz, color.luz);
 
@@ -469,12 +474,24 @@
     e.fov = S.fov; e.mapa = S.mapa; e.alfa = S.alfa;
     e.brilloLineas = S.brillo * mezcla(0.0, 1, E.entrada);
     e.luces = S.luces * X.luces * E.entrada;
+    // De día la tierra es el mapa del informe: los equipos pasan a ser puntos de tinta, tantos como diga el deslizador
+    const deDia = paso(S.mapa, 0.9, 1) * paso(S.tono, 3.7, 4);
+    e.tinta = deDia > 0.01 ? 1 : 0;
+    if (e.tinta) { e.luces = deDia; e.cuenta += (cuentaEquipos - e.cuenta) * 0.16; if (Math.abs(cuentaEquipos - e.cuenta) > 0.003) sucio = true; }
+    // En el mapa quedan marcados el servidor, el origen del ataque y la ruta que se cortó
+    // (en pantallas estrechas el texto ocupa todo el ancho: no hay sitio para anotar el mapa y los puntos van más tenues)
+    const angosta = window.innerWidth < 860;
+    if (e.tinta && angosta) e.luces *= 0.4;
+    const marcas = angosta ? 0 : deDia * (1 - paso(y, sec.planes.top - vh * 0.7, sec.planes.top - vh * 0.2));
+    if (marcas > 0.01) { rotulos[1].obj = marcas; rotulos[2].obj = marcas; }
+    rutaObj = marcas;
     e.baliza = S.baliza * X.baliza * torre(S.viaje) * E.entrada;
     // Penumbra bajo los textos que van sobre la tierra: la portada (abajo a la izquierda) y el instante (columna izquierda)
     const vPortada = (1 - paso(y, vh * 0.25, vh * 0.8)) * E.entrada, vInstante = paso(y, rango.instante[0] - vh * 0.5, rango.instante[0]) * (1 - paso(y, rango.instante[1], rango.instante[1] + vh * 0.6));
     const vGuardia = paso(y, rango.guardia[0] - vh * 0.5, rango.guardia[0]) * (1 - paso(y, rango.guardia[1], rango.guardia[1] + vh * 0.5));
     if (vInstante > 0.01) { e.veloX = 0.16; e.veloY = 0.4; e.veloRX = 0.42; e.veloRY = 0.52; e.velo = vInstante * 0.96; }
     else if (vGuardia > 0.01) { e.veloX = 0.2; e.veloY = 0.44; e.veloRX = 0.46; e.veloRY = 0.42; e.velo = vGuardia * 0.94; }
+    else if (marcas > 0.01) { e.veloX = 0.18; e.veloY = 0.54; e.veloRX = 0.42; e.veloRY = 0.78; e.velo = marcas * 0.82; } // el texto del informe, a la izquierda del mapa
     else { e.veloX = 0.17; e.veloY = 0.76; e.veloRX = 0.42; e.veloRY = 0.44; e.velo = vPortada * 0.94; }
     // En pantallas estrechas el texto ocupa todo el ancho: la penumbra también
     if (window.innerWidth < 860) { e.veloX = 0.5; e.veloRX = 0.9; if (vInstante <= 0.01 && vGuardia <= 0.01) { e.veloY = 0.62; e.veloRY = 0.5; } }
@@ -499,8 +516,28 @@
       if (r.o < 0.01) { if (r.el.style.opacity !== "0") r.el.style.opacity = "0"; return; }
       T.proyectar(r.i, pos);
       r.el.style.opacity = (pos.visible ? r.o : 0).toFixed(3);
-      r.el.style.transform = `translate3d(${(pos.x + 6).toFixed(1)}px,${(pos.y - 9).toFixed(1)}px,0)`;
+      // Si no cabe a la derecha de su luz, la etiqueta se cuelga a la izquierda
+      if (!r.w) r.w = r.el.offsetWidth;
+      const izq = pos.x + 10 + r.w > window.innerWidth - 12;
+      if (izq !== r.izq) { r.izq = izq; r.el.classList.toggle("rotulo--izq", izq); }
+      r.el.style.transform = `translate3d(${(izq ? pos.x - 10 - r.w : pos.x + 10).toFixed(1)}px,${(pos.y - 13).toFixed(1)}px,0)`;
     });
+
+    // La ruta del ataque sobre el mapa: una línea de trazos del origen al servidor, cortada cerca del origen
+    if (ruta) {
+      rutaO += (rutaObj - rutaO) * 0.14;
+      if (Math.abs(rutaObj - rutaO) > 0.004) sucio = true; else rutaO = rutaObj;
+      if (rutaO < 0.01) { if (ruta.style.opacity !== "0") ruta.style.opacity = "0"; }
+      else {
+        T.proyectar(1, pos); const ax = pos.x, ay = pos.y;
+        T.proyectar(9, pos);
+        const en = (t) => `${mezcla(ax, pos.x, t).toFixed(1)} ${mezcla(ay, pos.y, t).toFixed(1)}`;
+        rutaTramos[0].setAttribute("d", `M${en(0)}L${en(0.24)}`);
+        rutaTramos[1].setAttribute("d", `M${en(0.3)}L${en(1)}`);
+        rutaCorte.setAttribute("transform", `translate(${en(0.27)})`);
+        ruta.style.opacity = rutaO.toFixed(3);
+      }
+    }
 
     // El titular se pone tras las crestas al empezar a bajar
     if (titularCielo && y < vh * 1.4 && !q) titularCielo.style.transform = `translate3d(0,${(y * 2.3).toFixed(1)}px,0)`;
@@ -513,6 +550,7 @@
   const cabecera = $(".cabecera");
   function interfaz(y, hora) {
     if (horasReloj) horasReloj.style.setProperty("--avance", limita(y / maxScroll, 0, 1).toFixed(4));
+    html.classList.toggle("en-marcha", y > 60);
     if (hayPeli) ponerHora(hora);
     let activa = 0;
     objetivosHoras.forEach((o, i) => { if (o && o.getBoundingClientRect().top <= vh * 0.5) activa = i; });
@@ -684,9 +722,10 @@
   if (libro) {
     let minutos = 2 * 60 + 31, indice = 0, visto = false, total = cifra ? +cifra.dataset.vivo : 0;
     const apuntar = () => {
-      if (!visto || document.hidden || quieto()) return;
-      const [tipo, texto] = TXT.eventos[indice++ % TXT.eventos.length];
-      minutos += 2 + Math.floor(Math.random() * 6);
+      // La noche del relato se apunta hasta poco antes de las 03:07; después el libro espera
+      if (!visto || document.hidden || quieto() || indice >= TXT.eventos.length) return;
+      const [tipo, texto] = TXT.eventos[indice++];
+      minutos += 2 + Math.floor(Math.random() * 3);
       const li = document.createElement("li");
       li.className = tipo;
       const hora = `0${Math.floor(minutos / 60) % 24}`.slice(-2) + ":" + `0${minutos % 60}`.slice(-2) + ":" + `0${Math.floor(Math.random() * 60)}`.slice(-2);
@@ -717,6 +756,7 @@
     const euros = (v) => { const [e, d] = v.toFixed(v % 1 ? 2 : 0).split("."); return e.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (d ? "," + d : "") + " €"; };
     const calcular = () => {
       const n = +control.value;
+      cuentaEquipos = n / +control.max; sucio = true;
       let plan, precio, nota;
       if (n <= 2) { plan = "vigia"; precio = 9.9; nota = TXT.conIva; }
       else if (n <= 5) { plan = "centinela"; precio = 24.9; nota = TXT.conIva; }

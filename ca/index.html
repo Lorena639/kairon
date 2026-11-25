@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="KAIRON: SOC gestionat per a particulars i empreses. Vigilem els teus equips mentre dorms, aturem l'atac en el primer minut i ho demostrem amb proves.">
+  <meta name="description" content="KAIRON: SOC gestionat per a particulars i empreses. Vigilem els teus equips mentre dorms, tanquem el pas a l'atacant en un minut i mig i ho demostrem amb proves.">
   <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark light">
   <!-- Seguretat de la mateixa web: només es carreguen recursos d'aquest lloc (també les fonts); sense scripts en línia -->
@@ -36,7 +36,7 @@
     "knowsAbout": ["SOC", "Wazuh", "anàlisi forense", "resposta a incidents"]
   }
   </script>
-  <link rel="stylesheet" href="../css/noche.css?v=20261125n">
+  <link rel="stylesheet" href="../css/noche.css?v=20261125p">
 </head>
 <body>
   <!-- Primer element enfocable: saltar directament al contingut amb el teclat -->
@@ -55,6 +55,7 @@
 
   <!-- Etiquetas que acompañan a las luces de la escena (las coloca js/noche.js) -->
   <div class="rotulos" aria-hidden="true">
+    <svg class="ruta" aria-hidden="true" focusable="false"><path class="ruta__tramo"/><path class="ruta__tramo ruta__tramo--cortado"/><path class="ruta__corte" d="M-7 -7L7 7M7 -7L-7 7"/></svg>
     <span class="rotulo rotulo--kairon" data-actor="0">KAIRON <i>de guàrdia</i></span>
     <span class="rotulo rotulo--servidor" data-actor="9">srv-01 <i>el teu servidor</i></span>
     <span class="rotulo rotulo--intruso" data-actor="1">203.0.113.9 <i>desconegut</i></span>
@@ -115,7 +116,7 @@
       <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activar el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
       <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Reduir el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
     </div>
-    <a class="boton boton--linea cabecera__cta" href="#contacto">Parla amb nosaltres</a>
+    <a class="boton boton--linea cabecera__cta" href="#contacto">Demana una auditoria</a>
     <button class="menu-boton" type="button" aria-label="Obrir el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
   </header>
 
@@ -141,10 +142,10 @@
         <em class="titular__tierra">Nosaltres tampoc.</em>
       </h1>
       <div class="anochecer__pie">
-        <p class="voz anochecer__voz">Vigilem els equips de la teva empresa mentre dorm. Si algú hi entra, l'aturem en el primer minut i t'ho demostrem amb proves.</p>
+        <p class="voz anochecer__voz">Vigilem els equips de la teva empresa mentre dorm. Si algú intenta entrar, li tanquem el pas en un minut i mig i t'ho demostrem amb proves.</p>
         <div class="acciones">
           <a class="boton boton--oro" href="#contacto">Demana una auditoria</a>
-          <a class="enlace" href="#guardia">Mira una nit de guàrdia</a>
+          <a class="enlace enlace--sigue" href="#guardia">Mira una nit de guàrdia</a>
         </div>
       </div>
       <p class="ahora">Són les <time class="ahora__hora">--:--</time> a Barcelona. <span class="ahora__estado">Tot en calma.</span></p>
@@ -162,8 +163,8 @@
     <!-- Els tres oficis: detectar, respondre, demostrar -->
     <section class="acto oficios" id="servicios" aria-labelledby="titulo-servicios" data-plano="oficios">
       <div class="marco">
-        <h2 class="capitular" id="titulo-servicios">Detectar. Respondre. <em>Demostrar.</em></h2>
-        <p class="voz oficios__voz">Sempre en aquest ordre. És l'única cosa que fem, i la fem igual per a un portàtil que per a seixanta.</p>
+        <h2 class="capitular" id="titulo-servicios">Tres oficis. Sempre en aquest ordre.</h2>
+        <p class="voz oficios__voz">És l'única cosa que fem, i la fem igual per a un portàtil que per a seixanta.</p>
         <ul class="oficios__lista">
           <li>
             <article class="oficio" id="detectar">
@@ -207,11 +208,11 @@
         </div>
         <div class="libro__hoja">
           <ol class="libro__entradas" aria-live="off" aria-label="Registre d'esdeveniments (simulat)">
-            <li class="ok"><time>00:31:07</time><b>OK</b><span>Agent WS-07 en línia</span></li>
-            <li class="ok"><time>00:44:52</time><b>OK</b><span>Integritat de fitxers verificada</span></li>
-            <li class="aviso"><time>01:12:30</time><b>Avís</b><span>USB desconegut a WS-12</span></li>
-            <li class="ok"><time>01:58:03</time><b>OK</b><span>Còpia de seguretat completada</span></li>
             <li class="ok"><time>02:26:41</time><b>OK</b><span>Regles actualitzades (v2026.11)</span></li>
+            <li class="ok"><time>01:58:03</time><b>OK</b><span>Còpia de seguretat completada</span></li>
+            <li class="aviso"><time>01:12:30</time><b>Avís</b><span>USB desconegut a WS-12</span></li>
+            <li class="ok"><time>00:44:52</time><b>OK</b><span>Integritat de fitxers verificada</span></li>
+            <li class="ok"><time>00:31:07</time><b>OK</b><span>Agent WS-07 en línia</span></li>
           </ol>
           <dl class="libro__cuentas">
             <div><dt>Esdeveniments llegits aquesta nit</dt><dd class="libro__cifra" data-vivo="1240318">1.240.318</dd></div>
@@ -219,7 +220,7 @@
             <div><dt>Bloquejos automàtics</dt><dd data-bloqueos>3</dd></div>
           </dl>
         </div>
-        <p class="libro__mas"><a class="enlace" href="soc.html">Obrir el SOC en directe</a></p>
+        <p class="libro__mas"><a class="enlace enlace--sigue" href="soc.html">Obrir el SOC en directe</a></p>
       </div>
     </section>
 
@@ -229,7 +230,7 @@
         <div class="instante__relato">
           <p class="instante__crono" aria-hidden="true">03:07:00</p>
           <h2 class="voz voz--grande instante__paso" id="titulo-instante">Algú truca a la porta del teu servidor.</h2>
-          <p class="voz voz--grande instante__paso">Prova una contrasenya. I una altra. I una altra.<span class="instante__nota">Intents fallits: <b class="instante__intentos">0</b></span></p>
+          <p class="voz voz--grande instante__paso"><span class="trozo">Prova una contrasenya.</span> <span class="trozo">I una altra. I una altra.</span><span class="instante__nota">Intents fallits: <b class="instante__intentos">0</b></span></p>
           <p class="voz voz--grande instante__paso">Al cinquè error, el veiem.<span class="instante__nota">Alerta de força bruta en 38 s. Objectiu: menys de 60.</span></p>
           <p class="voz voz--grande instante__paso instante__paso--oro">I li tanquem el pas.<span class="instante__nota">La seva adreça, bloquejada 24 s després. Objectiu: 30 o menys.</span></p>
           <p class="voz voz--grande instante__paso">Tu continues dormint.<span class="instante__nota">Al cap de 10 minuts el bloqueig s'aixeca sol. Tot queda apuntat.</span></p>
@@ -238,7 +239,7 @@
           <p class="sello">Cas d'exemple · temps objectiu del laboratori</p>
           <div class="acciones">
             <button class="boton boton--linea simular" type="button">Simular un altre atac</button>
-            <a class="enlace" href="incidente.html">Un incident, minut a minut</a>
+            <a class="enlace enlace--sigue" href="incidente.html">Un incident, minut a minut</a>
           </div>
         </div>
       </div>
@@ -248,7 +249,7 @@
     <section class="acto amanecer" id="amanecer" aria-labelledby="titulo-amanecer" data-plano="amanecer">
       <div class="amanecer__escena">
         <h2 class="amanecer__titulo" id="titulo-amanecer">Clareja.</h2>
-        <p class="voz voz--grande amanecer__frase">No ha entrat ningú. La porta és on era.</p>
+        <p class="voz voz--grande amanecer__frase"><span class="trozo">No ha entrat ningú.</span> <span class="trozo">La porta és on era.</span></p>
         <p class="voz voz--grande amanecer__frase">A les nou, una persona repassa la nit i te l'explica.</p>
       </div>
     </section>
@@ -282,7 +283,7 @@
     <!-- ===== 09:00 · A PLENA LLUM: plans i preus ===== -->
     <section class="acto dia planes" id="planes" aria-labelledby="titulo-planes" data-plano="dia">
       <div class="marco">
-        <h2 class="capitular" id="titulo-planes">Quatre plans. La mateixa vigilància.</h2>
+        <h2 class="capitular capitular--ancho" id="titulo-planes">Quatre plans.<br>La mateixa vigilància.</h2>
         <p class="planes__entrada">Canvia quanta atenció humana reps, no la tecnologia. Les alertes i el bloqueig automàtic funcionen a qualsevol hora; els analistes treballen de dilluns a divendres, de 9 a 19 h. No prometem vigilància humana 24/7.</p>
 
         <!-- Calculadora: sense JavaScript no apareix; la taula es llegeix igual -->
@@ -429,7 +430,6 @@
       <div class="pie__llamada">
         <h2 class="capitular" id="titulo-contacto">Saps què passa <em>ara</em> a la teva xarxa?</h2>
         <p class="voz">Explica'ns quins equips tens i et diem, sense tecnicismes, per on començar. L'auditoria inicial és gratuïta al pla Ègida per a empreses.</p>
-        <p class="pie__guardia">Són les <time class="ahora__hora">--:--</time> a Barcelona. Seguim de guàrdia.</p>
       </div>
 
       <form class="formulario" action="#" method="post" novalidate aria-labelledby="titulo-contacto">
@@ -460,12 +460,14 @@
       </form>
     </div>
 
+    <p class="voz voz--grande pie__cierre"><span class="trozo">Són les <time class="ahora__hora">--:--</time> a Barcelona.</span> <span class="trozo">Seguim de guàrdia.</span></p>
+
     <div class="marco pie__base">
       <img class="pie__emblema" src="../img/relieve/kairon-relieve-emblema.png" width="444" height="335" alt="" loading="lazy" decoding="async">
       <ul class="pie__redes">
         <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
-        <li><a href="../antonia-lorena-cracana/ca/" aria-label="Portfolio d'Antonia Lorena Cracana"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></a></li>
-        <li><a href="../joao-daniel-oliveira/" aria-label="Portfolio de João Daniel"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></a></li>
+        <li class="pie__persona"><a href="../antonia-lorena-cracana/ca/">Portfolio de la Lorena</a></li>
+        <li class="pie__persona"><a href="../joao-daniel-oliveira/">Portfolio del Dani</a></li>
       </ul>
       <div class="avisos" aria-live="polite">
         <button type="button" class="boton boton--linea instalar" hidden>Instal·lar com a aplicació</button>
@@ -477,14 +479,14 @@
 
   <!-- Librerías guardadas en local, para no depender de internet: GSAP 3.15.1 (con ScrollTrigger, SplitText y
        ScrambleText), Lenis y Three.js 0.160. -->
-  <script src="../js/vendor/gsap.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/SplitText.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/CustomEase.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/lenis.min.js?v=20261125n" defer></script>
-  <script src="../js/vendor/three.min.js?v=20261125n" defer></script>
-  <script src="../js/noche-tierra.js?v=20261125n" defer></script>
-  <script src="../js/noche.js?v=20261125n" defer></script>
+  <script src="../js/vendor/gsap.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/CustomEase.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261125p" defer></script>
+  <script src="../js/vendor/three.min.js?v=20261125p" defer></script>
+  <script src="../js/noche-tierra.js?v=20261125p" defer></script>
+  <script src="../js/noche.js?v=20261125p" defer></script>
 </body>
 </html>
