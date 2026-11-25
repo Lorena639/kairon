@@ -449,7 +449,9 @@ if (hayGSAP && !reducido) {
   });
 
   // Pasos apilados: cada tarjeta se encoge y oscurece un poco cuando la siguiente la tapa
-  if (window.innerWidth >= 720) {
+  // (solo si la hoja de estilos los apila; en las páginas interiores nuevas son una línea de tiempo sin apilar)
+  const pilaPasos = document.querySelector(".pasos .paso");
+  if (window.innerWidth >= 720 && pilaPasos && getComputedStyle(pilaPasos).position === "sticky") {
     gsap.utils.toArray(".pasos .paso").forEach((p, i, arr) => {
       if (i === arr.length - 1) return;
       // El contenido se desvanece en proporción a lo que la siguiente tarjeta lo va tapando

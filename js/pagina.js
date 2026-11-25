@@ -9,7 +9,6 @@
   "use strict";
   const html = document.documentElement;
   const cabeza = document.querySelector(".pagina--cabeza");
-  const raiz = html.style;
 
   /* ---------- 1. La hora y su paleta (los mismos tonos que la portada, js/noche.js) ---------- */
   const TONOS = [
@@ -55,22 +54,90 @@
   }
   if (isNaN(tono)) tono = 1;
   const col = paleta(tono);
-  raiz.setProperty("--cielo-alto", rgb(col.alto));
-  raiz.setProperty("--cielo-medio", rgb(col.medio));
-  raiz.setProperty("--cielo-bajo", rgb(col.bajo));
-  raiz.setProperty("--sol", Math.min(1, Math.max(0, (tono - 1.8) / 0.9)).toFixed(2));
+  // Los colores de la hora se quedan en la cabecera de la página: el resto (secciones, pie) sigue siendo de noche
+  // con los valores por defecto de css/kairon.css. Si se pusieran en <html>, una página de día tendría el pie marfil.
+  if (cabeza) {
+    cabeza.style.setProperty("--cielo-alto", rgb(col.alto));
+    cabeza.style.setProperty("--cielo-medio", rgb(col.medio));
+    cabeza.style.setProperty("--cielo-bajo", rgb(col.bajo));
+    cabeza.style.setProperty("--sol", Math.min(1, Math.max(0, (tono - 1.8) / 0.9)).toFixed(2));
+  }
   // Alba (cielo claro, tierra oscura): el título va en tinta sobre el cielo. Día: la tierra es el mapa del informe y
   // todo el texto de la cabecera va en tinta.
   const claro = tono > 2.12, dia = tono >= 3.9;
   if (cabeza) { cabeza.classList.toggle("pagina--alba", claro && !dia); cabeza.classList.toggle("pagina--dia", dia); }
   const cabecera = document.querySelector(".cabecera");
+  // El menú va en tinta solo mientras está sobre una cabecera clara; sin cabecera de página, siempre de noche.
+  // «Clara» se mide en lo alto del cielo, que es lo que queda detrás del menú: al anochecer (malva) va en marfil.
+  const lineal = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  const cieloArribaClaro = 0.2126 * lineal(col.alto[0]) + 0.7152 * lineal(col.alto[1]) + 0.0722 * lineal(col.alto[2]) > 0.3;
   function luzCabecera() {
-    const arriba = !cabeza || cabeza.getBoundingClientRect().bottom > 90;
-    const dia = claro && arriba;
-    if ((html.dataset.luz === "dia") !== dia) html.dataset.luz = dia ? "dia" : "noche";
+    const arriba = !!cabeza && cabeza.getBoundingClientRect().bottom > 90;
+    const dia = cieloArribaClaro && arriba;
+    if ((html.dataset.luz === "dia") !== dia) {
+      html.dataset.luz = dia ? "dia" : "noche";
+      // el velo del menú toma el color del cielo de la hora mientras está encima de ella
+      if (cabecera) cabecera.style.setProperty("--cielo-alto", dia ? rgb(col.alto) : "");
+    }
   }
   luzCabecera();
   window.addEventListener("scroll", luzCabecera, { passive: true });
+
+  /* ---------- 1b. La ronda: cada sección de noche es un rato más de guardia ---------- */
+  // Arriba de cada sección, un punto de luz en el horizonte se abre en una línea de oro y, debajo, la hora de la
+  // guardia avanza unos minutos desde la de la página. Es solo decoración (aria-hidden): dibujada es el estado normal;
+  // la espera solo existe si hay JavaScript, IntersectionObserver y movimiento. Nunca esconde texto.
+  (function ronda() {
+    const secciones = [...document.querySelectorAll("main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo)")];
+    const base = (html.dataset.hora === "ahora" ? horaReal().texto : html.dataset.hora || "").match(/^(\d{1,2}):(\d{2})$/);
+    if (!secciones.length || !base) return;
+    const MINUTOS = 9;
+    const inicio = +base[1] * 60 + +base[2];
+    const reloj = (m) => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
+    const sinMovimiento = html.classList.contains("menos-movimiento") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    html.classList.add("con-ronda");
+    const marcas = secciones.map((seccion, i) => {
+      const marca = document.createElement("span");
+      marca.className = "ronda";
+      marca.setAttribute("aria-hidden", "true");
+      const linea = document.createElement("i");
+      linea.className = "ronda__linea";
+      const hora = document.createElement("span");
+      hora.className = "ronda__hora";
+      const minuto = inicio + (i + 1) * MINUTOS;
+      hora.textContent = reloj(minuto);
+      marca.append(linea, hora);
+      seccion.prepend(marca);
+      return { marca, hora, minuto };
+    });
+    if (sinMovimiento || !("IntersectionObserver" in window)) return;
+    marcas.forEach((x) => x.marca.classList.add("ronda--espera"));
+    const vigia = new IntersectionObserver((entradas) => entradas.forEach((en) => {
+      const x = marcas.find((k) => k.marca === en.target);
+      if (!x) return;
+      // las que ya quedaron arriba (al entrar por un ancla) se dibujan sin más
+      if (!en.isIntersecting && en.boundingClientRect.top > 0) return;
+      vigia.unobserve(en.target);
+      x.marca.classList.remove("ronda--espera");
+      if (!en.isIntersecting) return;
+      // el reloj corre los minutos que han pasado desde la sección anterior
+      const desde = x.minuto - MINUTOS, t0 = performance.now(), dura = 1100;
+      const avanzar = (t) => {
+        const k = Math.min(1, (t - t0) / dura);
+        x.hora.textContent = reloj(Math.round(desde + MINUTOS * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(avanzar);
+      };
+      requestAnimationFrame(avanzar);
+    }), { rootMargin: "0px 0px -15% 0px" });
+    marcas.forEach((x) => vigia.observe(x.marca));
+    // Un salto largo (tecla Fin, un ancla) puede dejar atrás una sección sin que llegue a verse: esas se dibujan ya
+    window.addEventListener("scroll", () => marcas.forEach((x) => {
+      if (x.marca.classList.contains("ronda--espera") && x.marca.getBoundingClientRect().top < 0) {
+        vigia.unobserve(x.marca);
+        x.marca.classList.remove("ronda--espera");
+      }
+    }), { passive: true });
+  })();
 
   if (!cabeza) return;
 
@@ -137,7 +204,7 @@
     // las luces de los equipos se apagan con el día; la baliza de KAIRON siempre
     e.luces = dia ? 0.75 : Math.max(0.15, 1 - Math.max(0, tono - 2.2) / 0.8); e.baliza = dia ? 0 : 1; e.alfa = dia ? 0.9 : 1; e.brilloLineas = 1;
     // Penumbra bajo el texto de la cabecera (abajo a la izquierda en escritorio; todo el ancho en móvil)
-    e.velo = dia ? 0.85 : claro ? 0.55 : 0.9;
+    e.velo = dia ? 0.85 : claro ? 0.82 : 0.9;
     if (estrecha) { e.veloX = 0.5; e.veloY = 0.62; e.veloRX = 0.9; e.veloRY = 0.5; }
     else { e.veloX = 0.24; e.veloY = 0.66; e.veloRX = 0.5; e.veloRY = 0.42; }
   }

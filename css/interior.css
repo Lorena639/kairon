@@ -202,6 +202,104 @@ main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) {
     linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--oro) 50%, transparent) 28%, color-mix(in srgb, var(--oro) 50%, transparent) 72%, transparent 100%) top / 100% 1px no-repeat,
     radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--cielo-bajo, #111b2c) 55%, transparent) 0%, transparent 62%),
     var(--noche);
+  border-top: 0; /* el filete gris del diseño anterior: el horizonte ya hace de separación */
   padding-block: clamp(80px, 13vh, 150px);
 }
 
+/* ---------- 9. Menos cajas, más aire ---------- */
+/* Las tarjetas del diseño anterior (relleno, borde y sombra) pasan a ser filas de un libro de guardia: sin relleno,
+   un filete de oro encima y espacio para respirar. Las tablas de datos, la consola del SOC y la ficha en papel se quedan. */
+.cifra, .persona, .valor, .paso, .ruta__hito, .viaje li,
+html:not(.portada-v6) .detalle__rec, .informe__sello, html:not(.portada-v6) .fichas__limite {
+  background: none;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--oro) 42%, transparent);
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline: 0;
+}
+html:not(.portada-v6) .fichas__limite { border-top-color: color-mix(in srgb, var(--rojo, #ff4d4d) 60%, transparent); padding-top: 26px; }
+.cifra:hover, .persona:hover, .valor:hover, .paso:hover, .ruta__hito:hover { transform: none; box-shadow: none; border-color: var(--oro); }
+.cifras__lista, .valores__lista, .ruta__lista, .viaje { column-gap: clamp(28px, 4vw, 64px); row-gap: clamp(20px, 4vh, 40px); }
+.pasos { gap: 0; }
+
+/* Las cifras: el número manda, el anillo acompaña */
+.cifra { padding-block: clamp(26px, 4vh, 40px); }
+.cifra__anillo { overflow: visible; }
+
+/* Las personas y los valores: el nombre y la idea en grande, sin marco */
+.persona { padding-block: clamp(30px, 5vh, 48px) 0; }
+.persona h3 { font-size: clamp(1.7rem, 2.6vw, 2.4rem); }
+.valor { padding-block: clamp(26px, 4vh, 40px) 0; }
+.valor h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); }
+.valor p, .ruta__hito p, .viaje li { font-size: var(--t-cuerpo); }
+
+/* La cronología del SOC: una línea de tiempo con su hilo, no una pila de tarjetas */
+.paso { position: relative; top: auto; padding: clamp(24px, 4vh, 36px) 0 clamp(24px, 4vh, 36px) 52px; }
+.paso > * { opacity: 1; }
+.paso::before { left: 3px; top: calc(clamp(24px, 4vh, 36px) + 6px); }
+.pasos::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--oro) 40%, transparent) 8%, color-mix(in srgb, var(--oro) 40%, transparent) 92%, transparent); }
+.pasos::after { left: 10px; }
+.paso h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+
+/* Los hitos: el número en oro encima del filete */
+.ruta__hito { padding-block: 34px 0; }
+.ruta__hito::before { left: 0; }
+
+/* Los pasos de «después de escribirnos» y los del SOC: número, filete y texto */
+.viaje li { padding-block: 22px 0; color: color-mix(in srgb, var(--marfil) 84%, transparent); }
+.viaje li::before { color: var(--oro); font-family: var(--f-titulo); font-size: 1rem; letter-spacing: 0.12em; }
+
+/* «Qué recibes»: una nota al margen, con el filete a la izquierda */
+html:not(.portada-v6) .detalle__rec { border-top: 0; border-left: 2px solid var(--oro); padding: 4px 0 4px 22px; }
+.informe__sello { padding-block: 24px; }
+
+/* ---------- 10. La ronda (js/pagina.js) ---------- */
+/* Con JavaScript, el horizonte de cada sección deja de ser un fondo y pasa a ser una pieza que se puede animar:
+   un punto de luz que se abre en una línea, y la hora de la guardia debajo, a la derecha */
+main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) { position: relative; }
+.con-ronda main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) {
+  background:
+    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--cielo-bajo, #111b2c) 55%, transparent) 0%, transparent 62%),
+    var(--noche);
+}
+.ronda { position: absolute; inset: 0 0 auto; height: 0; pointer-events: none; z-index: 1; }
+.ronda__linea {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--oro) 55%, transparent) 28%, color-mix(in srgb, var(--oro) 55%, transparent) 72%, transparent 100%);
+  transition: transform 1.6s var(--salida);
+}
+/* el instante: un punto de luz en el centro del horizonte, que se apaga cuando la línea ya está abierta */
+.ronda::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: var(--oro-vivo);
+  box-shadow: 0 0 16px 5px color-mix(in srgb, var(--oro) 55%, transparent);
+  opacity: 0;
+  transition: opacity 1.8s var(--salida) 0.5s;
+}
+.ronda__hora {
+  position: absolute;
+  top: 14px;
+  right: max(16px, var(--margen, 20px));
+  font-family: var(--f-dato);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--oro) 85%, transparent);
+  transition: opacity 0.8s var(--salida) 0.35s;
+}
+.ronda--espera .ronda__linea { transform: scaleX(0); transition: none; }
+.ronda--espera::before { opacity: 1; transition: none; }
+.ronda--espera .ronda__hora { opacity: 0; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ronda__linea, .ronda::before, .ronda__hora { transition: none; }
+}

@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-VERSION = "20261126c"
+VERSION = "20261126d"
 PAGINAS = ["servicios", "soc", "productos", "proyectos", "futuro", "sobre-mi", "contacto", "informe", "incidente",
            "metodo", "preguntas", "laboratorio", "kairos", "legal", "plan", "data-chip"]
 MENU = ["servicios.html", "soc.html", "productos.html", "proyectos.html", "futuro.html", "sobre-mi.html"]
