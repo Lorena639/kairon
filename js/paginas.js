@@ -156,12 +156,21 @@
       });
     });
 
-    // Secciones claras: se abren como una hoja que sube y pierde las esquinas redondeadas
+    // Secciones claras: entran como una hoja que sube con las esquinas de arriba redondeadas y, al irse,
+    // redondean las de abajo. Antes la hoja se recortaba también un 6 % por cada lado (cortaba los
+    // titulares pegados al margen: «EDIDAS DE SEGURIDAD») y al salir acababa en una línea recta.
     $$("main > section.claro, main > .pin-spacer > section.claro").forEach((s) => {
-      gsap.fromTo(s, { clipPath: "inset(8% 6% 0% 6% round 56px)" }, {
-        clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none",
-        scrollTrigger: { trigger: s, start: "top bottom", end: "top 40%", scrub: true },
-      });
+      const limite = (v) => Math.min(1, Math.max(0, v));
+      const hoja = () => {
+        const r = s.getBoundingClientRect(), alto = window.innerHeight, tramo = alto * 0.6;
+        const entra = limite((alto - r.top) / tramo);       // 0 → 1 mientras el borde de arriba sube
+        const sale = limite((alto * 0.6 - r.bottom) / tramo); // 0 → 1 cuando el de abajo se va
+        const arriba = (1 - entra) * 72, abajo = sale * 72;
+        s.style.clipPath = arriba < 0.5 && abajo < 0.5 ? "" :
+          "inset(" + arriba.toFixed(1) + "px 0px " + abajo.toFixed(1) + "px 0px round " +
+          (arriba * 0.8).toFixed(1) + "px " + (arriba * 0.8).toFixed(1) + "px " + (abajo * 0.8).toFixed(1) + "px " + (abajo * 0.8).toFixed(1) + "px)";
+      };
+      ScrollTrigger.create({ trigger: s, start: "top bottom", end: "bottom top", onUpdate: hoja, onRefresh: hoja });
     });
 
     // Líneas de bloque: se trazan cuando el bloque entra (la línea la dibuja el CSS con .pi-vista)
