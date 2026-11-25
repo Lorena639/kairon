@@ -338,10 +338,16 @@
         float ang = atan(vPos.y, vPos.x);
         float cola = smoothstep(0.0, 1.1, ang);
         float radio = length(vPos) / ${(RADIO * 1.02).toFixed(3)};
-        float alfa = cola * cola * 0.85 * smoothstep(hueco, hueco + 0.3, radio) * fuerza;
+        // Estela que se apaga deprisa detrás del frente, frente sin filo y borde exterior difuminado.
+        // Antes el alfa era casi plano (hasta ~1) y acababa en seco en el borde: se veía una cuña opaca y,
+        // con la cámara baja, una astilla recortada junto a la esfera.
+        float estela = cola * cola * cola;
+        float frente = 1.0 - smoothstep(1.07, 1.1, ang);
+        float borde = 1.0 - smoothstep(0.86, 1.0, radio);
+        float alfa = min(0.55, estela * 0.7 * fuerza) * frente * borde * smoothstep(hueco, hueco + 0.3, radio);
         vec3 info = nucleoInfo(vW);
         alfa *= (1.0 - info.x * uNucleo) * (1.0 - 0.9 * info.y * (1.0 - smoothstep(uRc * 0.6, uRc * 1.08, info.z)) * uNucleo * uEmblema);
-        gl_FragColor = luz(mix(color, vec3(1.0), cola * 0.45) * alfa * uCrece);
+        gl_FragColor = luz(mix(color, vec3(1.0), estela * 0.3) * alfa * uCrece);
         #include <colorspace_fragment>
       }`,
   });
@@ -715,7 +721,10 @@
 
   /* ---------- Estado ---------- */
   let claves = [{ y: 0, pose: "hero" }];
-  let scrollY = 0, velocidad = 0;
+  // velObjetivo llega en bruto desde el scroll (a saltos, un impulso por golpe de rueda); velocidad lo sigue
+  // suavizado. Antes se usaba el valor en bruto y el FOV, el brillo y la aberración saltaban de 0 al máximo
+  // y vuelta en cada golpe: el globo "vibraba" y parecía abrirse y cerrarse.
+  let scrollY = 0, velocidad = 0, velObjetivo = 0;
   const destino = pose("hero");
   const actual = pose("hero");
   const raton = { x: 0, y: 0, sx: 0, sy: 0 };
@@ -785,9 +794,14 @@
   }
 
   // Calidad adaptativa: si los primeros segundos van a menos de ~30 fps, se quita carga
-  let fotogramas = 0, tMedida = performance.now(), nivel = 0;
+  let fotogramas = 0, tMedida = performance.now(), nivel = 0, ultimaMedida = 0;
   const medir = !consulta.has("calidad");
   function medirRendimiento(ahora) {
+    // Si la escena no se ha dibujado durante un rato (intro 2D, pestaña oculta, lienzo apagado en las
+    // secciones claras), la medición vuelve a empezar. Antes ese tiempo contaba como fotogramas lentos:
+    // al acabar la intro salían ~3 fps falsos, se quitaba el bloom de golpe y el globo cambiaba de brillo.
+    if (ahora - ultimaMedida > 250) { fotogramas = 0; tMedida = ahora; }
+    ultimaMedida = ahora;
     fotogramas++;
     if (ahora - tMedida < 2500) return;
     const fps = (fotogramas * 1000) / (ahora - tMedida);
@@ -830,7 +844,9 @@
     CAMPOS.forEach((c) => { const d = destino[c] - actual[c]; actual[c] += d * k; cambio += Math.abs(d); });
     raton.sx += (raton.x - raton.sx) * (parado ? 0 : 0.05);
     raton.sy += (raton.y - raton.sy) * (parado ? 0 : 0.05);
-    velocidad *= 0.9;
+    velObjetivo *= Math.exp(-dtReal * 4); // si deja de llegar scroll, el objetivo también se apaga
+    velocidad += (velObjetivo - velocidad) * (parado ? 1 : 1 - Math.exp(-dtReal * 2.6));
+    if (Math.abs(velocidad) > 0.002) sucio = true;
     sacudida = Math.max(0, sacudida - dtReal * 1.6);
 
     // Con la escena quieta solo se repinta si algo ha cambiado
@@ -865,7 +881,7 @@
     camara.position.set(Math.sin(az) * Math.cos(el) * dist, Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
     camara.lookAt(0, 0, 0);
     const vel = Math.min(Math.abs(velocidad), 1);
-    camara.fov = FOV + vel * 7;
+    camara.fov = FOV + vel * 3; // un respiro al hacer scroll rápido, no un zoom
     tAnim += dt;
     // Latido: el destello del emblema respira despacio y da un golpe de luz cuando el barrido pasa por él
     const tBarrido = (tAnim % 6.5) / 1.3; // un barrido cada 6,5 s, de 1,3 s
@@ -1011,7 +1027,14 @@
     cont.style.opacity = String(r);
   }
 
-  window.addEventListener("resize", ajustar);
+  // En móvil la barra del navegador cambia el alto al hacer scroll: si se redimensiona el lienzo cada vez,
+  // se borra un fotograma y el globo salta unos píxeles. Solo se ajusta si cambia el ancho o el alto
+  // cambia de verdad (más de un 25 %, por ejemplo al girar la pantalla).
+  window.addEventListener("resize", () => {
+    const cambiaAncho = Math.abs(window.innerWidth - ancho) > 1;
+    const cambiaAlto = Math.abs(window.innerHeight - alto) / Math.max(1, alto) > 0.25;
+    if (cambiaAncho || cambiaAlto || !window.matchMedia("(pointer: coarse)").matches) ajustar();
+  });
   document.addEventListener("pointerleave", () => { cursor.activo = false; });
   window.addEventListener("pointermove", (e) => {
     if (e.pointerType === "touch") return;
@@ -1068,7 +1091,8 @@
     scroll(y, v) {
       if (y !== scrollY) sucio = true; // solo se repinta si el scroll se ha movido (importa en el modo sin movimiento)
       scrollY = y;
-      if (typeof v === "number") velocidad = Math.max(-1.5, Math.min(1.5, v * 0.02));
+      // Lenis da px por fotograma (de 0 a ~80): hacen falta ~70 px/fotograma para llegar al máximo
+      if (typeof v === "number") velObjetivo = Math.max(-1, Math.min(1, v * 0.014));
     },
     // Entrada tras la intro. rect: caja en pantalla del emblema del logo de la intro (para empalmar con ella)
     entrada(rect) {
@@ -1086,11 +1110,11 @@
         ent.espera = 0;
       }
       ent.desde = desde; ent.inicio = performance.now(); ent.activa = true;
-      aparecido = 0; extras = 0; tPulso = 0; tAnim = 0; sacudida = 0; velocidad = 0;
+      aparecido = 0; extras = 0; tPulso = 0; tAnim = 0; sacudida = 0; velocidad = 0; velObjetivo = 0;
       raton.sx = raton.sy = 0;
     },
     // Coloca todo en su destino sin transición (para capturas y para el modo sin movimiento)
-    asentar() { poseEn(scrollY, destino); CAMPOS.forEach((c) => { actual[c] = destino[c]; }); ent.activa = false; aparecido = 1; extras = 1; velocidad = 0; sucio = true; },
+    asentar() { poseEn(scrollY, destino); CAMPOS.forEach((c) => { actual[c] = destino[c]; }); ent.activa = false; aparecido = 1; extras = 1; velocidad = 0; velObjetivo = 0; sucio = true; },
     alerta: lanzarAviso,
     quieto() { sucio = true; },
     estado() { return { actual: Object.assign({}, actual), aparecido, nivel, compositor: !!compositor }; },

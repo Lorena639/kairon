@@ -1125,7 +1125,12 @@ body.cursor--enlace .cursor__anillo {
 .etiqueta--alerta { background: rgba(255, 77, 77, 0.18); color: var(--rojo); }
 
 .panel__grande {
-  font-size: clamp(2.4rem, 5vw, 4rem);
+  /* La cifra crece cada segundo: si no cabe con la unidad, "eventos" baja de línea en vez de cortarse */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 6px;
+  font-size: clamp(2.2rem, 3.4vw, 4rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -1135,7 +1140,6 @@ body.cursor--enlace .cursor__anillo {
 .panel__grande small {
   font-size: 0.35em;
   color: var(--oro);
-  margin-left: 6px;
 }
 
 .panel__nota {
@@ -6423,6 +6427,9 @@ html.portada-v6.intro-fin .cabecera .logo {
   pointer-events: none;
   opacity: 0;
   transition: opacity 1.2s ease;
+  /* El humo se funde antes del final del hero: si no, se cortaba en línea recta al hacer scroll */
+  -webkit-mask-image: linear-gradient(180deg, #000 65%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 65%, transparent 100%);
 }
 
 .con-fluido .v6-fluido {
@@ -6463,6 +6470,9 @@ html.portada-v6.intro-fin .cabecera .logo {
   inset: 0;
   z-index: -1;
   background: linear-gradient(90deg, rgba(11, 15, 20, 0.82) 0%, rgba(11, 15, 20, 0.5) 48%, rgba(11, 15, 20, 0) 78%);
+  /* También se funde arriba y abajo: si no, al acabar la sección quedaba un corte recto sobre el globo */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
   pointer-events: none;
 }
 
@@ -7027,6 +7037,13 @@ html.presentacion .v6-manifiesto__nota {
     color: var(--oro-claro);
   }
 
+  /* El título y el índice pisan el borde del globo: una sombra oscura y difusa los separa de los nodos
+     brillantes (sin ella el contraste bajaba a ~2:1 sobre los puntos más claros) */
+  .v6-servicios--fijo .v6-titulo,
+  .v6-servicios--fijo .v6-servicios__indice {
+    text-shadow: 0 0 2px rgba(8, 11, 16, 0.9), 0 2px 18px rgba(8, 11, 16, 0.95), 0 0 42px rgba(8, 11, 16, 0.8);
+  }
+
   /* Incidente: la cronología ocupa la columna izquierda y el globo se ve a la derecha */
   .v6-incidente .incidente__cabecera {
     display: grid;
@@ -7138,8 +7155,11 @@ body.menu-abierto .cabecera {
   animation: v6-deriva 140s ease-in-out infinite alternate;
 }
 
+/* Un poco más anchas que la pantalla: el paralaje del cursor las mueve hasta ±11 px y dejaba franjas
+   verticales sin estrellas en los lados */
 .v6-cielo__estrellas {
-  width: 100%;
+  left: -2%;
+  width: 104%;
   will-change: transform;
 }
 

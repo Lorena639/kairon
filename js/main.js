@@ -138,7 +138,10 @@ function revelarHero() {
     tl.to(letras, { yPercent: 0, rotateX: 0, duration: 1.1, ease: "power4.out", stagger: 0.035,
       onComplete: () => letras.forEach((l) => { gsap.set(l, { clearProps: "transform" }); l.style.animation = ""; }) });
   }
-  if (resto.length) tl.to(resto, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08 }, letras.length ? "-=0.7" : 0);
+  // Al acabar se borra el transform en línea que deja GSAP: en la cabecera tapaba la clase .cabecera--oculta
+  // (translateY(-110%)) y nunca se escondía al bajar, así que los títulos pasaban por debajo del logo
+  if (resto.length) tl.to(resto, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08,
+    onComplete: () => gsap.set(resto, { clearProps: "transform,translate,rotate,scale" }) }, letras.length ? "-=0.7" : 0);
 }
 
 function terminarCarga() {
@@ -878,13 +881,21 @@ function comprobarCabeceraClara() {
 }
 window.addEventListener("scroll", comprobarCabeceraClara, { passive: true });
 comprobarCabeceraClara();
-let ultimoScroll = 0;
+// Cabecera inteligente: se esconde al bajar y vuelve al subir, pero solo tras recorrer UMBRAL px en el mismo
+// sentido. Antes cambiaba con cualquier evento: los de la misma posición (Lenis y ScrollTrigger los emiten al
+// fijar secciones) y los retrocesos de 1 px de un touchpad la hacían abrirse y cerrarse muy rápido.
+let ultimoScroll = window.scrollY, recorrido = 0;
+const UMBRAL = 48;
 window.addEventListener("scroll", () => {
   const y = window.scrollY;
-  if (cabeceraEl && !document.body.classList.contains("menu-abierto")) {
-    cabeceraEl.classList.toggle("cabecera--oculta", y > ultimoScroll && y > 240);
-  }
+  const dy = y - ultimoScroll;
   ultimoScroll = y;
+  if (!cabeceraEl || document.body.classList.contains("menu-abierto")) return;
+  if (y <= 240) { cabeceraEl.classList.remove("cabecera--oculta"); recorrido = 0; return; }
+  if (dy === 0) return;
+  recorrido = Math.sign(dy) === Math.sign(recorrido) ? recorrido + dy : dy;
+  if (recorrido > UMBRAL) cabeceraEl.classList.add("cabecera--oculta");
+  else if (recorrido < -UMBRAL) cabeceraEl.classList.remove("cabecera--oculta");
 }, { passive: true });
 
 const arriba = document.querySelector(".arriba");

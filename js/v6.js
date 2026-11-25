@@ -360,7 +360,9 @@
     // Nebulosa: ruido de valor en 4 octavas, en baja resolución (el navegador la suaviza al ampliarla)
     if (nebulosa) {
       const vertical = window.innerHeight > window.innerWidth;
-      const w = vertical ? 180 : 288, h = vertical ? 288 : 180, r = azar(7), T = 64;
+      // El doble que antes (288×180 se ampliaba ~8 veces y el contorno de las nubes salía a facetas rectas)
+      const w = vertical ? 360 : 576, h = vertical ? 576 : 360, r = azar(7), T = 64;
+      const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
       const red = new Float32Array(T * T);
       for (let i = 0; i < red.length; i++) red[i] = r();
       const ruido = (x, y) => {
@@ -377,14 +379,17 @@
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
           const u = x / w * (vertical ? 1.3 : 3.2), v = y / h * (vertical ? 2.8 : 2); // nubes sin estirar en pantallas verticales
-          const oro = Math.max(0, fbm(u, v) - 0.44) * 2.6;                 // nubes de oro
+          // Nubes de oro. Con max(0, fbm - umbral) el borde era un pliegue que, ampliado, dibujaba aristas;
+          // smoothstep lo deja entrar sin pliegue (mismo umbral y misma densidad máxima aproximada)
+          const oro = sstep(0.44, 0.78, fbm(u, v)) * 0.9;
           // El cian solo donde no hay oro: mezclados daban un verde que no es de la marca
-          const cian = Math.max(0, fbm(u * 0.8 + 31, v * 0.8 + 12) - 0.5) * 2.4 * Math.max(0, 1 - oro * 3);
+          const cian = sstep(0.5, 0.8, fbm(u * 0.8 + 31, v * 0.8 + 12)) * 0.72 * Math.max(0, 1 - oro * 3);
           const po = oro * 0.11, pc = cian * 0.085, k = (y * w + x) * 4, suma = po + pc || 1; // 3–6 % en las zonas densas
           img.data[k] = (212 * po + 53 * pc) / suma;
           img.data[k + 1] = (175 * po + 198 * pc) / suma;
           img.data[k + 2] = (122 * po + 214 * pc) / suma;
-          img.data[k + 3] = Math.min(1, po + pc) * 255;
+          // Tramado de ±0,5: con alfas de 3 a 15 sobre 255, sin él se veían escalones (bandas) al ampliar
+          img.data[k + 3] = Math.min(1, po + pc) * 255 + (r() - 0.5);
         }
       }
       ctx.putImageData(img, 0, 0);
