@@ -130,7 +130,7 @@
     [".formulario", "iris"],
     [".principios > li, .ficha__datos > li", "ficha"],
     [".detalle__lista > li, .detalle__pasos > li, .persona .servicio__datos > li", "fila"],
-    [".vision__texto, .vision__nota, .informe__texto, .informe__nota, .contacto__sub, .vision, .pi-entradilla, .det-prosa, .det-entrada, .metodo__paso p, .enlace-detalle, .pi-pila__leyenda", "enfoque"],
+    // El texto corrido ya no entra desenfocado: se lee siempre, aunque el scroll vaya rápido o el cálculo se desfase
   ];
 
   function entradas() {
@@ -167,8 +167,8 @@
         const sale = limite((alto * 0.6 - r.bottom) / tramo); // 0 → 1 cuando el de abajo se va
         const arriba = (1 - entra) * 72, abajo = sale * 72;
         s.style.clipPath = arriba < 0.5 && abajo < 0.5 ? "" :
-          "inset(" + arriba.toFixed(1) + "px 0px " + abajo.toFixed(1) + "px 0px round " +
-          (arriba * 0.8).toFixed(1) + "px " + (arriba * 0.8).toFixed(1) + "px " + (abajo * 0.8).toFixed(1) + "px " + (abajo * 0.8).toFixed(1) + "px)";
+          // borde recto, como una hoja de papel (el sistema nuevo no usa esquinas redondeadas)
+          "inset(" + arriba.toFixed(1) + "px 0px " + abajo.toFixed(1) + "px 0px)";
       };
       ScrollTrigger.create({ trigger: s, start: "top bottom", end: "bottom top", onUpdate: hoja, onRefresh: hoja });
     });

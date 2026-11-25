@@ -72,7 +72,10 @@
   if (pieza && partes.length && "IntersectionObserver" in window) {
     var foco = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (e) {
-        if (e.isIntersecting) pieza.dataset.parte = e.target.dataset.parte;
+        if (!e.isIntersecting) return;
+        pieza.dataset.parte = e.target.dataset.parte;
+        // la parte que se lee se enciende; las demás quedan en segundo plano (siempre legibles)
+        partes.forEach(function (p) { p.classList.toggle("det-emblema__parte--activa", p === e.target); });
       });
     }, { rootMargin: "-48% 0px -48% 0px" }); // una franja en el centro de la pantalla
     partes.forEach(function (p) { foco.observe(p); });

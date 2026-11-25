@@ -20,7 +20,9 @@
   --grafito: var(--noche-2);
 }
 
-body { font-size: var(--t-cuerpo); line-height: 1.5; }
+/* overflow-x: clip y no hidden: «hidden» en <body> lo convierte en contenedor de scroll y deja sin efecto
+   todo lo que va fijado con position: sticky (el emblema de «La idea», el índice de servicios…) */
+body { font-size: var(--t-cuerpo); line-height: 1.5; overflow-x: clip; }
 
 /* Títulos: la inscripción de Cinzel, sin el peso extra ni las mayúsculas forzadas del diseño anterior */
 h1, h2, h3 { font-weight: 500; letter-spacing: -0.005em; }
@@ -164,3 +166,42 @@ html { scroll-padding-top: 100px; }
   /* En el móvil la hora va arriba a la derecha, por encima del título */
   .cielo-hora { top: 86px; right: max(16px, var(--margen)); font-size: clamp(3.6rem, 21vw, 7rem); }
 }
+
+/* ---------- 7. Piezas que cuentan algo paso a paso (el emblema de «La idea») ---------- */
+.det-emblema__partes { counter-reset: pieza; }
+.det-emblema__parte {
+  counter-increment: pieza;
+  min-height: 46svh;
+  padding: clamp(28px, 5vh, 48px) 0;
+  border-top: 1px solid color-mix(in srgb, var(--oro) 40%, transparent);
+  transition: opacity 0.6s var(--salida);
+}
+.det-emblema__parte::before {
+  content: counter(pieza, upper-roman);
+  font-family: var(--f-titulo);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--oro);
+  margin-bottom: 10px;
+}
+.det-emblema__parte h3 { font-size: var(--t-capitular); line-height: 1; margin-bottom: 16px; }
+.det-emblema__parte .det-prosa { font-size: var(--t-voz); line-height: 1.38; max-width: 30ch; color: var(--marfil); }
+/* con JavaScript, la parte que se lee manda y las otras se quedan atrás (nunca por debajo de lo legible) */
+.det-emblema__partes:has(.det-emblema__parte--activa) .det-emblema__parte:not(.det-emblema__parte--activa) { opacity: 0.42; }
+.det-emblema__parte:last-child { min-height: 40svh; }
+@media (max-width: 860px) {
+  .det-emblema__parte { min-height: 0; }
+  .det-emblema__partes:has(.det-emblema__parte--activa) .det-emblema__parte:not(.det-emblema__parte--activa) { opacity: 0.6; }
+}
+@media (prefers-reduced-motion: reduce) { .det-emblema__parte { transition: none; } }
+
+/* ---------- 8. Las secciones de noche no son un único bloque negro ---------- */
+/* Cada una empieza en un horizonte de oro, con el cielo un punto más claro arriba, como una nueva hora */
+main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) {
+  background:
+    linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--oro) 50%, transparent) 28%, color-mix(in srgb, var(--oro) 50%, transparent) 72%, transparent 100%) top / 100% 1px no-repeat,
+    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--cielo-bajo, #111b2c) 55%, transparent) 0%, transparent 62%),
+    var(--noche);
+  padding-block: clamp(80px, 13vh, 150px);
+}
+
