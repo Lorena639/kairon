@@ -317,6 +317,7 @@ main { position: relative; }
   position: relative;
   padding-block: var(--aire);
   background: var(--noche);
+  color: var(--marfil); /* explícito: no depende del color heredado de <body> */
 }
 
 /* --- 23:00 Anochece (portada) --- */

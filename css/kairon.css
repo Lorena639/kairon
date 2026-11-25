@@ -181,6 +181,11 @@
 
 .salto:focus { top: 16px; }
 
+/* El color y la letra del documento van sin capa: si otra hoja (la del visor de la vista previa, por ejemplo)
+   pinta <body>, el texto no puede quedarse en negro sobre la noche */
+body { background: var(--noche); color: var(--marfil); font-family: var(--f-texto); }
+.pie { color: var(--marfil); }
+
 /* ---------- 4. Piezas ---------- */
 .marco {
   position: relative;
