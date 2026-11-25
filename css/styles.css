@@ -6769,7 +6769,7 @@ html.portada-v6.intro-fin .cabecera .logo {
 }
 
 .v6-soc__visor {
-  min-height: 96svh;
+  min-height: 72svh; /* era 96svh: un hueco de casi una pantalla solo para el globo */
   display: grid;
   align-content: center;
   justify-items: start;
