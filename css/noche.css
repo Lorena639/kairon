@@ -1,0 +1,1654 @@
+/* KAIRON · «Una noche de guardia» · hoja de estilos de la portada
+   La portada es una noche entera, del anochecer al amanecer, y el scroll es el reloj.
+
+   Capas, de atrás hacia delante (todas en el mismo contexto de apilamiento, por eso <main> y .acto no
+   llevan z-index):
+     0  .cielo            fijo: color de la hora, estrellas, resplandor y la hora en grande
+     1  .titular__cielo   el titular: queda DETRÁS de la tierra y asoma tras las crestas
+     2  .tierra           fijo: el lienzo WebGL del territorio (transparente por arriba)
+     3  contenido         todo lo que se lee
+     30 .horas, .controles   ·   40 .cabecera   ·   60 .menu-movil
+
+   Sin JavaScript, sin WebGL o con «menos movimiento» la página se lee igual: cada acto pinta su propio
+   fondo. La clase .peli (la pone js/noche.js) activa la película: actos transparentes sobre el cielo fijo
+   y escenas que se quedan en pantalla mientras avanza la hora.
+
+   Índice: 1 fuentes · 2 tokens · 3 base · 4 capas · 5 piezas · 6 cabecera y regla de horas · 7 actos de noche
+           8 actos de día · 9 anochece y pie · 10 película · 11 movimiento reducido · 12 estrecho · 13 impresión */
+
+/* ---------- 1. Fuentes (alojadas aquí; licencia SIL OFL 1.1, ver fonts/OFL.txt) ---------- */
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url(../fonts/cinzel-latin-1.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(../fonts/eb-garamond-latin-wght-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(../fonts/eb-garamond-latin-wght-italic.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* El griego de EB Garamond, para escribir καιρός como se escribe */
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(../fonts/eb-garamond-greek-wght-normal.woff2) format("woff2");
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(../fonts/jetbrains-mono-latin-3.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- 2. Tokens ---------- */
+:root {
+  /* Marca */
+  --noche: #0b0f14;
+  --noche-2: #111823;
+  --marfil: #f8f5ee;
+  --marfil-2: #efe9dc;
+  --papel: #fffdf8;
+  --oro: #d4af7a;
+  --oro-vivo: #f1dcb0;
+  --oro-oscuro: #8c6b3f;
+  --oro-tinta: #6b4f28;   /* el dorado oscuro que sí llega a AA sobre marfil */
+  --cian: #35c6d6;
+  --rojo: #ff5a4d;
+  --tinta: #12161d;
+
+  /* El cielo de la hora: los cambia js/noche.js; estos valores son los del anochecer */
+  --cielo-alto: #06090f;
+  --cielo-medio: #0b1220;
+  --cielo-bajo: #1a2740;
+  --estrellas: 1;
+  --sol: 0;
+  --sol-color: 241, 207, 150;
+
+  /* Tipografía */
+  --f-titulo: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+  --f-texto: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --f-dato: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --t-titular: clamp(3.1rem, 9.7vw, 11rem);
+  --t-capitular: clamp(2.2rem, 5.2vw, 5.2rem);
+  --t-voz-grande: clamp(2rem, 4.5vw, 4.9rem);
+  --t-voz: clamp(1.3rem, 1.85vw, 1.95rem);
+  --t-cuerpo: clamp(1.18rem, 1.3vw, 1.42rem);
+  --t-nota: clamp(1rem, 1.05vw, 1.12rem);
+  --t-dato: 0.8em;
+
+  /* Espacio y movimiento */
+  --margen: clamp(20px, 4.6vw, 80px);
+  --aire: clamp(88px, 16vh, 200px);
+  --salida: cubic-bezier(0.16, 1, 0.3, 1);
+  --entrada: cubic-bezier(0.7, 0, 0.84, 0);
+  --regla: 44px; /* alto de la regla de horas */
+}
+
+/* ---------- 3. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  overflow-x: clip;
+  color-scheme: dark;
+  background: var(--noche);
+  scrollbar-color: var(--oro-oscuro) var(--noche);
+  scrollbar-width: thin;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 90px;
+}
+
+html:not(.lenis) { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--noche);
+  color: var(--marfil);
+  font-family: var(--f-texto);
+  font-size: var(--t-cuerpo);
+  line-height: 1.48;
+  font-kerning: normal;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection { background: var(--oro); color: var(--noche); }
+
+:focus-visible {
+  outline: 2px solid var(--oro-vivo);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.dia :focus-visible, [data-luz="dia"] .cabecera :focus-visible { outline-color: var(--tinta); }
+
+img, svg, canvas { display: block; max-width: 100%; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button, input, textarea { font: inherit; color: inherit; }
+b, strong { font-weight: 600; }
+code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-variant-numeric: tabular-nums lining-nums; letter-spacing: -0.01em; }
+[hidden] { display: none !important; }
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.salto {
+  position: fixed;
+  left: 16px;
+  top: -80px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--oro);
+  color: var(--noche);
+  font-family: var(--f-titulo);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: top 0.3s var(--salida);
+}
+
+.salto:focus { top: 16px; }
+
+/* ---------- 4. Capas fijas ---------- */
+.cielo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--cielo-alto) 0%, var(--cielo-medio) 34%, var(--cielo-bajo) 60%, var(--cielo-bajo) 100%);
+  display: none;
+}
+
+.cielo__estrellas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: var(--estrellas);
+}
+
+/* El resplandor del amanecer: sale por el horizonte y acaba llenando el cielo */
+.cielo__sol {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 190vmax;
+  height: 190vmax;
+  margin: -95vmax 0 0 -95vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--sol-color), 1) 0%, rgba(var(--sol-color), 0.72) 16%, rgba(var(--sol-color), 0.26) 38%, rgba(var(--sol-color), 0) 62%);
+  opacity: var(--sol);
+  transform: scale(var(--sol-escala, 0.3));
+}
+
+/* La hora en grande: un astro de letras que sale tras las crestas al empezar cada acto */
+.cielo__hora {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8vh;
+  text-align: center;
+  font-family: var(--f-titulo);
+  font-weight: 500;
+  font-size: clamp(7rem, 27vw, 31rem);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--marfil);
+  opacity: 0;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.tierra {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  display: none;
+}
+
+.tierra canvas { width: 100%; height: 100%; }
+
+.rotulos {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: none;
+}
+
+.rotulo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 22px;
+  font-family: var(--f-dato);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--marfil);
+  white-space: nowrap;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Una raya fina une la etiqueta con su luz */
+.rotulo::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.62em;
+  width: 13px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.rotulo i {
+  display: block;
+  font-family: var(--f-texto);
+  font-style: italic;
+  font-size: 1.24em;
+  letter-spacing: 0;
+  opacity: 0.78;
+}
+
+.rotulo--kairon { color: var(--oro-vivo); font-family: var(--f-titulo); font-size: 0.78rem; letter-spacing: 0.16em; }
+.rotulo--intruso { color: var(--rojo); }
+
+/* El farol: la luz que sigue al cursor (solo con ratón) */
+.farol {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: 46vmax;
+  height: 46vmax;
+  margin: -23vmax 0 0 -23vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(241, 220, 176, 0.13) 0%, rgba(241, 220, 176, 0.05) 32%, rgba(241, 220, 176, 0) 62%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+main { position: relative; }
+
+/* ---------- 5. Piezas ---------- */
+.marco {
+  position: relative;
+  z-index: 3;
+  width: min(100% - 2 * var(--margen), 1360px);
+  margin-inline: auto;
+}
+
+/* La voz que narra: Garamond grande, sin alardes */
+.voz {
+  font-weight: 400;
+  font-size: var(--t-voz);
+  line-height: 1.32;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.voz--grande {
+  font-size: var(--t-voz-grande);
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.voz em, .capitular em, .titular em { font-style: normal; color: var(--oro); }
+.dia .capitular em { color: var(--oro-oscuro); }
+
+/* Títulos de sección: Cinzel, capitales con versalitas, como una inscripción */
+.capitular {
+  font-family: var(--f-titulo);
+  font-weight: 500;
+  font-size: var(--t-capitular);
+  line-height: 1.02;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  max-width: 16ch;
+}
+
+.capitular--menor { font-size: clamp(1.7rem, 3vw, 2.9rem); }
+
+/* Líneas que SplitText envuelve para que salgan desde detrás de una línea de horizonte */
+.linea-mascara { overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+
+/* Etiqueta de honestidad: todo lo simulado o ficticio la lleva */
+.sello {
+  display: inline-block;
+  padding: 5px 12px 4px;
+  border: 1px solid currentColor;
+  font-family: var(--f-texto);
+  font-size: 0.98rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  color: var(--oro);
+}
+
+.sello--tinta { color: var(--oro-tinta); }
+
+/* Botones: placas rectas, no píldoras */
+.boton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  min-height: 52px;
+  padding: 14px 26px 13px;
+  border: 1px solid var(--oro);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--marfil);
+  font-family: var(--f-titulo);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s var(--salida), border-color 0.35s var(--salida), transform 0.2s var(--salida);
+}
+
+/* Al pasar por encima, el oro sube desde abajo como una luz que se enciende */
+.boton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--oro);
+  transform: translateY(101%);
+  transition: transform 0.45s var(--salida);
+}
+
+.boton:hover, .boton:focus-visible { color: var(--noche); }
+.boton:hover::before, .boton:focus-visible::before { transform: translateY(0); }
+.boton:active { transform: translateY(1px); }
+
+.boton--oro { background: var(--oro); color: var(--noche); }
+.boton--oro::before { background: var(--oro-vivo); }
+
+.boton--tinta { border-color: var(--tinta); background: var(--tinta); color: var(--marfil); }
+.boton--tinta::before { background: var(--oro-tinta); }
+.boton--tinta:hover, .boton--tinta:focus-visible { color: var(--marfil); border-color: var(--oro-tinta); }
+
+.boton[disabled] { opacity: 0.55; cursor: default; }
+
+/* Enlace de texto con flecha */
+.enlace {
+  display: inline-block;
+  font-style: italic;
+  font-size: 1.08em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: text-decoration-color 0.3s, color 0.3s;
+}
+
+.enlace::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 0.4em;
+  font-style: normal;
+  transition: transform 0.4s var(--salida);
+}
+
+.enlace:hover, .enlace:focus-visible { text-decoration-color: currentColor; color: var(--oro-vivo); }
+.dia .enlace:hover, .dia .enlace:focus-visible { color: var(--oro-tinta); }
+.enlace:hover::after, .enlace:focus-visible::after { transform: translateX(0.35em); }
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 30px;
+}
+
+/* ---------- 6. Cabecera, regla de horas y controles ---------- */
+.cabecera {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 40px);
+  padding: 20px var(--margen);
+  transition: transform 0.6s var(--salida), background-color 0.4s, color 0.4s;
+}
+
+/* Un velo del color de la hora, para que el menú se lea sobre lo que pase por debajo */
+.cabecera::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -28px;
+  z-index: -1;
+  background: linear-gradient(180deg, var(--cielo-alto) 20%, transparent);
+  opacity: 0.86;
+  pointer-events: none;
+}
+
+.cabecera--oculta { transform: translateY(calc(-100% - 44px)); }
+
+.cabecera__logo { position: relative; display: block; flex: none; }
+.logo { width: auto; height: clamp(38px, 3.6vw, 50px); transition: opacity 0.5s; }
+.logo--dia { position: absolute; left: 0; top: 50%; height: 108%; transform: translateY(-50%); opacity: 0; }
+[data-luz="dia"] .logo--noche { opacity: 0; }
+[data-luz="dia"] .logo--dia { opacity: 1; }
+
+.cabecera__nav { margin-left: auto; }
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.7vw, 30px);
+  font-size: 1.08rem;
+  white-space: nowrap;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+}
+
+.menu a {
+  position: relative;
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  opacity: 0.84;
+  transition: opacity 0.3s;
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 1px;
+  background: var(--oro);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--salida);
+}
+
+.menu a:hover, .menu a:focus-visible { opacity: 1; }
+.menu a:hover::after, .menu a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+
+.menu__idioma a { padding: 4px 10px 3px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); }
+.menu__idioma a::after { display: none; }
+
+.cabecera__cta { min-height: 44px; padding: 11px 20px 10px; font-size: 0.74rem; }
+
+[data-luz="dia"] .cabecera { color: var(--tinta); }
+[data-luz="dia"] .cabecera .boton { color: var(--tinta); border-color: var(--oro-oscuro); }
+[data-luz="dia"] .cabecera .boton:hover { color: var(--marfil); }
+[data-luz="dia"] .cabecera .boton::before { background: var(--tinta); }
+
+.menu-boton {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  margin-left: auto;
+  border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-boton span {
+  position: absolute;
+  left: 13px;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.4s var(--salida), top 0.4s var(--salida);
+}
+
+.menu-boton span:nth-child(1) { top: 18px; }
+.menu-boton span:nth-child(2) { top: 26px; }
+.menu-abierto .menu-boton span:nth-child(1) { top: 22px; transform: rotate(45deg); }
+.menu-abierto .menu-boton span:nth-child(2) { top: 22px; transform: rotate(-45deg); }
+
+.menu-movil {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  align-content: center;
+  gap: 36px;
+  padding: 96px var(--margen) 48px;
+  background: var(--noche);
+  color: var(--marfil);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition: clip-path 0.7s var(--salida), visibility 0s 0.7s;
+}
+
+.menu-abierto .menu-movil { clip-path: inset(0); visibility: visible; transition: clip-path 0.7s var(--salida); }
+.menu-abierto .cabecera { z-index: 70; color: var(--marfil); }
+.menu-abierto .cabecera::before { opacity: 0; }
+.menu-abierto .logo--noche { opacity: 1; }
+.menu-abierto .logo--dia { opacity: 0; }
+
+.menu-movil ul { display: grid; gap: 6px; }
+
+.menu-movil a {
+  display: block;
+  padding: 6px 0;
+  font-family: var(--f-titulo);
+  font-size: clamp(2rem, 9vw, 3.4rem);
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.menu-movil a:hover, .menu-movil a:focus-visible { color: var(--oro); }
+.menu-movil p { font-style: italic; opacity: 0.7; }
+
+/* La regla de horas: una línea de tiempo al pie de la pantalla. La marca avanza con el scroll. */
+.horas {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  height: var(--regla);
+  padding: 0 var(--margen);
+  color: var(--marfil);
+  background: var(--cielo-alto);
+  pointer-events: none;
+  display: none;
+  transition: color 0.4s, opacity 0.4s;
+}
+
+[data-luz="dia"] .horas { color: var(--tinta); }
+
+.horas ol {
+  position: relative;
+  height: 100%;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.horas li { position: absolute; top: 0; left: calc(var(--x, 0) * 100%); }
+
+.horas a {
+  position: absolute;
+  left: -22px;
+  top: -14px;
+  width: 44px;
+  height: calc(var(--regla) + 14px);
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+/* La muesca */
+.horas a::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  width: 1px;
+  height: 9px;
+  background: currentColor;
+  opacity: 0.5;
+  transition: height 0.4s var(--salida), opacity 0.3s, background-color 0.3s;
+}
+
+/* La hora de la parada, bajo la muesca */
+.horas a::after {
+  content: attr(data-hora);
+  position: absolute;
+  left: 50%;
+  top: 27px;
+  transform: translateX(-50%);
+  font-family: var(--f-dato);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  opacity: 0.46;
+  transition: opacity 0.3s;
+}
+
+.horas a span {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+  transform: translate(-50%, 6px);
+  padding: 4px 10px 3px;
+  background: var(--oro);
+  color: var(--noche);
+  font-size: 1rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.4s var(--salida);
+}
+
+.horas a:hover::before, .horas a:focus-visible::before, .horas a.activa::before { height: 15px; opacity: 1; background: var(--oro); }
+.horas a:hover::after, .horas a:focus-visible::after, .horas a.activa::after { opacity: 1; }
+.horas a:hover span, .horas a:focus-visible span { opacity: 1; transform: translate(-50%, 0); }
+.horas li:first-child a span { left: 0; transform: translate(0, 6px); }
+.horas li:first-child a:hover span, .horas li:first-child a:focus-visible span { transform: translate(0, 0); }
+.horas li:last-child a span { left: auto; right: 0; transform: translate(0, 6px); }
+.horas li:last-child a:hover span, .horas li:last-child a:focus-visible span { transform: translate(0, 0); }
+
+/* El reloj: la hora por la que va la noche, pegada a la marca que avanza */
+.horas__reloj {
+  position: absolute;
+  left: var(--margen);
+  right: var(--margen);
+  top: 0;
+  height: 0;
+}
+
+.horas__hora, .horas__acto { position: absolute; left: calc(var(--avance, 0) * 100%); white-space: nowrap; }
+
+.horas__hora {
+  bottom: 9px;
+  transform: translateX(calc(var(--avance, 0) * -100%));
+  padding: 3px 8px 2px;
+  background: var(--oro);
+  color: var(--noche);
+  font-family: var(--f-dato);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* La marca que baja del reloj a la regla */
+.horas__hora::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--avance, 0) * 100%);
+  top: 100%;
+  width: 1px;
+  height: 9px;
+  background: var(--oro);
+}
+
+.horas__acto { display: none; }
+
+.controles {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.control svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.control:hover, .control[aria-pressed="true"] { border-color: var(--oro); color: var(--oro); }
+[data-luz="dia"] .control:hover, [data-luz="dia"] .control[aria-pressed="true"] { border-color: var(--oro-tinta); color: var(--oro-tinta); }
+.control--sonido .onda { opacity: 0.3; transition: opacity 0.3s; }
+.control--sonido[aria-pressed="true"] .onda { opacity: 1; }
+
+.atajos {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 9, 15, 0.82);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.atajos.visible { opacity: 1; visibility: visible; }
+
+.atajos__caja {
+  width: min(100%, 520px);
+  padding: 34px 38px;
+  border: 1px solid var(--oro-oscuro);
+  background: var(--noche);
+}
+
+.atajos__titulo { margin-bottom: 20px; font-family: var(--f-titulo); font-size: 1.3rem; color: var(--oro); }
+.atajos dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 22px; }
+.atajos dt { font-family: var(--f-dato); font-size: 0.86rem; color: var(--oro-vivo); }
+
+/* ---------- 7. Actos de noche ---------- */
+/* Sin película, cada acto trae su fondo; con ella son transparentes y el cielo fijo hace el resto */
+.acto {
+  position: relative;
+  padding-block: var(--aire);
+  background: var(--noche);
+}
+
+/* --- 23:00 Anochece (portada) --- */
+.anochecer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: var(--margen);
+  min-height: 100svh;
+  padding: clamp(112px, 20.5vh, 210px) var(--margen) calc(var(--regla) + clamp(26px, 5vh, 56px));
+  background: linear-gradient(180deg, var(--cielo-alto), var(--cielo-bajo) 62%, var(--noche) 62.2%);
+}
+
+.titular {
+  grid-column: 1 / -1;
+  display: contents;
+  font-family: var(--f-titulo);
+  font-weight: 500;
+}
+
+/* El titular queda detrás de la tierra: su base asoma tras las crestas */
+.titular__cielo {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-size: var(--t-titular);
+  line-height: 0.95;
+  letter-spacing: -0.012em;
+  color: var(--marfil);
+}
+
+.titular__linea { display: block; }
+
+.titular__tierra {
+  text-shadow: 0 0 26px var(--noche), 0 0 8px var(--noche);
+  grid-column: 1;
+  grid-row: 3;
+  position: relative;
+  z-index: 3;
+  display: block;
+  margin-bottom: 0.42em;
+  font-size: clamp(1.7rem, 3.5vw, 3.9rem);
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--oro-vivo);
+}
+
+.anochecer__pie {
+  text-shadow: 0 0 22px var(--noche), 0 0 6px var(--noche);
+  grid-column: 1;
+  grid-row: 4;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: clamp(20px, 3.4vh, 34px);
+  max-width: 40rem;
+}
+
+.ahora {
+  grid-column: 2;
+  grid-row: 4;
+  align-self: end;
+  justify-self: end;
+  position: relative;
+  z-index: 3;
+  max-width: 17rem;
+  font-style: italic;
+  font-size: var(--t-voz);
+  line-height: 1.25;
+  text-align: right;
+  text-shadow: 0 0 22px var(--noche), 0 0 6px var(--noche);
+}
+
+.ahora time { font-style: normal; color: var(--oro-vivo); }
+.ahora__estado { display: block; }
+
+/* --- 00:30 La guardia --- */
+.guardia { padding-inline: var(--margen); }
+
+.guardia__escena {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: 0.5em;
+  align-content: center;
+}
+
+.guardia__frase--oro { color: var(--oro); }
+
+/* --- Los tres oficios --- */
+.oficios__voz { margin-top: clamp(20px, 3vh, 34px); max-width: 30ch; }
+
+.oficios__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(24px, 4vw, 70px);
+  margin-top: clamp(48px, 9vh, 104px);
+}
+
+.oficio {
+  --lx: 50%;
+  --ly: 0%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px 20px;
+  align-content: start;
+  height: 100%;
+  padding: clamp(24px, 3vw, 40px) 0 clamp(30px, 4vw, 52px);
+  border-top: 1px solid color-mix(in srgb, var(--oro) 46%, transparent);
+}
+
+/* La luz del farol al pasar por encima */
+.oficio::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(clamp(24px, 4vw, 70px) / -2);
+  z-index: -1;
+  background: radial-gradient(circle 22rem at var(--lx) var(--ly), rgba(212, 175, 122, 0.12), rgba(212, 175, 122, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.oficio:hover::before, .oficio:focus-within::before { opacity: 1; }
+
+.oficio__dibujo {
+  grid-column: 1;
+  width: clamp(72px, 7vw, 108px);
+  height: auto;
+  fill: none;
+  stroke: var(--oro);
+  stroke-width: 1;
+  overflow: visible;
+}
+
+.oficio__dibujo circle, .oficio__dibujo path { vector-effect: non-scaling-stroke; }
+
+.oficio__orden {
+  grid-column: 2;
+  font-family: var(--f-titulo);
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  color: var(--oro);
+}
+
+.oficio h3 {
+  grid-column: 1 / -1;
+  margin-top: clamp(14px, 3vh, 34px);
+  font-family: var(--f-titulo);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.1vw, 3.1rem);
+  line-height: 1;
+}
+
+.oficio > p:not(.oficio__orden) { grid-column: 1 / -1; max-width: 34ch; color: color-mix(in srgb, var(--marfil) 86%, transparent); }
+
+.oficio__datos {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  margin-top: 4px;
+  font-size: 1.04rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--oro-vivo);
+}
+
+.oficio__datos li + li::before { content: "·"; margin: 0 0.6em; opacity: 0.6; }
+
+/* Cada dibujo hace su gesto: los anillos laten, el cerco se cierra, el lacre cae */
+.oficio__dibujo circle:nth-child(n+2) { transform-origin: 60px 60px; transition: transform 0.9s var(--salida), opacity 0.6s; }
+#detectar:hover circle:nth-child(2), #detectar:focus-within circle:nth-child(2) { transform: scale(1.18); }
+#detectar:hover circle:nth-child(3), #detectar:focus-within circle:nth-child(3) { transform: scale(1.1); transition-delay: 0.06s; }
+#detectar:hover circle:nth-child(4), #detectar:focus-within circle:nth-child(4) { transform: scale(1.05); transition-delay: 0.12s; }
+
+.oficio__cierre { stroke-dasharray: 289; stroke-dashoffset: 86; transition: stroke-dashoffset 1s var(--salida); }
+#responder:hover .oficio__cierre, #responder:focus-within .oficio__cierre { stroke-dashoffset: 0; }
+
+.oficio__lacre { fill: var(--oro); stroke: none; transform-origin: 78px 92px; transform: scale(0.45); opacity: 0.5; transition: transform 0.5s var(--salida), opacity 0.4s; }
+#demostrar:hover .oficio__lacre, #demostrar:focus-within .oficio__lacre { transform: scale(1); opacity: 1; }
+
+.oficios__mas, .libro__mas, .metodo__mas, .faq__mas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin-top: clamp(28px, 5vh, 52px);
+}
+
+/* --- El libro de guardia --- */
+.libro__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+}
+
+.libro__cabecera { display: grid; gap: clamp(18px, 3vh, 30px); justify-items: start; }
+.libro__mas { grid-column: 1; margin-top: 0; }
+
+.libro__hoja { display: grid; gap: clamp(22px, 4vh, 40px); }
+
+.libro__entradas {
+  display: grid;
+  border-top: 1px solid color-mix(in srgb, var(--marfil) 22%, transparent);
+}
+
+.libro__entradas li {
+  display: grid;
+  grid-template-columns: 6.4em 5.2em 1fr;
+  gap: 0 18px;
+  align-items: baseline;
+  padding: 13px 0 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--marfil) 13%, transparent);
+}
+
+.libro__entradas time { opacity: 0.62; }
+.libro__entradas b { font-weight: 500; font-variant-caps: all-small-caps; letter-spacing: 0.1em; font-size: 1.04em; }
+.libro__entradas .ok b { color: var(--cian); }
+.libro__entradas .aviso b { color: var(--oro); }
+.libro__entradas .alerta b, .libro__entradas .alerta span { color: var(--rojo); }
+.libro__entradas .bloqueo b, .libro__entradas .bloqueo span { color: var(--oro-vivo); }
+
+.libro__cuentas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px clamp(28px, 4vw, 64px);
+}
+
+.libro__cuentas dt { font-size: 1.02rem; font-variant-caps: all-small-caps; letter-spacing: 0.08em; opacity: 0.72; }
+
+.libro__cuentas dd {
+  font-family: var(--f-dato);
+  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--oro-vivo);
+}
+
+/* --- 03:07 El instante --- */
+.instante { padding-inline: var(--margen); }
+
+.instante__escena {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: clamp(28px, 5vh, 56px);
+  align-content: center;
+}
+
+.instante__relato { display: grid; gap: clamp(26px, 4vh, 44px); }
+
+.instante__crono {
+  font-family: var(--f-dato);
+  font-size: clamp(1.1rem, 1.9vw, 1.8rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--rojo);
+}
+
+.instante__paso--oro { color: var(--oro); }
+
+.instante__nota {
+  display: block;
+  max-width: 30ch;
+  margin-top: 0.7em;
+  font-size: var(--t-cuerpo);
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--marfil) 82%, transparent);
+  text-wrap: pretty;
+}
+
+.instante__nota b { font-family: var(--f-dato); font-size: 1.05em; color: var(--rojo); }
+.instante__pie { display: grid; gap: 20px; justify-items: start; }
+
+/* --- 06:45 Amanece --- */
+.amanecer { padding-inline: var(--margen); background: linear-gradient(180deg, var(--noche) 0%, #3a3550 22%, #c59a66 52%, var(--oro) 70%, var(--marfil) 100%); }
+
+.amanecer__escena {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: clamp(20px, 4vh, 44px);
+  justify-items: center;
+  text-align: center;
+  color: var(--color-escena, var(--marfil));
+}
+
+.amanecer__titulo {
+  font-family: var(--f-titulo);
+  font-weight: 500;
+  font-size: clamp(3.6rem, 15.5vw, 17rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.amanecer__frase { max-width: 20ch; }
+
+/* ---------- 8. Actos de día ---------- */
+.dia {
+  background: var(--marfil);
+  color: var(--tinta);
+}
+
+.dia p, .dia li, .dia td { text-wrap: pretty; }
+
+/* --- El informe --- */
+.informe__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(36px, 6vw, 110px);
+  align-items: center;
+}
+
+.informe__texto { display: grid; gap: clamp(18px, 3vh, 28px); }
+.informe__texto p { max-width: 46ch; }
+
+/* La hoja del parte: papel sobre el mapa */
+.hoja {
+  position: relative;
+  padding: clamp(24px, 3.4vw, 46px) clamp(22px, 3.2vw, 46px) clamp(30px, 4vw, 54px);
+  background: var(--papel);
+  box-shadow: 0 1px 1px rgba(18, 22, 29, 0.08), 0 18px 40px -18px rgba(18, 22, 29, 0.32), 0 46px 90px -40px rgba(107, 79, 40, 0.42);
+  transform: rotate(-1.1deg);
+}
+
+.hoja__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--tinta);
+  font-family: var(--f-titulo);
+  font-size: clamp(1.2rem, 1.7vw, 1.6rem);
+}
+
+.hoja__cabecera span { font-family: var(--f-texto); font-style: italic; font-size: 1.05rem; color: var(--oro-tinta); }
+
+.hoja__tabla { width: 100%; margin-top: 6px; border-collapse: collapse; font-size: 1.06rem; line-height: 1.35; }
+
+.hoja__tabla th {
+  padding: 12px 14px 8px 0;
+  text-align: left;
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--oro-tinta);
+}
+
+.hoja__tabla td { padding: 11px 14px 10px 0; border-top: 1px solid rgba(18, 22, 29, 0.14); vertical-align: baseline; }
+.hoja__tabla td:first-child { font-family: var(--f-dato); font-size: 0.82em; white-space: nowrap; }
+.hoja__tabla td:last-child, .hoja__tabla th:last-child { padding-right: 0; white-space: nowrap; }
+.huella { color: var(--oro-tinta); }
+
+.hoja__firma {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  max-width: calc(100% - 120px);
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.hoja__firma .sello { font-style: normal; }
+
+/* El lacre: el sello de oro, estampado en la esquina */
+.hoja__lacre {
+  position: absolute;
+  right: clamp(-18px, -1vw, -6px);
+  bottom: clamp(-64px, -4.4vw, -38px);
+  width: clamp(96px, 10vw, 148px);
+  height: auto;
+  transform: rotate(9deg);
+  filter: drop-shadow(0 6px 10px rgba(60, 40, 14, 0.34));
+}
+
+/* --- Planes --- */
+.planes__entrada { max-width: 56ch; margin-top: clamp(20px, 3vh, 32px); }
+
+.calculo {
+  display: grid;
+  gap: 14px;
+  max-width: 46rem;
+  margin-top: clamp(36px, 6vh, 64px);
+}
+
+.calculo label { font-size: var(--t-voz); line-height: 1.2; }
+.calculo__fila { display: flex; align-items: center; gap: 22px; }
+
+.calculo__n {
+  flex: none;
+  min-width: 2.4ch;
+  font-family: var(--f-titulo);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1;
+  text-align: right;
+  color: var(--oro-tinta);
+}
+
+.calculo input[type="range"] {
+  flex: 1;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  accent-color: var(--oro-tinta);
+  cursor: grab;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.calculo input[type="range"]::-webkit-slider-runnable-track { height: 1px; background: var(--tinta); }
+.calculo input[type="range"]::-moz-range-track { height: 1px; background: var(--tinta); }
+
+.calculo input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border: 1px solid var(--tinta);
+  border-radius: 50%;
+  background: var(--oro);
+  box-shadow: 0 2px 6px rgba(18, 22, 29, 0.3);
+}
+
+.calculo input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--tinta);
+  border-radius: 50%;
+  background: var(--oro);
+  box-shadow: 0 2px 6px rgba(18, 22, 29, 0.3);
+}
+
+.calculo__resultado { font-size: var(--t-voz); line-height: 1.25; }
+.calculo__plan { font-family: var(--f-titulo); font-weight: 600; letter-spacing: 0.02em; }
+.calculo__precio { font-variant-numeric: lining-nums; }
+.calculo__nota { color: color-mix(in srgb, var(--tinta) 72%, transparent); }
+
+.tarifas {
+  width: 100%;
+  margin-top: clamp(30px, 5vh, 54px);
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tarifas thead th {
+  padding: 0 24px 12px 0;
+  font-weight: 500;
+  font-size: 1.04rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--oro-tinta);
+}
+
+.tarifas tbody tr { border-top: 1px solid rgba(18, 22, 29, 0.2); transition: background-color 0.5s var(--salida), color 0.5s var(--salida); }
+.tarifas tbody tr:last-child { border-bottom: 1px solid rgba(18, 22, 29, 0.2); }
+.tarifas td, .tarifas tbody th { padding: clamp(18px, 3vh, 30px) 24px clamp(18px, 3vh, 30px) 0; vertical-align: baseline; }
+.tarifas tbody th { padding-left: clamp(0px, 1.2vw, 18px); font-weight: 500; }
+.tarifas td:last-child { padding-right: clamp(0px, 1.2vw, 18px); white-space: nowrap; }
+
+.tarifas__nombre {
+  font-family: var(--f-titulo);
+  font-size: clamp(1.6rem, 2.7vw, 2.7rem);
+  line-height: 1;
+  cursor: help;
+}
+
+.tarifas__precio { white-space: nowrap; color: color-mix(in srgb, currentColor 78%, transparent); }
+.tarifas__precio b { font-size: clamp(1.4rem, 2vw, 1.9rem); font-variant-numeric: lining-nums tabular-nums; color: var(--tinta); }
+
+/* El plan que te corresponde: la fila se vuelve de noche */
+.tarifas tr.elegido { background: var(--tinta); color: var(--marfil); }
+.tarifas tr.elegido .tarifas__precio b { color: var(--oro); }
+.tarifas tr.elegido .tarifas__nombre { color: var(--oro); }
+
+.planes__nota { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 30px; margin-top: clamp(24px, 4vh, 40px); }
+
+/* --- Método y medidas --- */
+.metodo__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: clamp(40px, 7vw, 130px);
+  align-items: start;
+}
+
+.metodo__pasos { margin-top: clamp(30px, 5vh, 56px); counter-reset: paso; }
+
+.metodo__pasos li {
+  counter-increment: paso;
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 4px 18px;
+  padding: clamp(18px, 2.6vh, 26px) 0;
+  border-top: 1px solid rgba(18, 22, 29, 0.2);
+}
+
+.metodo__pasos li::before {
+  content: counter(paso, upper-roman);
+  grid-row: 1 / 3;
+  font-family: var(--f-titulo);
+  font-size: 1.12rem;
+  letter-spacing: 0.08em;
+  line-height: 1.75;
+  color: var(--oro-tinta);
+}
+
+.metodo__pasos h3 { font-family: var(--f-texto); font-weight: 500; font-size: var(--t-voz); line-height: 1.2; }
+.metodo__pasos p { grid-column: 2; max-width: 50ch; color: color-mix(in srgb, var(--tinta) 86%, transparent); }
+
+.medidas { display: grid; gap: 18px; justify-items: start; padding-top: 0.5rem; }
+.medidas__lista { display: grid; gap: 0; width: 100%; margin-top: 8px; }
+.medidas__lista div { padding: 16px 0; border-top: 1px solid rgba(18, 22, 29, 0.2); }
+.medidas__lista dt { font-family: var(--f-titulo); font-size: clamp(1.35rem, 2vw, 1.9rem); line-height: 1.1; color: var(--oro-tinta); }
+.medidas__lista dd { margin-top: 4px; max-width: 32ch; }
+
+/* --- Testimonios --- */
+.testimonios .sello { margin-top: clamp(16px, 2.4vh, 24px); }
+
+.testimonios__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(36px, 6vh, 72px) clamp(36px, 7vw, 120px);
+  margin-top: clamp(40px, 7vh, 80px);
+}
+
+.testimonio p {
+  position: relative;
+  font-size: clamp(1.45rem, 2.2vw, 2.25rem);
+  font-style: italic;
+  line-height: 1.24;
+  text-indent: -0.42em;
+}
+
+.testimonio p::before { content: "«"; }
+.testimonio p::after { content: "»"; }
+
+.testimonio footer { margin-top: 16px; font-size: 1.06rem; color: color-mix(in srgb, var(--tinta) 76%, transparent); }
+.testimonio cite { font-style: normal; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: 1.1em; color: var(--oro-tinta); }
+.testimonio cite::after { content: " · "; }
+
+/* --- Preguntas --- */
+.faq__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+}
+
+.faq__marco .capitular { position: sticky; top: 120px; }
+.faq__lista { border-top: 1px solid rgba(18, 22, 29, 0.24); }
+.faq__item { border-bottom: 1px solid rgba(18, 22, 29, 0.24); }
+
+.faq__item summary {
+  position: relative;
+  padding: clamp(18px, 2.8vh, 28px) 56px clamp(17px, 2.6vh, 26px) 0;
+  font-size: var(--t-voz);
+  line-height: 1.2;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.3s;
+}
+
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--oro-tinta); }
+
+/* El signo de abrir y cerrar, dibujado con dos líneas */
+.faq__item summary::before, .faq__item summary::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 20px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.45s var(--salida);
+}
+
+.faq__item summary::after { transform: rotate(90deg); }
+.faq__item[open] summary::after { transform: rotate(0deg); }
+
+.faq__item > p { max-width: 58ch; padding: 0 56px clamp(20px, 3vh, 30px) 0; animation: aparece 0.6s var(--salida); }
+.faq__item code { color: var(--oro-tinta); }
+.faq__mas { margin-top: clamp(24px, 4vh, 40px); }
+
+@keyframes aparece {
+  from { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ---------- 9. Vuelve la noche: equipo y pie ---------- */
+.anochece { padding-top: 0; background: linear-gradient(180deg, var(--marfil) 0%, #c59a66 10%, #3a3550 20%, var(--noche) 34%); }
+
+.anochece__paso {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  min-height: 70svh;
+  padding: var(--aire) var(--margen);
+  text-align: center;
+  color: var(--color-escena, var(--marfil));
+}
+
+.anochece__frase { max-width: 14ch; }
+
+.equipo__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vw, 90px);
+  margin-top: clamp(36px, 6vh, 70px);
+}
+
+.persona {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(18px, 2.4vw, 34px);
+  align-items: start;
+  padding-top: clamp(22px, 3vh, 32px);
+  border-top: 1px solid color-mix(in srgb, var(--oro) 46%, transparent);
+}
+
+.persona__avatar { width: clamp(72px, 7vw, 104px); height: auto; border-radius: 50%; border: 1px solid var(--oro-oscuro); }
+.persona > div { display: grid; gap: 8px; }
+.persona h3 { font-family: var(--f-titulo); font-weight: 500; font-size: clamp(1.4rem, 2vw, 1.95rem); line-height: 1.1; }
+.persona__rol { font-size: 1.1rem; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--oro); }
+.persona p:not(.persona__rol):not(.persona__enlaces) { max-width: 38ch; color: color-mix(in srgb, var(--marfil) 86%, transparent); }
+.persona__enlaces { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 4px; font-style: italic; }
+.persona__enlaces a { text-decoration-thickness: 1px; text-underline-offset: 0.24em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: color 0.3s; }
+.persona__enlaces a:hover, .persona__enlaces a:focus-visible { color: var(--oro-vivo); }
+
+.pie {
+  position: relative;
+  padding: var(--aire) 0 calc(var(--regla) + 34px);
+  background: var(--noche);
+}
+
+.pie__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(36px, 7vw, 130px);
+  align-items: start;
+}
+
+.pie__llamada { display: grid; gap: clamp(20px, 3.4vh, 34px); }
+.pie__guardia { font-style: italic; font-size: var(--t-voz); }
+.pie__guardia time { font-style: normal; color: var(--oro-vivo); }
+
+.formulario { display: grid; gap: 26px; }
+.formulario__nota, .formulario__privacidad { font-size: var(--t-nota); line-height: 1.45; color: color-mix(in srgb, var(--marfil) 78%, transparent); }
+.formulario__privacidad a { color: var(--oro-vivo); }
+.formulario__campo { position: relative; display: grid; gap: 4px; }
+.formulario label { font-size: 1.08rem; font-variant-caps: all-small-caps; letter-spacing: 0.09em; color: color-mix(in srgb, var(--marfil) 80%, transparent); }
+
+.formulario input, .formulario textarea {
+  width: 100%;
+  padding: 8px 0 10px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--marfil) 46%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--marfil);
+  font-size: var(--t-voz);
+  line-height: 1.25;
+  caret-color: var(--oro);
+}
+
+.formulario textarea { min-height: 5.2em; resize: vertical; }
+.formulario input:focus-visible, .formulario textarea:focus-visible { outline: none; border-bottom-color: var(--oro); box-shadow: 0 1px 0 var(--oro); }
+.formulario [aria-invalid="true"] { border-bottom-color: var(--rojo); }
+.formulario__error { margin-top: -18px; font-size: var(--t-nota); color: #ff9b8f; }
+
+.formulario__trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.formulario__aviso { font-family: var(--f-dato); font-size: 0.84rem; color: var(--cian); }
+.formulario .boton { justify-self: start; }
+
+.pie__base {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px clamp(24px, 4vw, 60px);
+  align-items: center;
+  margin-top: clamp(64px, 12vh, 150px);
+  padding-top: 26px;
+  border-top: 1px solid color-mix(in srgb, var(--marfil) 18%, transparent);
+}
+
+.pie__emblema { width: clamp(84px, 8vw, 124px); height: auto; }
+.pie__derechos { font-size: var(--t-nota); line-height: 1.5; color: color-mix(in srgb, var(--marfil) 74%, transparent); text-wrap: pretty; }
+.pie__derechos a { color: inherit; }
+.pie__derechos a:hover { color: var(--oro-vivo); }
+.pie__redes { display: flex; gap: 10px; }
+
+.pie__redes a, .pie__redes span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in srgb, var(--marfil) 26%, transparent);
+  border-radius: 50%;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.pie__redes svg { width: 18px; height: 18px; fill: currentColor; }
+.pie__redes a:hover, .pie__redes a:focus-visible { border-color: var(--oro); color: var(--oro); }
+.pie__redes span { opacity: 0.42; cursor: help; }
+
+.avisos { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.avisos:empty { display: none; }
+.aviso-red { font-style: italic; color: var(--oro-vivo); }
+
+/* Sorpresa: al escribir «kairos», el instante cruza la pantalla y solo se le puede agarrar mientras pasa */
+.mechon {
+  position: fixed;
+  left: 0;
+  top: 38vh;
+  z-index: 70;
+  padding: 10px 26px 12px;
+  border: 0;
+  background: linear-gradient(90deg, rgba(241, 220, 176, 0) 0%, rgba(241, 220, 176, 0.16) 60%, rgba(241, 220, 176, 0.5) 100%);
+  color: var(--oro-vivo);
+  font-family: var(--f-texto);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-style: normal;
+  line-height: 1;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.aviso-flotante {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--regla) + 28px);
+  z-index: 70;
+  width: max-content;
+  max-width: min(92vw, 34rem);
+  padding: 14px 22px 13px;
+  border: 1px solid var(--oro-oscuro);
+  background: var(--noche);
+  color: var(--marfil);
+  font-style: italic;
+  font-size: var(--t-voz);
+  line-height: 1.25;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 16px);
+  transition: opacity 0.6s var(--salida), transform 0.6s var(--salida);
+}
+
+.aviso-flotante.visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- 10. La película (la activa js/noche.js con la clase .peli en <html>) ---------- */
+.peli .cielo, .peli .tierra, .peli .rotulos, .peli .horas { display: block; }
+.peli body { background: transparent; }
+.peli .acto, .peli .pie { background: transparent; }
+
+/* Los textos largos de noche descansan sobre un velo, por si las crestas pasan por debajo */
+.peli .oficios .marco::before, .peli .libro .marco::before {
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 40% 46%, rgba(6, 9, 15, 0.55), rgba(6, 9, 15, 0) 70%);
+  pointer-events: none;
+}
+
+/* Escenas que se quedan en pantalla mientras avanza la hora (sticky: no hay saltos ni envoltorios) */
+.peli .guardia { height: 340vh; padding-block: 0; }
+.peli .instante { height: 520vh; padding-block: 0; }
+.peli .amanecer { height: 360vh; padding-block: 0; }
+
+.peli .guardia__escena, .peli .instante__escena, .peli .amanecer__escena {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+/* Las frases de una escena comparten sitio y se relevan */
+.peli .guardia__escena { align-content: center; padding-bottom: 12vh; }
+.peli .guardia__frase { grid-area: 1 / 1; align-self: center; }
+.peli .guardia__frase, .peli .instante__paso, .peli .amanecer__frase { will-change: transform, opacity, filter; }
+
+.peli .instante__escena { grid-template-rows: 1fr auto; align-content: stretch; padding: 16vh 0 calc(var(--regla) + 34px); }
+.peli .instante__relato { grid-template-rows: auto 1fr; align-content: start; max-width: 36rem; }
+.peli .instante__paso { grid-area: 2 / 1; align-self: start; }
+
+.peli .amanecer__escena { align-content: center; }
+.peli .amanecer__frase { grid-area: 2 / 1; }
+.peli .amanecer__titulo { grid-area: 1 / 1; }
+
+.peli .anochece__paso { min-height: 130svh; }
+.peli .anochece__frase { position: sticky; top: 42svh; }
+
+/* El velo del titular solo hace falta sin película (con ella el texto va sobre el cielo) */
+.peli .anochecer { background: transparent; }
+
+/* Con las escenas quietas («menos movimiento») las frases se leen una debajo de otra */
+.peli--quieta .guardia, .peli--quieta .instante, .peli--quieta .amanecer { height: auto; padding-block: var(--aire); }
+.peli--quieta .guardia__escena, .peli--quieta .instante__escena, .peli--quieta .amanecer__escena { position: relative; height: auto; }
+.peli--quieta .guardia__frase, .peli--quieta .instante__paso, .peli--quieta .amanecer__frase, .peli--quieta .amanecer__titulo { grid-area: auto; }
+.peli--quieta .anochece__paso { min-height: 70svh; }
+.peli--quieta .anochece__frase { position: static; }
+.peli--quieta .farol, .peli--quieta .cielo__hora { display: none; }
+
+/* Modo presentación (tecla P): más grande y con más contraste, para el proyector */
+.presentacion { --t-cuerpo: clamp(1.4rem, 1.7vw, 1.8rem); --t-voz: clamp(1.6rem, 2.3vw, 2.4rem); --t-nota: 1.25rem; }
+.presentacion .farol { display: none; }
+
+/* ---------- 11. Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.lenis) { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+.menos-movimiento *, .menos-movimiento *::before, .menos-movimiento *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+
+/* ---------- 12. Pantallas estrechas ---------- */
+@media (max-width: 1080px) {
+  .cabecera__nav, .cabecera__cta { display: none; }
+  .menu-boton { display: block; }
+  .libro__marco, .informe__marco, .metodo__marco, .faq__marco, .pie__marco { grid-template-columns: minmax(0, 1fr); }
+  .faq__marco .capitular { position: static; }
+  .libro__mas { grid-column: auto; }
+  .hoja { transform: none; }
+}
+
+@media (max-width: 860px) {
+  .anochecer { grid-template-columns: minmax(0, 1fr); }
+  .ahora { grid-column: 1; grid-row: 5; justify-self: start; margin-top: 22px; text-align: left; max-width: none; }
+  .ahora__estado { display: inline; }
+  .oficios__lista, .testimonios__lista, .equipo__lista { grid-template-columns: minmax(0, 1fr); }
+  .oficio { padding-bottom: clamp(34px, 6vh, 56px); }
+  .pie__base { grid-template-columns: auto 1fr; }
+  .pie__derechos { grid-column: 1 / -1; grid-row: 2; }
+
+  /* La tabla de planes pasa a fichas: cada fila, un bloque */
+  .tarifas thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tarifas, .tarifas tbody, .tarifas tr, .tarifas td, .tarifas tbody th { display: block; }
+  .tarifas tbody tr { padding: 22px 0 20px; }
+  .tarifas tr.elegido { margin-inline: calc(var(--margen) * -1); padding-inline: var(--margen); }
+  .tarifas td, .tarifas tbody th { padding: 0; }
+  .tarifas td { margin-top: 8px; }
+  .tarifas td:last-child { white-space: normal; }
+  .tarifas td:last-child::before { content: "Analista: "; font-variant-caps: all-small-caps; letter-spacing: 0.08em; }
+  :lang(ca) .tarifas td:last-child::before { content: "Analista: "; }
+
+  .hoja__tabla th:last-child, .hoja__tabla td:last-child { display: none; }
+  .libro__entradas li { grid-template-columns: 5.6em 1fr; }
+  .libro__entradas li span { grid-column: 1 / -1; }
+  .horas a::after { display: none; }
+  .rotulo i { display: none; }
+}
+
+@media (max-width: 560px) {
+  :root { --regla: 34px; }
+  .persona { grid-template-columns: minmax(0, 1fr); }
+  .acciones { gap: 16px 22px; }
+}
+
+/* ---------- 13. Impresión ---------- */
+@media print {
+  .cielo, .tierra, .rotulos, .farol, .cabecera, .horas, .controles, .menu-movil, .atajos { display: none !important; }
+  body, .acto, .pie { background: #fff !important; color: #000 !important; }
+}
