@@ -917,6 +917,10 @@ Promise.race([
     let [r, g, b] = colores[0];
     const velo = escenas.map(() => 1);
     for (let i = 1; i < escenas.length; i++) {
+      // Con el plató fijado («corte»), la ficha está encima de la portada desde el principio y la descubre
+      // el iris con su propio papel: no «entra» por abajo. Antes contaba como ya entrada, así que al cargar
+      // el fondo era marfil y la portada quedaba al 10 % (el nombre casi no se veía).
+      if (raiz.classList.contains("corte") && escenas[i].parentElement.classList.contains("plato")) continue;
       const arriba = escenas[i].getBoundingClientRect().top;
       const p = Math.min(1, Math.max(0, (alto * 0.85 - arriba) / (alto * 0.6)));
       if (p <= 0) break;
