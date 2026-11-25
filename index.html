@@ -313,21 +313,26 @@
             <h3>Vigía</h3>
             <p class="v6-plan__precio"><b>9,90 €</b> al mes, IVA incluido</p>
             <p class="v6-plan__para">1 o 2 equipos: un particular o un autónomo. Reglas estándar y guía paso a paso.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 2 días laborables</p>
           </li>
           <li class="v6-plan">
             <h3>Centinela</h3>
             <p class="v6-plan__precio"><b>24,90 €</b> al mes, IVA incluido</p>
             <p class="v6-plan__para">Una familia o un autónomo con hasta 5 equipos. Un analista revisa las alertas en horario laboral.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 24 h (críticas, 8 h)</p>
           </li>
           <li class="v6-plan">
             <h3>Guardián</h3>
             <p class="v6-plan__precio"><b>64,90 €</b> al mes, IVA incluido</p>
             <p class="v6-plan__para">Teletrabajo o microempresa, hasta 10 equipos. Contención remota y un caso forense al año.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 4 h</p>
           </li>
           <li class="v6-plan v6-plan--empresa">
             <h3>Égida</h3>
             <p class="v6-plan__precio">desde <b>590 €</b> al mes + IVA</p>
             <p class="v6-plan__para">Pymes de 10 a 100 equipos. Reglas a medida, equipo dedicado y auditoría inicial gratuita.</p>
+            <p class="v6-plan__ejemplo">Ejemplo: una empresa con 60 equipos paga <b>1.010 € + IVA</b> al mes, unos 16,83 € por equipo.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 1 h</p>
           </li>
         </ul>
         <p class="v6-planes__nota"><span class="v6-sello mono">Empresa ficticia · precios del proyecto</span> <a class="servicio__mas mono" href="preguntas.html#precios">Comparar los cuatro planes →</a></p>
@@ -410,6 +415,24 @@
             <p>Cronología clara de lo ocurrido, qué se hizo y cómo evitar que se repita. Listo para dirección y auditorías.</p>
           </li>
         </ol>
+        <!-- Si te pasa a ti: lo que ocurre y lo que tienes que hacer, en lenguaje de dirección -->
+        <div class="v6-sitepasa revelar" aria-labelledby="titulo-sitepasa">
+          <h3 class="v6-sitepasa__titulo" id="titulo-sitepasa">Si te pasa a ti</h3>
+          <ul class="v6-sitepasa__lista">
+            <li>
+              <p class="v6-sitepasa__cuando mono">A cualquier hora</p>
+              <p>El bloqueo automático actúa en segundos, también un sábado a las 3:00. Las pruebas quedan guardadas desde ese momento.</p>
+            </li>
+            <li>
+              <p class="v6-sitepasa__cuando mono">En horario laboral</p>
+              <p>Un analista confirma que es real y te llama: en 1 hora con Égida, en 4 con Guardián. No te llamamos por cada alerta, solo cuando hay que decidir algo.</p>
+            </li>
+            <li>
+              <p class="v6-sitepasa__cuando mono">Si hay datos personales</p>
+              <p>El RGPD da 72 horas para avisar a la autoridad de protección de datos (la AEPD). La decisión y el aviso son tuyos; nuestro informe te da la cronología y las pruebas.</p>
+            </li>
+          </ul>
+        </div>
         <p class="enlace-detalle revelar"><a class="servicio__mas mono" href="incidente.html">El incidente minuto a minuto →</a></p>
       </div>
     </section>
@@ -595,7 +618,7 @@
             <textarea id="mensaje" name="mensaje" required></textarea>
           </div>
           <p class="formulario__aviso" role="status" hidden></p>
-          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Pedir una auditoría">Pedir una auditoría</span></button>
+          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Pide una auditoría">Pide una auditoría</span></button>
         </form>
       </div>
     </section>

@@ -36,7 +36,7 @@ const TXT = CA ? {
     [5600, "ok", "Amenaça continguda · informe en curs"],
   ],
   enCurso: "Atac en curs…", otroAtaque: "▶ Simular un altre atac",
-  enviando: "Enviant…", recibido: "Demo completada", avisoForm: "> Demostració: aquest formulari encara no envia les dades.", pedir: "Demanar auditoria gratuïta",
+  enviando: "Enviant…", recibido: "Demo completada", avisoForm: "> Demostració: aquest formulari encara no envia les dades.", pedir: "Demana una auditoria",
   latencia: "latència",
 } : {
   eventos: [
@@ -59,7 +59,7 @@ const TXT = CA ? {
     [5600, "ok", "Amenaza contenida · informe en curso"],
   ],
   enCurso: "Ataque en curso…", otroAtaque: "▶ Simular otro ataque",
-  enviando: "Enviando…", recibido: "Demo completada", avisoForm: "> Demostración: este formulario todavía no envía los datos.", pedir: "Pedir auditoría gratuita",
+  enviando: "Enviando…", recibido: "Demo completada", avisoForm: "> Demostración: este formulario todavía no envía los datos.", pedir: "Pide una auditoría",
   latencia: "latencia",
 };
 
