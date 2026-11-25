@@ -237,6 +237,8 @@
   const ruta = $(".ruta"), rutaTramos = $$(".ruta__tramo"), rutaCorte = $(".ruta__corte");
   const pos = { x: 0, y: 0, visible: false };
   const pieInstante = $(".instante__pie");
+  // Si el teclado llega a los botones del final de la escena antes de que se vean, la escena avanza hasta ellos
+  if (pieInstante) pieInstante.addEventListener("focusin", () => { if (hayPeli && !quieto() && window.scrollY < rango.instante[1] - 8) ir(rango.instante[1] - 2, 0.8); });
 
   // Una frase visible entre a y b del avance: entra subiendo y enfocando, sale hacia arriba
   function frase(el, p, a, b, sinSalida) {
@@ -540,7 +542,7 @@
     }
 
     // El titular se pone tras las crestas al empezar a bajar
-    if (titularCielo && y < vh * 1.4 && !q) titularCielo.style.transform = `translate3d(0,${(y * 2.3).toFixed(1)}px,0)`;
+    if (titularCielo && y < vh * 1.4 && !q) titularCielo.style.transform = `translate3d(0,${(y * (window.innerWidth < 860 ? 0 : 2.3)).toFixed(1)}px,0)`;
 
     interfaz(y, horaInstante >= 0 ? horaInstante : S.hora);
   }
@@ -694,6 +696,8 @@
     botonMenu.setAttribute("aria-expanded", String(abrir));
     botonMenu.setAttribute("aria-label", abrir ? TXT.cerrarMenu : TXT.abrirMenu);
     menuMovil.setAttribute("aria-hidden", String(!abrir));
+    // Con el menú abierto, lo que queda detrás no debe recibir el foco del teclado
+    [$("main"), $(".horas"), $("footer")].forEach((el) => { if (el) el.inert = abrir; });
     if (lenis) abrir ? lenis.stop() : lenis.start();
     if (abrir) { const a = $("a", menuMovil); if (a) setTimeout(() => a.focus(), 80); } else botonMenu.focus();
   }
@@ -709,6 +713,7 @@
     e.preventDefault();
     ir(d.getBoundingClientRect().top + window.scrollY + (d.id === "incidente" || d.id === "guardia" || d.id === "amanecer" ? 2 : 0));
     if (d.id === "contacto") setTimeout(() => { const n = $("#nombre"); if (n) n.focus({ preventScroll: true }); }, 1300);
+    else { if (!d.hasAttribute("tabindex")) d.setAttribute("tabindex", "-1"); d.focus({ preventScroll: true }); } // el teclado sigue desde el destino
     try { history.replaceState(null, "", a.getAttribute("href")); } catch (err) { /* en un marco aislado no se puede: no pasa nada */ }
   });
   function ir(y, duracion) {
@@ -791,7 +796,18 @@
 
   const atajos = $(".atajos");
   const verAtajos = (v) => { if (atajos) { atajos.classList.toggle("visible", v); atajos.setAttribute("aria-hidden", String(!v)); } };
-  if (atajos) atajos.addEventListener("click", () => verAtajos(false));
+  if (atajos) atajos.addEventListener("click", (e) => { if (!e.target.closest(".atajos__apagar")) verAtajos(false); });
+  // Los atajos de una sola tecla se pueden apagar (hay quien navega con teclado o con voz y los dispararía sin querer)
+  let sinAtajos = false;
+  try { sinAtajos = localStorage.getItem("kairon-sin-atajos") === "1"; } catch (e) { /* sin almacenamiento */ }
+  const botonAtajos = $(".atajos__apagar");
+  if (botonAtajos) {
+    botonAtajos.setAttribute("aria-pressed", String(sinAtajos));
+    botonAtajos.addEventListener("click", () => {
+      sinAtajos = !sinAtajos; botonAtajos.setAttribute("aria-pressed", String(sinAtajos));
+      try { localStorage.setItem("kairon-sin-atajos", sinAtajos ? "1" : "0"); } catch (e) { /* sin almacenamiento */ }
+    });
+  }
   let tecleado = "";
   window.addEventListener("keydown", (e) => {
     const campo = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
@@ -801,6 +817,7 @@
     const tecla = e.key.toLowerCase();
     if (e.key.length === 1) { tecleado = (tecleado + tecla).slice(-6); if (tecleado === "kairos") { tecleado = ""; mechon(); return; } }
     if (e.key === "?") { e.preventDefault(); verAtajos(!atajos.classList.contains("visible")); }
+    else if (sinAtajos) { /* atajos de una tecla apagados desde la ayuda */ }
     else if (tecla === "a" && !tecleado.endsWith("ka")) { simular(); }
     else if (tecla === "p") {
       const activo = html.classList.toggle("presentacion");
@@ -924,7 +941,7 @@
     if (mechonActivo) return;
     mechonActivo = true;
     const el = document.createElement("button");
-    el.type = "button"; el.className = "mechon"; el.setAttribute("aria-label", "καιρός");
+    el.type = "button"; el.className = "mechon"; el.lang = "el";
     el.innerHTML = '<span lang="el">καιρός</span>';
     document.body.append(el);
     let agarrado = false;

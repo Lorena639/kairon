@@ -1,5 +1,6 @@
 /* KAIRON · «Una noche de guardia» · hoja de estilos de la portada
-   La portada es una noche entera, del anochecer al amanecer, y el scroll es el reloj.
+   La portada es una noche entera, del anochecer al amanecer, y el scroll es el reloj. Va después de css/kairon.css,
+   que trae las fuentes, los colores y las piezas comunes (cabecera, botones, pie…).
 
    Capas, de atrás hacia delante (todas en el mismo contexto de apilamiento, por eso <main> y .acto no
    llevan z-index):
@@ -7,183 +8,16 @@
      1  .titular__cielo   el titular: queda DETRÁS de la tierra y asoma tras las crestas
      2  .tierra           fijo: el lienzo WebGL del territorio (transparente por arriba)
      3  contenido         todo lo que se lee
-     30 .horas, .controles   ·   40 .cabecera   ·   60 .menu-movil
+     30 .horas   ·   40 .cabecera   ·   60 .menu-movil
 
    Sin JavaScript, sin WebGL o con «menos movimiento» la página se lee igual: cada acto pinta su propio
    fondo. La clase .peli (la pone js/noche.js) activa la película: actos transparentes sobre el cielo fijo
    y escenas que se quedan en pantalla mientras avanza la hora.
 
-   Índice: 1 fuentes · 2 tokens · 3 base · 4 capas · 5 piezas · 6 cabecera y regla de horas · 7 actos de noche
-           8 actos de día · 9 anochece y pie · 10 película · 11 movimiento reducido · 12 estrecho · 13 impresión */
+   Índice: 1 capas fijas · 2 regla de horas · 3 actos de noche · 4 actos de día · 5 vuelve la noche
+           6 película · 7 pantallas estrechas · 8 impresión */
 
-/* ---------- 1. Fuentes (alojadas aquí; licencia SIL OFL 1.1, ver fonts/OFL.txt) ---------- */
-@font-face {
-  font-family: "Cinzel";
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url(../fonts/cinzel-latin-1.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url(../fonts/eb-garamond-latin-wght-normal.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: italic;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url(../fonts/eb-garamond-latin-wght-italic.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* El griego de EB Garamond, para escribir καιρός como se escribe */
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url(../fonts/eb-garamond-greek-wght-normal.woff2) format("woff2");
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url(../fonts/jetbrains-mono-latin-3.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* ---------- 2. Tokens ---------- */
-:root {
-  /* Marca */
-  --noche: #0b0f14;
-  --noche-2: #111823;
-  --marfil: #f8f5ee;
-  --marfil-2: #efe9dc;
-  --papel: #fffdf8;
-  --oro: #d4af7a;
-  --oro-vivo: #f1dcb0;
-  --oro-oscuro: #8c6b3f;
-  --oro-tinta: #6b4f28;   /* el dorado oscuro que sí llega a AA sobre marfil */
-  --cian: #35c6d6;
-  --rojo: #ff5a4d;
-  --tinta: #12161d;
-
-  /* El cielo de la hora: los cambia js/noche.js; estos valores son los del anochecer */
-  --cielo-alto: #06090f;
-  --cielo-medio: #0b1220;
-  --cielo-bajo: #1a2740;
-  --estrellas: 1;
-  --sol: 0;
-  --sol-color: 241, 207, 150;
-
-  /* Tipografía */
-  --f-titulo: "Cinzel", "Trajan Pro", "Times New Roman", serif;
-  --f-texto: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --f-dato: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --t-titular: clamp(2.4rem, 12.6vw, 15rem);
-  --t-capitular: clamp(2.2rem, 5.2vw, 5.2rem);
-  --t-voz-grande: clamp(2rem, 4.5vw, 4.9rem);
-  --t-voz: clamp(1.3rem, 1.85vw, 1.95rem);
-  --t-cuerpo: clamp(1.18rem, 1.3vw, 1.42rem);
-  --t-nota: clamp(1rem, 1.05vw, 1.12rem);
-  --t-dato: 0.8em;
-
-  /* Espacio y movimiento */
-  --margen: clamp(20px, 4.6vw, 80px);
-  --aire: clamp(72px, 12.5vh, 156px);
-  --salida: cubic-bezier(0.16, 1, 0.3, 1);
-  --entrada: cubic-bezier(0.7, 0, 0.84, 0);
-  --regla: 44px; /* alto de la regla de horas */
-}
-
-/* ---------- 3. Base ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-
-html {
-  overflow-x: clip;
-  color-scheme: dark;
-  background: var(--noche);
-  scrollbar-color: var(--oro-oscuro) var(--noche);
-  scrollbar-width: thin;
-  -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 90px;
-}
-
-html:not(.lenis) { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--noche);
-  color: var(--marfil);
-  font-family: var(--f-texto);
-  font-size: var(--t-cuerpo);
-  line-height: 1.48;
-  font-kerning: normal;
-  font-variant-numeric: oldstyle-nums proportional-nums;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  overflow-x: clip;
-}
-
-::selection { background: var(--oro); color: var(--noche); }
-
-:focus-visible {
-  outline: 2px solid var(--oro-vivo);
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
-.dia :focus-visible, [data-luz="dia"] .cabecera :focus-visible { outline-color: var(--tinta); }
-
-img, svg, canvas { display: block; max-width: 100%; }
-h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
-ul, ol { padding: 0; list-style: none; }
-a { color: inherit; }
-button, input, textarea { font: inherit; color: inherit; }
-b, strong { font-weight: 600; }
-code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-variant-numeric: tabular-nums lining-nums; letter-spacing: -0.01em; }
-[hidden] { display: none !important; }
-
-.oculto {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.salto {
-  position: fixed;
-  left: 16px;
-  top: -80px;
-  z-index: 100;
-  padding: 12px 18px;
-  background: var(--oro);
-  color: var(--noche);
-  font-family: var(--f-titulo);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: top 0.3s var(--salida);
-}
-
-.salto:focus { top: 16px; }
-
-/* ---------- 4. Capas fijas ---------- */
+/* ---------- 1. Capas fijas ---------- */
 .cielo {
   position: fixed;
   inset: 0;
@@ -345,296 +179,7 @@ main { position: relative; }
 /* Sin JavaScript no hay reloj que poner en hora: la frase se retira */
 .sin-js .ahora, .sin-js .pie__cierre { display: none; }
 
-/* ---------- 5. Piezas ---------- */
-.marco {
-  position: relative;
-  z-index: 3;
-  width: min(100% - 2 * var(--margen), 1360px);
-  margin-inline: auto;
-}
-
-/* La voz que narra: Garamond grande, sin alardes */
-.voz {
-  font-weight: 400;
-  font-size: var(--t-voz);
-  line-height: 1.32;
-  max-width: 34ch;
-  text-wrap: pretty;
-}
-
-.voz--grande {
-  font-size: var(--t-voz-grande);
-  line-height: 1.04;
-  letter-spacing: -0.012em;
-  max-width: 17ch;
-  text-wrap: balance;
-}
-
-.voz em, .capitular em, .titular em { font-style: normal; color: var(--oro); }
-.dia .capitular em { color: var(--oro-oscuro); }
-
-/* Títulos de sección: Cinzel, capitales con versalitas, como una inscripción */
-.capitular {
-  font-family: var(--f-titulo);
-  font-weight: 500;
-  font-size: var(--t-capitular);
-  line-height: 1.02;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-  max-width: 16ch;
-}
-
-.capitular--menor { font-size: clamp(1.7rem, 3vw, 2.9rem); }
-.capitular--ancho { max-width: 22ch; }
-
-/* Un trozo de frase que no debe partirse por dentro si cabe entero: la línea se corta en la pausa */
-.trozo { display: inline-block; }
-
-/* Líneas que SplitText envuelve para que salgan desde detrás de una línea de horizonte */
-.linea-mascara { overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
-
-/* Etiqueta de honestidad: todo lo simulado o ficticio la lleva */
-.sello {
-  display: inline-block;
-  padding: 5px 12px 4px;
-  border: 1px solid currentColor;
-  font-family: var(--f-texto);
-  font-size: 1.1rem;
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  color: var(--oro);
-}
-
-.sello--tinta { color: var(--oro-tinta); }
-
-/* Sobre el terreno, el sello lleva su propio fondo para que las líneas no lo tachen */
-.instante .sello, .libro .sello { background: rgba(6, 9, 15, 0.86); }
-
-/* Botones: placas rectas, no píldoras */
-.boton {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7em;
-  min-height: 52px;
-  padding: 14px 26px 13px;
-  border: 1px solid var(--oro);
-  border-radius: 2px;
-  background: transparent;
-  color: var(--marfil);
-  font-family: var(--f-titulo);
-  font-weight: 600;
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  line-height: 1.1;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  overflow: hidden;
-  isolation: isolate;
-  transition: color 0.35s var(--salida), border-color 0.35s var(--salida), transform 0.2s var(--salida);
-}
-
-/* Al pasar por encima, el oro sube desde abajo como una luz que se enciende */
-.boton::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--oro);
-  transform: translateY(101%);
-  transition: transform 0.45s var(--salida);
-}
-
-.boton:hover, .boton:focus-visible { color: var(--noche); }
-.boton:hover::before, .boton:focus-visible::before { transform: translateY(0); }
-.boton:active { transform: translateY(1px); }
-
-.boton--oro { background: var(--oro); color: var(--noche); }
-.boton--oro::before { background: var(--oro-vivo); }
-
-.boton--tinta { border-color: var(--tinta); background: var(--tinta); color: var(--marfil); }
-.boton--tinta::before { background: var(--oro-tinta); }
-.boton--tinta:hover, .boton--tinta:focus-visible { color: var(--marfil); border-color: var(--oro-tinta); }
-
-.boton[disabled] { opacity: 0.55; cursor: default; }
-
-/* Enlace de texto. La flecha (.enlace--sigue) solo donde el relato continúa en otra parte */
-.enlace {
-  display: inline-block;
-  font-style: italic;
-  font-size: 1.08em;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.24em;
-  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
-  transition: text-decoration-color 0.3s, color 0.3s;
-}
-
-.enlace--sigue::after {
-  content: "\2192";
-  display: inline-block;
-  margin-left: 0.4em;
-  font-style: normal;
-  transition: transform 0.4s var(--salida);
-}
-
-.enlace:hover, .enlace:focus-visible { text-decoration-color: currentColor; color: var(--oro-vivo); }
-.dia .enlace:hover, .dia .enlace:focus-visible { color: var(--oro-tinta); }
-.enlace--sigue:hover::after, .enlace--sigue:focus-visible::after { transform: translateX(0.35em); }
-
-.acciones {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 18px 30px;
-}
-
-/* ---------- 6. Cabecera, regla de horas y controles ---------- */
-.cabecera {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  gap: clamp(16px, 2.4vw, 40px);
-  padding: 20px var(--margen);
-  transition: transform 0.6s var(--salida), background-color 0.4s, color 0.4s;
-}
-
-/* Un velo del color de la hora, para que el menú se lea sobre lo que pase por debajo */
-.cabecera::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 -28px;
-  z-index: -1;
-  background: linear-gradient(180deg, var(--cielo-alto) 20%, transparent);
-  opacity: 0.86;
-  pointer-events: none;
-}
-
-.cabecera--oculta { transform: translateY(calc(-100% - 44px)); }
-
-.cabecera__logo { position: relative; display: block; flex: none; }
-.logo { width: auto; height: clamp(38px, 3.6vw, 50px); transition: opacity 0.5s; }
-.logo--dia { position: absolute; left: 0; top: 50%; height: 108%; transform: translateY(-50%); opacity: 0; }
-[data-luz="dia"] .logo--noche { opacity: 0; }
-[data-luz="dia"] .logo--dia { opacity: 1; }
-
-.cabecera__nav { margin-left: auto; }
-
-.menu {
-  display: flex;
-  align-items: center;
-  gap: clamp(12px, 1.7vw, 30px);
-  font-size: 1.08rem;
-  white-space: nowrap;
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.1em;
-}
-
-.menu a {
-  position: relative;
-  display: block;
-  padding: 8px 0;
-  text-decoration: none;
-  opacity: 0.84;
-  transition: opacity 0.3s;
-}
-
-.menu a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4px;
-  height: 1px;
-  background: var(--oro);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.45s var(--salida);
-}
-
-.menu a:hover, .menu a:focus-visible { opacity: 1; }
-.menu a:hover::after, .menu a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
-
-.menu__idioma a { padding: 4px 10px 3px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); }
-.menu__idioma a::after { display: none; }
-
-.cabecera__cta { min-height: 44px; padding: 11px 20px 10px; font-size: 0.74rem; }
-
-[data-luz="dia"] .cabecera { color: var(--tinta); }
-[data-luz="dia"] .cabecera .boton { color: var(--tinta); border-color: var(--oro-oscuro); }
-[data-luz="dia"] .cabecera .boton:hover { color: var(--marfil); }
-[data-luz="dia"] .cabecera .boton::before { background: var(--tinta); }
-
-.menu-boton {
-  display: none;
-  position: relative;
-  flex: none;
-  width: 46px;
-  height: 46px;
-  margin-left: auto;
-  border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-  border-radius: 2px;
-  background: transparent;
-  cursor: pointer;
-}
-
-.menu-boton span {
-  position: absolute;
-  left: 13px;
-  width: 18px;
-  height: 1.5px;
-  background: currentColor;
-  transition: transform 0.4s var(--salida), top 0.4s var(--salida);
-}
-
-.menu-boton span:nth-child(1) { top: 18px; }
-.menu-boton span:nth-child(2) { top: 26px; }
-.menu-abierto .menu-boton span:nth-child(1) { top: 22px; transform: rotate(45deg); }
-.menu-abierto .menu-boton span:nth-child(2) { top: 22px; transform: rotate(-45deg); }
-
-.menu-movil {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: grid;
-  align-content: center;
-  gap: 36px;
-  padding: 96px var(--margen) 48px;
-  background: var(--noche);
-  color: var(--marfil);
-  clip-path: inset(0 0 100% 0);
-  visibility: hidden;
-  transition: clip-path 0.7s var(--salida), visibility 0s 0.7s;
-}
-
-.menu-abierto .menu-movil { clip-path: inset(0); visibility: visible; transition: clip-path 0.7s var(--salida); }
-.menu-abierto .cabecera { z-index: 70; color: var(--marfil); }
-.menu-abierto .cabecera::before { opacity: 0; }
-.menu-abierto .logo--noche { opacity: 1; }
-.menu-abierto .logo--dia { opacity: 0; }
-
-.menu-movil ul { display: grid; gap: 6px; }
-
-.menu-movil a {
-  display: block;
-  padding: 6px 0;
-  font-family: var(--f-titulo);
-  font-size: clamp(2rem, 9vw, 3.4rem);
-  line-height: 1.1;
-  text-decoration: none;
-}
-
-.menu-movil a:hover, .menu-movil a:focus-visible { color: var(--oro); }
-.menu-movil p { font-style: italic; opacity: 0.7; }
-
+/* ---------- 2. Regla de horas ---------- */
 /* La regla de horas: una línea de tiempo al pie de la pantalla. La marca avanza con el scroll. */
 .horas {
   position: fixed;
@@ -696,7 +241,7 @@ main { position: relative; }
   font-family: var(--f-dato);
   font-size: 0.66rem;
   letter-spacing: 0.02em;
-  opacity: 0.46;
+  opacity: 0.72;
   transition: opacity 0.3s;
 }
 
@@ -765,56 +310,6 @@ main { position: relative; }
 }
 
 .horas__acto { display: none; }
-
-.controles {
-  display: flex;
-  flex: none;
-  gap: 8px;
-}
-
-.control {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  transition: border-color 0.3s, color 0.3s;
-}
-
-.control svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.control:hover, .control[aria-pressed="true"] { border-color: var(--oro); color: var(--oro); }
-[data-luz="dia"] .control:hover, [data-luz="dia"] .control[aria-pressed="true"] { border-color: var(--oro-tinta); color: var(--oro-tinta); }
-.control--sonido .onda { opacity: 0.3; transition: opacity 0.3s; }
-.control--sonido[aria-pressed="true"] .onda { opacity: 1; }
-
-.atajos {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(6, 9, 15, 0.82);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-
-.atajos.visible { opacity: 1; visibility: visible; }
-
-.atajos__caja {
-  width: min(100%, 520px);
-  padding: 34px 38px;
-  border: 1px solid var(--oro-oscuro);
-  background: var(--noche);
-}
-
-.atajos__titulo { margin-bottom: 20px; font-family: var(--f-titulo); font-size: 1.3rem; color: var(--oro); }
-.atajos dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 22px; }
-.atajos dt { font-family: var(--f-dato); font-size: 0.86rem; color: var(--oro-vivo); }
 
 /* ---------- 7. Actos de noche ---------- */
 /* Sin película, cada acto trae su fondo; con ella son transparentes y el cielo fijo hace el resto */
@@ -1113,6 +608,10 @@ main { position: relative; }
 
 /* --- 06:45 Amanece --- */
 .amanecer { padding-inline: var(--margen); background: linear-gradient(180deg, var(--noche) 0%, #3a3550 22%, #c59a66 52%, var(--oro) 70%, var(--marfil) 100%); }
+
+/* Sin película el texto del amanecer va sobre el degradado de la propia sección: tinta donde el fondo ya es claro */
+html:not(.peli) .amanecer__frase:last-child { color: var(--tinta); }
+.sin-js .simular { display: none; }
 
 .amanecer__escena {
   position: relative;
@@ -1474,110 +973,6 @@ main { position: relative; }
 .persona__enlaces a { text-decoration-thickness: 1px; text-underline-offset: 0.24em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: color 0.3s; }
 .persona__enlaces a:hover, .persona__enlaces a:focus-visible { color: var(--oro-vivo); }
 
-.pie {
-  position: relative;
-  padding: var(--aire) 0 calc(var(--regla) + 34px);
-  background: var(--noche);
-}
-
-.pie__marco {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(36px, 7vw, 130px);
-  align-items: start;
-}
-
-.pie__llamada { display: grid; gap: clamp(20px, 3.4vh, 34px); }
-/* La última línea de la página: la hora de verdad, sobre la tierra a oscuras */
-.pie__cierre {
-  position: relative;
-  z-index: 3;
-  max-width: none;
-  margin: clamp(110px, 24vh, 240px) auto 0;
-  padding-inline: var(--margen);
-  text-align: center;
-}
-
-.pie__cierre time { font-size: 0.86em; color: var(--oro-vivo); }
-
-.formulario { display: grid; gap: 26px; }
-.formulario__nota, .formulario__privacidad { font-size: var(--t-nota); line-height: 1.45; color: color-mix(in srgb, var(--marfil) 78%, transparent); }
-.formulario__privacidad a { color: var(--oro-vivo); }
-.formulario__campo { position: relative; display: grid; gap: 4px; }
-.formulario label { font-size: 1.08rem; font-variant-caps: all-small-caps; letter-spacing: 0.09em; color: color-mix(in srgb, var(--marfil) 80%, transparent); }
-
-.formulario input, .formulario textarea {
-  width: 100%;
-  padding: 8px 0 10px;
-  border: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--marfil) 46%, transparent);
-  border-radius: 0;
-  background: transparent;
-  color: var(--marfil);
-  font-size: var(--t-voz);
-  line-height: 1.25;
-  caret-color: var(--oro);
-}
-
-.formulario textarea { min-height: 5.2em; resize: vertical; }
-.formulario input:focus-visible, .formulario textarea:focus-visible { outline: none; border-bottom-color: var(--oro); box-shadow: 0 1px 0 var(--oro); }
-.formulario [aria-invalid="true"] { border-bottom-color: var(--rojo); }
-.formulario__error { margin-top: -18px; font-size: var(--t-nota); color: #ff9b8f; }
-
-.formulario__trampa {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.formulario__aviso { font-family: var(--f-dato); font-size: 0.84rem; color: var(--cian); }
-.formulario .boton { justify-self: start; }
-
-.pie__base {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 20px clamp(24px, 4vw, 60px);
-  align-items: center;
-  margin-top: clamp(150px, 34vh, 340px);
-  padding-top: 26px;
-  border-top: 1px solid color-mix(in srgb, var(--marfil) 18%, transparent);
-}
-
-.pie__base::before {
-  content: "";
-  position: absolute;
-  inset: 0 -50vw calc(-1 * var(--regla) - 40px);
-  z-index: -1;
-  background: color-mix(in srgb, var(--cielo-alto) 99%, transparent);
-}
-
-.pie__emblema { width: clamp(84px, 8vw, 124px); height: auto; }
-.pie__derechos { font-size: var(--t-nota); line-height: 1.5; color: color-mix(in srgb, var(--marfil) 74%, transparent); text-wrap: pretty; }
-.pie__derechos a { color: inherit; }
-.pie__derechos a:hover { color: var(--oro-vivo); }
-.pie__redes { display: flex; align-items: center; gap: 10px 22px; white-space: nowrap; }
-.pie__redes .pie__persona a { display: inline; width: auto; height: auto; padding: 12px 0; border: 0; border-radius: 0; font-size: 1.08rem; font-variant-caps: all-small-caps; letter-spacing: 0.08em; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
-
-.pie__redes a, .pie__redes span {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid color-mix(in srgb, var(--marfil) 26%, transparent);
-  border-radius: 50%;
-  transition: border-color 0.3s, color 0.3s;
-}
-
-.pie__redes svg { width: 18px; height: 18px; fill: currentColor; }
-.pie__redes a:hover, .pie__redes a:focus-visible { border-color: var(--oro); color: var(--oro); }
-.pie__redes span { opacity: 0.42; cursor: help; }
-
-.avisos { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
-.avisos:empty { display: none; }
-.aviso-red { font-style: italic; color: var(--oro-vivo); }
-
 /* Sorpresa: al escribir «kairos», el instante cruza la pantalla y solo se le puede agarrar mientras pasa */
 .mechon {
   position: fixed;
@@ -1595,28 +990,6 @@ main { position: relative; }
   cursor: pointer;
   will-change: transform;
 }
-
-.aviso-flotante {
-  position: fixed;
-  left: 50%;
-  bottom: calc(var(--regla) + 28px);
-  z-index: 70;
-  width: max-content;
-  max-width: min(92vw, 34rem);
-  padding: 14px 22px 13px;
-  border: 1px solid var(--oro-oscuro);
-  background: var(--noche);
-  color: var(--marfil);
-  font-style: italic;
-  font-size: var(--t-voz);
-  line-height: 1.25;
-  text-align: center;
-  opacity: 0;
-  transform: translate(-50%, 16px);
-  transition: opacity 0.6s var(--salida), transform 0.6s var(--salida);
-}
-
-.aviso-flotante.visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- 10. La película (la activa js/noche.js con la clase .peli en <html>) ---------- */
 .peli .cielo, .peli .tierra, .peli .rotulos, .peli .horas { display: block; }
@@ -1672,23 +1045,11 @@ main { position: relative; }
 .peli--quieta .anochece__frase { position: static; }
 .peli--quieta .farol, .peli--quieta .cielo__hora { display: none; }
 
-/* Modo presentación (tecla P): más grande y con más contraste, para el proyector */
-.presentacion { --t-cuerpo: clamp(1.4rem, 1.7vw, 1.8rem); --t-voz: clamp(1.6rem, 2.3vw, 2.4rem); --t-nota: 1.25rem; }
 .presentacion .farol { display: none; }
 
-/* ---------- 11. Movimiento reducido ---------- */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.lenis) { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-}
-
-.menos-movimiento *, .menos-movimiento *::before, .menos-movimiento *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-
-/* ---------- 12. Pantallas estrechas ---------- */
+/* ---------- Pantallas estrechas ---------- */
 @media (max-width: 1080px) {
-  .cabecera__nav, .cabecera__cta { display: none; }
-  .menu-boton { display: block; }
-  .libro__marco, .informe__marco, .metodo__marco, .faq__marco, .pie__marco { grid-template-columns: minmax(0, 1fr); }
+  .libro__marco, .informe__marco, .metodo__marco, .faq__marco { grid-template-columns: minmax(0, 1fr); }
   .faq__marco .capitular { position: static; }
   .libro__mas { grid-column: auto; }
   .hoja { transform: none; }
@@ -1701,9 +1062,6 @@ main { position: relative; }
   .oficios__lista, .testimonios__lista, .equipo__lista { grid-template-columns: minmax(0, 1fr); }
   .oficios .marco { grid-template-columns: minmax(0, 1fr); row-gap: clamp(20px, 3vh, 34px); }
   .oficio { padding-bottom: clamp(34px, 6vh, 56px); }
-  .pie__base { grid-template-columns: auto 1fr; }
-  .pie__redes { flex-wrap: wrap; justify-content: flex-end; }
-  .pie__derechos { grid-column: 1 / -1; grid-row: 2; }
 
   /* La tabla de planes pasa a fichas: cada fila, un bloque */
   .tarifas thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
@@ -1736,11 +1094,10 @@ main { position: relative; }
 @media (max-width: 560px) {
   :root { --regla: 34px; }
   .persona { grid-template-columns: minmax(0, 1fr); }
-  .acciones { gap: 16px 22px; }
 }
 
-/* ---------- 13. Impresión ---------- */
+/* ---------- Impresión ---------- */
 @media print {
-  .cielo, .tierra, .rotulos, .farol, .cabecera, .horas, .controles, .menu-movil, .atajos { display: none !important; }
-  body, .acto, .pie { background: #fff !important; color: #000 !important; }
+  .cielo, .tierra, .rotulos, .farol, .horas { display: none !important; }
+  .acto { background: #fff !important; color: #000 !important; }
 }
