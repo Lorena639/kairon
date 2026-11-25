@@ -1395,6 +1395,34 @@ body.cursor--enlace .cursor__anillo {
   resize: vertical;
 }
 
+/* Validación campo a campo (js/main.js): el error queda escrito bajo el campo */
+.formulario__nota,
+.formulario__privacidad {
+  margin: 0;
+  color: var(--suave);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.formulario__privacidad a {
+  color: var(--oro-claro);
+}
+
+.formulario__error {
+  margin: -18px 0 0; /* pegado a su campo pese al hueco de la rejilla */
+  color: #ff9b8f; /* 8,6:1 sobre el fondo oscuro */
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.formulario__error::before {
+  content: "⚠ ";
+}
+
+.formulario [aria-invalid="true"] {
+  border-bottom-color: #ff9b8f;
+}
+
 .formulario__aviso {
   font-family: var(--mono);
   font-size: 0.75rem;

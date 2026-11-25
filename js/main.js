@@ -37,6 +37,7 @@ const TXT = CA ? {
   ],
   enCurso: "Atac en curs…", otroAtaque: "▶ Simular un altre atac",
   enviando: "Enviant…", recibido: "Demo completada", avisoForm: "> Demostració: aquest formulari encara no envia les dades.", pedir: "Demana una auditoria",
+  errores: { falta: "Aquest camp és obligatori.", correo: "Escriu un correu vàlid, com ara nom@empresa.cat.", largo: "És massa llarg: com a màxim {n} caràcters.", resumen: "Revisa els camps marcats." },
   latencia: "latència",
 } : {
   eventos: [
@@ -60,6 +61,7 @@ const TXT = CA ? {
   ],
   enCurso: "Ataque en curso…", otroAtaque: "▶ Simular otro ataque",
   enviando: "Enviando…", recibido: "Demo completada", avisoForm: "> Demostración: este formulario todavía no envía los datos.", pedir: "Pide una auditoría",
+  errores: { falta: "Este campo es obligatorio.", correo: "Escribe un correo válido, como nombre@empresa.es.", largo: "Es demasiado largo: como máximo {n} caracteres.", resumen: "Revisa los campos marcados." },
   latencia: "latencia",
 };
 
@@ -1124,12 +1126,44 @@ if (botonCompartir && navigator.share) {
   });
 }
 
-/* ---------- 8. Formulario ---------- */
+/* ---------- 8. Formulario ----------
+   Validación propia, campo a campo: el mensaje queda escrito bajo el campo (aria-describedby) y el campo
+   se marca con aria-invalid. Antes se usaban las burbujas del navegador, que desaparecen enseguida y no
+   siempre las anuncia el lector de pantalla. Lo escrito no se borra si hay errores. */
 const formulario = document.querySelector(".formulario");
+const camposFormulario = formulario ? [...formulario.querySelectorAll("input:not([name=web]), textarea")] : [];
+camposFormulario.forEach((campo) => {
+  const error = document.createElement("p");
+  error.className = "formulario__error";
+  error.id = "error-" + campo.id;
+  error.hidden = true;
+  campo.closest(".formulario__campo").after(error); // fuera del campo: la línea dorada (::after) sigue bajo el input
+  campo.setAttribute("aria-describedby", error.id);
+  // Al corregir, el error se quita en cuanto el campo vuelve a ser válido
+  campo.addEventListener("input", () => { if (campo.getAttribute("aria-invalid") === "true") validarCampo(campo); });
+  campo.addEventListener("blur", () => { if (campo.value) validarCampo(campo); });
+});
+function validarCampo(campo) {
+  // Un nombre o un mensaje hecho solo de espacios no cuenta como escrito
+  const valor = campo.value.trim();
+  let mensaje = "";
+  if (campo.required && !valor) mensaje = TXT.errores.falta;
+  else if (campo.type === "email" && valor && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valor)) mensaje = TXT.errores.correo;
+  else if (campo.maxLength > 0 && valor.length > campo.maxLength) mensaje = TXT.errores.largo.replace("{n}", campo.maxLength);
+  const error = document.getElementById("error-" + campo.id);
+  if (error) { error.textContent = mensaje; error.hidden = !mensaje; }
+  if (mensaje) campo.setAttribute("aria-invalid", "true"); else campo.removeAttribute("aria-invalid");
+  return !mensaje;
+}
+function validarFormulario() {
+  const malos = camposFormulario.filter((c) => !validarCampo(c));
+  if (malos.length) malos[0].focus();
+  return !malos.length;
+}
 if (formulario) {
   formulario.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!formulario.checkValidity()) return formulario.reportValidity();
+    if (!validarFormulario()) return;
     const trampa = formulario.querySelector('input[name="web"]');
     if (trampa && trampa.value) { formulario.reset(); return; } // bot detectado: no se hace nada
     const aviso = formulario.querySelector(".formulario__aviso");

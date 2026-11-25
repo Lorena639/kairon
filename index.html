@@ -597,17 +597,18 @@
         </div>
 
         <form class="formulario revelar" action="#" method="post" novalidate>
+          <p class="formulario__nota">Todos los campos son obligatorios salvo la empresa.</p>
           <div class="formulario__campo">
             <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" maxlength="80" required>
           </div>
           <div class="formulario__campo">
             <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" autocomplete="email" required>
+            <input type="email" id="email" name="email" autocomplete="email" maxlength="120" required>
           </div>
           <div class="formulario__campo">
             <label for="empresa">Empresa (opcional)</label>
-            <input type="text" id="empresa" name="empresa" autocomplete="organization">
+            <input type="text" id="empresa" name="empresa" autocomplete="organization" maxlength="120">
           </div>
           <div class="formulario__campo formulario__trampa" aria-hidden="true">
             <label for="web">No rellenes este campo</label>
@@ -615,8 +616,9 @@
           </div>
           <div class="formulario__campo">
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" required></textarea>
+            <textarea id="mensaje" name="mensaje" maxlength="2000" required></textarea>
           </div>
+          <p class="formulario__privacidad">Usamos tus datos solo para responderte. Este formulario es una demostración y no envía nada. <a href="legal.html#esta-web">Qué hacemos con tus datos</a>.</p>
           <p class="formulario__aviso" role="status" hidden></p>
           <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Pide una auditoría">Pide una auditoría</span></button>
         </form>
