@@ -571,7 +571,7 @@
     if (hayPeli) {
       gsap.set(lineas, { y: "64vh" });
       tl.to(E, { entrada: 1, duration: 2.6, ease: "power2.out" }, 0)
-        .to(lineas, { y: 0, duration: 1.9, ease: K_OUT, stagger: 0.16 }, 0.35);
+        .to(lineas, { y: 0, duration: 2.3, ease: "power3.out", stagger: 0.18 }, 0.3);
     } else if (haySplit) {
       tl.from(lineas, { yPercent: 105, duration: 1.2, stagger: 0.12 }, 0);
     }
@@ -671,7 +671,7 @@
     e.preventDefault();
     ir(d.getBoundingClientRect().top + window.scrollY + (d.id === "incidente" || d.id === "guardia" || d.id === "amanecer" ? 2 : 0));
     if (d.id === "contacto") setTimeout(() => { const n = $("#nombre"); if (n) n.focus({ preventScroll: true }); }, 1300);
-    history.replaceState(null, "", a.getAttribute("href"));
+    try { history.replaceState(null, "", a.getAttribute("href")); } catch (err) { /* en un marco aislado no se puede: no pasa nada */ }
   });
   function ir(y, duracion) {
     y = limita(y, 0, maxScroll);
