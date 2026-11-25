@@ -17,6 +17,7 @@
    - Anillo del tiempo (manifiesto): 60 marcas de chronos y una sola de kairos, la dorada.
    - Escudo (Responder) e informe sellado (Demostrar): las facetas de los servicios.
    - Visor del SOC: anillos de alcance y avisos que laten sobre el globo con cada alerta simulada.
+   - Mapa de ataques: cada alerta llega como un arco rojo desde fuera del globo y se vuelve dorado al bloquearse.
    - Incidente: el rojo se extiende por la red y una onda dorada lo contiene.
 
    Quién lo dirige: js/v6.js le pasa una lista de claves { y: scroll en px, pose: nombre } y la
@@ -399,6 +400,117 @@
     m.visible = false;
     grupo.add(m);
     avisos.push({ m, t: 1 });
+  }
+
+  /* --- Mapa de ataques: cada alerta llega como un arco desde fuera del globo ---
+     Rojo mientras viaja (la amenaza), con una cabeza brillante y una estela; al llegar, el nodo late
+     y el arco entero se vuelve dorado (bloqueado) y se apaga. Es la misma simulación que la consola
+     del SOC: el arco sale de los eventos "alerta" (js/v6.js, kairon-alerta) y del simulador. */
+  const ARCO_N = 90;
+  const geoArcoT = new Float32Array(ARCO_N);
+  for (let k = 0; k < ARCO_N; k++) geoArcoT[k] = k / (ARCO_N - 1);
+  const arcos = [];
+  for (let i = 0; i < 5; i++) {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(ARCO_N * 3), 3));
+    geo.setAttribute("aT", new THREE.BufferAttribute(geoArcoT, 1));
+    const mat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, depthTest: false, ...LUZ,
+      uniforms: { uCabeza: { value: 0 }, uBloqueo: { value: 0 }, uApagado: { value: 0 },
+        uRojo: { value: new THREE.Color(0xff4d4d) }, uOro: { value: new THREE.Color(0xfff3d6) } },
+      vertexShader: "attribute float aT; varying float vT; void main(){ vT = aT; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+      fragmentShader: `
+        uniform float uCabeza; uniform float uBloqueo; uniform float uApagado; uniform vec3 uRojo; uniform vec3 uOro; varying float vT;
+        ${GLSL_LUZ}
+        void main(){
+          float delante = step(vT, uCabeza);
+          float estela = smoothstep(uCabeza - 0.5, uCabeza, vT) * delante;      // se apaga detrás de la cabeza
+          float cabeza = smoothstep(uCabeza - 0.04, uCabeza, vT) * delante;     // punto brillante en el frente
+          float viaje = estela * 0.75 + cabeza * 1.6;
+          float llegado = mix(viaje, 0.6 + cabeza * 0.4, uBloqueo);            // al bloquearse, se ve el arco entero
+          float a = llegado * (1.0 - uApagado);
+          gl_FragColor = luz(mix(uRojo, uOro, uBloqueo) * a);
+          #include <colorspace_fragment>
+        }`,
+    });
+    const linea = new THREE.Line(geo, mat);
+    linea.visible = false;
+    linea.renderOrder = 9;
+    linea.frustumCulled = false;
+    // La línea de WebGL mide 1 px: encima va una estela de puntos con brillo, como los nodos del globo
+    const matP = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, depthTest: false, ...LUZ,
+      uniforms: mat.uniforms, // mismos uniformes: se mueven juntos
+      vertexShader: `
+        attribute float aT; uniform float uCabeza; uniform float uBloqueo; varying float vA;
+        void main(){
+          float delante = step(aT, uCabeza);
+          float estela = smoothstep(uCabeza - 0.32, uCabeza, aT) * delante;
+          vA = estela * (1.0 - uBloqueo * 0.7);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = (1.5 + 7.0 * estela * estela) * ${(Math.min(window.devicePixelRatio || 1, 1.5)).toFixed(2)};
+        }`,
+      fragmentShader: `
+        uniform float uBloqueo; uniform float uApagado; uniform vec3 uRojo; uniform vec3 uOro; varying float vA;
+        ${GLSL_LUZ}
+        void main(){
+          float d = length(gl_PointCoord - 0.5);
+          float disco = smoothstep(0.5, 0.0, d);
+          gl_FragColor = luz(mix(uRojo, uOro, uBloqueo) * disco * vA * (1.0 - uApagado) * 1.4);
+          #include <colorspace_fragment>
+        }`,
+    });
+    const puntos = new THREE.Points(geo, matP);
+    puntos.renderOrder = 9;
+    puntos.frustumCulled = false;
+    linea.add(puntos);
+    grupo.add(linea);
+    arcos.push({ linea, mat, t: 2, nodo: 0 });
+  }
+  const vArcoA = new THREE.Vector3(), vArcoB = new THREE.Vector3(), vArcoC = new THREE.Vector3(), vArcoP = new THREE.Vector3(), vArcoD = new THREE.Vector3();
+  const mArcoInv = new THREE.Matrix4();
+  // Curva de Bézier cuadrática: sale de un punto lejano a un lado del nodo y cae sobre él por encima del globo
+  function lanzarArco(indice) {
+    const arco = arcos.find((a) => a.t >= 2);
+    if (!arco) return false;
+    const n = nodos[indice];
+    vArcoB.set(n.x, n.y, n.z);                                      // destino (normal del nodo)
+    vArcoP.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).cross(vArcoB).normalize(); // de lado
+    // Siempre desde la derecha de la pantalla: el texto de la portada está a la izquierda y los arcos lo cruzaban
+    mArcoInv.copy(grupo.matrixWorld).invert();
+    vArcoD.setFromMatrixColumn(camara.matrixWorld, 0).transformDirection(mArcoInv);
+    if (vArcoP.dot(vArcoD) < 0) vArcoP.negate();
+    vArcoA.copy(vArcoB).multiplyScalar(0.35).addScaledVector(vArcoP, 1).normalize().multiplyScalar(RADIO * 2.0); // origen
+    vArcoC.copy(vArcoA).normalize().add(vArcoB).normalize().multiplyScalar(RADIO * 2.15); // control: por fuera del globo, para que se vea la curva
+    vArcoB.multiplyScalar(RADIO * 1.01);
+    const pos = arco.linea.geometry.getAttribute("position");
+    for (let k = 0; k < ARCO_N; k++) {
+      const t = k / (ARCO_N - 1), u = 1 - t;
+      pos.setXYZ(k, u * u * vArcoA.x + 2 * u * t * vArcoC.x + t * t * vArcoB.x,
+                    u * u * vArcoA.y + 2 * u * t * vArcoC.y + t * t * vArcoB.y,
+                    u * u * vArcoA.z + 2 * u * t * vArcoC.z + t * t * vArcoB.z);
+    }
+    pos.needsUpdate = true;
+    arco.nodo = indice;
+    arco.t = 0;
+    arco.linea.visible = true;
+    return true;
+  }
+  // t: 0 → 1 viaje (1,1 s); 1 → 1,35 se vuelve dorado; 1,35 → 2 se apaga
+  function actualizarArcos(dt) {
+    let activos = false;
+    arcos.forEach((a) => {
+      if (a.t >= 2) { a.linea.visible = false; return; }
+      activos = true;
+      const antes = a.t;
+      a.t = Math.min(2, a.t + dt * (a.t < 1 ? 1 / 1.1 : 1 / 1.6));
+      if (antes < 1 && a.t >= 1) marcarNodo(a.nodo, "alerta");  // impacto: late el nodo
+      const u = a.mat.uniforms;
+      u.uCabeza.value = Math.min(1, suave(Math.min(1, a.t)) * 1.02);
+      u.uBloqueo.value = suave(Math.min(1, Math.max(0, (a.t - 1.05) / 0.3)));
+      u.uApagado.value = suave(Math.min(1, Math.max(0, (a.t - 1.35) / 0.65)));
+    });
+    return activos;
   }
 
   /* --- Escudo (Responder): una malla que se cierra alrededor del globo --- */
@@ -943,7 +1055,8 @@
       geoPaquetes.getAttribute("position").needsUpdate = true;
     }
 
-    // Avisos del SOC
+    // Mapa de ataques (arcos) y avisos del SOC
+    if (actualizarArcos(dt)) sucio = true;
     avisos.forEach((a) => {
       if (a.t >= 1) { a.m.visible = false; return; }
       a.t += dtReal / 1.6;
@@ -1048,18 +1161,32 @@
   requestAnimationFrame(cuadro);
 
   /* ---------- API ---------- */
+  // Una alerta llega primero como un arco desde fuera del globo; el nodo late al llegar (marcarNodo)
   function lanzarAviso(tipo) {
-    const libre = avisos.find((a) => a.t >= 1) || avisos[0];
-    // Se elige un nodo de la cara que mira a la cámara
+    const ataque = tipo === "alerta" && !quieto();
+    const i = elegirNodo(ataque);
+    if (ataque && lanzarArco(i)) { sucio = true; return; }
+    marcarNodo(i, tipo);
+  }
+
+  // Nodo de la cara que mira a la cámara (con algo de azar para que no caiga siempre en el centro).
+  // Para los ataques se prefiere el borde visible del globo: en el centro, el arco y el anillo tapaban el emblema.
+  function elegirNodo(borde) {
     vCam.copy(camara.position).normalize();
     grupo.worldToLocal(vCam.multiplyScalar(RADIO)).normalize();
     let mejor = 0, mejorP = -2;
     for (let k = 0; k < 14; k++) {
       const i = Math.floor(Math.random() * N), n = nodos[i];
-      const p = n.x * vCam.x + n.y * vCam.y + n.z * vCam.z - Math.random() * 0.5;
+      const cara = n.x * vCam.x + n.y * vCam.y + n.z * vCam.z;
+      const p = (borde ? -Math.abs(cara - 0.4) : cara) - Math.random() * 0.5;
       if (p > mejorP) { mejorP = p; mejor = i; }
     }
-    const n = nodos[mejor];
+    return mejor;
+  }
+
+  function marcarNodo(indice, tipo) {
+    const libre = avisos.find((a) => a.t >= 1) || avisos[0];
+    const n = nodos[indice];
     libre.m.position.set(n.x * RADIO * 1.01, n.y * RADIO * 1.01, n.z * RADIO * 1.01);
     libre.m.lookAt(n.x * 10, n.y * 10, n.z * 10); // dentro del grupo: mira hacia fuera del globo
     libre.m.material.color.setHex(COLOR_AVISO[tipo] || COLOR_AVISO.ok);
