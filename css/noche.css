@@ -311,6 +311,9 @@ code, time, .dato { font-family: var(--f-dato); font-size: var(--t-dato); font-v
 
 main { position: relative; }
 
+/* Sin JavaScript no hay reloj que poner en hora: la frase se retira */
+.sin-js .ahora, .sin-js .pie__guardia { display: none; }
+
 /* ---------- 5. Piezas ---------- */
 .marco {
   position: relative;
@@ -1250,7 +1253,7 @@ main { position: relative; }
   cursor: help;
 }
 
-.tarifas__precio { white-space: nowrap; color: color-mix(in srgb, currentColor 78%, transparent); }
+.tarifas td.tarifas__precio { white-space: nowrap; color: color-mix(in srgb, currentColor 78%, transparent); }
 .tarifas__precio b { font-size: clamp(1.4rem, 2vw, 1.9rem); font-variant-numeric: lining-nums tabular-nums; color: var(--tinta); }
 
 /* El plan que te corresponde: la fila se vuelve de noche */
@@ -1331,7 +1334,7 @@ main { position: relative; }
   align-items: start;
 }
 
-.faq__marco .capitular { position: sticky; top: 120px; }
+.faq__marco .capitular { position: sticky; top: 120px; font-size: clamp(2rem, 3.9vw, 4rem); }
 .faq__lista { border-top: 1px solid rgba(18, 22, 29, 0.24); }
 .faq__item { border-bottom: 1px solid rgba(18, 22, 29, 0.24); }
 
@@ -1469,9 +1472,17 @@ main { position: relative; }
   grid-template-columns: auto 1fr auto;
   gap: 20px clamp(24px, 4vw, 60px);
   align-items: center;
-  margin-top: clamp(64px, 12vh, 150px);
+  margin-top: clamp(200px, 44vh, 440px);
   padding-top: 26px;
   border-top: 1px solid color-mix(in srgb, var(--marfil) 18%, transparent);
+}
+
+.pie__base::before {
+  content: "";
+  position: absolute;
+  inset: 0 -50vw calc(-1 * var(--regla) - 40px);
+  z-index: -1;
+  background: var(--cielo-alto);
 }
 
 .pie__emblema { width: clamp(84px, 8vw, 124px); height: auto; }
@@ -1578,7 +1589,7 @@ main { position: relative; }
 .peli .amanecer__frase { grid-area: 2 / 1; }
 .peli .amanecer__titulo { grid-area: 1 / 1; }
 
-.peli .anochece__paso { min-height: 130svh; }
+.peli .anochece__paso { min-height: 160svh; }
 .peli .anochece__frase { position: sticky; top: 42svh; }
 
 /* El velo del titular solo hace falta sin película (con ella el texto va sobre el cielo) */

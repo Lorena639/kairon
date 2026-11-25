@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ca" class="sin-js portada-v6" data-raiz="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KAIRON: SOC gestionat per a particulars i empreses. Detectem a temps, responem en el moment just i ho demostrem amb proves.">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark">
+  <!-- Seguretat de la mateixa web: només es carreguen recursos d'aquest lloc (també les fonts); sense scripts en línia -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="KAIRON · El moment just">
+  <meta property="og:description" content="SOC gestionat per a particulars i empreses. Detectar, respondre, demostrar.">
+  <meta property="og:image" content="../img/og-image.jpg">
+  <title>KAIRON · El moment just</title>
+  <link rel="icon" href="../img/favicon.ico">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="alternate" hreflang="es" href="../index.html">
+  <link rel="alternate" hreflang="ca" href="index.html">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../css/fuentes.css?v=20261125a">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KAIRON",
+    "description": "SOC gestionat per a particulars i empreses (empresa fictícia creada per a la pràctica A1-RA1 i el TFG de SMX a Digitech Barcelona).",
+    "url": "ca/index.html",
+    "logo": "../img/kairon-logo-dorado.png",
+    "founder": [
+      { "@type": "Person", "name": "Antonia Lorena Cracana", "jobTitle": "Ciberseguretat i anàlisi forense", "url": "https://github.com/Lorena639" },
+      { "@type": "Person", "name": "João Daniel de Paiva Oliveira", "jobTitle": "Desenvolupament web i sistemes", "url": "https://github.com/jdanioliv" }
+    ],
+    "areaServed": "Barcelona",
+    "knowsAbout": ["SOC", "Wazuh", "anàlisi forense", "resposta a incidents"]
+  }
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20261125a">
+  <!-- Portada v6: estilos propios de la portada inmersiva (se cargan después de la hoja común) -->
+</head>
+<body>
+  <!-- Primer elemento enfocable: saltar directamente al contenido con el teclado -->
+  <a class="salto" href="#contenido">Salta al contingut</a>
+
+  <!-- Capas globales: aurora de fondo, grano y progreso -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="grano" aria-hidden="true"></div>
+  <div class="progreso" aria-hidden="true"></div>
+  <div class="cortina" aria-hidden="true"></div>
+
+  <!-- El mundo del radar: un único lienzo WebGL fijo para toda la portada (js/mundo.js).
+       Si no hay WebGL, aquí mismo se dibuja el radar 2D de reserva. -->
+  <!-- El cel de fons: nebulosa tènue i dos plans d'estrelles amb paral·laxi (els dibuixa js/v6.js; la base és CSS) -->
+  <div class="v6-cielo" aria-hidden="true">
+    <canvas class="v6-cielo__nebulosa"></canvas>
+    <canvas class="v6-cielo__estrellas v6-cielo__estrellas--lejos"></canvas>
+    <canvas class="v6-cielo__estrellas v6-cielo__estrellas--cerca"></canvas>
+  </div>
+
+  <div class="hero__escena mundo" aria-hidden="true"></div>
+
+  <!-- Intro: un punto de oro, el vórtice que forja el logo y la zambullida en la escena (js/intro.js) -->
+  <div class="carga carga--v6" aria-hidden="true">
+    <canvas class="intro__lienzo" aria-hidden="true"></canvas>
+    <span class="intro__lente" aria-hidden="true"></span>
+    <p class="intro__eslogan mono" aria-hidden="true" data-texto="El moment just"></p>
+    <div class="intro__logo oro-metal oro-metal--completo" aria-hidden="true"><img src="../img/relieve/kairon-relieve-logo.png" width="546" height="482" alt=""></div>
+  </div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__anillo" aria-hidden="true"></div>
+
+  <!-- Menú móvil a pantalla completa -->
+  <div class="menu-movil" id="menu-movil" aria-hidden="true">
+    <ul>
+      <li><a href="servicios.html"><span class="mono">01</span>Serveis</a></li>
+      <li><a href="soc.html"><span class="mono">02</span>SOC en directe</a></li>
+      <li><a href="productos.html"><span class="mono">03</span>Productes</a></li>
+      <li><a href="proyectos.html"><span class="mono">04</span>Projectes</a></li>
+      <li><a href="futuro.html"><span class="mono">05</span>Futur</a></li>
+      <li><a href="sobre-mi.html"><span class="mono">06</span>Equip</a></li>
+      <li><a href="contacto.html#contacto"><span class="mono">07</span>Contacte</a></li>
+    </ul>
+    <p class="mono">SOC gestionat per a particulars i empreses</p>
+  </div>
+
+  <a class="arriba" href="#contenido" aria-label="Torna a dalt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+  <!-- Ayuda de atajos para presentar (tecla ?) -->
+  <div class="atajos" id="atajos" aria-hidden="true">
+    <div class="atajos__caja">
+      <span class="mono">Dreceres per presentar</span>
+      <dl>
+        <dt>A</dt><dd>Simular un atac</dd>
+        <dt>↓ / ↑</dt><dd>Parada següent / anterior</dd>
+        <dt>Inici / Fi</dt><dd>Anar a dalt / al contacte</dd>
+        <dt>E</dt><dd>Pàgina de l'equip</dd>
+        <dt>P</dt><dd>Mode presentació (text més gran, sense cursor ni efectes)</dd>
+        <dt>?</dt><dd>Mostrar o amagar aquesta ajuda</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Navegación lateral por puntos (escritorio) -->
+  <nav class="puntos" aria-label="Seccions">
+    <a href="#contenido" data-seccion="hero"><span>Inici</span></a>
+    <a href="#manifiesto" data-seccion="manifiesto"><span>La idea</span></a>
+    <a href="#servicios" data-seccion="servicios"><span>Serveis</span></a>
+    <a href="#soc" data-seccion="soc"><span>SOC en directe</span></a>
+    <a href="#planes" data-seccion="planes"><span>Plans</span></a>
+    <a href="#metodo" data-seccion="metodo"><span>Mètode</span></a>
+    <a href="#incidente" data-seccion="incidente"><span>Incident</span></a>
+    <a href="#testimonios" data-seccion="testimonios"><span>Clients</span></a>
+    <a href="#faq" data-seccion="faq"><span>Preguntes</span></a>
+    <a href="#contacto" data-seccion="contacto"><span>Contacte</span></a>
+  </nav>
+
+  <!-- Controles de experiencia: sonido (apagado por defecto) y reducir movimiento -->
+  <div class="controles" role="group" aria-label="Preferències d'experiència">
+    <button type="button" class="control control--sonido" aria-pressed="false" aria-label="Activa el so ambient"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+    <button type="button" class="control control--movimiento" aria-pressed="false" aria-label="Redueix el moviment"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></button>
+  </div>
+
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="index.html" aria-label="KAIRON, inici" class="oro-metal oro-metal--horizontal">
+        <img class="logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON">
+      </a>
+      <button class="menu-boton" type="button" aria-label="Obre el menú" aria-expanded="false" aria-controls="menu-movil"><span></span><span></span></button>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li class="menu__idioma"><a href="../index.html" lang="es" hreflang="es" aria-label="Versió en castellà">ES</a></li>
+          <li><a href="servicios.html">Serveis</a></li>
+          <li><a href="soc.html">SOC en directe</a></li>
+          <li><a href="productos.html">Productes</a></li>
+          <li><a href="proyectos.html">Projectes</a></li>
+          <li><a href="futuro.html">Futur</a></li>
+          <li><a href="sobre-mi.html">Equip</a></li>
+          <li><a href="contacto.html#contacto" class="boton"><span class="boton__texto" data-texto="Parla amb nosaltres">Parla amb nosaltres</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===== HERO: el globo del radar con el emblema en el centro ===== -->
+    <section class="hero v6-hero" aria-labelledby="titulo-hero" data-punto="hero" data-pose="hero">
+      <!-- Estela de fluido que sigue al cursor (solo con ratón y en pantallas anchas) -->
+      <canvas class="v6-fluido" aria-hidden="true"></canvas>
+      <div class="hero__velo" aria-hidden="true"></div>
+
+      <!-- Registro de eventos en vivo (simulado) -->
+      <aside class="hero__registro" aria-label="Registre d'esdeveniments del SOC (simulat)">
+        <span class="mono">● Registre del SOC · simulat</span>
+        <ul class="hero__registro-lista" aria-live="off"></ul>
+      </aside>
+
+      <div class="contenedor hero__contenido hero__contenido--centro">
+        <h1 class="hero__titular" id="titulo-hero">La seguretat no espera. <em>Nosaltres tampoc.</em></h1>
+
+        <p class="hero__sub hero__sub--centro">Detectem els atacs a temps i responem en l'instant just, amb proves. Vigilància de seguretat professional per a particulars, autònoms i pimes, sense contractar un equip propi.</p>
+        <div class="hero__acciones hero__acciones--centro">
+          <a href="#contacto" class="boton boton--lleno"><span class="boton__texto" data-texto="Demana una auditoria">Demana una auditoria</span></a>
+          <a href="#metodo" class="boton"><span class="boton__texto" data-texto="Com treballem">Com treballem</span></a>
+        </div>
+        <span class="hero__scroll hero__scroll--centro mono">Llisca</span>
+      </div>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__pista">
+        <span class="marquee__item">Detectar <img src="../img/relieve/kairon-relieve-mini.png" alt=""> Respondre <img src="../img/relieve/kairon-relieve-mini.png" alt=""> Demostrar <img src="../img/relieve/kairon-relieve-mini.png" alt=""> <span class="fino">Alertes a l'instant</span> <img src="../img/relieve/kairon-relieve-mini.png" alt=""> <span class="fino">Kairos · l'instant oportú</span> <img src="../img/relieve/kairon-relieve-mini.png" alt=""></span>
+        <span class="marquee__item">Detectar <img src="../img/relieve/kairon-relieve-mini.png" alt=""> Respondre <img src="../img/relieve/kairon-relieve-mini.png" alt=""> Demostrar <img src="../img/relieve/kairon-relieve-mini.png" alt=""> <span class="fino">Alertes a l'instant</span> <img src="../img/relieve/kairon-relieve-mini.png" alt=""> <span class="fino">Kairos · l'instant oportú</span> <img src="../img/relieve/kairon-relieve-mini.png" alt=""></span>
+      </div>
+    </div>
+
+    <!-- ===== MANIFIESTO: kairos frente a chronos (la cámara orbita y aparece el anillo del tiempo) ===== -->
+    <section class="v6-manifiesto" id="manifiesto" aria-label="Què és KAIRON" data-pose="manifiesto1 manifiesto2 manifiesto3" data-fijar="160">
+      <div class="contenedor v6-manifiesto__marco">
+        <div class="v6-manifiesto__frases">
+          <p class="v6-frase">Kairos és l'instant <em>oportú.</em></p>
+          <p class="v6-frase">En seguretat, un minut tard ja és un <em>incident.</em></p>
+          <p class="v6-frase">Vigilem els teus equips per actuar quan de veritat <em>importa.</em></p>
+        </div>
+        <div class="v6-manifiesto__pie">
+          <dl class="v6-tiempos">
+            <div><dt class="mono">Chronos</dt><dd>El temps que passa, minut a minut.</dd></div>
+            <div class="v6-tiempos__kairos"><dt class="mono">Kairos</dt><dd>L'instant que ho canvia tot.</dd></div>
+          </dl>
+          <p class="v6-manifiesto__nota">Un centre d'operacions de seguretat a la mida d'un particular, un autònom o una pime: alertes automàtiques a qualsevol hora, analistes en horari laboral i informes que s'entenen.</p>
+          <p class="enlace-detalle"><a class="servicio__mas mono" href="kairos.html">La idea de KAIRON, en detall →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICIOS: tres tarjetas; el globo gira y muestra una faceta por servicio ===== -->
+    <section class="v6-servicios" id="servicios" aria-labelledby="titulo-servicios" data-pose="detectar responder demostrar" data-fijar="180">
+      <div class="contenedor v6-servicios__marco">
+        <header class="v6-servicios__cabecera">
+          <h2 class="v6-titulo" id="titulo-servicios">Detectar, respondre, demostrar</h2>
+          <ol class="v6-servicios__indice" aria-hidden="true"><li class="activo">Detectar</li><li>Respondre</li><li>Demostrar</li></ol>
+        </header>
+        <div class="v6-servicios__rejilla">
+
+          <article class="v6-servicio" id="detectar" data-pose-movil="detectar">
+            <span class="v6-servicio__numero mono" aria-hidden="true">01</span>
+            <h3 class="v6-servicio__titulo">Detectar</h3>
+            <p class="v6-servicio__texto">Agents als teus equips envien l'activitat al nostre SOC. Regles pròpies separen el soroll del que importa: accessos sospitosos, malware, força bruta, comportaments anòmals.</p>
+            <ul class="v6-servicio__datos"><li>Wazuh</li><li>Regles pròpies</li><li>Equips i xarxa</li><li>Alertes a l'instant</li></ul>
+            <a class="servicio__mas mono" href="servicios.html#detectar">Veure tot el detall →</a>
+          </article>
+
+          <article class="v6-servicio" id="responder" data-pose-movil="responder">
+            <span class="v6-servicio__numero mono" aria-hidden="true">02</span>
+            <h3 class="v6-servicio__titulo">Respondre</h3>
+            <p class="v6-servicio__texto">La resposta automàtica bloqueja l'atacant en segons. Després recollim les proves de l'equip afectat amb cadena de custòdia: processos, connexions, usuaris, persistència. Cada prova amb hora UTC, número de cas i hash SHA-256.</p>
+            <ul class="v6-servicio__datos"><li>Bloqueig automàtic</li><li>Cadena de custòdia</li><li>SHA-256</li><li>Eina pròpia</li></ul>
+            <a class="servicio__mas mono" href="servicios.html#responder">Veure tot el detall →</a>
+          </article>
+
+          <article class="v6-servicio" id="demostrar" data-pose-movil="demostrar">
+            <span class="v6-servicio__numero mono" aria-hidden="true">03</span>
+            <h3 class="v6-servicio__titulo">Demostrar</h3>
+            <p class="v6-servicio__texto">Cronologia del que ha passat, què s'ha fet i com evitar que es repeteixi, en llenguatge clar per a direcció i útil per a auditories. A més: auditoria de seguretat, hardening i formació per a la plantilla.</p>
+            <ul class="v6-servicio__datos"><li>Informe clar</li><li>RGPD</li><li>Hardening</li><li>Formació anti-phishing</li></ul>
+            <div class="v6-servicio__acciones">
+              <a class="servicio__mas mono" href="servicios.html#demostrar">Veure tot el detall →</a>
+              <a href="informe.html" class="boton"><span class="boton__texto" data-texto="Veure un informe d'exemple">Veure un informe d'exemple</span></a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOC EN VIVO (simulado): la cámara baja a vista cenital y el barrido se vuelve el visor ===== -->
+    <section class="soc v6-soc" id="soc" aria-labelledby="titulo-soc">
+      <div class="contenedor v6-soc__visor" data-pose="soc">
+        <h2 class="v6-titulo" id="titulo-soc">Així es veu la nostra vigilància</h2>
+        <p class="v6-soc__entrada">L'escombratge que has vist girar és aquest visor. Cada alerta de la consola batega sobre el globus en el moment en què entra.</p>
+        <p class="v6-sello mono">Dades simulades</p>
+      </div>
+      <div class="contenedor" data-pose="socPanel">
+        <div class="panel v6-panel">
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Esdeveniments per minut</span><span class="panel__punto"></span></div>
+            <canvas class="panel__grafica" aria-label="Gràfica d'esdeveniments per minut (simulada)"></canvas>
+          </div>
+
+          <div class="panel__bloque">
+            <div class="panel__cabecera"><span class="mono">Analitzats avui</span></div>
+            <p class="panel__grande" data-vivo="1240318">1.240.318<small>esdeveniments</small></p>
+            <p class="panel__nota">Processats per les regles del SOC des de les 00:00.</p>
+          </div>
+
+          <div class="panel__bloque">
+            <div class="panel__cabecera"><span class="mono">Deteccions per tipus</span></div>
+            <ul class="panel__barras">
+              <li data-w="78"><span>Força bruta <b>78</b></span><i></i></li>
+              <li data-w="52"><span>Phishing <b>52</b></span><i></i></li>
+              <li data-w="34"><span>Malware <b>34</b></span><i></i></li>
+              <li data-w="21" class="alerta"><span>Persistència <b>21</b></span><i></i></li>
+            </ul>
+          </div>
+
+          <div class="panel__bloque panel__bloque--ancho panel__bloque--mapa">
+            <div class="panel__cabecera"><span class="mono">Mapa d'amenaces</span><span class="panel__punto"></span></div>
+            <canvas class="panel__mapa" data-visual="mapa" aria-label="Atacs entrants neutralitzats al SOC (simulació)"></canvas>
+          </div>
+
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Estat dels sistemes</span><span class="panel__sim mono">Simulació</span></div>
+            <ul class="panel__estados">
+              <li data-sistema="agentes"><span>Agents connectats</span><b>42 / 42</b></li>
+              <li data-sistema="reglas"><span>Regles de detecció</span><b>Operatiu</b></li>
+              <li data-sistema="cortafuegos"><span>Tallafoc</span><b>Operatiu</b></li>
+              <li data-sistema="copias"><span>Còpies de seguretat</span><b>Operatiu</b></li>
+            </ul>
+          </div>
+
+          <div class="panel__bloque panel__bloque--ancho">
+            <div class="panel__cabecera"><span class="mono">Últimes alertes</span><span class="panel__sim mono">Simulació</span></div>
+            <div class="panel__barra-filtros">
+              <div class="panel__filtros" role="group" aria-label="Últimes alertes">
+                <button type="button" class="filtro activo" data-filtro="todas" aria-pressed="true">Totes <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="alerta" aria-pressed="false">Alertes <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="aviso" aria-pressed="false">Avisos <b>0</b></button>
+                <button type="button" class="filtro" data-filtro="ok" aria-pressed="false">OK <b>0</b></button>
+              </div>
+              <button type="button" class="filtro panel__pausa" aria-pressed="false">Pausa</button>
+            </div>
+            <div class="panel__consola">
+              <ul class="panel__alertas" data-filtro="todas" data-lenis-prevent></ul>
+              <aside class="panel__detalle" aria-live="polite"><p class="panel__nota">Selecciona una alerta per veure'n el detall.</p></aside>
+            </div>
+          </div>
+        </div>
+        <p class="enlace-detalle"><a class="servicio__mas mono" href="soc.html">El SOC, explicat →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== PLANES (los cuatro del proyecto; precios de una empresa ficticia) ===== -->
+    <section class="v6-planes" id="planes" aria-labelledby="titulo-planes" data-pose="fondo">
+      <div class="contenedor">
+        <h2 class="v6-titulo" id="titulo-planes">Quatre plans, la mateixa tecnologia</h2>
+        <p class="v6-planes__entrada">Canvia quanta atenció humana reps, no la vigilància. Les alertes i el bloqueig automàtic funcionen a qualsevol hora; els analistes treballen de dilluns a divendres, de 9 a 19 h. No prometem vigilància humana 24/7.</p>
+        <ul class="v6-planes__lista">
+          <li class="v6-plan">
+            <h3>Vigia</h3>
+            <p class="v6-plan__precio"><b>9,90 €</b> al mes, IVA inclòs</p>
+            <p class="v6-plan__para">1 o 2 equips: un particular o un autònom. Regles estàndard i guia pas a pas.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 2 dies laborables</p>
+          </li>
+          <li class="v6-plan">
+            <h3>Sentinella</h3>
+            <p class="v6-plan__precio"><b>24,90 €</b> al mes, IVA inclòs</p>
+            <p class="v6-plan__para">Una família o un autònom amb fins a 5 equips. Un analista revisa les alertes en horari laboral.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 24 h (crítiques, 8 h)</p>
+          </li>
+          <li class="v6-plan">
+            <h3>Guardià</h3>
+            <p class="v6-plan__precio"><b>64,90 €</b> al mes, IVA inclòs</p>
+            <p class="v6-plan__para">Teletreball o microempresa, fins a 10 equips. Contenció remota i un cas forense a l'any.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 4 h</p>
+          </li>
+          <li class="v6-plan v6-plan--empresa">
+            <h3>Ègida</h3>
+            <p class="v6-plan__precio">des de <b>590 €</b> al mes + IVA</p>
+            <p class="v6-plan__para">Pimes de 10 a 100 equips. Regles a mida, equip dedicat i auditoria inicial gratuïta.</p>
+            <p class="v6-plan__ejemplo">Exemple: una empresa amb 60 equips paga <b>1.010 € + IVA</b> al mes, uns 16,83 € per equip.</p>
+            <p class="v6-plan__respuesta mono">Analista: en 1 h</p>
+          </li>
+        </ul>
+        <p class="v6-planes__nota"><span class="v6-sello mono">Empresa fictícia · preus del projecte</span> <a class="servicio__mas mono" href="preguntas.html#precios">Comparar els quatre plans →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== EL MÉTODO (sección clara, scrollytelling) ===== -->
+    <section class="metodo claro v6-cortina" id="metodo" aria-labelledby="titulo-metodo" data-pose="oculto">
+      <div class="topografia" aria-hidden="true"></div>
+      <div class="contenedor metodo__grid">
+        <div class="metodo__fijo">
+          <h2 class="metodo__titulo" id="titulo-metodo">Vigilar. <br>Actuar. <br><span class="metodo__destacado">Demostrar.</span></h2>
+          <div class="metodo__emblema">
+            <img src="../img/kairon-emblema-oro_oscuro.png" width="260" height="243" alt="" loading="lazy" decoding="async">
+            <span class="metodo__anillo"></span>
+            <span class="metodo__anillo metodo__anillo--2"></span>
+          </div>
+        </div>
+        <ol class="metodo__pasos">
+          <li class="metodo__paso" data-n="01">
+            <h3>Conèixer els teus equips</h3>
+            <p>Una primera revisió: quins equips tens, quines dades importen i per on et podrien atacar. Sense tecnicismes. Al pla Ègida és una auditoria inicial gratuïta.</p>
+          </li>
+          <li class="metodo__paso" data-n="02">
+            <h3>Instal·lar la vigilància</h3>
+            <p>Un agent lleuger a cada equip envia l'activitat al SOC. Regles ajustades al teu cas perquè les alertes importin.</p>
+          </li>
+          <li class="metodo__paso" data-n="03">
+            <h3>Respondre a temps</h3>
+            <p>El bloqueig automàtic actua en segons i a qualsevol hora. L'analista confirma l'incident, t'avisa i recull les proves amb cadena de custòdia.</p>
+          </li>
+          <li class="metodo__paso" data-n="04">
+            <h3>Demostrar-ho amb un informe</h3>
+            <p>Cronologia, evidències amb SHA-256 i recomanacions clares. El que necessita una auditoria i el que entén una gerència.</p>
+          </li>
+        </ol>
+        <p class="enlace-detalle v6-enlaces"><a class="servicio__mas mono" href="metodo.html">El mètode pas a pas →</a> <a class="servicio__mas mono" href="laboratorio.html">El laboratori on ho demostrem →</a></p>
+      </div>
+    </section>
+
+
+    <!-- ===== ANATOMÍA DE UN INCIDENTE + SIMULADOR: el rojo se extiende por el globo y una onda dorada lo contiene ===== -->
+    <section class="incidente v6-incidente" id="incidente" aria-labelledby="titulo-incidente" data-pose="incidente1 incidente2 incidente3">
+      <div class="contenedor">
+        <div class="incidente__cabecera">
+          <div>
+            <h2 class="v6-titulo" id="titulo-incidente">De l'atac a l'informe</h2>
+            <p class="v6-sello mono">Cas d'exemple · temps objectiu</p>
+          </div>
+          <div class="hero__acciones v6-sin-margen">
+            <button class="boton boton--lleno simular" type="button"><span class="boton__texto" data-texto="▶ Simular un atac">▶ Simular un atac</span></button>
+            <a href="informe.html" class="boton"><span class="boton__texto" data-texto="Veure l'informe del cas">Veure l'informe del cas</span></a>
+          </div>
+        </div>
+
+        <ol class="pasos">
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:00</span>
+            <h3>Entrada</h3>
+            <p>Un correu de phishing. Algú hi fa clic i s'executa un fitxer sense signatura en un portàtil.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:01</span>
+            <h3>Detecció</h3>
+            <p>L'agent de l'equip envia l'esdeveniment a Wazuh. Una regla pròpia el marca com a execució sospitosa amb persistència.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:03</span>
+            <h3>Contenció</h3>
+            <p>S'aïlla el portàtil de la xarxa i es bloqueja la IP de comandament i control al tallafoc.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:05</span>
+            <h3>Forense</h3>
+            <p>La nostra eina recull processos, connexions, usuaris i persistència. Cada prova amb hora UTC, número de cas i SHA-256.</p>
+          </li>
+          <li class="paso revelar">
+            <span class="paso__hora mono">00:40</span>
+            <h3>Informe</h3>
+            <p>Cronologia clara del que ha passat, què s'ha fet i com evitar que es repeteixi. A punt per a direcció i auditories.</p>
+          </li>
+        </ol>
+        <!-- Si et passa a tu: què passa i què has de fer, en llenguatge de direcció -->
+        <div class="v6-sitepasa revelar" aria-labelledby="titulo-sitepasa">
+          <h3 class="v6-sitepasa__titulo" id="titulo-sitepasa">Si et passa a tu</h3>
+          <ul class="v6-sitepasa__lista">
+            <li>
+              <p class="v6-sitepasa__cuando mono">A qualsevol hora</p>
+              <p>El bloqueig automàtic actua en segons, també un dissabte a les 3:00. Les proves queden guardades des d'aquell moment.</p>
+            </li>
+            <li>
+              <p class="v6-sitepasa__cuando mono">En horari laboral</p>
+              <p>Un analista confirma que és real i et truca: en 1 hora amb Égida, en 4 amb Guardián. No et truquem per cada alerta, només quan cal decidir alguna cosa.</p>
+            </li>
+            <li>
+              <p class="v6-sitepasa__cuando mono">Si hi ha dades personals</p>
+              <p>El RGPD dona 72 hores per avisar l'autoritat de protecció de dades (l'AEPD). La decisió i l'avís són teus; el nostre informe et dona la cronologia i les proves.</p>
+            </li>
+          </ul>
+        </div>
+        <p class="enlace-detalle revelar"><a class="servicio__mas mono" href="incidente.html">L'incident minut a minut →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== MEDIDAS: lo que se comprueba en el laboratorio (objetivos del proyecto, no cifras de clientes) ===== -->
+    <section class="v6-medidas" id="medidas" aria-labelledby="titulo-medidas" data-pose="fondo">
+      <div class="contenedor">
+        <h2 class="v6-titulo" id="titulo-medidas">El que mesurem</h2>
+        <p class="v6-sello mono">Objectius del laboratori · no són xifres de clients</p>
+        <ul class="v6-medidas__lista">
+          <li class="v6-medida">
+            <p class="v6-medida__valor"><span class="v6-cifra" data-cifra="&lt; 60">&lt; 60</span><small>s</small></p>
+            <p class="v6-medida__texto">De cinc errors d'accés seguits a l'alerta de força bruta.</p>
+          </li>
+          <li class="v6-medida">
+            <p class="v6-medida__valor"><span class="v6-cifra" data-cifra="≤ 30">≤ 30</span><small>s</small></p>
+            <p class="v6-medida__texto">De l'alerta al bloqueig automàtic de la IP atacant.</p>
+          </li>
+          <li class="v6-medida">
+            <p class="v6-medida__valor"><span class="v6-cifra" data-cifra="10">10</span><small>min</small></p>
+            <p class="v6-medida__texto">Fins al desbloqueig automàtic, sense deixar regles òrfenes al tallafoc.</p>
+          </li>
+          <li class="v6-medida">
+            <p class="v6-medida__valor"><span class="v6-cifra" data-cifra="100">100</span><small>%</small></p>
+            <p class="v6-medida__texto">De les proves amb hora UTC, número de cas i hash SHA-256.</p>
+          </li>
+        </ul>
+        <p class="enlace-detalle"><a class="servicio__mas mono" href="laboratorio.html">Com és el laboratori →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== TESTIMONIOS (ficticios, contenido de ejemplo para la práctica) ===== -->
+    <section class="testimonios claro v6-cortina" id="testimonios" aria-labelledby="titulo-testimonios" data-pose="oculto">
+      <div class="topografia" aria-hidden="true"></div>
+      <div class="contenedor">
+        <div class="incidente__cabecera">
+          <div>
+            <h2 class="equipo__titulo revelar" id="titulo-testimonios">El que diuen de nosaltres</h2>
+            <p class="v6-sello mono">Testimonis ficticis, escrits per a la pràctica</p>
+          </div>
+          <div class="testimonios__flechas">
+            <button type="button" class="flecha" data-dir="-1" aria-label="Testimoni anterior">←</button>
+            <button type="button" class="flecha" data-dir="1" aria-label="Testimoni següent">→</button>
+          </div>
+        </div>
+      </div>
+      <div class="testimonios__pista arrastrable" data-arrastra="Arrossega" aria-label="Testimonis">
+        <blockquote class="testimonio revelar">
+          <p>Ens van avisar d'un correu sospitós abans que ningú hi fes clic. Ens van estalviar un disgust enorme.</p>
+          <footer><strong>Marta R.</strong><span class="mono">Directora administrativa · logística</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>L'informe de l'incident va ser clar i útil. Per fi vam entendre què havia passat a la nostra xarxa.</p>
+          <footer><strong>Jordi P.</strong><span class="mono">Gerent · despatx d'arquitectura</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>Un ransomware va entrar per un portàtil i al cap de pocs minuts ja estava aïllat. Sense KAIRON hauríem aturat la fàbrica.</p>
+          <footer><strong>Núria S.</strong><span class="mono">Responsable de TI · indústria</span></footer>
+        </blockquote>
+        <blockquote class="testimonio revelar">
+          <p>Parlen clar. Sé què tinc, quin risc corro i què he de fer. És el que necessita una empresa petita.</p>
+          <footer><strong>Álvaro M.</strong><span class="mono">CEO · comerç en línia</span></footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== PREGUNTAS FRECUENTES ===== -->
+    <section class="faq" id="faq" aria-labelledby="titulo-faq" data-pose="fondo">
+      <div class="contenedor faq__grid">
+        <div>
+          <h2 class="equipo__titulo revelar" id="titulo-faq">El que ens pregunten</h2>
+        </div>
+        <div class="faq__lista revelar">
+          <details class="faq__item" open>
+            <summary>Què és un SOC i per què el necessito?</summary>
+            <p>Un centre d'operacions de seguretat: persones i eines que vigilen els teus equips i responen si passa alguna cosa. La majoria d'atacs entren per correu o contrasenyes febles, i sense vigilància es descobreixen setmanes després.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Vigileu les 24 hores?</summary>
+            <p>Les alertes i el bloqueig automàtic funcionen a qualsevol hora. Els analistes treballen de dilluns a divendres, de 9 a 19 h: no prometem vigilància humana 24/7.</p>
+          </details>
+          <details class="faq__item">
+            <summary>He d'instal·lar res?</summary>
+            <p>Un agent lleuger a cada equip (Windows, macOS o Linux) que envia l'activitat al SOC. No alenteix l'ordinador i no llegeix els teus documents.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Què passa quan detecteu un atac?</summary>
+            <p>La resposta automàtica bloqueja l'atacant en segons. Després depèn del pla: et guiem pas a pas o un analista conté l'equip a distància, recull les proves amb cadena de custòdia i redacta l'informe en llenguatge clar.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Les proves serveixen davant d'una auditoria o una denúncia?</summary>
+            <p>Cada evidència porta hora UTC, número de cas i empremta SHA-256, de manera que es pot comprovar que no ha estat alterada. <a href="informe.html">Mira un informe d'exemple</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>I aquesta web, està protegida?</summary>
+            <p>Sí, prediquem amb l'exemple: política de seguretat de contingut (CSP) que només permet recursos d'aquest lloc, sense scripts en línia, política de referrer estricta, enllaços externs amb <code>rel="noopener"</code>, formulari amb camp trampa anti-spam i ni una galeta ni cap rastrejador.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Quant costa?</summary>
+            <p>Des de 9,90 € al mes amb IVA inclòs (pla Vigia, 1 o 2 equips) fins al pla Ègida per a empreses, des de 590 € al mes més IVA. <a href="preguntas.html#precios">Mira la comparativa dels quatre plans</a>.</p>
+          </details>
+          <p class="enlace-detalle revelar"><a class="servicio__mas mono" href="preguntas.html">Totes les preguntes i els plans →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EQUIPO ===== -->
+    <section class="equipo" aria-labelledby="titulo-equipo" data-pose="fondo">
+      <div class="contenedor">
+        <h2 class="equipo__titulo revelar" id="titulo-equipo">Qui vigila</h2>
+        <div class="equipo__lista">
+          <article class="persona persona--giro revelar" tabindex="0">
+            <img class="persona__avatar" src="../img/avatar-lorena.svg" width="96" height="96" alt="Avatar de la Lorena" loading="lazy" decoding="async">
+            <h3>Antonia Lorena Cracana</h3>
+            <p class="persona__rol mono">Ciberseguretat i anàlisi forense</p>
+            <p class="persona__texto">Detecció, resposta a incidents i recollida de proves amb cadena de custòdia. Munta el laboratori i afina les regles del SOC.</p>
+            <div class="persona__enlaces">
+              <a href="https://github.com/Lorena639" target="_blank" rel="noopener">GitHub</a>
+              <a href="../antonia-lorena-cracana/ca/">Portfolio</a>
+              <a href="sobre-mi.html">Perfil</a>
+            </div>
+            <div class="persona__dorso" aria-hidden="true">
+              <span class="mono">Expedient · OP-02</span>
+              <ul>
+                <li><span>Rol</span><b>Ciberseguretat i forense</b></li>
+                <li><span>Base</span><b>Digitech · Barcelona</b></li>
+                <li><span>Stack</span><b>Wazuh · Sysmon · Python</b></li>
+                <li><span>Estat</span><b class="ok">Operativa</b></li>
+              </ul>
+            </div>
+          </article>
+          <article class="persona persona--giro revelar" tabindex="0">
+            <img class="persona__avatar" src="../img/avatar-dani.svg" width="96" height="96" alt="Avatar del João Daniel" loading="lazy" decoding="async">
+            <h3>João Daniel de Paiva Oliveira</h3>
+            <p class="persona__rol mono">Desenvolupament web i sistemes</p>
+            <p class="persona__texto">Arquitectures web netes, scripting modular i maquinari. Lidera el front-end i l'optimització dels equips.</p>
+            <div class="persona__enlaces">
+              <a href="https://github.com/jdanioliv" target="_blank" rel="noopener">GitHub</a>
+              <a href="../joao-daniel-oliveira/">Portfolio</a>
+              <a href="sobre-mi.html">Perfil</a>
+            </div>
+            <div class="persona__dorso" aria-hidden="true">
+              <span class="mono">Expedient · OP-01</span>
+              <ul>
+                <li><span>Rol</span><b>Desenvolupament web i sistemes</b></li>
+                <li><span>Base</span><b>Digitech · Barcelona</b></li>
+                <li><span>Stack</span><b>HTML · CSS · JS · Git</b></li>
+                <li><span>Estat</span><b class="ok">Operatiu</b></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO: la cámara se aleja y todo queda en calma ===== -->
+    <section class="contacto v6-contacto" id="contacto" aria-labelledby="titulo-contacto" data-pose="contacto">
+      <div class="contenedor contacto__grid">
+        <div>
+          <h2 class="contacto__titulo revelar" id="titulo-contacto">Saps què passa <em class="oro-brillo">ara</em> a la teva xarxa?</h2>
+          <p class="hero__sub revelar v6-contacto__sub">Explica'ns quins equips tens i et diem, sense tecnicismes, per on començar. L'auditoria inicial és gratuïta al pla Ègida per a empreses.</p>
+        </div>
+
+        <form class="formulario revelar" action="#" method="post" novalidate>
+          <p class="formulario__nota">Tots els camps són obligatoris excepte l'empresa.</p>
+          <div class="formulario__campo">
+            <label for="nombre">Nom</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="email">Correu electrònic</label>
+            <input type="email" id="email" name="email" autocomplete="email" maxlength="120" required>
+          </div>
+          <div class="formulario__campo">
+            <label for="empresa">Empresa (opcional)</label>
+            <input type="text" id="empresa" name="empresa" autocomplete="organization" maxlength="120">
+          </div>
+          <div class="formulario__campo formulario__trampa" aria-hidden="true">
+            <label for="web">No omplis aquest camp</label>
+            <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="formulario__campo">
+            <label for="mensaje">Missatge</label>
+            <textarea id="mensaje" name="mensaje" maxlength="2000" required></textarea>
+          </div>
+          <p class="formulario__privacidad">Fem servir les teves dades només per respondre't. Aquest formulari és una demostració i no envia res. <a href="legal.html#esta-web">Què fem amb les teves dades</a>.</p>
+          <p class="formulario__aviso" role="status" hidden></p>
+          <button type="submit" class="boton boton--lleno"><span class="boton__texto" data-texto="Demana una auditoria">Demana una auditoria</span></button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <span class="pie__gigante" aria-hidden="true"><img src="../img/relieve/kairon-relieve-wordmark.png" alt="" width="512" height="138" loading="lazy" decoding="async"></span>
+      <div class="pie__fila">
+        <span class="oro-metal oro-metal--horizontal"><img class="pie__logo" src="../img/relieve/kairon-relieve-horizontal.png" width="224" height="60" alt="KAIRON"></span>
+        <ul class="pie__redes">
+          <li><a href="https://github.com/lorena639/kairon" target="_blank" rel="noopener" aria-label="GitHub de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a></li>
+          <li><a href="#" aria-label="X de KAIRON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.3 3h6.5l4.5 6z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="pie__estado mono" aria-live="off">
+        <span><i class="pie__punto"></i>Demo del SOC · simulada</span>
+        <span>Barcelona · <time class="pie__reloj">--:--:--</time></span>
+        <span class="pie__latencia">latència 12 ms</span>
+      </div>
+      <div class="avisos" aria-live="polite">
+        <button type="button" class="boton instalar" hidden><span class="boton__texto" data-texto="⤓ Instal·la l'app">⤓ Instal·la l'app</span></button>
+        <span class="aviso-red mono" hidden>● Sense connexió · es mostra la versió desada</span>
+      </div>
+      <p class="pie__derechos">&copy; 2026 KAIRON · Empresa fictícia creada per a la pràctica A1-RA1 · Digitech Barcelona · Sense galetes ni rastrejadors · <a href="../antonia-lorena-cracana/ca/">Portfolio d'Antonia Lorena Cracana</a> · <a href="../joao-daniel-oliveira/">Portfolio de João Daniel</a></p>
+    </div>
+  </footer>
+
+  <!-- Librerías guardadas en local, para no depender de internet: GSAP 3.15.1 (con ScrollTrigger, SplitText y
+       ScrambleText), Lenis, Three.js 0.160 y postprocessing. fluido.js es una adaptación de
+       WebGL-Fluid-Simulation (MIT) para la estela del cursor. -->
+  <script src="../js/vendor/gsap.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/SplitText.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/ScrambleTextPlugin.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/lenis.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/three.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/postprocessing.min.js?v=20261125a" defer></script>
+  <script src="../js/vendor/fluido.js?v=20261125a" defer></script>
+  <script src="../js/intro.js?v=20261125a" defer></script>
+  <script src="../js/escena.js?v=20261125a" defer></script>
+  <script src="../js/mundo.js?v=20261125a" defer></script>
+  <script src="../js/visuales.js?v=20261125a" defer></script>
+  <script src="../js/main.js?v=20261125a" defer></script>
+  <script src="../js/v6.js?v=20261125a" defer></script>
+</body>
+</html>

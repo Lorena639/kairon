@@ -34,7 +34,7 @@
     calma: "Tot en calma.", desvelo: "Seguim desperts.", manana: "Ja hem repassat la nit.",
     eventos: [["ok", "Agent WS-07 en línia"], ["ok", "Integritat de fitxers verificada"], ["aviso", "5 intents d'accés fallits · srv-01"], ["ok", "Regles actualitzades (v2026.11)"], ["aviso", "USB desconegut a WS-12"], ["ok", "Còpia de seguretat completada"], ["aviso", "Port 3389 exposat · fw-edge"], ["ok", "Empremta SHA-256 registrada · cas 0427"], ["ok", "Agent WS-03 en línia"], ["ok", "Certificat renovat · correu"]],
     etiquetas: { ok: "OK", aviso: "Avís", alerta: "Alerta", bloqueo: "Bloqueig" },
-    planes: { vigia: "Vigía", centinela: "Centinela", guardian: "Guardián", egida: "Égida" },
+    planes: { vigia: "Vigia", centinela: "Sentinella", guardian: "Guardià", egida: "Ègida" },
     conIva: "al mes, IVA inclòs.", masIva: (e) => `al mes + IVA, uns ${e} per equip.`,
     errores: { falta: "Aquest camp és obligatori.", correo: "Escriu un correu vàlid, com ara nom@empresa.cat.", largo: "És massa llarg: com a màxim {n} caràcters." },
     enviando: "Enviant…", recibido: "Rebut (demostració)", avisoForm: "Demostració: aquest formulari encara no envia les dades.",
@@ -194,8 +194,8 @@
     k(ep(0.1), { tono: 3.2, hora: H(44, 30), alfa: 0.85, camY: 14, camZ: 12, cabeceo: -0.8, mapa: 0.6 });
     k(ep(0.42), { tono: 2.4, hora: H(45, 30), alfa: 1, camY: 3.4, camZ: 0, cabeceo: 0.02, mapa: 0, viaje: 62, luces: 0.5 });
     k(ep(0.8), { tono: 0.5, hora: H(46, 30), viaje: 64, camY: 2.6, cabeceo: 0.24, luces: 1, baliza: 1 });
-    k(s.contacto.top, { tono: 0.7, hora: H(46, 59), viaje: 68, cabeceo: 0.21 });
-    k(maxScroll, { tono: 1, hora: H(47, 0), viaje: 74, cabeceo: 0.12 });
+    k(s.contacto.top, { tono: 0.7, hora: H(46, 59), viaje: 68, cabeceo: 0.27 });
+    k(maxScroll, { tono: 1, hora: H(47, 0), viaje: 74, cabeceo: 0.17 });
 
     if (q) {
       // Sin movimiento: la cámara no vuela. Se queda en el encuadre de lectura y solo cambia el color.
@@ -440,7 +440,7 @@
       escenaInstante(y, e);
       escenaAmanecer(y);
       astroEn(y, S.tono);
-      if (fraseNoche) frase(fraseNoche, tramo(y, rango.anochece[0], rango.anochece[1]), 0.3, 0.96);
+      if (fraseNoche) frase(fraseNoche, tramo(y, rango.anochece[0], rango.anochece[1]), 0.28, 0.8);
       // En la portada, la etiqueta de la baliza
       rotulos[0].obj = Math.max(rotulos[0].obj, (1 - paso(y, vh * 0.12, vh * 0.4)) * E.entrada);
     }
@@ -476,6 +476,8 @@
     if (vInstante > 0.01) { e.veloX = 0.16; e.veloY = 0.4; e.veloRX = 0.42; e.veloRY = 0.52; e.velo = vInstante * 0.96; }
     else if (vGuardia > 0.01) { e.veloX = 0.2; e.veloY = 0.44; e.veloRX = 0.46; e.veloRY = 0.42; e.velo = vGuardia * 0.94; }
     else { e.veloX = 0.17; e.veloY = 0.76; e.veloRX = 0.42; e.veloRY = 0.44; e.velo = vPortada * 0.94; }
+    // En pantallas estrechas el texto ocupa todo el ancho: la penumbra también
+    if (window.innerWidth < 860) { e.veloX = 0.5; e.veloRX = 0.9; if (vInstante <= 0.01 && vGuardia <= 0.01) { e.veloY = 0.62; e.veloRY = 0.5; } }
     e.grosor = (html.classList.contains("presentacion") ? 1.25 : 0.78) * Math.pow(Math.min(window.devicePixelRatio || 1, 2), 0.8);
 
     // El farol: ilumina y levanta la tierra donde apunta el cursor
@@ -493,6 +495,7 @@
     // Etiquetas colgadas de las luces
     rotulos.forEach((r) => {
       r.o += (r.obj - r.o) * 0.14;
+      if (Math.abs(r.obj - r.o) > 0.004) sucio = true; else r.o = r.obj;
       if (r.o < 0.01) { if (r.el.style.opacity !== "0") r.el.style.opacity = "0"; return; }
       T.proyectar(r.i, pos);
       r.el.style.opacity = (pos.visible ? r.o : 0).toFixed(3);
@@ -500,7 +503,7 @@
     });
 
     // El titular se pone tras las crestas al empezar a bajar
-    if (titularCielo && y < vh * 1.4 && !q) titularCielo.style.transform = `translate3d(0,${(y * 1.5).toFixed(1)}px,0)`;
+    if (titularCielo && y < vh * 1.4 && !q) titularCielo.style.transform = `translate3d(0,${(y * 2.3).toFixed(1)}px,0)`;
 
     interfaz(y, horaInstante >= 0 ? horaInstante : S.hora);
   }
@@ -710,7 +713,8 @@
   if (calculo) {
     calculo.hidden = false;
     const control = $("#calculo-equipos"), nEl = $(".calculo__n"), planEl = $(".calculo__plan"), precioEl = $(".calculo__precio"), notaEl = $(".calculo__nota");
-    const euros = (v) => v.toLocaleString("es-ES", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 }) + " €";
+    // Con punto de millares también en cuatro cifras (1.010 €), que «es-ES» por sí solo no pone
+    const euros = (v) => { const [e, d] = v.toFixed(v % 1 ? 2 : 0).split("."); return e.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (d ? "," + d : "") + " €"; };
     const calcular = () => {
       const n = +control.value;
       let plan, precio, nota;
