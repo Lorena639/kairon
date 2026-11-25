@@ -90,7 +90,11 @@
   (function ronda() {
     const secciones = [...document.querySelectorAll("main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo)")];
     const base = (html.dataset.hora === "ahora" ? horaReal().texto : html.dataset.hora || "").match(/^(\d{1,2}):(\d{2})$/);
-    if (!secciones.length || !base) return;
+    // Solo en páginas con cabecera de hora (el informe empieza directamente en el documento)
+    if (!cabeza || !secciones.length || !base) return;
+    // Donde la página enseña las horas reales de un caso (cronología del incidente), la ronda no pone hora:
+    // se confundiría con un dato
+    const conHora = !document.querySelector(".det-linea, .informe__datos");
     const MINUTOS = 9;
     const inicio = +base[1] * 60 + +base[2];
     const reloj = (m) => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
@@ -106,7 +110,8 @@
       hora.className = "ronda__hora";
       const minuto = inicio + (i + 1) * MINUTOS;
       hora.textContent = reloj(minuto);
-      marca.append(linea, hora);
+      marca.append(linea);
+      if (conHora) marca.append(hora);
       seccion.prepend(marca);
       return { marca, hora, minuto };
     });

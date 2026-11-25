@@ -100,6 +100,10 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.005em; }
 
 /* Alba: el cielo es claro arriba, así que la hora y el título (en escritorio, sobre el cielo) van en tinta */
 .pagina--alba .cielo-hora { color: var(--tinta); opacity: 0.86; }
+/* el texto en marfil cae sobre crestas claras: un halo de noche más denso para que se lea */
+.pagina--alba .pagina__intro, .pagina--alba .pi-datos, .pagina--alba .det-aviso, .pagina--alba .plan-aviso {
+  text-shadow: 0 0 2px rgba(11, 15, 20, 0.95), 0 0 10px rgba(11, 15, 20, 0.9), 0 0 26px rgba(11, 15, 20, 0.85);
+}
 @media (min-width: 861px) {
   .pagina--alba .pagina__titulo { color: var(--tinta); text-shadow: none; }
   .pagina--alba .pagina__titulo em { color: var(--oro-tinta); }
@@ -240,6 +244,8 @@ html:not(.portada-v6) .fichas__limite { border-top-color: color-mix(in srgb, var
 .paso::before { left: 3px; top: calc(clamp(24px, 4vh, 36px) + 6px); }
 .pasos::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--oro) 40%, transparent) 8%, color-mix(in srgb, var(--oro) 40%, transparent) 92%, transparent); }
 .pasos::after { left: 10px; }
+/* el simulador de ataque marca en rojo el paso que está ardiendo */
+.paso.ardiendo { border-top-color: var(--rojo, #ff4d4d); background: linear-gradient(90deg, rgba(255, 77, 77, 0.1), transparent 70%); }
 .paso h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
 
 /* Los hitos: el número en oro encima del filete */
@@ -302,4 +308,16 @@ main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) { position:
 .ronda--espera .ronda__hora { opacity: 0; transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .ronda__linea, .ronda::before, .ronda__hora { transition: none; }
+}
+/* «Menos movimiento» puede activarse (o recuperarse de una visita anterior) después de montar la ronda:
+   entonces se queda dibujada, sin esperas */
+.menos-movimiento .ronda--espera .ronda__linea { transform: none; }
+.menos-movimiento .ronda--espera .ronda__hora { opacity: 1; }
+.menos-movimiento .ronda--espera::before { opacity: 0; }
+/* En papel no hay noche: sin horizontes, sin fondos y con poco margen entre secciones */
+@media print {
+  .ronda { display: none; }
+  main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo),
+  .con-ronda main > section:not(.pagina--cabeza):not(.claro):not(.pagina--equipo) { background: none; padding-block: 18px; }
+  main strong, main b { color: inherit; }
 }
